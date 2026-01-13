@@ -1,0 +1,2850 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Danzas - Festividad Virgen de la Candelaria Puno 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(to bottom, #f5f3ff, #e0e7ff, #f0f9ff);
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Header - Diseño mejorado */
+        .header {
+            background: linear-gradient(to right, #4c1d95, #5b21b6);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 4px 20px rgba(76, 29, 149, 0.2);
+        }
+
+        .header-content {
+            max-width: 90rem;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        .header h1 {
+            font-size: 2.25rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (min-width: 768px) {
+            .header h1 {
+                font-size: 3rem;
+            }
+        }
+
+        .subtitle {
+            color: #fbbf24;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-top: -0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Navigation Tabs - Mejorado */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(to right, #fbbf24, #f59e0b);
+            color: #4c1d95;
+            box-shadow: 0 10px 25px -5px rgba(251, 191, 36, 0.3);
+            transform: scale(1.05);
+        }
+
+        .tab-btn:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tab-btn:not(.active):hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 90rem;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Search Bar - Mejorado */
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .search-input-wrapper {
+                flex-direction: row;
+            }
+        }
+
+        .search-input {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 2.75rem;
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            color: #1f2937;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Open Sans', sans-serif;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-input input::placeholder {
+            color: #9ca3af;
+        }
+
+        .search-input input:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .filter-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: #4c1d95;
+            border: 2px solid #5b21b6;
+            border-radius: 0.75rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 4px 6px rgba(76, 29, 149, 0.1);
+        }
+
+        .filter-btn:hover {
+            background: #5b21b6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(76, 29, 149, 0.15);
+        }
+
+        /* Calendar - Mejorado */
+        .calendar {
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: none;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .calendar.active {
+            display: block;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .calendar-header button {
+            padding: 0.5rem;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 0.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-header button:hover {
+            background: #fbbf24;
+            color: #4c1d95;
+        }
+
+        .calendar-header h3 {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #4c1d95;
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .weekday {
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+            padding: 0.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-day {
+            padding: 0.75rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            background: #ffffff;
+            color: #1f2937;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .calendar-day:hover {
+            background: #fef3c7;
+            border-color: #fbbf24;
+        }
+
+        .calendar-day.has-events {
+            background: rgba(251, 191, 36, 0.1);
+            border: 2px solid #fbbf24;
+            color: #92400e;
+            font-weight: 700;
+        }
+
+        .calendar-day.selected {
+            background: #fbbf24;
+            color: #4c1d95;
+            font-weight: 800;
+            box-shadow: 0 4px 6px rgba(251, 191, 36, 0.3);
+        }
+
+        .calendar-controls {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 2px solid #f3f4f6;
+        }
+
+        .calendar-controls button {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .clear-btn {
+            background: #f3f4f6;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .clear-btn:hover {
+            background: #e5e7eb;
+            color: #4c1d95;
+        }
+
+        .today-btn {
+            background: #4c1d95;
+            color: #ffffff;
+        }
+
+        .today-btn:hover {
+            background: #5b21b6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(76, 29, 149, 0.2);
+        }
+
+        /* Events Grid - Diseño espectacular */
+        .events-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(to right, #4c1d95, #5b21b6);
+            border-radius: 0.75rem;
+            color: white;
+        }
+
+        .events-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .events-header .icon {
+            width: 1.75rem;
+            height: 1.75rem;
+            color: #fbbf24;
+        }
+
+        .event-count {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.125rem;
+            font-weight: 400;
+            margin-left: auto;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .events-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .events-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .event-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px -12px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border: 1px solid #e5e7eb;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+            border-color: #fbbf24;
+        }
+
+        .event-gradient {
+            position: absolute;
+            inset: 0;
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .event-image-container {
+            position: relative;
+            height: 16rem;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .event-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: all 0.5s ease;
+        }
+
+        .event-card:hover .event-image {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .event-date-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(76, 29, 149, 0.9);
+            backdrop-filter: blur(4px);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border: 2px solid #fbbf24;
+            z-index: 3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-date-number {
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.875rem;
+            line-height: 1;
+            text-align: center;
+        }
+
+        .event-date-month {
+            color: #fbbf24;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .event-date-day {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-top: 0.25rem;
+            text-align: center;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+            background: #ffffff;
+            z-index: 3;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-genre {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(76, 29, 149, 0.1);
+            border-radius: 9999px;
+            color: #4c1d95;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            border: 1px solid rgba(76, 29, 149, 0.2);
+            font-family: 'Montserrat', sans-serif;
+            align-self: flex-start;
+        }
+
+        .event-title {
+            color: #1f2937;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .event-card:hover .event-title {
+            color: #4c1d95;
+        }
+
+        .event-time {
+            display: flex;
+            align-items: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .event-time svg {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.5rem;
+            color: #f59e0b;
+        }
+
+        .event-btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(to right, #fbbf24, #f59e0b);
+            color: #4c1d95;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.875rem;
+        }
+
+        .event-btn:hover {
+            background: linear-gradient(to right, #f59e0b, #d97706);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Consultas Tab - Mejorado */
+        .advanced-filters {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f3f4f6;
+            margin-top: 1.5rem;
+        }
+
+        .advanced-filters.active {
+            display: grid;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #4b5563;
+            font-size: 0.875rem;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #fbbf24;
+        }
+
+        /* Results Grid para danzas */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            border-color: #fbbf24;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            background: linear-gradient(to right, #4c1d95, #5b21b6);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dance-order {
+            background: #fbbf24;
+            color: #4c1d95;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .dance-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .dance-category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #fef3c7;
+            color: #92400e;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .dance-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 0.875rem;
+            color: #1f2937;
+            font-weight: 700;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #fbbf24, #f59e0b);
+            color: #4c1d95;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #f59e0b, #d97706);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #4c1d95;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5b21b6;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #fbbf24;
+            color: #fbbf24;
+        }
+
+        .btn-outline:hover {
+            background: #fef3c7;
+        }
+
+        /* Notification Settings */
+        .notification-settings {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .time-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .time-option {
+            padding: 0.5rem 1rem;
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .time-option.active {
+            background: #fbbf24;
+            border-color: #f59e0b;
+            color: #4c1d95;
+            font-weight: 600;
+        }
+
+        .time-option:hover:not(.active) {
+            background: #e5e7eb;
+        }
+
+        /* Map Container */
+        .map-container {
+            height: 600px;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .map-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: #fbbf24;
+            border-radius: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 12px;
+            width: 2px;
+            height: calc(100% + 2rem);
+            background: #e5e7eb;
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 2rem;
+            background: linear-gradient(to right, #4c1d95, #5b21b6);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #fbbf24;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .modal-section h3 {
+            color: #4c1d95;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #fbbf24;
+        }
+
+        .dance-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .dance-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-facts {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.875rem;
+        }
+
+        .page-btn.active {
+            background: #4c1d95;
+            color: white;
+            border-color: #4c1d95;
+        }
+
+        .page-btn:hover:not(.active) {
+            border-color: #fbbf24;
+        }
+
+        /* No results */
+        .no-results {
+            text-align: center;
+            padding: 4rem 1rem;
+            display: none;
+            background: white;
+            border-radius: 1rem;
+            border: 2px dashed #e5e7eb;
+        }
+
+        .no-results.active {
+            display: block;
+        }
+
+        .no-results-icon {
+            width: 4rem;
+            height: 4rem;
+            color: #d1d5db;
+            margin: 0 auto 1rem;
+        }
+
+        .no-results h3 {
+            color: #4c1d95;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .no-results p {
+            color: #6b7280;
+            font-size: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.875rem;
+            }
+            
+            .subtitle {
+                font-size: 0.875rem;
+            }
+            
+            .tab-btn {
+                padding: 0.625rem 1rem;
+                font-size: 0.75rem;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dance-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-container {
+                height: 400px;
+            }
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #4c1d95;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px -5px rgba(76, 29, 149, 0.3);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: slideIn 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast.success {
+            background: linear-gradient(to right, #10b981, #059669);
+        }
+
+        .toast.warning {
+            background: linear-gradient(to right, #f59e0b, #d97706);
+        }
+
+        .toast.error {
+            background: linear-gradient(to right, #dc2626, #b91c1c);
+        }
+
+        .toast.info {
+            background: linear-gradient(to right, #0ea5e9, #0284c7);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <h1>Plataforma de Danzas</h1>
+            <div class="subtitle">Festividad Virgen de la Candelaria - Puno 2025</div>
+            
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-tab="programacion">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Programación 2025
+                </button>
+                <button class="tab-btn" data-tab="consultas">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    Consultas de Danzas
+                </button>
+                <button class="tab-btn" data-tab="lista">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                    Lista Completa
+                </button>
+                <button class="tab-btn" data-tab="mapa">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    Mapa en Vivo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Programación Tab -->
+        <div id="programacion" class="tab-content active">
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <div class="search-input">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <input type="text" id="search-input" placeholder="Buscar eventos...">
+                    </div>
+                    <button class="filter-btn" id="filter-toggle">
+                        Filtro por Fecha
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Calendar -->
+                <div id="calendar" class="calendar">
+                    <div class="calendar-header">
+                        <button id="prev-month">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </button>
+                        <h3 id="current-month">Enero 2025</h3>
+                        <button id="next-month">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="calendar-weekdays">
+                        <div class="weekday">Dom</div>
+                        <div class="weekday">Lun</div>
+                        <div class="weekday">Mar</div>
+                        <div class="weekday">Mié</div>
+                        <div class="weekday">Jue</div>
+                        <div class="weekday">Vie</div>
+                        <div class="weekday">Sáb</div>
+                    </div>
+
+                    <div id="calendar-days" class="calendar-days"></div>
+
+                    <div class="calendar-controls">
+                        <button class="clear-btn" id="clear-date">Limpiar Filtro</button>
+                        <button class="today-btn" id="today-btn">Hoy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Header -->
+            <div class="events-header">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 19V5m6 14V5m4.5.5h-15a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h15a1 1 0 0 0 1-1v-12a1 1 0 0 0-1-1Z"></path>
+                </svg>
+                <h2>Programación Oficial 2025</h2>
+                <span class="event-count" id="event-count">(12 eventos)</span>
+            </div>
+
+            <div id="events-grid" class="events-grid"></div>
+            <div id="no-events" class="no-results">
+                <svg class="no-results-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 19V5m6 14V5m4.5.5h-15a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h15a1 1 0 0 0 1-1v-12a1 1 0 0 0-1-1Z"></path>
+                </svg>
+                <h3>No se encontraron eventos</h3>
+                <p>Intenta ajustar tus filtros o busca con otros términos</p>
+            </div>
+        </div>
+
+        <!-- Consultas de Danzas Tab -->
+        <div id="consultas" class="tab-content">
+            <div class="search-container">
+                <h2 style="color: #4c1d95; margin-bottom: 1.5rem; font-size: 1.5rem;">Consultas de Danzas</h2>
+                <div class="search-input-wrapper">
+                    <div class="search-input">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <input type="text" id="danza-search" placeholder="Buscar danza por nombre, categoría, origen...">
+                    </div>
+                    <button class="filter-btn" id="toggle-filters">
+                        Filtros Avanzados
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Advanced Filters -->
+                <div class="advanced-filters" id="advanced-filters">
+                    <div class="filter-group">
+                        <label>Categoría</label>
+                        <select id="filter-categoria">
+                            <option value="">Todas</option>
+                            <option value="TRAJE DE LUCES">Trajes de Luces</option>
+                            <option value="ORIGINARIAS">Originarias/Autóctonas</option>
+                            <option value="TRADICIONAL">Tradicional</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Zona de Pertenencia</label>
+                        <select id="filter-zona">
+                            <option value="">Todas</option>
+                            <option value="PUNO">Puno</option>
+                            <option value="JULIACA">Juliaca</option>
+                            <option value="AYAVIRI">Ayaviri</option>
+                            <option value="AZANGARO">Azángaro</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Tipo de Música</label>
+                        <select id="filter-musica">
+                            <option value="">Todos</option>
+                            <option value="BANDA">Bandas</option>
+                            <option value="SIKURI">Sikuris</option>
+                            <option value="PHUSIPIA">Phusipia</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Modalidad</label>
+                        <select id="filter-modalidad">
+                            <option value="">Ambas</option>
+                            <option value="CONCURSO">Concurso</option>
+                            <option value="VENERACION">Veneración</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Día de Participación</label>
+                        <select id="filter-dia">
+                            <option value="">Todos</option>
+                            <option value="1">1 de Febrero</option>
+                            <option value="2">2 de Febrero</option>
+                            <option value="3">3 de Febrero</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Cant. Mínima de Bailarines</label>
+                        <input type="number" id="filter-bailarines" placeholder="Ej: 50">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="notification-settings">
+                <h3 style="color: #4c1d95; margin-bottom: 1rem;">Configurar Notificaciones</h3>
+                <p style="color: #6b7280; margin-bottom: 1rem;">Selecciona el tiempo de anticipación para recibir alertas:</p>
+                <div class="time-options">
+                    <div class="time-option active" data-minutes="5">5 min antes</div>
+                    <div class="time-option" data-minutes="10">10 min antes</div>
+                    <div class="time-option" data-minutes="20">20 min antes</div>
+                    <div class="time-option" data-minutes="30">30 min antes</div>
+                    <div class="time-option" data-minutes="60">1 hora antes</div>
+                </div>
+            </div>
+
+            <div class="results-grid" id="danzas-grid"></div>
+            <div id="no-danzas" class="no-results">
+                <svg class="no-results-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <h3>No se encontraron danzas</h3>
+                <p>Intenta ajustar tus filtros o búsqueda</p>
+            </div>
+        </div>
+
+        <!-- Lista de Danzas Tab -->
+        <div id="lista" class="tab-content">
+            <div class="search-container">
+                <h2 style="color: #4c1d95; margin-bottom: 1.5rem; font-size: 1.5rem;">Lista Completa de Danzas</h2>
+                <div class="search-input-wrapper">
+                    <div class="search-input">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <input type="text" id="lista-search" placeholder="Buscar en lista completa...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-grid" id="lista-grid"></div>
+            <div id="no-lista" class="no-results">
+                <svg class="no-results-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+                <h3>No se encontraron danzas</h3>
+                <p>Intenta ajustar tu búsqueda</p>
+            </div>
+        </div>
+
+        <!-- Mapa en Tiempo Real Tab -->
+        <div id="mapa" class="tab-content">
+            <div class="search-container">
+                <h2 style="color: #4c1d95; margin-bottom: 1.5rem; font-size: 1.5rem;">Mapa en Tiempo Real - Recorrido de Veneración</h2>
+                <div class="map-controls">
+                    <button class="btn btn-primary" id="live-view">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
+                            <path d="M12 4v1m6.364 1.636-.707.707M20 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547Z"></path>
+                        </svg>
+                        Ver en Vivo
+                    </button>
+                    <button class="btn btn-outline" id="refresh-map">Actualizar Posiciones</button>
+                    <select class="filter-group" style="margin-left: auto;" id="map-filter">
+                        <option value="">Todas las Danzas</option>
+                        <option value="TRAJE_DE_LUCES">Trajes de Luces</option>
+                        <option value="ORIGINARIAS">Danzas Originarias</option>
+                        <option value="EN_PROGRESO">En Progreso</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+
+            <div class="notification-settings">
+                <h3 style="color: #4c1d95; margin-bottom: 1rem;">Puntos de Referencia del Recorrido</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="info-item">
+                        <div class="info-label">Inicio</div>
+                        <div class="info-value">Av. El Sol - 06:00 AM</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Parque Pino</div>
+                        <div class="info-value">Punto Histórico</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Plaza de Armas</div>
+                        <div class="info-value">Principal - 10:00 AM</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Jr. Lima</div>
+                        <div class="info-value">Zona Comercial</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Final</div>
+                        <div class="info-value">Estadio - 08:00 PM</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Dance Details -->
+    <div class="modal" id="dance-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Detalles de la Danza</h2>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Modal for Event Details -->
+    <div class="modal" id="event-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="event-modal-title">Detalles del Evento</h2>
+                <button class="modal-close" id="event-modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="event-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // ===== DATOS COMPLETOS =====
+        const eventos = [
+            {
+                id: 1,
+                fecha: '24 ENE',
+                dia: 'VIE',
+                titulo: 'Inicio de Novena',
+                tipo: 'RELIGIOSO',
+                hora: '19:00',
+                descripcion: 'Comienzo de los nueve días de oración dedicados a la Virgen de la Candelaria. Celebración eucarística y actos devocionales en la Basílica Catedral.',
+                imagen: 'https://files.hozana.org/203582-novena-a-santa-rita-de-cascia!990x427.webp',
+                color: 'linear-gradient(to bottom right, #fbbf24, #b45309)',
+                ubicacion: 'Basílica Catedral de Puno',
+                organizador: 'Hermandad de la Virgen de la Candelaria',
+                importancia: 'Alta',
+                duracion: '2 horas',
+                capacidad: '2000 personas'
+            },
+            {
+                id: 2,
+                fecha: '1 FEB',
+                dia: 'SÁB',
+                titulo: 'Concurso de Danzas Originarias - Día 1',
+                tipo: 'CONCURSO',
+                hora: '08:00 - 18:00',
+                descripcion: 'Primer día del concurso de danzas originarias en el Estadio Enrique Torres Belón. Participan más de 50 conjuntos de danzas autóctonas.',
+                imagen: 'https://imgmedia.larepublica.pe/1000x590/larepublica/original/2025/02/03/67a12120a8e33d5aa110b300.webp',
+                color: 'linear-gradient(to bottom right, #16a34a, #15803d)',
+                ubicacion: 'Estadio Enrique Torres Belón',
+                organizador: 'Federación Regional de Folklore',
+                importancia: 'Muy Alta',
+                duracion: '10 horas',
+                capacidad: '25000 personas'
+            },
+            {
+                id: 3,
+                fecha: '2 FEB',
+                dia: 'DOM',
+                titulo: 'Concurso de Danzas Originarias - Día 2',
+                tipo: 'CONCURSO',
+                hora: '08:00 - 18:00',
+                descripcion: 'Segundo día del concurso de danzas originarias. Final y premiación de las mejores danzas autóctonas de la región.',
+                imagen: 'https://vivecandelaria.com/wp-content/uploads/2025/02/wifala_san_francisco_javier_de_munani.jpg',
+                color: 'linear-gradient(to bottom right, #2563eb, #1e3a8a)',
+                ubicacion: 'Estadio Enrique Torres Belón',
+                organizador: 'Federación Regional de Folklore',
+                importancia: 'Muy Alta',
+                duracion: '10 horas',
+                capacidad: '25000 personas'
+            },
+            {
+                id: 4,
+                fecha: '8 FEB',
+                dia: 'SÁB',
+                titulo: 'Concurso de Danzas con Traje de Luces - Día 1',
+                tipo: 'CONCURSO',
+                hora: '08:00 - 18:00',
+                descripcion: 'Primer día del concurso de danzas con traje de luces. Los conjuntos más espectaculares muestran su arte y coreografía.',
+                imagen: 'https://domiruthperutravel.com/es/wp-content/uploads/2021/09/domiruthperutravel-itinerario-puno-candelaria-3.jpg',
+                color: 'linear-gradient(to bottom right, #9333ea, #be185d)',
+                ubicacion: 'Estadio Enrique Torres Belón',
+                organizador: 'Federación Regional de Folklore',
+                importancia: 'Muy Alta',
+                duracion: '10 horas',
+                capacidad: '25000 personas'
+            },
+            {
+                id: 5,
+                fecha: '9 FEB',
+                dia: 'DOM',
+                titulo: 'Concurso de Danzas con Traje de Luces - Día 2',
+                tipo: 'CONCURSO',
+                hora: '08:00 - 18:00',
+                descripcion: 'Segundo día del concurso de danzas con traje de luces. Gran final y premiación de los mejores conjuntos.',
+                imagen: 'https://radioondaazul.com/wp-content/uploads/2024/11/Trajes-de-Luces.jpg',
+                color: 'linear-gradient(to bottom right, #ec4899, #be185d)',
+                ubicacion: 'Estadio Enrique Torres Belón',
+                organizador: 'Federación Regional de Folklore',
+                importancia: 'Muy Alta',
+                duracion: '10 horas',
+                capacidad: '25000 personas'
+            },
+            {
+                id: 6,
+                fecha: '10 FEB',
+                dia: 'LUN',
+                titulo: 'Parada de Veneración - Traje de Luces (Gran día)',
+                tipo: 'PARADA',
+                hora: '08:00 - 20:00',
+                descripcion: 'Gran día de veneración con todas las danzas de traje de luces por las principales calles de Puno. La procesión más grande de la festividad.',
+                imagen: 'https://diariocorreo.pe/resizer/YSZRetm186Lzt5YSt17DbtPGn_c=/1200x900/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/RIBVOYVJMJCCDKMBU7W25RRPJU.jpg',
+                color: 'linear-gradient(to bottom right, #b91c1c, #7f1d1d)',
+                ubicacion: 'Calles principales de Puno',
+                organizador: 'Municipalidad Provincial de Puno',
+                importancia: 'Máxima',
+                duracion: '12 horas',
+                capacidad: 'Ilimitada'
+            },
+            {
+                id: 7,
+                fecha: '11 FEB',
+                dia: 'MAR',
+                titulo: 'Procesión de la Octava',
+                tipo: 'RELIGIOSO',
+                hora: '14:00',
+                descripcion: 'Procesión de la Virgen de la Candelaria por las calles de Puno en su día de octava.',
+                imagen: 'https://radioondaazul.com/wp-content/uploads/2024/02/procesion-por-la-octava-de-la-Virgen-de-la-Candelaria.jpg',
+                color: 'linear-gradient(to bottom right, #b45309, #fbbf24)',
+                ubicacion: 'Centro Histórico de Puno',
+                organizador: 'Arzobispado de Puno',
+                importancia: 'Alta',
+                duracion: '3 horas',
+                capacidad: 'Ilimitada'
+            },
+            {
+                id: 8,
+                fecha: '12 FEB',
+                dia: 'MIÉ',
+                titulo: 'Misa Mayor de la Octava',
+                tipo: 'RELIGIOSO',
+                hora: '10:00',
+                descripcion: 'Misa solemne en honor a la Virgen de la Candelaria, presidida por el Arzobispo de Puno.',
+                imagen: 'https://radioondaazul.com/wp-content/uploads/2021/02/Misa-de-Fiesta-Festividad-Virgen-de-la-Candelaria-2021-1.jpg',
+                color: 'linear-gradient(to bottom right, #4b5563, #1f2937)',
+                ubicacion: 'Basílica Catedral de Puno',
+                organizador: 'Arzobispado de Puno',
+                importancia: 'Alta',
+                duracion: '2 horas',
+                capacidad: '2000 personas'
+            }
+        ];
+
+        const danzas = [
+            {
+                id: 1,
+                nombre: "Morenada Central Puno",
+                categoria: "TRAJE DE LUCES",
+                orden_concurso: 1,
+                orden_veneracion: 5,
+                dia_participacion: "1 de Febrero",
+                zona: "Puno",
+                tipo_musica: "Bandas",
+                cantidad_bailarines: 80,
+                banda_acompanante: "Banda Central Puno",
+                duracion_estimada: "15 minutos",
+                distancia_recorrida: "2.5 km",
+                origen: "Representa a los esclavos africanos en las minas de plata del periodo colonial",
+                fundador: "Comunidad del Barrio Mañazo - 1950",
+                historia: "La Morenada surge como representación satírica de los esclavos africanos traídos a las minas de Potosí. En Puno, se adaptó en los años 50 y es una de las danzas más emblemáticas de la festividad. El conjunto ha ganado múltiples premios internacionales.",
+                significado: "Los pasos imitan el caminar pesado de los esclavos cargando lingotes de plata, mientras que los movimientos de hombros representan el frío de la altitud. Las matracas simbolizan las cadenas de la esclavitud.",
+                vestimenta: "Trajes bordados con hilos de plata, máscaras negras con rasgos exagerados, sombreros con plumas y matracas que simulan cadenas. Cada traje pesa aproximadamente 25 kg.",
+                premios: ["Primer puesto 2019", "Segundo puesto 2022", "Premio especial UNESCO 2023"],
+                imagen_principal: "https://images.unsplash.com/photo-1547825407-12d434919a71?w=600",
+                galeria: [
+                    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400",
+                    "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400",
+                    "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400"
+                ],
+                tiempo_estimado: "10:30 AM",
+                progreso: 35,
+                latitud: -15.8402,
+                longitud: -70.0219,
+                en_vivo: true,
+                contacto: "+51 951 789 123",
+                email: "morenada@puno.pe",
+                redes: "@morenadapuno"
+            },
+            {
+                id: 2,
+                nombre: "Wifalas San Francisco",
+                categoria: "ORIGINARIAS",
+                orden_concurso: 3,
+                orden_veneracion: 8,
+                dia_participacion: "1 de Febrero",
+                zona: "San Francisco de Asís",
+                tipo_musica: "Sikuris",
+                cantidad_bailarines: 45,
+                banda_acompanante: "Sikuris San Francisco",
+                duracion_estimada: "12 minutos",
+                distancia_recorrida: "1.8 km",
+                origen: "Danza guerrera aymara de la región altiplánica",
+                fundador: "Comunidad Munani - 1975",
+                historia: "Danza precolombina que representa rituales guerreros de las comunidades aymaras. Recuperada en los años 70 por la comunidad de Munani, ha sido declarada Patrimonio Cultural Inmaterial por el Ministerio de Cultura.",
+                significado: "Movimientos circulares representan la cosmovisión andina del ciclo de la vida. Los pasos en zigzag simbolizan el camino a seguir y la conexión con la Pachamama.",
+                vestimenta: "Monteras de cuero, ponchos multicolores, hondas tejidas y abarcas de cuero. Cada color representa un elemento de la naturaleza: rojo (tierra), azul (cielo), verde (agua), amarillo (sol).",
+                premios: ["Primer puesto 2020", "Tercer puesto 2023", "Mejor Vestimenta 2024"],
+                imagen_principal: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600",
+                galeria: [
+                    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400",
+                    "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400"
+                ],
+                tiempo_estimado: "11:15 AM",
+                progreso: 28,
+                latitud: -15.8380,
+                longitud: -70.0200,
+                en_vivo: true,
+                contacto: "+51 951 789 456",
+                email: "wifalas@munani.pe",
+                redes: "@wifalassanfrancisco"
+            },
+            {
+                id: 3,
+                nombre: "Diablada Confraternidad",
+                categoria: "TRAJE DE LUCES",
+                orden_concurso: 2,
+                orden_veneracion: 3,
+                dia_participacion: "2 de Febrero",
+                zona: "Juliaca",
+                tipo_musica: "Bandas",
+                cantidad_bailarines: 120,
+                banda_acompanante: "Banda 27 de Junio",
+                duracion_estimada: "18 minutos",
+                distancia_recorrida: "3.2 km",
+                origen: "Representación de la lucha entre el bien y el mal con influencia española",
+                fundador: "Hermandad de la Diablada - 1965",
+                historia: "Fusiona elementos del teatro medieval español con tradiciones andinas. Introducida en Puno por migrantes bolivianos y adaptada a la cultura local. Es la danza con más bailarines en la festividad.",
+                significado: "La lucha entre el Arcángel Miguel y los diablos representa la batalla espiritual entre el bien y el mal, con un mensaje de redención final. Cada diablo representa un pecado capital.",
+                vestimenta: "Trajes con espejos y lentejuelas, máscaras diabólicas detalladas, tridentes y capas bordadas con imágenes religiosas. El traje del Arcángel Miguel incluye alas de 3 metros.",
+                premios: ["Primer puesto 2021", "Primer puesto 2023", "Récord Guinness 2022"],
+                imagen_principal: "https://images.unsplash.com/photo-1541535650810-10d26f5c2ab3?w=600",
+                galeria: [
+                    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400",
+                    "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400"
+                ],
+                tiempo_estimado: "09:45 AM",
+                progreso: 65,
+                latitud: -15.8420,
+                longitud: -70.0195,
+                en_vivo: true,
+                contacto: "+51 951 789 789",
+                email: "diablada@confraternidad.pe",
+                redes: "@diabladaoficial"
+            },
+            {
+                id: 4,
+                nombre: "Sikuris 27 de Junio",
+                categoria: "ORIGINARIAS",
+                orden_concurso: 4,
+                orden_veneracion: 12,
+                dia_participacion: "2 de Febrero",
+                zona: "Puno Centro",
+                tipo_musica: "Sikuris",
+                cantidad_bailarines: 60,
+                banda_acompanante: "Propia - Sikuris",
+                duracion_estimada: "25 minutos",
+                distancia_recorrida: "2.0 km",
+                origen: "Música y danza ancestral con instrumentos de viento precolombinos",
+                fundador: "Comunidad Collavina - 1980",
+                historia: "Conserva las tradiciones musicales más antiguas del altiplano. Formada por maestros sikuris que mantienen la técnica ancestral de ejecución. Han realizado giras internacionales en 15 países.",
+                significado: "Cada melodía corresponde a un ritual agrícola específico: siembra, cosecha, lluvia. La danza imita el movimiento del viento en los cultivos y la conexión con los apus.",
+                vestimenta: "Chullos tejidos, ponchos de lana de alpaca, ojotas y fajas multicolores. Cada músico lleva su siku (zampoña) de diferente tamaño, desde 20 cm hasta 2 metros.",
+                premios: ["Segundo puesto 2022", "Mejor Música 2023", "Premio a la Tradición 2024"],
+                imagen_principal: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600",
+                galeria: [
+                    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400",
+                    "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400"
+                ],
+                tiempo_estimado: "02:30 PM",
+                progreso: 15,
+                latitud: -15.8360,
+                longitud: -70.0225,
+                en_vivo: false,
+                contacto: "+51 951 789 101",
+                email: "sikuris@collavina.pe",
+                redes: "@sikuris27dejunio"
+            },
+            {
+                id: 5,
+                nombre: "Caporales Vientos del Sur",
+                categoria: "TRAJE DE LUCES",
+                orden_concurso: 5,
+                orden_veneracion: 7,
+                dia_participacion: "2 de Febrero",
+                zona: "Huáscar",
+                tipo_musica: "Bandas",
+                cantidad_bailarines: 95,
+                banda_acompanante: "Banda Huáscar",
+                duracion_estimada: "14 minutos",
+                distancia_recorrida: "2.8 km",
+                origen: "Danza de influencia afroboliviana adaptada a Puno",
+                fundador: "Familia Mendoza - 1995",
+                historia: "Adaptación local de los caporales bolivianos con elementos punenos. Introducida por jóvenes que estudiaron en La Paz y trajeron la danza a Puno. Es la danza más joven en competencia.",
+                significado: "Representa a los capataces de las haciendas durante la colonia. Los látigos simbolizan autoridad, mientras que los saltos altos muestran energía juvenil y rebeldía.",
+                vestimenta: "Botas altas, látigos, sombreros y trajes con bordados dorados. Las mujeres visten faldas cortas con volados y blusas ajustadas. El calzado incluye cascabeles que marcan el ritmo.",
+                premios: ["Tercer puesto 2020", "Segundo puesto 2024", "Mejor Coreografía 2023"],
+                imagen_principal: "https://images.unsplash.com/photo-1541535650810-10d26f5c2ab3?w=600",
+                galeria: [
+                    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400",
+                    "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400"
+                ],
+                tiempo_estimado: "11:45 AM",
+                progreso: 42,
+                latitud: -15.8390,
+                longitud: -70.0180,
+                en_vivo: true,
+                contacto: "+51 951 789 112",
+                email: "caporales@vientosdelsur.pe",
+                redes: "@caporalesvientosdelsur"
+            },
+            {
+                id: 6,
+                nombre: "Tinkus Machallata",
+                categoria: "ORIGINARIAS",
+                orden_concurso: 6,
+                orden_veneracion: 10,
+                dia_participacion: "3 de Febrero",
+                zona: "Ayaviri",
+                tipo_musica: "Phusipia",
+                cantidad_bailarines: 55,
+                banda_acompanante: "Phusipia Machallata",
+                duracion_estimada: "20 minutos",
+                distancia_recorrida: "2.3 km",
+                origen: "Danza guerrera de encuentro ritual entre comunidades",
+                fundador: "Comunidad Machallata - 1988",
+                historia: "Representa los encuentros rituales entre comunidades andinas para resolver conflictos. Recuperada de tradiciones orales y adaptada para la festividad.",
+                significado: "El encuentro ritual simboliza la unión de comunidades y la resolución pacífica de conflictos a través del diálogo y la danza.",
+                vestimenta: "Monteras con cuernos, ponchos de lana de oveja, hondas de colores y máscaras con expresiones guerreras.",
+                premios: ["Mejor Representación 2022", "Tercer puesto 2023"],
+                imagen_principal: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600",
+                galeria: [
+                    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400",
+                    "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400"
+                ],
+                tiempo_estimado: "03:15 PM",
+                progreso: 20,
+                latitud: -15.8440,
+                longitud: -70.0170,
+                en_vivo: false,
+                contacto: "+51 951 789 113",
+                email: "tinkus@machallata.pe",
+                redes: "@tinkusmachallata"
+            }
+        ];
+
+        // ===== VARIABLES GLOBALES =====
+        let map;
+        let mapMarkers = [];
+        let notificationTime = 5; // minutos por defecto
+        let selectedDances = [];
+        let userFavorites = JSON.parse(localStorage.getItem('favoritos_danzas')) || [];
+        let userNotifications = JSON.parse(localStorage.getItem('danza_notifications')) || [];
+        let currentMonth = 0; // Enero
+        let currentYear = 2025;
+        let selectedDate = null;
+        let showFilters = false;
+
+        // ===== INICIALIZACIÓN =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initTabs();
+            renderEvents();
+            renderDanzas();
+            renderListaCompleta();
+            initMap();
+            setupEventListeners();
+            generateCalendar();
+            checkNotifications();
+            
+            // Cargar iconos de Lucide
+            lucide.createIcons();
+        });
+
+        // ===== FUNCIONES PRINCIPALES =====
+        function initTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Actualizar pestaña activa
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Mostrar contenido activo
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Refrescar mapa si es necesario
+                    if (tabId === 'mapa' && map) {
+                        setTimeout(() => {
+                            map.invalidateSize();
+                            updateMapMarkers();
+                        }, 100);
+                    }
+                });
+            });
+        }
+
+        function generateCalendar() {
+            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const calendarDays = document.getElementById('calendar-days');
+            const currentMonthElement = document.getElementById('current-month');
+
+            currentMonthElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            calendarDays.innerHTML = '';
+
+            // Días vacíos al inicio
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day';
+                calendarDays.appendChild(emptyDay);
+            }
+
+            // Días del mes
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('button');
+                dayElement.className = 'calendar-day';
+                dayElement.type = 'button';
+
+                const formattedDate = `${day} ${monthNames[currentMonth].substring(0, 3).toUpperCase()}`;
+                const hasEvents = eventos.some(evento => evento.fecha === formattedDate);
+
+                if (hasEvents) {
+                    dayElement.classList.add('has-events');
+                }
+
+                if (selectedDate === formattedDate) {
+                    dayElement.classList.add('selected');
+                }
+
+                dayElement.textContent = day;
+                dayElement.addEventListener('click', function() {
+                    selectedDate = formattedDate;
+                    renderEvents();
+                    generateCalendar();
+                });
+
+                calendarDays.appendChild(dayElement);
+            }
+        }
+
+        function renderEvents() {
+            const eventsGrid = document.getElementById('events-grid');
+            const noEvents = document.getElementById('no-events');
+            const eventCount = document.getElementById('event-count');
+
+            const filteredEvents = eventos.filter(evento => {
+                const matchDate = selectedDate === null || evento.fecha === selectedDate;
+                const searchTerm = document.getElementById('search-input').value.toLowerCase();
+                const matchSearch = evento.titulo.toLowerCase().includes(searchTerm) ||
+                                   evento.descripcion.toLowerCase().includes(searchTerm) ||
+                                   evento.tipo.toLowerCase().includes(searchTerm);
+                return matchDate && matchSearch;
+            });
+
+            eventCount.textContent = `(${filteredEvents.length} eventos)`;
+
+            if (filteredEvents.length === 0) {
+                noEvents.classList.add('active');
+                eventsGrid.innerHTML = '';
+                return;
+            }
+
+            noEvents.classList.remove('active');
+
+            eventsGrid.innerHTML = filteredEvents.map(evento => {
+                const [dateNum, dateMonth] = evento.fecha.split(' ');
+                return `
+                    <div class="event-card">
+                        <div class="event-gradient" style="background: ${evento.color};"></div>
+                        <div class="event-image-container">
+                            <img class="event-image" src="${evento.imagen}" alt="${evento.titulo}" onerror="this.onerror=null; this.src='https://placehold.co/400x300/4c1d95/fbbf24?text=${encodeURIComponent(evento.titulo)}';">
+                        </div>
+                        <div class="event-date-badge">
+                            <div class="event-date-number">${dateNum}</div>
+                            <div class="event-date-month">${dateMonth}</div>
+                            <div class="event-date-day">${evento.dia}</div>
+                        </div>
+                        <div class="event-content">
+                            <div class="event-genre">${evento.tipo}</div>
+                            <h3 class="event-title">${evento.titulo}</h3>
+                            <div class="event-time">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                ${evento.hora}
+                            </div>
+                            <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem; flex-grow: 1;">${evento.descripcion.substring(0, 100)}...</p>
+                            <button class="event-btn" onclick="openEventModal(${evento.id})">Más Información</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderDanzas(filteredDanzas = danzas) {
+            const grid = document.getElementById('danzas-grid');
+            const noResults = document.getElementById('no-danzas');
+
+            if (filteredDanzas.length === 0) {
+                noResults.classList.add('active');
+                grid.innerHTML = '';
+                return;
+            }
+
+            noResults.classList.remove('active');
+            grid.innerHTML = filteredDanzas.map(danza => `
+                <div class="result-card">
+                    <div class="card-header">
+                        <div>
+                            <div style="font-size: 0.875rem; color: #fbbf24;">${danza.dia_participacion}</div>
+                            <div style="font-size: 1.25rem; font-weight: 800;">${danza.nombre}</div>
+                        </div>
+                        <div class="dance-order">#${danza.orden_concurso}</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="dance-category">${danza.categoria}</div>
+                        ${danza.en_vivo ? `<div style="background: #dc2626; color: white; padding: 0.25rem 0.75rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.25rem;">
+                            <span style="width: 6px; height: 6px; background: white; border-radius: 50%; animation: pulse 1.5s infinite;"></span>
+                            EN VIVO
+                        </div>` : ''}
+                        <div class="dance-info">
+                            <div class="info-item">
+                                <div class="info-label">Orden Veneración</div>
+                                <div class="info-value">#${danza.orden_veneracion}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Zona</div>
+                                <div class="info-value">${danza.zona}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Bailarines</div>
+                                <div class="info-value">${danza.cantidad_bailarines}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Hora Estimada</div>
+                                <div class="info-value">${danza.tiempo_estimado}</div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-primary" onclick="openDanceModal(${danza.id})">Ver Detalles</button>
+                            <button class="btn btn-outline" onclick="toggleNotification(${danza.id})">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg>
+                                Notificar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderListaCompleta() {
+            const grid = document.getElementById('lista-grid');
+            const noResults = document.getElementById('no-lista');
+            
+            if (danzas.length === 0) {
+                noResults.classList.add('active');
+                grid.innerHTML = '';
+                return;
+            }
+
+            noResults.classList.remove('active');
+            grid.innerHTML = danzas.map(danza => `
+                <div class="result-card">
+                    <div class="card-header">
+                        <div style="font-size: 1.25rem; font-weight: 800;">${danza.nombre}</div>
+                        <div class="dance-order" style="background: ${danza.categoria === 'TRAJE DE LUCES' ? '#9333ea' : '#10b981'}">${danza.categoria === 'TRAJE DE LUCES' ? 'TL' : 'OR'}</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="dance-category">${danza.categoria} • ${danza.zona}</div>
+                        <p style="color: #6b7280; margin-bottom: 1rem; font-size: 0.875rem;">${danza.origen.substring(0, 150)}...</p>
+                        <div class="dance-info">
+                            <div class="info-item">
+                                <div class="info-label">Fundación</div>
+                                <div class="info-value">${danza.fundador.split('-')[1]?.trim() || '1960'}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Banda</div>
+                                <div class="info-value">${danza.banda_acompanante}</div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-primary" onclick="openDanceModal(${danza.id}, true)">Ver Ficha Completa</button>
+                            <button class="btn btn-secondary" onclick="downloadPDF(${danza.id})">PDF</button>
+                            <button class="btn btn-outline" onclick="toggleFavorite(${danza.id})">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openDanceModal(danzaId, fullInfo = false) {
+            const danza = danzas.find(d => d.id === danzaId);
+            if (!danza) return;
+
+            const modal = document.getElementById('dance-modal');
+            const modalBody = document.getElementById('modal-body');
+            const modalTitle = document.getElementById('modal-title');
+
+            modalTitle.textContent = danza.nombre;
+
+            if (fullInfo) {
+                modalBody.innerHTML = `
+                    <div class="dance-details-grid">
+                        <div>
+                            <img src="${danza.imagen_principal}" alt="${danza.nombre}" class="dance-image">
+                            <div style="margin-top: 1.5rem;">
+                                <h3>Datos Rápidos</h3>
+                                <div class="quick-facts">
+                                    <div class="info-item">
+                                        <div class="info-label">Categoría</div>
+                                        <div class="info-value">${danza.categoria}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Orden Concurso</div>
+                                        <div class="info-value">#${danza.orden_concurso}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Orden Veneración</div>
+                                        <div class="info-value">#${danza.orden_veneracion}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Día</div>
+                                        <div class="info-value">${danza.dia_participacion}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Zona</div>
+                                        <div class="info-value">${danza.zona}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Bailarines</div>
+                                        <div class="info-value">${danza.cantidad_bailarines}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Contacto</div>
+                                        <div class="info-value">${danza.contacto}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Email</div>
+                                        <div class="info-value">${danza.email}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="modal-section">
+                                <h3>Historia y Origen</h3>
+                                <p style="line-height: 1.6; color: #4b5563;">${danza.historia}</p>
+                                <p style="margin-top: 1rem;"><strong>Fundador:</strong> ${danza.fundador}</p>
+                            </div>
+                            <div class="modal-section">
+                                <h3>Significado Cultural</h3>
+                                <p style="line-height: 1.6; color: #4b5563;">${danza.significado}</p>
+                            </div>
+                            <div class="modal-section">
+                                <h3>Vestimenta</h3>
+                                <p style="line-height: 1.6; color: #4b5563;">${danza.vestimenta}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Galería</h3>
+                        <div class="gallery-grid">
+                            ${danza.galeria.map(img => `<img src="${img}" class="gallery-img" onclick="openImage('${img}')">`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Historial de Participación</h3>
+                        <div class="timeline">
+                            ${danza.premios.map((premio, index) => `
+                                <div class="timeline-item">
+                                    <h4 style="color: #4c1d95;">${premio}</h4>
+                                    <p style="color: #6b7280;">Festividad Virgen de la Candelaria</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Información de Contacto</h3>
+                        <div style="background: #f5f3ff; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #e0e7ff;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                                <div class="info-item">
+                                    <div class="info-label">Teléfono</div>
+                                    <div class="info-value">${danza.contacto}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Email</div>
+                                    <div class="info-value">${danza.email}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Redes Sociales</div>
+                                    <div class="info-value">${danza.redes}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions" style="margin-top: 2rem;">
+                        <button class="btn btn-primary" onclick="downloadPDF(${danza.id})">Descargar Ficha PDF</button>
+                        <button class="btn btn-secondary" onclick="toggleNotification(${danza.id})">Configurar Notificación</button>
+                        <button class="btn btn-outline" onclick="compareDance(${danza.id})">Comparar</button>
+                    </div>
+                `;
+            } else {
+                modalBody.innerHTML = `
+                    <div class="dance-details-grid">
+                        <div>
+                            <img src="${danza.imagen_principal}" alt="${danza.nombre}" class="dance-image">
+                            <div style="margin-top: 1.5rem;">
+                                <h3>Información de Presentación</h3>
+                                <div class="quick-facts">
+                                    <div class="info-item">
+                                        <div class="info-label">Orden en Concurso</div>
+                                        <div class="info-value">#${danza.orden_concurso}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Orden en Veneración</div>
+                                        <div class="info-value">#${danza.orden_veneracion}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Hora Estimada</div>
+                                        <div class="info-value">${danza.tiempo_estimado}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Duración</div>
+                                        <div class="info-value">${danza.duracion_estimada}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Distancia</div>
+                                        <div class="info-value">${danza.distancia_recorrida}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Estado</div>
+                                        <div class="info-value">${danza.en_vivo ? '<span style="color: #dc2626; font-weight: 800;">EN VIVO</span>' : 'Programado'}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="modal-section">
+                                <h3>Datos del Conjunto</h3>
+                                <p><strong>Categoría:</strong> ${danza.categoria}</p>
+                                <p><strong>Zona:</strong> ${danza.zona}</p>
+                                <p><strong>Bailarines:</strong> ${danza.cantidad_bailarines}</p>
+                                <p><strong>Banda:</strong> ${danza.banda_acompanante}</p>
+                                <p><strong>Música:</strong> ${danza.tipo_musica}</p>
+                                <p><strong>Día:</strong> ${danza.dia_participacion}</p>
+                            </div>
+                            <div class="modal-section">
+                                <h3>Tiempo Estimado</h3>
+                                <p>Presentación aproximada: <strong>${danza.tiempo_estimado}</strong></p>
+                                <p>Basado en el ritmo actual del evento</p>
+                                <div style="background: #e5e7eb; height: 10px; border-radius: 5px; margin: 1rem 0;">
+                                    <div style="background: ${danza.progreso > 50 ? '#10b981' : '#f59e0b'}; width: ${danza.progreso}%; height: 100%; border-radius: 5px;"></div>
+                                </div>
+                                <p>Progreso estimado: <strong>${danza.progreso}%</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions" style="margin-top: 2rem;">
+                        <button class="btn btn-primary" onclick="downloadPDF(${danza.id})">Descargar PDF</button>
+                        <button class="btn btn-secondary" onclick="toggleNotification(${danza.id})">Notificar ${notificationTime}min antes</button>
+                        <button class="btn btn-outline" onclick="viewOnMap(${danza.id})">Ver en Mapa</button>
+                    </div>
+                `;
+            }
+
+            modal.classList.add('active');
+        }
+
+        function openEventModal(eventoId) {
+            const evento = eventos.find(e => e.id === eventoId);
+            if (!evento) return;
+
+            const modal = document.getElementById('event-modal');
+            const modalBody = document.getElementById('event-modal-body');
+            const modalTitle = document.getElementById('event-modal-title');
+
+            modalTitle.textContent = evento.titulo;
+            modalBody.innerHTML = `
+                <div class="dance-details-grid">
+                    <div>
+                        <img src="${evento.imagen}" alt="${evento.titulo}" class="dance-image">
+                        <div style="margin-top: 1.5rem;">
+                            <h3>Información del Evento</h3>
+                            <div class="quick-facts">
+                                <div class="info-item">
+                                    <div class="info-label">Fecha</div>
+                                    <div class="info-value">${evento.fecha} • ${evento.dia}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Hora</div>
+                                    <div class="info-value">${evento.hora}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Tipo</div>
+                                    <div class="info-value">${evento.tipo}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Ubicación</div>
+                                    <div class="info-value">${evento.ubicacion}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Organizador</div>
+                                    <div class="info-value">${evento.organizador}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Importancia</div>
+                                    <div class="info-value">${evento.importancia}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="modal-section">
+                            <h3>Descripción Completa</h3>
+                            <p style="line-height: 1.6; color: #4b5563;">${evento.descripcion}</p>
+                            <p style="margin-top: 1rem; line-height: 1.6; color: #4b5563;"><strong>Historia:</strong> Este evento forma parte de las tradiciones centenarias de la Festividad de la Virgen de la Candelaria, declarada Patrimonio Cultural Inmaterial de la Humanidad por la UNESCO en 2014.</p>
+                        </div>
+                        <div class="modal-section">
+                            <h3>Detalles Adicionales</h3>
+                            <div style="background: #f5f3ff; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #e0e7ff;">
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                    <div class="info-item">
+                                        <div class="info-label">Duración</div>
+                                        <div class="info-value">${evento.duracion}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Capacidad</div>
+                                        <div class="info-value">${evento.capacidad}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Acceso</div>
+                                        <div class="info-value">${evento.tipo === 'RELIGIOSO' ? 'Gratuito' : 'Con entrada'}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Recomendaciones</div>
+                                        <div class="info-value">Llegar 1 hora antes</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-section">
+                    <h3>Recorrido y Ubicación</h3>
+                    <div style="background: #fef3c7; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #fbbf24;">
+                        <p><strong>Lugar Principal:</strong> ${evento.ubicacion}</p>
+                        <p><strong>Puntos importantes:</strong> Salida desde Av. El Sol, recorrido por Jr. Lima, Plaza de Armas, Jr. Deustua</p>
+                        <p><strong>Significado:</strong> El recorrido simboliza el peregrinaje de los devotos hacia la Basílica Catedral.</p>
+                    </div>
+                </div>
+                
+                <div class="card-actions" style="margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="viewEventOnMap(${evento.id})">Ver en Mapa</button>
+                    <button class="btn btn-outline" onclick="shareEvent(${evento.id})">Compartir Evento</button>
+                    <button class="btn btn-secondary" onclick="setEventReminder(${evento.id})">Recordarme</button>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function initMap() {
+            // Coordenadas de Puno
+            map = L.map('map').setView([-15.8402, -70.0219], 15);
+
+            // Capa de OpenStreetMap con estilo mejorado
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Recorrido de la veneración
+            const routeCoordinates = [
+                [-15.8450, -70.0250], // Inicio
+                [-15.8430, -70.0230],
+                [-15.8402, -70.0219], // Plaza de Armas
+                [-15.8380, -70.0200],
+                [-15.8360, -70.0180], // Estadio
+            ];
+
+            // Dibujar recorrido
+            L.polyline(routeCoordinates, {
+                color: '#fbbf24',
+                weight: 4,
+                opacity: 0.7,
+                dashArray: '10, 10'
+            }).addTo(map);
+
+            // Puntos de referencia
+            const landmarks = [
+                {name: "Inicio", coords: [-15.8450, -70.0250], desc: "Av. El Sol - 06:00 AM", icon: "flag", color: "#10b981"},
+                {name: "Parque Pino", coords: [-15.8430, -70.0230], desc: "Punto histórico de concentración", icon: "tree-pine", color: "#0ea5e9"},
+                {name: "Plaza de Armas", coords: [-15.8402, -70.0219], desc: "Principal - 10:00 AM", icon: "landmark", color: "#f59e0b"},
+                {name: "Jr. Lima", coords: [-15.8380, -70.0200], desc: "Zona comercial principal", icon: "store", color: "#9333ea"},
+                {name: "Estadio", coords: [-15.8360, -70.0180], desc: "Estadio Torres Belón - Final", icon: "stadium", color: "#dc2626"}
+            ];
+
+            landmarks.forEach(landmark => {
+                L.marker(landmark.coords)
+                    .addTo(map)
+                    .bindPopup(`
+                        <div style="padding: 0.5rem;">
+                            <h3 style="margin: 0 0 0.5rem 0; color: ${landmark.color}; font-family: 'Montserrat', sans-serif;">${landmark.name}</h3>
+                            <p style="margin: 0; color: #6b7280;">${landmark.desc}</p>
+                        </div>
+                    `)
+                    .openPopup();
+            });
+
+            // Añadir marcadores de danzas
+            updateMapMarkers();
+        }
+
+        function updateMapMarkers() {
+            // Limpiar marcadores anteriores
+            mapMarkers.forEach(marker => map.removeLayer(marker));
+            mapMarkers = [];
+
+            // Añadir nuevos marcadores
+            danzas.forEach(danza => {
+                const marker = L.marker([danza.latitud, danza.longitud])
+                    .addTo(map)
+                    .bindPopup(`
+                        <div style="padding: 1rem; min-width: 250px;">
+                            <h3 style="margin: 0 0 0.5rem 0; color: #4c1d95; font-family: 'Montserrat', sans-serif;">${danza.nombre}</h3>
+                            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="background: ${danza.categoria === 'TRAJE DE LUCES' ? '#9333ea' : '#10b981'}; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">${danza.categoria === 'TRAJE DE LUCES' ? 'Traje de Luces' : 'Originaria'}</span>
+                                ${danza.en_vivo ? '<span style="background: #dc2626; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">EN VIVO</span>' : ''}
+                            </div>
+                            <p style="margin: 0.5rem 0; color: #6b7280; font-size: 0.875rem;"><strong>Orden:</strong> #${danza.orden_veneracion}</p>
+                            <p style="margin: 0.5rem 0; color: #6b7280; font-size: 0.875rem;"><strong>Hora:</strong> ${danza.tiempo_estimado}</p>
+                            <p style="margin: 0.5rem 0; color: #6b7280; font-size: 0.875rem;"><strong>Progreso:</strong> ${danza.progreso}%</p>
+                            <button onclick="openDanceModal(${danza.id})" style="margin-top: 0.5rem; padding: 0.5rem 1rem; background: linear-gradient(to right, #fbbf24, #f59e0b); color: #4c1d95; border: none; border-radius: 0.5rem; cursor: pointer; font-weight: 600; font-family: 'Montserrat', sans-serif; width: 100%;">
+                                Ver Detalles
+                            </button>
+                        </div>
+                    `);
+                
+                // Personalizar icono según categoría
+                const icon = L.divIcon({
+                    html: `
+                        <div style="background: ${danza.categoria === 'TRAJE DE LUCES' ? '#9333ea' : '#10b981'}; color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
+                            ${danza.orden_veneracion}
+                        </div>
+                    `,
+                    className: 'dance-marker'
+                });
+                
+                marker.setIcon(icon);
+                mapMarkers.push(marker);
+            });
+        }
+
+        function setupEventListeners() {
+            // Cerrar modales
+            document.getElementById('modal-close').addEventListener('click', () => {
+                document.getElementById('dance-modal').classList.remove('active');
+            });
+
+            document.getElementById('event-modal-close').addEventListener('click', () => {
+                document.getElementById('event-modal').classList.remove('active');
+            });
+
+            // Cerrar modales al hacer clic fuera
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            });
+
+            // Filtros avanzados
+            document.getElementById('toggle-filters').addEventListener('click', function() {
+                const filters = document.getElementById('advanced-filters');
+                const chevron = this.querySelector('.chevron');
+                filters.classList.toggle('active');
+                chevron.classList.toggle('rotated');
+            });
+
+            // Configurar notificaciones
+            document.querySelectorAll('.time-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.time-option').forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+                    notificationTime = parseInt(this.getAttribute('data-minutes'));
+                    localStorage.setItem('notification_time', notificationTime);
+                    showToast(`Notificaciones configuradas a ${notificationTime} minutos antes`, 'success');
+                });
+            });
+
+            // Buscador de danzas
+            document.getElementById('danza-search').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const categoria = document.getElementById('filter-categoria').value;
+                const zona = document.getElementById('filter-zona').value;
+                const musica = document.getElementById('filter-musica').value;
+                const modalidad = document.getElementById('filter-modalidad').value;
+                const dia = document.getElementById('filter-dia').value;
+                const bailarines = document.getElementById('filter-bailarines').value;
+
+                const filtered = danzas.filter(danza => {
+                    const matchesSearch = danza.nombre.toLowerCase().includes(searchTerm) ||
+                                         danza.categoria.toLowerCase().includes(searchTerm) ||
+                                         danza.zona.toLowerCase().includes(searchTerm) ||
+                                         danza.tipo_musica.toLowerCase().includes(searchTerm);
+                    
+                    const matchesCategoria = !categoria || danza.categoria === categoria;
+                    const matchesZona = !zona || danza.zona === zona;
+                    const matchesMusica = !musica || danza.tipo_musica === musica;
+                    const matchesBailarines = !bailarines || danza.cantidad_bailarines >= parseInt(bailarines);
+
+                    return matchesSearch && matchesCategoria && matchesZona && matchesMusica && matchesBailarines;
+                });
+
+                renderDanzas(filtered);
+            });
+
+            // Aplicar filtros
+            document.querySelectorAll('#advanced-filters select, #advanced-filters input').forEach(el => {
+                el.addEventListener('change', () => {
+                    document.getElementById('danza-search').dispatchEvent(new Event('input'));
+                });
+            });
+
+            // Buscador de lista
+            document.getElementById('lista-search').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const filtered = danzas.filter(danza => 
+                    danza.nombre.toLowerCase().includes(searchTerm) ||
+                    danza.zona.toLowerCase().includes(searchTerm) ||
+                    danza.categoria.toLowerCase().includes(searchTerm) ||
+                    danza.origen.toLowerCase().includes(searchTerm)
+                );
+                
+                const grid = document.getElementById('lista-grid');
+                const noResults = document.getElementById('no-lista');
+                
+                if (filtered.length === 0) {
+                    noResults.classList.add('active');
+                    grid.innerHTML = '';
+                    return;
+                }
+
+                noResults.classList.remove('active');
+                grid.innerHTML = filtered.map(danza => `
+                    <div class="result-card">
+                        <div class="card-header">
+                            <div style="font-size: 1.25rem; font-weight: 800;">${danza.nombre}</div>
+                            <div class="dance-order" style="background: ${danza.categoria === 'TRAJE DE LUCES' ? '#9333ea' : '#10b981'}">${danza.categoria === 'TRAJE DE LUCES' ? 'TL' : 'OR'}</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="dance-category">${danza.categoria} • ${danza.zona}</div>
+                            <p style="color: #6b7280; margin-bottom: 1rem; font-size: 0.875rem;">${danza.origen.substring(0, 150)}...</p>
+                            <div class="dance-info">
+                                <div class="info-item">
+                                    <div class="info-label">Fundación</div>
+                                    <div class="info-value">${danza.fundador.split('-')[1]?.trim() || '1960'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Banda</div>
+                                    <div class="info-value">${danza.banda_acompanante}</div>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn btn-primary" onclick="openDanceModal(${danza.id}, true)">Ver Ficha Completa</button>
+                                <button class="btn btn-secondary" onclick="downloadPDF(${danza.id})">PDF</button>
+                                <button class="btn btn-outline" onclick="toggleFavorite(${danza.id})">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            });
+
+            // Ver en vivo
+            document.getElementById('live-view').addEventListener('click', () => {
+                showToast('Abriendo transmisión en vivo...', 'info');
+                setTimeout(() => {
+                    window.open('https://streaming.candelariapuno2025.pe', '_blank');
+                }, 1000);
+            });
+
+            // Actualizar mapa
+            document.getElementById('refresh-map').addEventListener('click', () => {
+                updateMapMarkers();
+                showToast('Posiciones actualizadas', 'success');
+            });
+
+            // Filtrar mapa
+            document.getElementById('map-filter').addEventListener('change', function() {
+                const filter = this.value;
+                mapMarkers.forEach((marker, index) => {
+                    const danza = danzas[index];
+                    if (!danza) return;
+                    
+                    if (!filter || 
+                        (filter === 'TRAJE_DE_LUCES' && danza.categoria === 'TRAJE DE LUCES') ||
+                        (filter === 'ORIGINARIAS' && danza.categoria === 'ORIGINARIAS') ||
+                        (filter === 'EN_PROGRESO' && danza.progreso > 0 && danza.progreso < 100)) {
+                        if (!map.hasLayer(marker)) {
+                            marker.addTo(map);
+                        }
+                    } else {
+                        if (map.hasLayer(marker)) {
+                            map.removeLayer(marker);
+                        }
+                    }
+                });
+            });
+
+            // Buscador de eventos
+            document.getElementById('search-input').addEventListener('input', renderEvents);
+
+            // Calendario
+            document.getElementById('filter-toggle').addEventListener('click', function() {
+                const calendar = document.getElementById('calendar');
+                const chevron = this.querySelector('.chevron');
+                calendar.classList.toggle('active');
+                chevron.classList.toggle('rotated');
+            });
+
+            document.getElementById('prev-month').addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                generateCalendar();
+            });
+
+            document.getElementById('next-month').addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                generateCalendar();
+            });
+
+            document.getElementById('clear-date').addEventListener('click', () => {
+                selectedDate = null;
+                renderEvents();
+                generateCalendar();
+                showToast('Filtro de fecha limpiado', 'success');
+            });
+
+            document.getElementById('today-btn').addEventListener('click', () => {
+                const today = new Date();
+                currentMonth = today.getMonth();
+                currentYear = today.getFullYear();
+                generateCalendar();
+                showToast('Mostrando calendario actual', 'info');
+            });
+        }
+
+        function toggleNotification(danzaId) {
+            const danza = danzas.find(d => d.id === danzaId);
+            if (!danza) return;
+
+            const existingIndex = userNotifications.findIndex(n => n.danzaId === danzaId);
+
+            if (existingIndex > -1) {
+                userNotifications.splice(existingIndex, 1);
+                showToast(`Notificación para ${danza.nombre} cancelada`, 'warning');
+            } else {
+                userNotifications.push({
+                    danzaId,
+                    nombre: danza.nombre,
+                    horaEstimada: danza.tiempo_estimado,
+                    minutosAntes: notificationTime,
+                    notificado: false
+                });
+                showToast(`Te notificaremos ${notificationTime} minutos antes de ${danza.nombre} (${danza.tiempo_estimado})`, 'success');
+            }
+
+            localStorage.setItem('danza_notifications', JSON.stringify(userNotifications));
+        }
+
+        function checkNotifications() {
+            const now = new Date();
+            
+            userNotifications.forEach(notification => {
+                if (!notification.notificado) {
+                    // Simulación: En una implementación real, esto compararía con la hora real
+                    console.log(`Recordatorio: ${notification.nombre} en ${notification.minutosAntes} minutos`);
+                    notification.notificado = true;
+                }
+            });
+
+            localStorage.setItem('danza_notifications', JSON.stringify(userNotifications));
+        }
+
+        function downloadPDF(danzaId) {
+            const danza = danzas.find(d => d.id === danzaId);
+            if (!danza) return;
+
+            showToast(`Generando PDF para ${danza.nombre}...`, 'info');
+            
+            // Simulación de generación de PDF
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.download = `ficha_${danza.nombre.replace(/\s+/g, '_')}.pdf`;
+                link.click();
+                showToast(`PDF de ${danza.nombre} descargado`, 'success');
+            }, 1500);
+        }
+
+        function toggleFavorite(danzaId) {
+            const index = userFavorites.indexOf(danzaId);
+            if (index > -1) {
+                userFavorites.splice(index, 1);
+                showToast('Eliminado de favoritos', 'warning');
+            } else {
+                userFavorites.push(danzaId);
+                showToast('Añadido a favoritos', 'success');
+            }
+            localStorage.setItem('favoritos_danzas', JSON.stringify(userFavorites));
+        }
+
+        function compareDance(danzaId) {
+            if (selectedDances.includes(danzaId)) {
+                selectedDances = selectedDances.filter(id => id !== danzaId);
+                showToast('Danza removida de la comparación', 'info');
+            } else {
+                if (selectedDances.length >= 3) {
+                    showToast('Máximo 3 danzas para comparar', 'error');
+                    return;
+                }
+                selectedDances.push(danzaId);
+                showToast('Danza añadida para comparar', 'success');
+            }
+
+            if (selectedDances.length > 1) {
+                showComparisonModal();
+            }
+        }
+
+        function showComparisonModal() {
+            const selected = danzas.filter(d => selectedDances.includes(d.id));
+            let comparisonHTML = '<div style="padding: 1rem;"><h3 style="color: #4c1d95; margin-bottom: 1rem;">Comparación de Danzas</h3><div style="overflow-x: auto;"><table style="width: 100%; border-collapse: collapse; margin-top: 1rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; overflow: hidden;">';
+            
+            comparisonHTML += '<tr style="background: linear-gradient(to right, #4c1d95, #5b21b6); color: white;"><th style="padding: 1rem; text-align: left;">Característica</th>';
+            selected.forEach(d => comparisonHTML += `<th style="padding: 1rem; text-align: left;">${d.nombre}</th>`);
+            comparisonHTML += '</tr>';
+            
+            const characteristics = [
+                {name: 'Categoría', get: d => d.categoria},
+                {name: 'Bailarines', get: d => d.cantidad_bailarines},
+                {name: 'Duración', get: d => d.duracion_estimada},
+                {name: 'Distancia', get: d => d.distancia_recorrida},
+                {name: 'Zona', get: d => d.zona},
+                {name: 'Banda', get: d => d.banda_acompanante},
+                {name: 'Música', get: d => d.tipo_musica},
+                {name: 'Día', get: d => d.dia_participacion}
+            ];
+            
+            characteristics.forEach((char, index) => {
+                comparisonHTML += `<tr style="background: ${index % 2 === 0 ? '#f9fafb' : 'white'}; border-bottom: 1px solid #e5e7eb;">`;
+                comparisonHTML += `<td style="padding: 1rem; font-weight: 600; color: #4b5563;">${char.name}</td>`;
+                selected.forEach(d => comparisonHTML += `<td style="padding: 1rem; color: #1f2937;">${char.get(d)}</td>`);
+                comparisonHTML += '</tr>';
+            });
+            
+            comparisonHTML += '</table></div><button onclick="resetComparison()" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: linear-gradient(to right, #fbbf24, #f59e0b); color: #4c1d95; border: none; border-radius: 0.5rem; cursor: pointer; font-weight: 600; font-family: \'Montserrat\', sans-serif;">Limpiar Comparación</button></div>';
+            
+            alert(comparisonHTML);
+        }
+
+        function resetComparison() {
+            selectedDances = [];
+            showToast('Comparación reiniciada', 'info');
+        }
+
+        function viewOnMap(danzaId) {
+            // Cambiar a pestaña de mapa
+            document.querySelector('[data-tab="mapa"]').click();
+            setTimeout(() => {
+                const danza = danzas.find(d => d.id === danzaId);
+                if (danza && map) {
+                    map.setView([danza.latitud, danza.longitud], 16);
+                    
+                    // Abrir popup del marcador
+                    mapMarkers.forEach(marker => {
+                        const markerLatLng = marker.getLatLng();
+                        if (markerLatLng.lat === danza.latitud && markerLatLng.lng === danza.longitud) {
+                            marker.openPopup();
+                        }
+                    });
+                    
+                    showToast(`Mostrando ${danza.nombre} en el mapa`, 'info');
+                }
+            }, 500);
+        }
+
+        function viewEventOnMap(eventoId) {
+            const evento = eventos.find(e => e.id === eventoId);
+            if (!evento) return;
+
+            document.querySelector('[data-tab="mapa"]').click();
+            setTimeout(() => {
+                map.setView([-15.8402, -70.0219], 16);
+                showToast(`Mostrando ubicación de ${evento.titulo}`, 'info');
+            }, 500);
+        }
+
+        function shareEvent(eventoId) {
+            const evento = eventos.find(e => e.id === eventoId);
+            if (evento) {
+                const text = `¡Mira este evento de la Festividad Virgen de la Candelaria 2025!\n\n${evento.titulo}\nFecha: ${evento.fecha} (${evento.dia})\nHora: ${evento.hora}\n\n#Candelaria2025 #Puno`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: evento.titulo,
+                        text: text,
+                        url: window.location.href
+                    });
+                } else {
+                    navigator.clipboard.writeText(text);
+                    showToast('Enlace copiado al portapapeles', 'success');
+                }
+            }
+        }
+
+        function setEventReminder(eventoId) {
+            const evento = eventos.find(e => e.id === eventoId);
+            if (evento) {
+                showToast(`Recordatorio configurado para ${evento.titulo}`, 'success');
+            }
+        }
+
+        function openImage(url) {
+            window.open(url, '_blank');
+        }
+
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    ${type === 'success' ? '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>' :
+                      type === 'error' ? '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>' :
+                      type === 'warning' ? '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>' :
+                      '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>'}
+                </svg>
+                <span>${message}</span>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Remover después de 4 segundos
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // Actualizar progreso de danzas (simulación en tiempo real)
+        setInterval(() => {
+            danzas.forEach(danza => {
+                // Incrementar progreso aleatoriamente para simular
+                if (danza.progreso < 100 && danza.en_vivo) {
+                    const increment = Math.random() * 3;
+                    danza.progreso = Math.min(100, danza.progreso + increment);
+                    
+                    // Actualizar posición en mapa
+                    danza.latitud += (Math.random() - 0.5) * 0.0003;
+                    danza.longitud += (Math.random() - 0.5) * 0.0003;
+                    
+                    // Mantener dentro del área de Puno
+                    danza.latitud = Math.max(-15.85, Math.min(-15.83, danza.latitud));
+                    danza.longitud = Math.max(-70.025, Math.min(-70.015, danza.longitud));
+                }
+            });
+            
+            // Actualizar mapa si está visible
+            if (document.querySelector('#mapa').classList.contains('active')) {
+                updateMapMarkers();
+            }
+            
+            // Actualizar notificaciones
+            checkNotifications();
+        }, 10000); // Actualizar cada 10 segundos
+
+        // Inicializar estilos CSS para animación pulse
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.5; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

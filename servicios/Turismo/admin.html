@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candelaria 2025 | Admin - Turismo</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Configuración de Tailwind y Estilos Personalizados -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        candelaria: {
+                            purple: '#4c1d95', // Color principal festivo
+                            gold: '#fbbf24',   // Detalles premium
+                            lake: '#0ea5e9',   // Lago Titicaca
+                            light: '#f5f3ff'   // Fondos suaves
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Open Sans', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Open Sans', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
+
+        /* Animaciones suaves */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-preview {
+            position: relative;
+            display: inline-block;
+            margin: 5px;
+        }
+        
+        .preview-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Header Section -->
+    <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="bg-white/10 p-2 rounded-lg border border-white/20">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-candelaria-gold"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold tracking-tight">Admin Turismo</h1>
+                        <p class="text-xs text-purple-200 font-medium tracking-wide uppercase">Gestión de Servicios</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button onclick="location.href='index.html'" class="text-purple-100 hover:text-white transition-colors flex items-center">
+                        <i data-lucide="eye" class="w-5 h-5 mr-1"></i>
+                        Ver Sitio
+                    </button>
+                    <button onclick="window.location.reload()" class="bg-candelaria-gold text-purple-900 px-4 py-2 rounded-full font-bold hover:bg-yellow-300 transition-colors shadow-lg flex items-center">
+                        <i data-lucide="refresh-cw" class="w-4 h-4 mr-1"></i>
+                        Recargar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Form Section -->
+            <div class="lg:w-1/2">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <i data-lucide="plus-circle" class="w-6 h-6 mr-2 text-candelaria-purple"></i>
+                        <span id="form-title">Agregar Servicio Turístico</span>
+                    </h2>
+                    
+                    <form id="turismo-form" enctype="multipart/form-data">
+                        <input type="hidden" id="turismo-id">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Nombre -->
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nombre del Servicio *</label>
+                                <input type="text" id="nombre" name="nombre" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                            </div>
+                            
+                            <!-- Ubicación -->
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Ubicación *</label>
+                                <input type="text" id="ubicacion" name="ubicacion" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                            </div>
+                            
+                            <!-- Tipo -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de Servicio *</label>
+                                <select id="tipo" name="tipo" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                                    <option value="">Seleccionar tipo</option>
+                                    <option value="Información Turística">Información Turística</option>
+                                    <option value="Guía Turístico">Guía Turístico</option>
+                                    <option value="Agencia de Viajes">Agencia de Viajes</option>
+                                    <option value="Sitio Arqueológico">Sitio Arqueológico</option>
+                                    <option value="Museo">Museo</option>
+                                    <option value="Mirador">Mirador</option>
+                                    <option value="Isla Turística">Isla Turística</option>
+                                    <option value="Mercado Artesanal">Mercado Artesanal</option>
+                                    <option value="Parque Recreativo">Parque Recreativo</option>
+                                    <option value="Sitio Religioso">Sitio Religioso</option>
+                                    <option value="Centro Cultural">Centro Cultural</option>
+                                    <option value="Puerto Turístico">Puerto Turístico</option>
+                                    <option value="Festival Cultural">Festival Cultural</option>
+                                    <option value="Centro de Salud">Centro de Salud</option>
+                                    <option value="Centro Educativo">Centro Educativo</option>
+                                    <option value="Seguridad Turística">Seguridad Turística</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Calificación -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Calificación</label>
+                                <input type="number" id="calificacion" name="calificacion" min="0" max="5" step="0.1" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                            </div>
+                            
+                            <!-- Precio -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Precio (S/)</label>
+                                <input type="number" id="precio" name="precio" min="0" step="0.01" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                            </div>
+                            
+                            <!-- Capacidad -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Capacidad</label>
+                                <input type="number" id="capacidad" name="capacidad" min="0" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                            </div>
+                            
+                            <!-- Horario -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Horario</label>
+                                <input type="text" id="horario" name="horario" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm"
+                                    placeholder="Ej: 08:00-18:00">
+                            </div>
+                            
+                            <!-- Contacto -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
+                                <input type="text" id="telefono" name="telefono" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <input type="email" id="email" name="email" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                            </div>
+                            
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Página Web</label>
+                                <input type="url" id="pagina_web" name="pagina_web" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                            </div>
+                        </div>
+                        
+                        <!-- Descripción -->
+                        <div class="mt-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
+                            <textarea id="descripcion" name="descripcion" rows="4" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm"></textarea>
+                        </div>
+                        
+                        <!-- Servicios -->
+                        <div class="mt-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Servicios Adicionales</label>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <button type="button" onclick="addServiceField()" class="inline-flex items-center px-3 py-1.5 border border-candelaria-purple text-candelaria-purple rounded-full text-sm font-medium hover:bg-candelaria-purple hover:text-white transition-colors">
+                                    <i data-lucide="plus" class="w-4 h-4 mr-1"></i>
+                                    Agregar Servicio
+                                </button>
+                            </div>
+                            <div id="services-container">
+                                <div class="flex items-center mb-2">
+                                    <input type="text" name="servicios[]" placeholder="Ej: Guías Autorizados" 
+                                        class="flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                                    <button type="button" onclick="removeServiceField(this)" class="bg-red-500 text-white px-3 py-2 rounded-r-lg hover:bg-red-600 transition-colors">
+                                        <i data-lucide="x" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Imágenes -->
+                        <div class="mt-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Imágenes</label>
+                            <input type="file" id="imagenes" name="imagenes" multiple accept="image/*"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                            <p class="mt-2 text-sm text-gray-500">Puedes seleccionar múltiples imágenes para subir</p>
+                            <div id="image-previews" class="mt-3 flex flex-wrap gap-3"></div>
+                        </div>
+                        
+                        <!-- Botones de acción -->
+                        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                            <button type="submit" class="flex-1 bg-candelaria-purple text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors shadow-lg flex items-center justify-center">
+                                <i data-lucide="save" class="w-5 h-5 mr-2"></i>
+                                <span id="submit-text">Guardar Servicio</span>
+                            </button>
+                            <button type="button" onclick="clearForm()" class="flex-1 bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors flex items-center justify-center">
+                                <i data-lucide="rotate-ccw" class="w-5 h-5 mr-2"></i>
+                                Limpiar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Services List Section -->
+            <div class="lg:w-1/2">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <i data-lucide="list" class="w-6 h-6 mr-2 text-candelaria-purple"></i>
+                        Servicios Registrados
+                    </h2>
+                    
+                    <div class="mb-4 flex items-center">
+                        <div class="relative flex-1">
+                            <input type="text" id="search-input" placeholder="Buscar servicios..."
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple sm:text-sm transition-all shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="services-list" class="space-y-4 max-h-[calc(100vh-250px)] overflow-y-auto pr-2">
+                        <!-- Servicios se cargarán aquí -->
+                        <div class="animate-pulse flex space-x-4">
+                            <div class="flex-1 space-y-4 py-1">
+                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                <div class="space-y-2">
+                                    <div class="h-4 bg-gray-200 rounded"></div>
+                                    <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notificaciones Toast Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <script>
+        // Estado de la aplicación
+        let turismoServices = [];
+        let currentEditingId = null;
+        
+        // URLs de API
+        const API_URL = '/api/turismo';
+        const IMAGENES_URL = '/api/imagenes';
+        
+        // Inicializar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            loadServices();
+            setupEventListeners();
+            lucide.createIcons();
+        });
+        
+        function setupEventListeners() {
+            // Formulario de turismo
+            document.getElementById('turismo-form').addEventListener('submit', handleFormSubmit);
+            
+            // Búsqueda
+            document.getElementById('search-input').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                filterServices(searchTerm);
+            });
+            
+            // Preview de imágenes
+            document.getElementById('imagenes').addEventListener('change', previewImages);
+        }
+        
+        // Cargar servicios desde la API
+        async function loadServices() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                turismoServices = await response.json();
+                renderServicesList();
+            } catch (error) {
+                console.error('Error loading services:', error);
+                showToast('Error al cargar los servicios', 'error');
+            }
+        }
+        
+        // Filtrar servicios
+        function filterServices(searchTerm) {
+            const filteredServices = turismoServices.filter(service => 
+                service.nombre.toLowerCase().includes(searchTerm) ||
+                service.ubicacion.toLowerCase().includes(searchTerm) ||
+                service.tipo.toLowerCase().includes(searchTerm) ||
+                service.descripcion.toLowerCase().includes(searchTerm)
+            );
+            
+            renderServicesList(filteredServices);
+        }
+        
+        // Renderizar lista de servicios
+        function renderServicesList(services = turismoServices) {
+            const container = document.getElementById('services-list');
+            
+            if (services.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8">
+                        <i data-lucide="info" class="w-12 h-12 text-gray-300 mx-auto mb-3"></i>
+                        <p class="text-gray-500">No hay servicios registrados</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+            
+            container.innerHTML = services.map(service => `
+                <div class="service-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <h3 class="font-bold text-lg text-gray-800">${service.nombre}</h3>
+                            <p class="text-sm text-gray-600 mt-1">${service.tipo} • ${service.ubicacion}</p>
+                            <div class="flex items-center mt-2">
+                                <span class="text-xs bg-candelaria-purple text-white px-2 py-1 rounded-full font-medium">
+                                    ${service.calificacion} ★
+                                </span>
+                                ${service.precio ? `<span class="text-xs text-candelaria-purple ml-2 font-medium">S/ ${service.precio}</span>` : ''}
+                                ${service.capacidad ? `<span class="text-xs text-gray-500 ml-2">Cap: ${service.capacidad}</span>` : ''}
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="editService(${service.id})" class="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors">
+                                <i data-lucide="edit" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="deleteService(${service.id})" class="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        ${service.servicios.slice(0, 3).map(serv => `
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-700">
+                                ${serv}
+                            </span>
+                        `).join('')}
+                        ${service.servicios.length > 3 ? `<span class="text-xs text-gray-500">+${service.servicios.length - 3} más</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+        }
+        
+        // Manejar envío del formulario
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            const form = e.target;
+            
+            // Agregar los datos del formulario
+            const turismoData = {
+                nombre: form.nombre.value,
+                ubicacion: form.ubicacion.value,
+                tipo: form.tipo.value,
+                descripcion: form.descripcion.value,
+                horario: form.horario.value,
+                precio: parseFloat(form.precio.value) || 0,
+                capacidad: parseInt(form.capacidad.value) || 0,
+                servicios: [],
+                calificacion: parseFloat(form.calificacion.value) || 0,
+                telefono: form.telefono.value,
+                email: form.email.value,
+                pagina_web: form.pagina_web.value
+            };
+            
+            // Obtener servicios
+            const serviceInputs = document.querySelectorAll('input[name="servicios[]"]');
+            turismoData.servicios = Array.from(serviceInputs)
+                .map(input => input.value.trim())
+                .filter(value => value !== '');
+            
+            // Agregar turismo data como JSON
+            formData.append('turismo', JSON.stringify(turismoData));
+            
+            // Agregar archivos de imagen
+            const imageFiles = document.getElementById('imagenes').files;
+            for (let i = 0; i < imageFiles.length; i++) {
+                formData.append('imagenes', imageFiles[i]);
+            }
+            
+            try {
+                let response;
+                if (currentEditingId) {
+                    // Actualizar servicio existente
+                    const url = `${API_URL}/${currentEditingId}`;
+                    response = await fetch(url, {
+                        method: 'PUT',
+                        body: formData
+                    });
+                } else {
+                    // Crear nuevo servicio
+                    response = await fetch(API_URL, {
+                        method: 'POST',
+                        body: formData
+                    });
+                }
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                showToast(currentEditingId ? 'Servicio actualizado' : 'Servicio creado', 'success');
+                
+                // Limpiar formulario y recargar lista
+                clearForm();
+                loadServices();
+            } catch (error) {
+                console.error('Error saving service:', error);
+                showToast('Error al guardar el servicio', 'error');
+            }
+        }
+        
+        // Editar servicio
+        function editService(id) {
+            const service = turismoServices.find(s => s.id === id);
+            if (!service) return;
+            
+            // Rellenar el formulario con los datos del servicio
+            document.getElementById('turismo-id').value = service.id;
+            document.getElementById('nombre').value = service.nombre;
+            document.getElementById('ubicacion').value = service.ubicacion;
+            document.getElementById('tipo').value = service.tipo;
+            document.getElementById('descripcion').value = service.descripcion || '';
+            document.getElementById('horario').value = service.horario || '';
+            document.getElementById('precio').value = service.precio || '';
+            document.getElementById('capacidad').value = service.capacidad || '';
+            document.getElementById('calificacion').value = service.calificacion || '';
+            document.getElementById('telefono').value = service.telefono || '';
+            document.getElementById('email').value = service.email || '';
+            document.getElementById('pagina_web').value = service.pagina_web || '';
+            
+            // Limpiar servicios existentes
+            document.getElementById('services-container').innerHTML = '';
+            
+            // Agregar servicios existentes
+            if (service.servicios && service.servicios.length > 0) {
+                service.servicios.forEach(serv => {
+                    addServiceField(serv);
+                });
+            } else {
+                addServiceField();
+            }
+            
+            // Actualizar título y botón
+            document.getElementById('form-title').textContent = 'Editar Servicio Turístico';
+            document.getElementById('submit-text').textContent = 'Actualizar Servicio';
+            
+            // Hacer scroll al formulario
+            document.getElementById('turismo-form').scrollIntoView({ behavior: 'smooth' });
+            
+            currentEditingId = id;
+        }
+        
+        // Eliminar servicio
+        async function deleteService(id) {
+            if (!confirm('¿Estás seguro de que deseas eliminar este servicio?')) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                showToast('Servicio eliminado', 'success');
+                loadServices();
+            } catch (error) {
+                console.error('Error deleting service:', error);
+                showToast('Error al eliminar el servicio', 'error');
+            }
+        }
+        
+        // Limpiar formulario
+        function clearForm() {
+            document.getElementById('turismo-form').reset();
+            document.getElementById('form-title').textContent = 'Agregar Servicio Turístico';
+            document.getElementById('submit-text').textContent = 'Guardar Servicio';
+            document.getElementById('image-previews').innerHTML = '';
+            currentEditingId = null;
+            
+            // Añadir campo de servicio por defecto
+            document.getElementById('services-container').innerHTML = '';
+            addServiceField();
+        }
+        
+        // Agregar campo de servicio
+        function addServiceField(value = '') {
+            const container = document.getElementById('services-container');
+            const div = document.createElement('div');
+            div.className = 'flex items-center mb-2';
+            div.innerHTML = `
+                <input type="text" name="servicios[]" placeholder="Ej: Guías Autorizados" value="${value}"
+                    class="flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple transition-all shadow-sm">
+                <button type="button" onclick="removeServiceField(this)" class="bg-red-500 text-white px-3 py-2 rounded-r-lg hover:bg-red-600 transition-colors">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            `;
+            container.appendChild(div);
+            lucide.createIcons();
+        }
+        
+        // Remover campo de servicio
+        function removeServiceField(button) {
+            const container = document.getElementById('services-container');
+            if (container.children.length > 1) {
+                button.parentElement.remove();
+            } else {
+                button.previousElementSibling.value = '';
+            }
+        }
+        
+        // Previsualizar imágenes
+        function previewImages(event) {
+            const previewContainer = document.getElementById('image-previews');
+            previewContainer.innerHTML = '';
+            
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (!file.type.match('image.*')) continue;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.className = 'image-preview';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" class="preview-image" alt="Preview">
+                        <div class="remove-image" onclick="removePreview(this)">×</div>
+                    `;
+                    previewContainer.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // Remover previsualización de imagen
+        function removePreview(button) {
+            button.parentElement.remove();
+        }
+        
+        // Mostrar notificación
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let bgColor = 'bg-gray-800';
+            if (type === 'success') bgColor = 'bg-green-600';
+            if (type === 'error') bgColor = 'bg-red-600';
+            
+            toast.className = `p-4 rounded-lg shadow-lg text-white flex items-center gap-2 transform translate-y-10 opacity-0 transition-all duration-300 ${bgColor}`;
+            toast.innerHTML = `
+                <i data-lucide="${type === 'success' ? 'check-circle' : type === 'error' ? 'alert-circle' : 'info'}" class="w-5 h-5"></i>
+                ${message}
+            `;
+            
+            container.appendChild(toast);
+            lucide.createIcons();
+            
+            // Animate in
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            });
+            
+            // Remove after 3s
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
