@@ -1280,14 +1280,20 @@
 
         // Cargar ruta
         async function loadRoute() {
+            // DETECCIÓN AUTOMÁTICA DE ENTORNO
+            const HOST = window.location.hostname;
+            const API_BASE_URL = (HOST === 'localhost' || HOST === '127.0.0.1')
+                ? '/php-candelaria/php-admin/api/admin/mapa.php'
+                : '/candelaria-admin/api/admin/mapa.php';
+
             try {
-                const response = await fetch('/php-candelaria/php-admin/api/admin/mapa.php/route-points');
+                const response = await fetch(`${API_BASE_URL}/route-points`);
                 if (response.ok) {
                     routePoints = await response.json();
                     drawRoute();
                 }
 
-                const lengthResponse = await fetch('/php-candelaria/php-admin/api/admin/mapa.php/route-length');
+                const lengthResponse = await fetch(`${API_BASE_URL}/route-length`);
                 if (lengthResponse.ok) {
                     const data = await lengthResponse.json();
                     totalRouteLength = data.total_length || 0;
@@ -1329,8 +1335,14 @@
 
         // Cargar lista de danzas inicial
         async function loadDances() {
+            // DETECCIÓN AUTOMÁTICA DE ENTORNO
+            const HOST = window.location.hostname;
+            const API_BASE_URL = (HOST === 'localhost' || HOST === '127.0.0.1')
+                ? '/php-candelaria/php-admin/api/admin/mapa.php'
+                : '/candelaria-admin/api/admin/mapa.php';
+
             try {
-                const response = await fetch('/php-candelaria/php-admin/api/admin/mapa.php/dances');
+                const response = await fetch(`${API_BASE_URL}/dances`);
                 if (response.ok) {
                     dansas = await response.json();
                     updateMapMarkers();
@@ -1342,8 +1354,15 @@
 
         // Actualizar estado de las danzas (polling)
         async function updateDancesState() {
+            // DETECCIÓN AUTOMÁTICA DE ENTORNO
+            const PROTOCOL = window.location.protocol;
+            const HOST = window.location.hostname;
+            const API_BASE_URL = (HOST === 'localhost' || HOST === '127.0.0.1')
+                ? '/php-candelaria/php-admin/api/admin/mapa.php'
+                : '/candelaria-admin/api/admin/mapa.php';
+
             try {
-                const response = await fetch('/php-candelaria/php-admin/api/admin/mapa.php/dances');
+                const response = await fetch(`${API_BASE_URL}/dances`);
                 if (response.ok) {
                     const newDances = await response.json();
                     console.log('📊 Dances updated:', newDances);
@@ -1355,7 +1374,7 @@
                     updateMapMarkers();
 
                     // Also refresh route length periodically to keep it updated
-                    const lengthResponse = await fetch('/php-candelaria/php-admin/api/admin/mapa.php/route-length');
+                    const lengthResponse = await fetch(`${API_BASE_URL}/route-length`);
                     if (lengthResponse.ok) {
                         const data = await lengthResponse.json();
                         totalRouteLength = data.total_length || 0;
