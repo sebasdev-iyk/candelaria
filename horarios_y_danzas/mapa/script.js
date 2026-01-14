@@ -1,7 +1,10 @@
 // Configuración
 const MAP_CENTER = [-15.8407, -70.0214]; // Puno
 const MAP_ZOOM = 14;
-const API_BASE_URL = '/php-candelaria/php-admin/api/admin/mapa.php';
+// DETECCIÓN AUTOMÁTICA DE ENTORNO
+const API_BASE_URL = window.location.hostname === 'localhost'
+    ? '/php-candelaria/php-admin/api/admin/mapa.php'
+    : '/candelaria-admin/api/admin/mapa.php';
 
 // Variables globales
 let map;
