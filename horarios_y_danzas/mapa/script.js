@@ -1,7 +1,7 @@
 // Configuración
 const MAP_CENTER = [-15.8407, -70.0214]; // Puno
 const MAP_ZOOM = 14;
-const API_BASE_URL = '/api/mapa'; // Proxy en API Gateway
+const API_BASE_URL = '/php-candelaria/php-admin/api/admin/mapa.php';
 
 // Variables globales
 let map;
@@ -27,7 +27,7 @@ function setActiveTab(tabName) {
     }
 
     // Redirigir a la pestaña correspondiente
-    if(tabName !== 'mapa') {
+    if (tabName !== 'mapa') {
         window.location.href = `../${tabName}/index.html`;
     }
 }
@@ -292,7 +292,7 @@ function updateMapMarkers() {
             `);
 
             // Add click event to center map on marker
-            marker.on('click', function() {
+            marker.on('click', function () {
                 map.setView([danza.lat, danza.lng], map.getZoom());
             });
 
@@ -310,7 +310,7 @@ function updateMapMarkers() {
             // Only adjust bounds if they are valid and not too zoomed out
             if (bounds.isValid() && bounds.getNorthEast() && bounds.getSouthWest()) {
                 // Add some padding to ensure markers are not too close to the edge
-                map.fitBounds(bounds, {padding: [50, 50], maxZoom: 16});
+                map.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
             }
         }
     }

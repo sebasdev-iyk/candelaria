@@ -8,7 +8,7 @@
 
     // Configuración
     const CONFIG = {
-        apiUrl: '/api/chatbot/ask',
+        apiUrl: '/php-candelaria/php-admin/api/chatbot.php',
         welcomeMessage: '¡Hola! Soy tu asistente del Festival de la Candelaria. Puedo ayudarte con información sobre danzas, horarios y presentaciones. ¿Qué te gustaría saber?'
     };
 
@@ -147,7 +147,7 @@
         ${avatar}
       </div>
       <div class="chatbot-message-content">
-        ${escapeHtml(content)}
+        ${content}
       </div>
     `;
 
@@ -206,7 +206,7 @@
         if (!question || isTyping) return;
 
         // Agregar mensaje del usuario
-        addMessage('user', question);
+        addMessage('user', escapeHtml(question));
         input.value = '';
 
         // Deshabilitar input mientras se procesa
@@ -237,11 +237,27 @@
 
             // Agregar respuesta del bot
             if (data.answer) {
-                addMessage('bot', data.answer);
+                // Convertir markdown a HTML básico si es necesario, o usar texto plano
+                // Aquí solo escapamos para seguridad pero permitimos saltos de línea
+                const formattedAnswer = escapeHtml(data.answer).replace(/\n/g, '<br>');
+                addMessage('bot', formattedAnswer);
             } else if (data.error) {
                 addMessage('bot', `Lo siento, ocurrió un error: ${data.error}`);
             } else {
                 addMessage('bot', 'Lo siento, no pude procesar tu pregunta. Por favor, intenta de nuevo.');
+            }
+
+            // Extreme Debugging Logging
+            if (data.debug) {
+                console.group("🤖 Chatbot Extreme Debug");
+                console.log("URL:", data.debug.url);
+                console.log("HTTP Code:", data.debug.http_code);
+                console.log("Response Body:", data.debug.response_body);
+                console.log("Verbose CURL Log:", data.debug.verbose_log);
+                console.groupEnd();
+
+                // Also alert the user to check console
+                console.warn("Check the console above for detailed error info");
             }
 
         } catch (error) {

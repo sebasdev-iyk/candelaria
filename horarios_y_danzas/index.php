@@ -1281,13 +1281,13 @@
         // Cargar ruta
         async function loadRoute() {
             try {
-                const response = await fetch('/api/mapa/route-points');
+                const response = await fetch('/php-candelaria/php-admin/api/admin/mapa.php/route-points');
                 if (response.ok) {
                     routePoints = await response.json();
                     drawRoute();
                 }
 
-                const lengthResponse = await fetch('/api/mapa/route-length');
+                const lengthResponse = await fetch('/php-candelaria/php-admin/api/admin/mapa.php/route-length');
                 if (lengthResponse.ok) {
                     const data = await lengthResponse.json();
                     totalRouteLength = data.total_length || 0;
@@ -1330,7 +1330,7 @@
         // Cargar lista de danzas inicial
         async function loadDances() {
             try {
-                const response = await fetch('/api/mapa/dances');
+                const response = await fetch('/php-candelaria/php-admin/api/admin/mapa.php/dances');
                 if (response.ok) {
                     dansas = await response.json();
                     updateMapMarkers();
@@ -1343,7 +1343,7 @@
         // Actualizar estado de las danzas (polling)
         async function updateDancesState() {
             try {
-                const response = await fetch('/api/mapa/dances');
+                const response = await fetch('/php-candelaria/php-admin/api/admin/mapa.php/dances');
                 if (response.ok) {
                     const newDances = await response.json();
                     console.log('📊 Dances updated:', newDances);
@@ -1355,7 +1355,7 @@
                     updateMapMarkers();
 
                     // Also refresh route length periodically to keep it updated
-                    const lengthResponse = await fetch('/api/mapa/route-length');
+                    const lengthResponse = await fetch('/php-candelaria/php-admin/api/admin/mapa.php/route-length');
                     if (lengthResponse.ok) {
                         const data = await lengthResponse.json();
                         totalRouteLength = data.total_length || 0;
@@ -1436,12 +1436,7 @@
                     }
 
                     const icon = L.divIcon({
-                        html: `<div style="width: 35px; height: 35px; border-radius: 50%; background-color: ${danza.color};
-                              border: 2px solid white; display: flex; align-items: center; justify-content: center;
-                              color: white; font-weight: bold; font-size: 10px; text-align: center;
-                              text-shadow: 1px 1px 2px rgba(0,0,0,0.7); box-shadow: 0 2px 6px rgba(0,0,0,0.4);">
-                              <div style="transform: scale(0.8); overflow: hidden; text-overflow: ellipsis;">${shortName}</div>
-                              </div>`,
+                        html: `<div style="font-size: 28px; color: ${danza.color}; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">${danza.icon || '💃'}</div>`,
                         className: 'custom-dance-icon',
                         iconSize: [35, 35],
                         iconAnchor: [17, 17]
@@ -1948,6 +1943,10 @@
             });
         }
     </script>
+    <!-- Chatbot Widget -->
+    <link rel="stylesheet" href="../assets/css/chatbot-widget.css">
+    <div id="chatbot-widget"></div>
+    <script src="../assets/js/chatbot-widget.js"></script>
 </body>
 
 </html>

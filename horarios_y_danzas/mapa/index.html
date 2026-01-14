@@ -300,113 +300,54 @@
         </div>
     </nav>
 
+    <!-- Map Layout with Sidebar -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-            <div class="p-4 bg-white border-b border-gray-100 flex justify-between items-center">
-                <h2 class="font-bold text-gray-800 flex items-center">
-                    <i data-lucide="map-pin" class="w-5 h-5 mr-2 text-candelaria-purple"></i>
-                    Mapa de Eventos en Tiempo Real
-                </h2>
-                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-medium">En vivo</span>
+        <div class="flex flex-col lg:flex-row gap-6">
+            <!-- Sidebar with Dance List -->
+            <div class="lg:w-1/3 order-2 lg:order-1">
+                <div
+                    class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden h-[600px] flex flex-col">
+                    <div class="p-4 bg-white border-b border-gray-100">
+                        <h3 class="font-bold text-gray-800 flex items-center justify-between">
+                            <span>Danzas en Curso</span>
+                            <span id="active-dances-count"
+                                class="bg-candelaria-purple text-white text-xs px-2 py-1 rounded-full">0</span>
+                        </h3>
+                    </div>
+                    <div id="dance-list" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+                        <!-- Dance items will be inserted here -->
+                        <div class="text-center text-gray-500 py-4">Cargando danzas...</div>
+                    </div>
+                </div>
             </div>
-            <div id="map-container-full" class="w-full h-[600px] z-0 bg-gray-100 relative"></div>
+
+            <!-- Map Container -->
+            <div class="lg:w-2/3 order-1 lg:order-2">
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <div class="p-4 bg-white border-b border-gray-100 flex justify-between items-center">
+                        <h2 class="font-bold text-gray-800 flex items-center">
+                            <i data-lucide="map-pin" class="w-5 h-5 mr-2 text-candelaria-purple"></i>
+                            Mapa de Recorrido
+                        </h2>
+                        <span
+                            class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-medium animate-pulse">En
+                            vivo</span>
+                    </div>
+                    <!-- Map div must strictly convert to this ID used in script.js -->
+                    <div id="map" class="w-full h-[600px] z-0 bg-gray-100 relative"></div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white mt-16 border-t-4 border-candelaria-gold">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i data-lucide="sparkles" class="w-6 h-6 text-candelaria-gold"></i>
-                        <span class="text-xl font-bold font-heading">Candelaria 2025</span>
-                    </div>
-                    <p class="text-gray-400 text-sm mb-6 max-w-md">
-                        Plataforma oficial de servicios turísticos para la Festividad de la Virgen de la Candelaria en
-                        Puno, Patrimonio Cultural Inmaterial de la Humanidad (UNESCO).
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="facebook"
-                                class="w-5 h-5"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="twitter"
-                                class="w-5 h-5"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="instagram"
-                                class="w-5 h-5"></i></a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-bold mb-4 text-white">Enlaces Rápidos</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="../index.php" class="hover:text-candelaria-gold transition-colors">Programación
-                                Oficial</a></li>
-                        <li><a href="#" class="hover:text-candelaria-gold transition-colors">Rutas de Desfile</a></li>
-                        <li><a href="#" class="hover:text-candelaria-gold transition-colors">Números de Emergencia</a>
-                        </li>
-                        <li><a href="#" class="hover:text-candelaria-gold transition-colors">Historia de la
-                                Festividad</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-bold mb-4 text-white">Contacto</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> +51 951 123 456
-                        </li>
-                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i>
-                            info@candelaria2025.pe</li>
-                        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Plaza de
-                            Armas, Puno</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
-                &copy; 2025 Gobierno Regional de Puno & Comité de Salvaguardia. Todos los derechos reservados.
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts: Libraries first (already in head), then Logic -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+    <!-- Script Logic -->
+    <script src="script.js"></script>
     <script>
         // Configuración de Lucide Icons
         lucide.createIcons();
 
-        // Inicializar mapa
-        function initMap() {
-            const mapElement = document.getElementById('map-container-full');
-            if (!mapElement) return;
-
-            const map = L.map(mapElement).setView([-15.8407, -70.0214], 14); // Coordenadas de Puno
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-            // Agregar marcadores de eventos
-            const eventos = [
-                { id: 1, fecha: '24 ENE', dia: 'VIE', banda: 'Inicio de Novena', genero: 'RELIGIOSO', hora: '19:00', lat: -15.8407, lng: -70.0214 },
-                { id: 2, fecha: '25 ENE', dia: 'SÁB', banda: 'Segundo día de Novena', genero: 'RELIGIOSO', hora: '19:00', lat: -15.8400, lng: -70.0200 },
-                { id: 3, fecha: '28 ENE', dia: 'MAR', banda: 'Entrada de Qhʼapuas y Ceremonia Andina', genero: 'TRADICIONAL', hora: '08:00', lat: -15.8390, lng: -70.0220 },
-                { id: 4, fecha: '1 FEB', dia: 'SÁB', banda: 'Concurso de Danzas Originarias – Día 1', genero: 'ORIGINARIAS', hora: '08:00 - 18:00', lat: -15.8410, lng: -70.0230 },
-                { id: 5, fecha: '2 FEB', dia: 'DOM', banda: 'Concurso de Danzas Originarias – Día 2', genero: 'ORIGINARIAS', hora: '08:00 - 18:00', lat: -15.8420, lng: -70.0210 }
-            ];
-
-            eventos.forEach(evento => {
-                L.marker([evento.lat, evento.lng])
-                    .addTo(map)
-                    .bindPopup(`<b>${evento.banda}</b><br>${evento.fecha} - ${evento.hora}<br>${evento.genero}`);
-            });
-        }
-
-        // Inicializar el mapa cuando se haya cargado el DOM
-        document.addEventListener('DOMContentLoaded', initMap);
-
         // Función para establecer pestaña activa
         function setActiveTab(tabName) {
-            // Redirigir a la pestaña principal en lugar de mantenerse en la página individual
             window.location.href = `../index.php#${tabName}`;
         }
     </script>

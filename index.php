@@ -946,7 +946,9 @@
         }
       });
     </script>
-    <script src="./script.js"></script>
+    <script>
+      // Script.js logic is already inline or handled
+    </script>
 
     <!-- Chatbot Widget -->
     <link rel="stylesheet" href="assets/css/chatbot-widget.css">
@@ -966,6 +968,10 @@
         });
       }
     </script>
+    <!-- Chatbot Widget -->
+    <link rel="stylesheet" href="assets/css/chatbot-widget.css">
+    <div id="chatbot-widget"></div>
+    <script src="assets/js/chatbot-widget.js"></script>
 </body>
 
 </html>
