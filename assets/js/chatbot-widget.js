@@ -8,7 +8,12 @@
 
     // Configuración
     const CONFIG = {
-        apiUrl: '/php-candelaria/php-admin/api/chatbot.php',
+        // DETECCIÓN AUTOMÁTICA DE ENTORNO
+        // Si estamos en localhost, usa la ruta local. Si estamos en web, usa la ruta de producción.
+        apiUrl: window.location.hostname === 'localhost'
+            ? '/php-candelaria/php-admin/api/chatbot.php'
+            : '/candelaria-admin/api/chatbot.php',
+
         welcomeMessage: '¡Hola! Soy tu asistente del Festival de la Candelaria. Puedo ayudarte con información sobre danzas, horarios y presentaciones. ¿Qué te gustaría saber?'
     };
 
