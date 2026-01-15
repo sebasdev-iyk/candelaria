@@ -826,11 +826,16 @@
             lucide.createIcons();
         }
 
-        // ==========================================
         // 5. MODAL SYSTEM
         // ==========================================
 
         function openModal(id, category) {
+            // For hospedajes, redirect to hotel detail page
+            if (category === 'hospedajes') {
+                window.location.href = 'Hospedajes/hotel.php?id=' + id;
+                return;
+            }
+
             const item = DB[category].find(i => i.id === id);
             if (!item) return;
 
