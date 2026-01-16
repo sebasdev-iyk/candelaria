@@ -187,27 +187,19 @@ function timeAgo($datetime)
                         // DEBUG MODE: Show raw content if requested
                         if (isset($_GET['debug_content'])) {
                             echo '<div class="bg-yellow-100 p-4 mb-4 border border-yellow-300 font-mono text-xs overflow-auto">';
-                            echo '<strong>RAW CONTENT:</strong><br>' . htmlspecialchars($content);
+                            echo '<strong>RAW CONTENT (DB):</strong><br>' . htmlspecialchars($content);
                             echo '</div>';
                         }
 
-                        // 1. Fix simple relative paths (e.g., src="../assets")
-                        // From candelaria/noticias/ to candelaria/assets/ (one level up)
-                        $content = str_replace('src="../assets', 'src="../../assets', $content);
-
-                        // 2. Fix images that might be saved as just filenames (e.g. from some editors)
-                        // This regex looks for src="filename.png" without any / or http prefix
-                        $content = preg_replace('/src="([^"\/]+?\.(png|jpg|jpeg|webp))"/', 'src="../../assets/uploads/$1"', $content);
-
-                        // 3. Ensure all /assets/ paths are relative from this depth
-                        // If src="/assets/...", make it "../../assets/..." if needed, or rely on absolute if domain match
-                        // A safer bet is to assume the public content uses /candelaria/assets
-                        $content = str_replace('src="/candelaria/assets', 'src="../../assets', $content);
-
-                        // 4. Case where editor saved it as relative "candelaria/assets/..." (no leading slash)
-                        // This would resolve to candelaria/noticias/candelaria/assets... which is wrong
-                        // We want "../../assets/..."
-                        $content = str_replace('src="candelaria/assets', 'src="../../assets', $content);
+                        // NUCLEAR OPTION: Fix ANY path pointing to an image in assets/uploads
+                        // This catches:
+                        // src="assets/uploads/img.png"
+                        // src="/candelaria/assets/uploads/img.png"
+                        // src="../assets/uploads/img.png"
+                        // src="random/path/assets/uploads/img.png"
+                        // And forces it to: src="../../assets/uploads/img.png" (Correct relative path from /candelaria/noticias/)
+                    
+                        $content = preg_replace('/src=".*?assets\/uploads\/([^"]+)"/', 'src="../../assets/uploads/$1"', $content);
 
                         echo $content;
                         ?>
