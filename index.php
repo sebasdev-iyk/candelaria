@@ -743,8 +743,9 @@
         <a href="./cultura/cultura.html"
           class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
         <a href="./horarios_y_danzas/index.php"
-          class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Horarios
-          y Danzas</a>
+          class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Horarios</a>
+        <a href="./noticias/index.php"
+          class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Noticias</a>
       </nav>
     </div>
     </div>

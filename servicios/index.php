@@ -260,6 +260,7 @@
                         <a href="index.php" class="nav-link-custom active">Servicios</a>
                         <a href="../cultura/cultura.html" class="nav-link-custom">Cultura</a>
                         <a href="../horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
+                        <a href="../noticias/index.php" class="nav-link-custom">Noticias</a>
                     </nav>
 
                     <!-- User Auth Button -->
@@ -284,8 +285,9 @@
                 <a href="../cultura/cultura.html"
                     class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
                 <a href="../horarios_y_danzas/index.php"
-                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Horarios
-                    y Danzas</a>
+                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Horarios</a>
+                <a href="../noticias/index.php"
+                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Noticias</a>
             </nav>
         </div>
     </header>
