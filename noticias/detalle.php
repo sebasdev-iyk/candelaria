@@ -3,6 +3,9 @@ ini_set('display_errors', 1); // Temporary for debugging
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Include Custom Logger
+include_once __DIR__ . '/../../custom_logger.php';
+
 // Robust Database Include
 $db_paths = [
     __DIR__ . '/../../php-admin/src/Config/Database.php',       // Local / Standard
@@ -32,14 +35,26 @@ $db = $database->connect('mipuno_candelaria');
 $article = null;
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
+custom_log("Detail Page Accessed: ID=$id");
+
 if ($db && $id > 0) {
     try {
         $stmt = $db->prepare("SELECT * FROM noticias WHERE id = ?");
         $stmt->execute([$id]);
         $article = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($article) {
+            custom_log("Article FOUND: ID=$id, Title=" . $article['titulo']);
+        } else {
+            custom_log("Article NOT FOUND: ID=$id");
+        }
+
     } catch (Exception $e) {
+        custom_log("DB Error details: " . $e->getMessage());
         error_log("Error fetching article: " . $e->getMessage());
     }
+} else {
+    custom_log("Detail Page: Invalid ID or DB Connection Failed. DB=" . ($db ? "OK" : "NULL"));
 }
 
 if (!$article && isset($_GET['debug'])) {
@@ -191,15 +206,21 @@ function timeAgo($datetime)
                             echo '</div>';
                         }
 
-                        // NUCLEAR OPTION: Fix ANY path pointing to an image in assets/uploads
-                        // This catches:
-                        // src="assets/uploads/img.png"
-                        // src="/candelaria/assets/uploads/img.png"
-                        // src="../assets/uploads/img.png"
-                        // src="random/path/assets/uploads/img.png"
-                        // And forces it to: src="../../assets/uploads/img.png" (Correct relative path from /candelaria/noticias/)
+                        // NUCLEAR OPTION REVISED: Fix paths to be ONE level up
+                        // Structure: candelaria/noticias/detalle.php
+                        // Assets: candelaria/assets/
+                        // Path needed: ../assets/
                     
-                        $content = preg_replace('/src=".*?assets\/uploads\/([^"]+)"/', 'src="../../assets/uploads/$1"', $content);
+                        // 1. Convert any double-up to single-up if it was wrongly fixed
+                        $content = str_replace('../../assets', '../assets', $content);
+
+                        // 2. Fix the "Aggressive" regex to use ../
+                        // Catches src="...assets/uploads/img.png" -> src="../assets/uploads/img.png"
+                        $content = preg_replace('/src=".*?assets\/uploads\/([^"]+)"/', 'src="../assets/uploads/$1"', $content);
+
+                        // 3. Just in case regex missed something or it's a bare filename
+                        // src="img.png" -> src="../assets/uploads/img.png"
+                        $content = preg_replace('/src="([^"\/]+?\.(png|jpg|jpeg|webp))"/', 'src="../assets/uploads/$1"', $content);
 
                         echo $content;
                         ?>
