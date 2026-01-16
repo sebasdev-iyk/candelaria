@@ -163,6 +163,10 @@ function timeAgo($datetime)
 
     <main class="max-w-4xl mx-auto px-4 py-10">
         <?php if ($article): ?>
+            <?php
+            // Set timezone for correct "Time Ago" calculation
+            date_default_timezone_set('America/Lima');
+            ?>
             <article class="bg-white rounded-2xl shadow-xl overflow-hidden">
                 <img src="<?= getImg($article['imagen_principal']) ?>" class="w-full h-[400px] object-cover">
                 <div class="p-8 md:p-12">
@@ -180,6 +184,13 @@ function timeAgo($datetime)
                         <?php
                         $content = $article['contenido'];
 
+                        // DEBUG MODE: Show raw content if requested
+                        if (isset($_GET['debug_content'])) {
+                            echo '<div class="bg-yellow-100 p-4 mb-4 border border-yellow-300 font-mono text-xs overflow-auto">';
+                            echo '<strong>RAW CONTENT:</strong><br>' . htmlspecialchars($content);
+                            echo '</div>';
+                        }
+
                         // 1. Fix simple relative paths (e.g., src="../assets")
                         // From candelaria/noticias/ to candelaria/assets/ (one level up)
                         $content = str_replace('src="../assets', 'src="../../assets', $content);
@@ -192,6 +203,11 @@ function timeAgo($datetime)
                         // If src="/assets/...", make it "../../assets/..." if needed, or rely on absolute if domain match
                         // A safer bet is to assume the public content uses /candelaria/assets
                         $content = str_replace('src="/candelaria/assets', 'src="../../assets', $content);
+
+                        // 4. Case where editor saved it as relative "candelaria/assets/..." (no leading slash)
+                        // This would resolve to candelaria/noticias/candelaria/assets... which is wrong
+                        // We want "../../assets/..."
+                        $content = str_replace('src="candelaria/assets', 'src="../../assets', $content);
 
                         echo $content;
                         ?>
@@ -225,6 +241,11 @@ function timeAgo($datetime)
     <footer class="bg-gray-900 text-white py-8 text-center mt-12">
         <p class="text-gray-500 text-sm">&copy; 2025 Candelaria Puno</p>
     </footer>
+
+    <!-- Auth Modal & Logic -->
+    <?= getAuthModalHTML() ?>
+    <?= getAuthJS('../') ?>
+
     <script>lucide.createIcons();</script>
 </body>
 
