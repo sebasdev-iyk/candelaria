@@ -134,24 +134,30 @@ function timeAgo($datetime)
 
 <body class="bg-gray-50">
     <!-- Header -->
+    <!-- Navbar -->
     <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-50">
-        <div class="w-full px-4 py-4 flex justify-between items-center max-w-7xl mx-auto">
-            <a href="../index.php" class="flex items-center"><img src="../principal/virgencandelariaa.png"
-                    class="h-10"></a>
-            <div class="flex items-center gap-6">
-                <nav class="hidden md:flex gap-4">
-                    <a href="../servicios/index.php" class="nav-link-custom">Servicios</a>
-                    <a href="../cultura/cultura.html" class="nav-link-custom">Cultura</a>
-                    <a href="../horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
-                    <a href="../noticias/index.php" class="nav-link-custom text-candelaria-gold font-bold">Noticias</a>
-                </nav>
-                <?php include '../includes/auth-header.php'; ?>
-                <?= getAuthButtonHTML() ?>
+        <div class="bg-purple-950 text-xs py-1 text-center text-purple-200">Festividad de la Virgen de la Candelaria
+            2025 - Del 2 al 11 de Febrero</div>
+        <div class="w-full px-4 md:px-12 py-4">
+            <div class="flex justify-between items-center">
+                <a href="../index.php" class="flex items-center group">
+                    <img src="../principal/virgencandelariaa.png" alt="Candelaria"
+                        class="h-10 md:h-12 w-auto object-contain">
+                </a>
+                <div class="flex items-center gap-6">
+                    <nav class="hidden md:flex items-center gap-1">
+                        <a href="../servicios/index.php" class="nav-link-custom">Servicios</a>
+                        <a href="../cultura/cultura.html" class="nav-link-custom">Cultura</a>
+                        <a href="../horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
+                        <a href="index.php" class="nav-link-custom active">Noticias</a>
+                    </nav>
+                    <?php include '../includes/auth-header.php'; ?>
+                    <?= getAuthButtonHTML() ?>
+                    <a href="../horarios_y_danzas/index.php" class="btn-live text-white font-bold no-underline">
+                        <div class="live-dot"></div> EN VIVO
+                    </a>
+                </div>
             </div>
-            <a href="index.php"
-                class="text-sm font-bold border border-white/30 rounded-full px-4 py-2 hover:bg-white/10 flex items-center gap-2">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver
-            </a>
         </div>
     </header>
 
@@ -173,8 +179,20 @@ function timeAgo($datetime)
                     <div class="article-content">
                         <?php
                         $content = $article['contenido'];
-                        // Fix relative paths from Admin (../assets) to Public (../../assets)
+
+                        // 1. Fix simple relative paths (e.g., src="../assets")
+                        // From candelaria/noticias/ to candelaria/assets/ (one level up)
                         $content = str_replace('src="../assets', 'src="../../assets', $content);
+
+                        // 2. Fix images that might be saved as just filenames (e.g. from some editors)
+                        // This regex looks for src="filename.png" without any / or http prefix
+                        $content = preg_replace('/src="([^"\/]+?\.(png|jpg|jpeg|webp))"/', 'src="../../assets/uploads/$1"', $content);
+
+                        // 3. Ensure all /assets/ paths are relative from this depth
+                        // If src="/assets/...", make it "../../assets/..." if needed, or rely on absolute if domain match
+                        // A safer bet is to assume the public content uses /candelaria/assets
+                        $content = str_replace('src="/candelaria/assets', 'src="../../assets', $content);
+
                         echo $content;
                         ?>
                     </div>
