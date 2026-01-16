@@ -3,8 +3,8 @@ ini_set('display_errors', 1); // Temporary for debugging
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Include Custom Logger
-include_once __DIR__ . '/../../custom_logger.php';
+// Include Custom Logger (Local)
+include_once __DIR__ . '/../includes/logger.php';
 
 // Robust Database Include
 $db_paths = [
