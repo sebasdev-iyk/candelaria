@@ -503,6 +503,15 @@
             }
             if (item.imagen) image = item.imagen; // Fallback for comida
 
+            // Fix relative paths to root absolute
+            const originalImage = image;
+            if (image && !image.startsWith('http') && !image.startsWith('data:') && !image.startsWith('/')) {
+                if (image.startsWith('assets/')) image = '/' + image;
+            }
+            if (originalImage !== image) {
+                 console.log(`[DEBUG] Service Image Fixed: "${originalImage}" -> "${image}"`);
+            }
+
             let features = [];
             if (item.servicios) {
                 if (Array.isArray(item.servicios)) features = item.servicios;

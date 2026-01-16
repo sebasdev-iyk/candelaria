@@ -687,10 +687,15 @@
 
         // Helper to fix image paths
         function fixImagePath(url) {
-            if (!url) return '';
-            if (url.startsWith('http') || url.startsWith('data:')) return url;
-            if (url.startsWith('assets/')) return '../../../' + url;
-            return url;
+            const original = url;
+            let finalUrl = url;
+            if (!url) finalUrl = '';
+            else if (url.startsWith('http') || url.startsWith('data:')) finalUrl = url;
+            else if (url.startsWith('/')) finalUrl = url;
+            else if (url.startsWith('assets/')) finalUrl = '/' + url; // Root relative
+
+            console.log(`[DEBUG] Image Path Fix: "${original}" -> "${finalUrl}"`);
+            return finalUrl;
         }
 
         // Get hotel ID from URL
