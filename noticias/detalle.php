@@ -1,42 +1,46 @@
 <?php
-// Mock Data
-$articles = [
-    1 => [
-        'title' => 'La Diablada Aymara en Juli: origen histórico de los diablos del altiplano',
-        'date' => 'Hace 47 minutos',
-        'category' => 'Cultura',
-        'image' => '../principal/Festividad.png',
-        'content' => '<p class="mb-4">Hablar de diablos y diabladas implica comprender un profundo sincretismo cultural que se remonta a siglos de historia en la región altiplánica. La Diablada Aymara de Juli representa una de las manifestaciones más antiguas y genuinas de esta tradición.</p>
-                      <p class="mb-4">Durante el reciente congreso llevado a cabo en la "Pequeña Roma de América", historiadores y cultores debatieron sobre los orígenes precoloniales de las danzas de demonios, vinculándolos a rituales agrarios y deidades locales que, tras la llegada de los evangelizadores, fueron reinterpretadas bajo la iconografía católica del diablo.</p>
-                      <p class="mb-4">"No es solo un baile, es resistencia cultural", afirmó uno de los ponentes. La vestimenta, caracterizada por máscaras expresivas y trajes bordados con hilos de oro y plata, narra la lucha entre el bien y el mal, pero también la cosmovisión andina del Supay.</p>
-                      <h3 class="text-xl font-bold text-gray-800 mt-6 mb-3">Impacto en la Candelaria 2026</h3>
-                      <p>Se espera que las conclusiones de este congreso influyan en las presentaciones de los conjuntos folclóricos en la próxima Festividad de la Virgen de la Candelaria, promoviendo una mayor autenticidad y respeto por las raíces históricas de la danza.</p>'
-    ],
-    2 => [
-        'title' => 'Ni partidos ni candidatos: la Candelaria 2026 se blinda',
-        'date' => 'Hace 13 horas',
-        'category' => 'Política',
-        'image' => 'https://picsum.photos/seed/puno1/800/400',
-        'content' => '<p>La Federación Regional de Folklore y Cultura de Puno ha emitido un comunicado contundente: la Festividad de la Virgen de la Candelaria 2026 será un espacio libre de proselitismo político.</p><p>Ante la cercanía de las elecciones regionales y municipales, se han establecido multas severas para aquellos conjuntos que permitan el uso de sus espacios o indumentaria para propaganda partidaria.</p>'
-    ],
-    3 => [
-        'title' => 'Congreso de la Diablada inició en Juli con gran acogida',
-        'date' => 'Hace 13 horas',
-        'category' => 'Actualidad',
-        'image' => 'https://picsum.photos/seed/diablada/800/400',
-        'content' => '<p>Con la participación de más de 50 delegaciones, inició en Juli el Primer Congreso Internacional de la Diablada. El evento busca salvaguardar la danza como Patrimonio Cultural e Inmaterial de la Humanidad.</p>'
-    ],
-    4 => [
-        'title' => 'Perú rompe barreras: el Túnel Ollachea conquista un Récord Guinness',
-        'date' => 'Hace 2 días',
-        'category' => 'Infraestructura',
-        'image' => 'https://picsum.photos/seed/tunel/800/400',
-        'content' => '<p>El Túnel Ollachea, ubicado en la región Puno, ha sido reconocido por el Guinness World Records por su ingeniería de vanguardia en condiciones geográficas extremas.</p>'
-    ]
-];
+include_once '../../php-admin/src/Config/Database.php';
+use Config\Database;
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 1;
-$article = isset($articles[$id]) ? $articles[$id] : $articles[1];
+$database = new Database();
+$db = $database->connect('mipuno_candelaria');
+
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$article = null;
+
+if ($db && $id) {
+    try {
+        $stmt = $db->prepare("SELECT * FROM noticias WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $article = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        // Log Error
+    }
+}
+
+// Helpers
+function getImg($path)
+{
+    if (!$path)
+        return 'https://picsum.photos/800/400';
+    if (strpos($path, 'http') === 0)
+        return $path;
+    return '../../' . $path;
+}
+
+function timeAgo($datetime)
+{
+    if (!$datetime)
+        return '';
+    $time = strtotime($datetime);
+    $diff = time() - $time;
+    if ($diff < 3600)
+        return 'Hace ' . floor($diff / 60) . ' min';
+    if ($diff < 86400)
+        return 'Hace ' . floor($diff / 3600) . ' horas';
+    return 'Hace ' . floor($diff / 86400) . ' días';
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -44,10 +48,7 @@ $article = isset($articles[$id]) ? $articles[$id] : $articles[1];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $article['title'] ?> - Candelaria 2025
-    </title>
-    <!-- Tailwind CSS -->
+    <title><?= $article ? htmlspecialchars($article['titulo']) : 'Noticia no encontrada' ?> - Candelaria 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap"
@@ -57,9 +58,7 @@ $article = isset($articles[$id]) ? $articles[$id] : $articles[1];
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        candelaria: { purple: '#4c1d95', gold: '#fbbf24', lake: '#0ea5e9' }
-                    },
+                    colors: { candelaria: { purple: '#4c1d95', gold: '#fbbf24', lake: '#0ea5e9' } },
                     fontFamily: { heading: ['Montserrat', 'sans-serif'], sans: ['Open Sans', 'sans-serif'] }
                 }
             }
@@ -84,68 +83,101 @@ $article = isset($articles[$id]) ? $articles[$id] : $articles[1];
             color: #374151;
             font-size: 1.1rem;
         }
+
+        .article-content h2,
+        .article-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #1f2937;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-content img {
+            border-radius: 0.5rem;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
     </style>
 </head>
 
 <body class="bg-gray-50">
-
-    <!-- Header (Condensed) -->
-    <header class="bg-candelaria-purple text-white shadow-lg">
+    <!-- Header -->
+    <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-50">
         <div class="w-full px-4 py-4 flex justify-between items-center max-w-7xl mx-auto">
             <a href="../index.php" class="flex items-center"><img src="../principal/virgencandelariaa.png"
                     class="h-10"></a>
-            <nav class="hidden md:flex gap-4">
-                <a href="../servicios/index.php" class="nav-link-custom">Servicios</a>
-                <a href="../noticias/index.php" class="nav-link-custom text-candelaria-gold font-bold">Noticias</a>
-            </nav>
+            <div class="flex items-center gap-6">
+                <nav class="hidden md:flex gap-4">
+                    <a href="../servicios/index.php" class="nav-link-custom">Servicios</a>
+                    <a href="../cultura/cultura.html" class="nav-link-custom">Cultura</a>
+                    <a href="../horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
+                    <a href="../noticias/index.php" class="nav-link-custom text-candelaria-gold font-bold">Noticias</a>
+                </nav>
+                <?php include '../includes/auth-header.php'; ?>
+                <?= getAuthButtonHTML() ?>
+            </div>
             <a href="index.php"
-                class="text-sm font-bold border border-white/30 rounded-full px-4 py-2 hover:bg-white/10">
-                <i data-lucide="arrow-left" class="w-4 h-4 inline mr-1"></i> Volver a Noticias
+                class="text-sm font-bold border border-white/30 rounded-full px-4 py-2 hover:bg-white/10 flex items-center gap-2">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver
             </a>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto px-4 py-10">
-        <article class="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <img src="<?= $article['image'] ?>" class="w-full h-[400px] object-cover">
+        <?php if ($article): ?>
+            <article class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <img src="<?= getImg($article['imagen_principal']) ?>" class="w-full h-[400px] object-cover">
+                <div class="p-8 md:p-12">
+                    <div class="flex items-center gap-4 mb-6 text-sm">
+                        <span
+                            class="bg-candelaria-purple text-white px-3 py-1 rounded-full font-bold uppercase"><?= htmlspecialchars($article['categoria']) ?></span>
+                        <span class="text-gray-500 flex items-center gap-1"><i data-lucide="clock" class="w-4 h-4"></i>
+                            <?= timeAgo($article['fecha_publicacion']) ?></span>
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-bold font-heading text-gray-900 mb-8 leading-tight">
+                        <?= htmlspecialchars($article['titulo']) ?>
+                    </h1>
 
-            <div class="p-8 md:p-12">
-                <div class="flex items-center gap-4 mb-6 text-sm">
-                    <span class="bg-candelaria-purple text-white px-3 py-1 rounded-full font-bold uppercase">
-                        <?= $article['category'] ?>
-                    </span>
-                    <span class="text-gray-500 flex items-center gap-1"><i data-lucide="clock" class="w-4 h-4"></i>
-                        <?= $article['date'] ?>
-                    </span>
-                </div>
+                    <div class="article-content">
+                        <?php
+                        $content = $article['contenido'];
+                        // Fix relative paths from Admin (../assets) to Public (../../assets)
+                        $content = str_replace('src="../assets', 'src="../../assets', $content);
+                        echo $content;
+                        ?>
+                    </div>
 
-                <h1 class="text-3xl md:text-5xl font-bold font-heading text-gray-900 mb-8 leading-tight">
-                    <?= $article['title'] ?>
-                </h1>
-
-                <div class="article-content">
-                    <?= $article['content'] ?>
-                </div>
-
-                <div class="mt-12 pt-8 border-t border-gray-100 flex justify-between items-center">
-                    <div class="text-gray-500 text-sm">Compártelo:</div>
-                    <div class="flex gap-4">
-                        <button class="text-blue-600 hover:text-blue-800"><i data-lucide="facebook"
-                                class="w-6 h-6"></i></button>
-                        <button class="text-blue-400 hover:text-blue-600"><i data-lucide="twitter"
-                                class="w-6 h-6"></i></button>
-                        <button class="text-green-500 hover:text-green-700"><i data-lucide="share-2"
-                                class="w-6 h-6"></i></button>
+                    <div class="mt-12 pt-8 border-t border-gray-100 flex justify-between items-center">
+                        <div class="text-gray-500 text-sm">Por <span
+                                class="font-bold text-gray-800"><?= htmlspecialchars($article['autor']) ?></span></div>
+                        <div class="flex gap-4">
+                            <button class="text-blue-600 hover:text-blue-800 transition-colors"><i data-lucide="facebook"
+                                    class="w-6 h-6"></i></button>
+                            <button class="text-blue-400 hover:text-blue-600 transition-colors"><i data-lucide="twitter"
+                                    class="w-6 h-6"></i></button>
+                            <button class="text-green-500 hover:text-green-700 transition-colors"><i data-lucide="share-2"
+                                    class="w-6 h-6"></i></button>
+                        </div>
                     </div>
                 </div>
+            </article>
+        <?php else: ?>
+            <div class="text-center py-20">
+                <h1 class="text-4xl font-bold text-gray-300 mb-4">404</h1>
+                <p class="text-gray-500 text-xl">La noticia que buscas no existe o ha sido eliminada.</p>
+                <a href="index.php"
+                    class="inline-block mt-8 bg-candelaria-purple text-white px-6 py-3 rounded-full font-bold hover:bg-purple-800 transition-colors">Volver
+                    a Noticias</a>
             </div>
-        </article>
+        <?php endif; ?>
     </main>
 
     <footer class="bg-gray-900 text-white py-8 text-center mt-12">
         <p class="text-gray-500 text-sm">&copy; 2025 Candelaria Puno</p>
     </footer>
-
     <script>lucide.createIcons();</script>
 </body>
 
