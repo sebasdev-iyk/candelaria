@@ -712,8 +712,13 @@
           <nav class="hidden md:flex items-center gap-2">
             <a href="./servicios/index.php" class="nav-link-custom">Servicios</a>
             <a href="./cultura/cultura.html" class="nav-link-custom">Cultura</a>
-            <a href="./horarios_y_danzas/index.php" class="nav-link-custom">Horarios y Danzas</a>
+            <a href="./horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
+            <a href="./noticias/index.php" class="nav-link-custom">Noticias</a>
           </nav>
+
+          <?php include 'includes/auth-header.php'; ?>
+          <!-- User Auth Button -->
+          <?= getAuthButtonHTML() ?>
 
           <!-- EN VIVO Button -->
           <a href="./horarios_y_danzas/index.php" class="btn-live group">
@@ -972,6 +977,10 @@
     <link rel="stylesheet" href="assets/css/chatbot-widget.css">
     <div id="chatbot-widget"></div>
     <script src="assets/js/chatbot-widget.js"></script>
+
+    <!-- Auth Modal and Dropdown -->
+    <?= getAuthModalHTML() ?>
+    <?= getAuthJS('') ?>
 </body>
 
 </html>

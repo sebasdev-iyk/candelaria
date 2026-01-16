@@ -219,6 +219,7 @@
 </head>
 
 <body class="bg-gray-50 text-gray-800">
+    <?php include '../includes/auth-header.php'; ?>
 
     <!-- Notificaciones Toast Container -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
@@ -260,6 +261,10 @@
                         <a href="../cultura/cultura.html" class="nav-link-custom">Cultura</a>
                         <a href="../horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
                     </nav>
+
+                    <!-- User Auth Button -->
+                    <?= getAuthButtonHTML() ?>
+
                     <a href="../horarios_y_danzas/index.php" class="btn-live">
                         <div class="live-dot"></div>
                         <span>EN TIEMPO REAL</span>
@@ -1021,6 +1026,10 @@
             });
         }
     </script>
+
+    <!-- Auth Modal and Dropdown -->
+    <?= getAuthModalHTML() ?>
+    <?= getAuthJS('../') ?>
 </body>
 
 </html>

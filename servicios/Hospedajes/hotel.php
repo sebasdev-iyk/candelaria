@@ -272,21 +272,37 @@
                         </button>
                     </form>
 
-                    <!-- Logged In View -->
+                    <!-- Logged In View - Now just shows logout if they open modal while logged in -->
                     <div id="logged-in-view" class="hidden text-center">
-                        <div
-                            class="w-20 h-20 bg-candelaria-light rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="user-check" class="w-10 h-10 text-candelaria-purple"></i>
-                        </div>
-                        <h3 id="user-welcome" class="text-xl font-bold text-gray-900 mb-2">¡Hola!</h3>
-                        <p id="user-email-display" class="text-gray-500 mb-6"></p>
-                        <button onclick="logout()"
-                            class="w-full bg-red-500 text-white py-3 rounded-xl font-bold hover:bg-red-600 transition-all">
-                            Cerrar Sesión
+                        <p class="text-gray-500 mb-4">Ya has iniciado sesión</p>
+                        <button onclick="closeAuthModal()"
+                            class="w-full bg-candelaria-purple text-white py-3 rounded-xl font-bold hover:bg-purple-800 transition-all">
+                            Cerrar
                         </button>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- User Dropdown (when logged in) -->
+    <div id="user-dropdown"
+        class="fixed top-20 right-6 bg-white rounded-xl shadow-xl border border-gray-200 w-64 z-50 hidden">
+        <div class="p-4 border-b border-gray-100">
+            <p class="font-bold text-gray-900" id="dropdown-user-name"></p>
+            <p class="text-sm text-gray-500" id="dropdown-user-email"></p>
+        </div>
+        <div class="p-2">
+            <a href="../../perfil.php"
+                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-50 text-gray-700">
+                <i data-lucide="user" class="w-5 h-5"></i>
+                Mi Perfil
+            </a>
+            <button onclick="logout()"
+                class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-red-50 text-red-600">
+                <i data-lucide="log-out" class="w-5 h-5"></i>
+                Cerrar Sesión
+            </button>
         </div>
     </div>
 
@@ -581,6 +597,68 @@
             </div>
         </section>
 
+        <!-- Ratings & Reviews Section -->
+        <section id="reviews-section" class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 font-heading mb-6 flex items-center gap-3">
+                <i data-lucide="star" class="w-7 h-7 text-candelaria-purple"></i>
+                Calificaciones y Comentarios
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Rating Summary -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-gray-900 mb-2" id="avg-rating">0.0</div>
+                        <div id="stars-display" class="flex justify-center gap-1 mb-2">
+                            <!-- Stars injected here -->
+                        </div>
+                        <p class="text-gray-500"><span id="total-reviews">0</span> opiniones</p>
+                    </div>
+
+                    <!-- Rate Form (only if logged in) -->
+                    <div id="rate-form-container" class="mt-6 pt-6 border-t border-gray-200 hidden">
+                        <h4 class="font-bold text-gray-800 mb-3">Deja tu opinión</h4>
+                        <div class="flex justify-center gap-2 mb-3" id="rate-stars">
+                            <button onclick="setRating(1)"
+                                class="rate-star text-3xl text-gray-300 hover:text-yellow-400">★</button>
+                            <button onclick="setRating(2)"
+                                class="rate-star text-3xl text-gray-300 hover:text-yellow-400">★</button>
+                            <button onclick="setRating(3)"
+                                class="rate-star text-3xl text-gray-300 hover:text-yellow-400">★</button>
+                            <button onclick="setRating(4)"
+                                class="rate-star text-3xl text-gray-300 hover:text-yellow-400">★</button>
+                            <button onclick="setRating(5)"
+                                class="rate-star text-3xl text-gray-300 hover:text-yellow-400">★</button>
+                        </div>
+                        <textarea id="rate-comment" rows="3" placeholder="Escribe tu comentario (opcional)"
+                            class="w-full p-3 rounded-lg border border-gray-300 focus:ring-candelaria-purple focus:border-candelaria-purple mb-3"></textarea>
+                        <button onclick="submitRating()"
+                            class="w-full bg-candelaria-purple text-white py-2 rounded-lg font-bold hover:bg-purple-800">
+                            Enviar Calificación
+                        </button>
+                    </div>
+
+                    <div id="login-to-rate" class="mt-6 pt-6 border-t border-gray-200 text-center">
+                        <p class="text-gray-500 text-sm mb-3">Inicia sesión para dejar una calificación</p>
+                        <button onclick="toggleAuthModal()"
+                            class="text-candelaria-purple font-bold text-sm hover:underline">
+                            Iniciar Sesión
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Reviews List -->
+                <div class="lg:col-span-2">
+                    <div id="reviews-list" class="space-y-4">
+                        <div class="text-center py-8 text-gray-500">
+                            <i data-lucide="message-square" class="w-12 h-12 mx-auto mb-3 text-gray-300"></i>
+                            <p>Sé el primero en dejar una opinión</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
@@ -607,6 +685,14 @@
         let mapInstance = null;
         let currentUser = null; // User authentication state
 
+        // Helper to fix image paths
+        function fixImagePath(url) {
+            if (!url) return '';
+            if (url.startsWith('http') || url.startsWith('data:')) return url;
+            if (url.startsWith('assets/')) return '../../../' + url;
+            return url;
+        }
+
         // Get hotel ID from URL
         const urlParams = new URLSearchParams(window.location.search);
         const hotelId = urlParams.get('id');
@@ -622,6 +708,8 @@
             await loadHotelData();
             initDatePickers();
             setupAuthForms();
+            loadReviews(); // Load ratings and reviews
+            setupGalleryCarousel(); // Setup photo carousel
         });
 
         // ============================================
@@ -678,24 +766,37 @@
         }
 
         function toggleAuthModal() {
-            const modal = document.getElementById('auth-modal');
-            modal.classList.toggle('hidden');
+            if (currentUser) {
+                // Show dropdown instead of modal when logged in
+                const dropdown = document.getElementById('user-dropdown');
+                dropdown.classList.toggle('hidden');
 
-            if (!modal.classList.contains('hidden')) {
-                // Show appropriate view
-                if (currentUser) {
-                    document.getElementById('login-form').classList.add('hidden');
-                    document.getElementById('register-form').classList.add('hidden');
-                    document.getElementById('logged-in-view').classList.remove('hidden');
-                    document.getElementById('user-welcome').textContent = `¡Hola, ${currentUser.nombre}!`;
-                    document.getElementById('user-email-display').textContent = currentUser.email;
-                } else {
-                    switchAuthTab('login');
-                    document.getElementById('logged-in-view').classList.add('hidden');
-                }
+                // Populate dropdown info
+                document.getElementById('dropdown-user-name').textContent = currentUser.nombre;
+                document.getElementById('dropdown-user-email').textContent = currentUser.email;
+                lucide.createIcons();
+            } else {
+                // Show login modal
+                const modal = document.getElementById('auth-modal');
+                modal.classList.remove('hidden');
+                switchAuthTab('login');
+                document.getElementById('logged-in-view').classList.add('hidden');
                 lucide.createIcons();
             }
         }
+
+        function closeUserDropdown() {
+            document.getElementById('user-dropdown').classList.add('hidden');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('user-dropdown');
+            const btn = document.getElementById('user-btn');
+            if (dropdown && btn && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
 
         function closeAuthModal() {
             document.getElementById('auth-modal').classList.add('hidden');
@@ -829,12 +930,22 @@
                 const roomsRes = await fetch(`../../api/habitaciones.php?hospedaje_id=${hotelId}`);
                 if (roomsRes.ok) {
                     rooms = await roomsRes.json();
+                    // Parse JSON fields for rooms
+                    rooms.forEach(room => {
+                        if (typeof room.amenidades === 'string') {
+                            try { room.amenidades = JSON.parse(room.amenidades); } catch (e) { room.amenidades = []; }
+                        }
+                        if (typeof room.imagenes === 'string') {
+                            try { room.imagenes = JSON.parse(room.imagenes); } catch (e) { room.imagenes = []; }
+                        }
+                    });
                 }
 
                 // Render everything
                 renderHotel();
                 renderRooms();
                 initMap();
+                loadReviews(); // Load real ratings
 
                 // Show content
                 document.getElementById('loading-state').classList.add('hidden');
@@ -869,9 +980,11 @@
             document.getElementById('map-address').querySelector('span').textContent = hotel.ubicacion;
 
             // Gallery
-            const images = hotel.imagenes && hotel.imagenes.length > 0
+            const rawImages = hotel.imagenes && hotel.imagenes.length > 0
                 ? hotel.imagenes
                 : ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'];
+
+            const images = rawImages.map(img => fixImagePath(img));
 
             document.getElementById('gallery-main').src = images[0];
 
@@ -923,9 +1036,11 @@
 
             container.innerHTML = rooms.map(room => {
                 const amenities = Array.isArray(room.amenidades) ? room.amenidades : [];
-                const images = Array.isArray(room.imagenes) && room.imagenes.length > 0
+                const rawImages = Array.isArray(room.imagenes) && room.imagenes.length > 0
                     ? room.imagenes
                     : ['https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800'];
+
+                const images = rawImages.map(img => fixImagePath(img));
 
                 const disponible = room.disponibles !== undefined ? room.disponibles > 0 : true;
                 const tipoLabel = {
@@ -935,9 +1050,22 @@
 
                 return `
                     <div class="room-card bg-white rounded-2xl shadow-md overflow-hidden ${!disponible ? 'opacity-60' : ''}" 
-                         data-room-id="${room.id}" onclick="${disponible ? `selectRoom(${room.id})` : ''}">
-                        <div class="relative h-48">
-                            <img src="${images[0]}" alt="${room.nombre}" class="w-full h-full object-cover">
+                         data-room-id="${room.id}">
+                        <div class="relative h-48" id="room-gallery-${room.id}">
+                            <img src="${images[0]}" alt="${room.nombre}" class="w-full h-full object-cover room-img-${room.id}" data-index="0">
+                            ${images.length > 1 ? `
+                                <button onclick="event.stopPropagation(); roomCarouselPrev(${room.id})" 
+                                    class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1.5 rounded-full shadow z-10">
+                                    <i data-lucide="chevron-left" class="w-4 h-4 text-gray-700"></i>
+                                </button>
+                                <button onclick="event.stopPropagation(); roomCarouselNext(${room.id})" 
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1.5 rounded-full shadow z-10">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-700"></i>
+                                </button>
+                                <div class="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-0.5 rounded-full">
+                                    <span class="room-counter-${room.id}">1</span>/${images.length}
+                                </div>
+                            ` : ''}
                             <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md text-xs font-bold">
                                 ${tipoLabel[room.tipo] || room.tipo}
                             </span>
@@ -984,6 +1112,54 @@
             }).join('');
 
             lucide.createIcons();
+
+            // Add click handlers to reserve buttons
+            document.querySelectorAll('.room-card').forEach(card => {
+                const roomId = card.dataset.roomId;
+                const btn = card.querySelector('button:last-of-type');
+                if (btn && btn.textContent.includes('Reservar')) {
+                    btn.onclick = (e) => {
+                        e.stopPropagation();
+                        selectRoom(parseInt(roomId));
+                    };
+                }
+            });
+        }
+
+        // Room carousel state
+        const roomCarouselState = {};
+
+        function roomCarouselPrev(roomId) {
+            const room = rooms.find(r => r.id == roomId);
+            if (!room) return;
+
+            const images = Array.isArray(room.imagenes) ? room.imagenes : [];
+            if (images.length < 2) return;
+
+            if (!roomCarouselState[roomId]) roomCarouselState[roomId] = 0;
+            roomCarouselState[roomId] = (roomCarouselState[roomId] - 1 + images.length) % images.length;
+            updateRoomCarousel(roomId, images);
+        }
+
+        function roomCarouselNext(roomId) {
+            const room = rooms.find(r => r.id == roomId);
+            if (!room) return;
+
+            const images = Array.isArray(room.imagenes) ? room.imagenes : [];
+            if (images.length < 2) return;
+
+            if (!roomCarouselState[roomId]) roomCarouselState[roomId] = 0;
+            roomCarouselState[roomId] = (roomCarouselState[roomId] + 1) % images.length;
+            updateRoomCarousel(roomId, images);
+        }
+
+        function updateRoomCarousel(roomId, images) {
+            const idx = roomCarouselState[roomId] || 0;
+            const img = document.querySelector(`.room-img-${roomId}`);
+            const counter = document.querySelector(`.room-counter-${roomId}`);
+
+            if (img) img.src = images[idx];
+            if (counter) counter.textContent = idx + 1;
         }
 
         // Change gallery image
@@ -1226,6 +1402,214 @@
             icon.classList.toggle('text-red-500');
             icon.classList.toggle('fill-red-500');
             showToast(icon.classList.contains('fill-red-500') ? 'Agregado a favoritos' : 'Eliminado de favoritos', 'success');
+        }
+
+        // ============================================
+        // RATINGS & REVIEWS
+        // ============================================
+        let userRating = 0;
+        let galleryImages = [];
+        let currentGalleryIndex = 0;
+
+        async function loadReviews() {
+            try {
+                const res = await fetch(`../../api/calificaciones.php?hospedaje_id=${hotelId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    renderRatingsSummary(data);
+                    renderReviewsList(data.reviews);
+                }
+            } catch (e) {
+                console.error('Error loading reviews:', e);
+            }
+        }
+
+        function renderRatingsSummary(data) {
+            document.getElementById('avg-rating').textContent = data.promedio.toFixed(1);
+            document.getElementById('total-reviews').textContent = data.total_reviews;
+
+            // Display stars
+            const starsDisplay = document.getElementById('stars-display');
+            starsDisplay.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('span');
+                star.textContent = '★';
+                star.className = i <= Math.round(data.promedio) ? 'text-yellow-400 text-xl' : 'text-gray-300 text-xl';
+                starsDisplay.appendChild(star);
+            }
+
+            // Update auth UI for ratings
+            if (currentUser) {
+                const userHasRated = data.reviews && data.reviews.some(r => r.cliente_id == currentUser.id);
+
+                const formContainer = document.getElementById('rate-form-container');
+                const loginMsg = document.getElementById('login-to-rate');
+                let ratedMsg = document.getElementById('already-rated-msg');
+
+                if (!ratedMsg) {
+                    ratedMsg = document.createElement('div');
+                    ratedMsg.id = 'already-rated-msg';
+                    ratedMsg.className = 'mt-6 pt-6 border-t border-gray-200 text-center text-candelaria-purple font-bold hidden';
+                    ratedMsg.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5 inline mr-2"></i>¡Ya has calificado este hospedaje!';
+                    formContainer.parentNode.appendChild(ratedMsg);
+                    lucide.createIcons();
+                }
+
+                if (userHasRated) {
+                    formContainer.classList.add('hidden');
+                    ratedMsg.classList.remove('hidden');
+                } else {
+                    formContainer.classList.remove('hidden');
+                    ratedMsg.classList.add('hidden');
+                }
+                loginMsg.classList.add('hidden');
+            } else {
+                document.getElementById('rate-form-container').classList.add('hidden');
+                document.getElementById('login-to-rate').classList.remove('hidden');
+                const ratedMsg = document.getElementById('already-rated-msg');
+                if (ratedMsg) ratedMsg.classList.add('hidden');
+            }
+        }
+
+        function renderReviewsList(reviews) {
+            const container = document.getElementById('reviews-list');
+
+            if (!reviews || reviews.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i data-lucide="message-square" class="w-12 h-12 mx-auto mb-3 text-gray-300"></i>
+                        <p>Sé el primero en dejar una opinión</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            container.innerHTML = reviews.map(r => `
+                <div class="bg-white rounded-xl shadow-sm p-4 border border-gray-100">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                            <div class="w-10 h-10 bg-candelaria-light rounded-full flex items-center justify-center text-candelaria-purple font-bold">
+                                ${r.cliente_nombre.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-800">${r.cliente_nombre}</p>
+                                <div class="flex gap-0.5">
+                                    ${Array.from({ length: 5 }, (_, i) =>
+                `<span class="${i < r.puntuacion ? 'text-yellow-400' : 'text-gray-300'}">★</span>`
+            ).join('')}
+                                </div>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-400">${new Date(r.created_at).toLocaleDateString('es-ES')}</span>
+                    </div>
+                    ${r.comentario ? `<p class="text-gray-600 text-sm mt-2">${r.comentario}</p>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function setRating(rating) {
+            userRating = rating;
+            const stars = document.querySelectorAll('.rate-star');
+            stars.forEach((star, i) => {
+                star.classList.toggle('text-yellow-400', i < rating);
+                star.classList.toggle('text-gray-300', i >= rating);
+            });
+        }
+
+        async function submitRating() {
+            if (!userRating) {
+                showToast('Selecciona una calificación', 'warning');
+                return;
+            }
+
+            const token = localStorage.getItem('clientToken');
+            const comment = document.getElementById('rate-comment').value;
+
+            try {
+                const res = await fetch('../../api/calificaciones.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        hospedaje_id: parseInt(hotelId),
+                        puntuacion: userRating,
+                        comentario: comment
+                    })
+                });
+
+                if (res.ok) {
+                    showToast('¡Gracias por tu opinión!', 'success');
+                    document.getElementById('rate-comment').value = '';
+                    userRating = 0;
+                    setRating(0);
+                    loadReviews();
+                } else {
+                    const err = await res.json();
+                    showToast(err.message || 'Error al enviar', 'error');
+                }
+            } catch (e) {
+                showToast('Error de conexión', 'error');
+            }
+        }
+
+        // ============================================
+        // GALLERY CAROUSEL
+        // ============================================
+        function setupGalleryCarousel() {
+            galleryImages = hotel.imagenes || [];
+            if (typeof galleryImages === 'string') {
+                try { galleryImages = JSON.parse(galleryImages); } catch (e) { galleryImages = []; }
+            }
+
+            if (galleryImages.length > 1) {
+                // Add navigation arrows
+                const galleryContainer = document.querySelector('.relative.overflow-hidden.rounded-2xl');
+                if (galleryContainer) {
+                    galleryContainer.innerHTML += `
+                        <button onclick="prevGalleryImage()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg z-10">
+                            <i data-lucide="chevron-left" class="w-6 h-6 text-gray-700"></i>
+                        </button>
+                        <button onclick="nextGalleryImage()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg z-10">
+                            <i data-lucide="chevron-right" class="w-6 h-6 text-gray-700"></i>
+                        </button>
+                        <div class="absolute bottom-4 right-4 bg-white/80 px-3 py-1 rounded-full text-sm font-medium">
+                            <span id="gallery-counter">1</span>/${galleryImages.length}
+                        </div>
+                    `;
+                    lucide.createIcons();
+                }
+            }
+        }
+
+        function prevGalleryImage() {
+            if (galleryImages.length < 2) return;
+            currentGalleryIndex = (currentGalleryIndex - 1 + galleryImages.length) % galleryImages.length;
+            updateGalleryDisplay();
+        }
+
+        function nextGalleryImage() {
+            if (galleryImages.length < 2) return;
+            currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
+            updateGalleryDisplay();
+        }
+
+        function updateGalleryDisplay() {
+            const mainImg = document.getElementById('gallery-main');
+            mainImg.src = galleryImages[currentGalleryIndex];
+
+            const counter = document.getElementById('gallery-counter');
+            if (counter) counter.textContent = currentGalleryIndex + 1;
+
+            // Update thumbnail active state
+            const thumbs = document.querySelectorAll('.gallery-thumb');
+            thumbs.forEach((t, i) => {
+                t.classList.toggle('active', i === currentGalleryIndex);
+                t.classList.toggle('ring-2', i === currentGalleryIndex);
+                t.classList.toggle('ring-candelaria-purple', i === currentGalleryIndex);
+            });
         }
     </script>
 </body>

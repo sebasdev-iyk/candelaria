@@ -28,7 +28,11 @@ if ($db) {
                 }
                 if (isset($item['imagenes']) && is_string($item['imagenes'])) {
                     $decoded = json_decode($item['imagenes']);
-                    $item['imagenes'] = $decoded !== null ? $decoded : [];
+                    // Handle double encoded JSON
+                    if (is_string($decoded)) {
+                        $decoded = json_decode($decoded);
+                    }
+                    $item['imagenes'] = (is_array($decoded) || is_object($decoded)) ? $decoded : [];
                 }
                 echo json_encode($item);
             } else {
@@ -50,7 +54,11 @@ if ($db) {
                 }
                 if (isset($item['imagenes']) && is_string($item['imagenes'])) {
                     $decoded = json_decode($item['imagenes']);
-                    $item['imagenes'] = $decoded !== null ? $decoded : [];
+                    // Handle double encoded JSON
+                    if (is_string($decoded)) {
+                        $decoded = json_decode($decoded);
+                    }
+                    $item['imagenes'] = (is_array($decoded) || is_object($decoded)) ? $decoded : [];
                 }
             }
 
