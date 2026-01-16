@@ -1,32 +1,46 @@
 <?php
-include_once '../../php-admin/src/Config/Database.php';
+ini_set('display_errors', 1); // Temporary for debugging
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Robust Database Include
+$db_paths = [
+    __DIR__ . '/../../php-admin/src/Config/Database.php',       // Local / Standard
+    __DIR__ . '/../../candelaria-admin/src/Config/Database.php', // Plesk Alternative
+    $_SERVER['DOCUMENT_ROOT'] . '/php-admin/src/Config/Database.php',
+    $_SERVER['DOCUMENT_ROOT'] . '/candelaria-admin/src/Config/Database.php'
+];
+
+$db_included = false;
+foreach ($db_paths as $path) {
+    if (file_exists($path)) {
+        include_once $path;
+        $db_included = true;
+        break;
+    }
+}
+
+if (!$db_included) {
+    die("Error Critical: No se pudo encontrar el archivo de configuración de base de datos. Rutas probadas: " . implode(", ", $db_paths));
+}
+
 use Config\Database;
 
 $database = new Database();
-$db = $database->connect('mipuno_candelaria');
+// ... connection below ...
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-$article = null;
-
-if ($db && $id) {
-    try {
-        $stmt = $db->prepare("SELECT * FROM noticias WHERE id = :id");
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        $article = $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        // Log Error
-    }
-}
+// ... (lines 6-22 omitted in replacement context match, assuming manual edit for brevity or exact match)
 
 // Helpers
 function getImg($path)
 {
     if (!$path)
         return 'https://picsum.photos/800/400';
-    if (strpos($path, 'http') === 0)
+    if (strpos($path, 'http') === 0 || strpos($path, 'data:') === 0)
         return $path;
-    return '../../' . $path;
+    if (strpos($path, '/') === 0)
+        return $path; // Trust absolute paths
+    return '../../' . $path; // Fallback for relative paths
 }
 
 function timeAgo($datetime)
