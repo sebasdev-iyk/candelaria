@@ -27,9 +27,24 @@ if (!$db_included) {
 use Config\Database;
 
 $database = new Database();
-// ... connection below ...
+$db = $database->connect('mipuno_candelaria');
 
-// ... (lines 6-22 omitted in replacement context match, assuming manual edit for brevity or exact match)
+$article = null;
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+if ($db && $id > 0) {
+    try {
+        $stmt = $db->prepare("SELECT * FROM noticias WHERE id = ?");
+        $stmt->execute([$id]);
+        $article = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log("Error fetching article: " . $e->getMessage());
+    }
+}
+
+if (!$article && isset($_GET['debug'])) {
+    echo "Debug Info: ID=$id. DB Connection: " . ($db ? "OK" : "Failed");
+}
 
 // Helpers
 function getImg($path)
