@@ -692,7 +692,7 @@
             if (!url) finalUrl = '';
             else if (url.startsWith('http') || url.startsWith('data:')) finalUrl = url;
             else if (url.startsWith('/')) finalUrl = url;
-            else if (url.startsWith('assets/')) finalUrl = '/' + url; // Root relative
+            else if (url.startsWith('assets/')) finalUrl = '/candelaria/' + url; // Root relative
 
             console.log(`[DEBUG] Image Path Fix: "${original}" -> "${finalUrl}"`);
             return finalUrl;

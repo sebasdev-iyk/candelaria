@@ -1,5 +1,29 @@
 <?php
-include_once '../../php-admin/src/Config/Database.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Robust Database Include
+$db_paths = [
+    __DIR__ . '/../../php-admin/src/Config/Database.php',       // Local / Standard
+    __DIR__ . '/../../candelaria-admin/src/Config/Database.php', // Plesk Alternative
+    $_SERVER['DOCUMENT_ROOT'] . '/php-admin/src/Config/Database.php',
+    $_SERVER['DOCUMENT_ROOT'] . '/candelaria-admin/src/Config/Database.php'
+];
+
+$db_included = false;
+foreach ($db_paths as $path) {
+    if (file_exists($path)) {
+        include_once $path;
+        $db_included = true;
+        break;
+    }
+}
+
+if (!$db_included) {
+    die("Error Critical: No se pudo encontrar el archivo de configuración de base de datos. Rutas probadas: " . implode(", ", $db_paths));
+}
+
 use Config\Database;
 
 $database = new Database();
