@@ -1,0 +1,285 @@
+/* Live Platform Styles */
+:root {
+  --live-bg: #0f172a;
+  --live-panel: #1e293b;
+  --live-accent: #fbbf24;
+  --live-purple: #4c1d95;
+  --live-text: #e2e8f0;
+  --live-border: #334155;
+}
+
+body {
+  background-color: var(--live-bg);
+  color: var(--live-text);
+  overflow-x: hidden;
+}
+
+/* Layout Grid */
+.live-container {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  grid-template-rows: calc(100vh - 80px);
+  /* Adjust for header height */
+  height: calc(100vh - 80px);
+}
+
+/* Video Section */
+.main-stage {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 0;
+  /* Removed padding for edge-to-edge video */
+  background: #000;
+}
+
+.video-player-container {
+  width: 100%;
+  /* Maximize height but respect 16:9 or viewport */
+  aspect-ratio: 16/9;
+  max-height: calc(100vh - 80px);
+  /* Fit within viewport minus header */
+  background: #000;
+  border-radius: 0;
+  /* Remove radius for theater feel */
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+}
+
+/* Container for info below video */
+.stage-content {
+  padding: 20px 30px;
+  background: var(--live-bg);
+  flex: 1;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.live-badge-overlay {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #dc2626;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.viewers-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+}
+
+/* Stream Info */
+.stream-info {
+  margin-bottom: 30px;
+}
+
+.stream-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.streamer-profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.streamer-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--live-accent);
+}
+
+/* Chat Section */
+.chat-sidebar {
+  grid-column: 2;
+  background: var(--live-panel);
+  border-left: 1px solid var(--live-border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chat-header {
+  padding: 15px;
+  border-bottom: 1px solid var(--live-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-message {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  animation: fadeIn 0.3s ease;
+}
+
+.chat-user {
+  font-weight: 700;
+  color: var(--live-accent);
+  /* Default user color */
+  margin-right: 5px;
+}
+
+.chat-input-area {
+  padding: 15px;
+  border-top: 1px solid var(--live-border);
+  background: var(--live-panel);
+}
+
+.chat-input {
+  width: 100%;
+  background: #0f172a;
+  border: 1px solid var(--live-border);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.chat-input:focus {
+  border-color: var(--live-accent);
+}
+
+/* Recommended Section */
+.recommended-section {
+  margin-top: 20px;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  border-left: 4px solid var(--live-accent);
+  padding-left: 10px;
+}
+
+.channels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.channel-card {
+  background: var(--live-panel);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.channel-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-thumb {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  position: relative;
+}
+
+.card-live-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #dc2626;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.card-info {
+  padding: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.card-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.card-details h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: white;
+  margin-top: -2px;
+}
+
+.card-details p {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .live-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 500px;
+    height: auto;
+  }
+
+  .chat-sidebar {
+    grid-column: 1;
+    height: 500px;
+    border-left: none;
+    border-top: 1px solid var(--live-border);
+  }
+}

@@ -1,0 +1,24 @@
+[
+    {
+        "id": "yt_test_01",
+        "title": "🔴 TRANSIMISIÓN DE PRUEBA: Candelaria 2026",
+        "streamer": "Canal de Prueba",
+        "platform": "youtube",
+        "embed_id": "aSxjLz3xUgs",
+        "thumbnail": "https://img.youtube.com/vi/aSxjLz3xUgs/maxresdefault.jpg",
+        "viewers": 1200,
+        "status": "live",
+        "category": "Prueba"
+    },
+    {
+        "id": "fb_test_01",
+        "title": "Video de Facebook - Candelaria Share",
+        "streamer": "Facebook User",
+        "platform": "facebook",
+        "embed_id": "https://web.facebook.com/share/v/1CG6idgrkt/",
+        "thumbnail": "https://img.freepik.com/free-photo/people-celebrating-carnival_23-2151161726.jpg",
+        "viewers": 850,
+        "status": "live",
+        "category": "Redes"
+    }
+]

@@ -692,6 +692,73 @@
     <div class="video-overlay"></div>
   </div>
 
+  <!-- Transition Overlay (Hidden by default) -->
+  <div id="page-transition" class="fixed inset-0 z-[100] pointer-events-none opacity-0 transition-opacity duration-300">
+    <!-- Left Panel (Purple) -->
+    <div id="trans-left" class="absolute inset-y-0 left-0 w-1/2 bg-candelaria-purple transform -translate-x-full transition-transform duration-700 ease-in-out z-20 flex items-center justify-end pr-10 border-r-4 border-candelaria-gold">
+        <div class="bg-white/10 p-6 rounded-full blur-3xl w-64 h-64 absolute right-[-8rem]"></div>
+    </div>
+    
+    <!-- Right Panel (Purple) -->
+    <div id="trans-right" class="absolute inset-y-0 right-0 w-1/2 bg-candelaria-purple transform translate-x-full transition-transform duration-700 ease-in-out z-20 flex items-center justify-start pl-10 border-l-4 border-candelaria-gold">
+        <div class="bg-white/10 p-6 rounded-full blur-3xl w-64 h-64 absolute left-[-8rem]"></div>
+    </div>
+
+    <!-- Center Image (Virgin) -->
+    <div id="trans-image-container" class="absolute inset-0 z-30 flex items-center justify-center opacity-0 scale-90 transition-all duration-500 delay-300">
+        <div class="relative">
+            <div class="absolute inset-0 bg-candelaria-gold blur-[60px] opacity-50 rounded-full animate-pulse"></div>
+            <img src="./principal/virgencandelariaa.png" alt="Transition" class="h-64 md:h-96 w-auto object-contain drop-shadow-[0_0_30px_rgba(251,191,36,0.6)] relative z-10 transform hover:scale-105 transition-transform">
+            <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                <span class="text-white font-bold text-2xl tracking-[0.2em] uppercase font-heading text-shadow-glow">Conectando...</span>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    // Transition Logic
+    function playTransition(targetUrl) {
+        const overlay = document.getElementById('page-transition');
+        const left = document.getElementById('trans-left');
+        const right = document.getElementById('trans-right');
+        const img = document.getElementById('trans-image-container');
+
+        // Show overlay wrapper
+        overlay.classList.remove('opacity-0');
+        overlay.classList.add('opacity-100', 'pointer-events-auto');
+
+        // Slide animation (Close curtains)
+        requestAnimationFrame(() => {
+            left.classList.remove('-translate-x-full');
+            right.classList.remove('translate-x-full');
+            
+            // Show Image
+            setTimeout(() => {
+                img.classList.remove('opacity-0', 'scale-90');
+                img.classList.add('opacity-100', 'scale-100');
+            }, 300);
+
+            // Redirect
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 2000); // 2 seconds to admire the animation
+        });
+    }
+
+    // Attach to Live Button
+    document.addEventListener('DOMContentLoaded', () => {
+        const liveBtns = document.querySelectorAll('.btn-live');
+        liveBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = btn.getAttribute('href');
+                playTransition(target);
+            });
+        });
+    });
+  </script>
+
   <!-- Header Mejorado -->
   <!-- Header Section - Standardized with EN VIVO Style -->
   <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-40">
@@ -721,7 +788,7 @@
           <?= getAuthButtonHTML() ?>
 
           <!-- EN VIVO Button -->
-          <a href="./horarios_y_danzas/index.php" class="btn-live group">
+          <a href="./live-platform/index.php" class="btn-live group">
             <div class="live-dot"></div>
             <span class="tracking-wider">EN TIEMPO REAL</span>
           </a>
