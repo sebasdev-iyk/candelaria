@@ -185,6 +185,74 @@ if ($method === 'GET' && $action === 'messages') {
         'message' => $newMessage
     ]);
 
+} elseif ($action === 'heartbeat') {
+    // Register viewer presence (heartbeat)
+    $streamId = isset($_GET['stream_id']) ? $_GET['stream_id'] : 'default';
+    $viewersFile = __DIR__ . '/../live-platform/data/viewers.json';
+
+    // Generate unique viewer ID from IP + User Agent
+    $viewerId = md5($_SERVER['REMOTE_ADDR'] . ($_SERVER['HTTP_USER_AGENT'] ?? ''));
+
+    // Read current viewers
+    $viewers = [];
+    if (file_exists($viewersFile)) {
+        $content = file_get_contents($viewersFile);
+        $viewers = json_decode($content, true) ?: [];
+    }
+
+    // Initialize stream viewers if not exists
+    if (!isset($viewers[$streamId])) {
+        $viewers[$streamId] = [];
+    }
+
+    // Update viewer timestamp
+    $viewers[$streamId][$viewerId] = time();
+
+    // Clean old viewers (inactive for more than 30 seconds)
+    $cutoffTime = time() - 30;
+    foreach ($viewers as $stream => &$streamViewers) {
+        $streamViewers = array_filter($streamViewers, function ($timestamp) use ($cutoffTime) {
+            return $timestamp > $cutoffTime;
+        });
+    }
+
+    // Save viewers
+    file_put_contents($viewersFile, json_encode($viewers, JSON_PRETTY_PRINT));
+
+    // Count active viewers for this stream
+    $activeCount = count($viewers[$streamId] ?? []);
+
+    echo json_encode([
+        'success' => true,
+        'viewers' => $activeCount
+    ]);
+
+} elseif ($action === 'viewers') {
+    // Get viewer count without registering
+    $streamId = isset($_GET['stream_id']) ? $_GET['stream_id'] : 'default';
+    $viewersFile = __DIR__ . '/../live-platform/data/viewers.json';
+
+    $viewers = [];
+    if (file_exists($viewersFile)) {
+        $content = file_get_contents($viewersFile);
+        $viewers = json_decode($content, true) ?: [];
+    }
+
+    // Clean old viewers
+    $cutoffTime = time() - 30;
+    if (isset($viewers[$streamId])) {
+        $viewers[$streamId] = array_filter($viewers[$streamId], function ($timestamp) use ($cutoffTime) {
+            return $timestamp > $cutoffTime;
+        });
+    }
+
+    $activeCount = count($viewers[$streamId] ?? []);
+
+    echo json_encode([
+        'success' => true,
+        'viewers' => $activeCount
+    ]);
+
 } else {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Acción no válida']);

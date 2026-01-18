@@ -31,6 +31,38 @@
             "message": "csmr no va a funcionar en plesk",
             "color": "#8b5cf6",
             "timestamp": 1768776361
+        },
+        {
+            "id": 5,
+            "user_id": 6,
+            "user": "prueba",
+            "message": "siuuuuuuuuuuuu",
+            "color": "#8b5cf6",
+            "timestamp": 1768777911
+        },
+        {
+            "id": 6,
+            "user_id": 6,
+            "user": "prueba",
+            "message": "ho",
+            "color": "#8b5cf6",
+            "timestamp": 1768778184
+        },
+        {
+            "id": 7,
+            "user_id": 6,
+            "user": "prueba",
+            "message": "oaoaooa",
+            "color": "#8b5cf6",
+            "timestamp": 1768778187
+        },
+        {
+            "id": 8,
+            "user_id": 1,
+            "user": "sebas",
+            "message": "oa como estar",
+            "color": "#ec4899",
+            "timestamp": 1768778194
         }
     ]
 }

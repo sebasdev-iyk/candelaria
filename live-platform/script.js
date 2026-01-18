@@ -279,18 +279,31 @@ function scrollToBottom() {
     }
 }
 
-/* --- Video Controls --- */
+/* --- Real Viewer Counter with Heartbeat --- */
 function initVideoControls() {
     const viewerCount = document.getElementById('count-val');
     if (!viewerCount) return;
 
-    let count = parseInt(viewerCount.textContent.replace(/,/g, '')) || 15400;
+    console.log('[Viewers] Iniciando sistema de heartbeat para stream:', streamId);
 
-    setInterval(() => {
-        const change = Math.floor(Math.random() * 50) - 20;
-        count = Math.max(100, count + change);
-        viewerCount.textContent = count.toLocaleString();
-    }, 5000);
+    // Send heartbeat immediately and every 10 seconds
+    sendHeartbeat();
+    setInterval(sendHeartbeat, 10000);
+
+    // Update viewer count display
+    async function sendHeartbeat() {
+        try {
+            const response = await fetch(`${CHAT_API_BASE}?action=heartbeat&stream_id=${streamId}`);
+            const data = await response.json();
+
+            if (data.success && typeof data.viewers === 'number') {
+                viewerCount.textContent = data.viewers.toLocaleString();
+                console.log('[Viewers] Actualizado:', data.viewers);
+            }
+        } catch (error) {
+            console.error('[Viewers] Error en heartbeat:', error);
+        }
+    }
 }
 
 /* --- Follow Button --- */
