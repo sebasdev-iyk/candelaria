@@ -168,7 +168,7 @@ function timeAgo($datetime)
                     </nav>
                     <?php include '../includes/auth-header.php'; ?>
                     <?= getAuthButtonHTML() ?>
-                    <a href="../horarios_y_danzas/index.php" class="btn-live text-white font-bold no-underline">
+                    <a href="../live-platform/index.php" class="btn-live text-white font-bold no-underline">
                         <div class="live-dot"></div> EN VIVO
                     </a>
                 </div>

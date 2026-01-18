@@ -266,7 +266,7 @@
                     <!-- User Auth Button -->
                     <?= getAuthButtonHTML() ?>
 
-                    <a href="../horarios_y_danzas/index.php" class="btn-live">
+                    <a href="../live-platform/index.php" class="btn-live">
                         <div class="live-dot"></div>
                         <span>EN TIEMPO REAL</span>
                     </a>
