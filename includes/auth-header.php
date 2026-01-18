@@ -88,9 +88,8 @@ HTML;
 function getAuthButtonHTML()
 {
     return <<<HTML
-    <button id="auth-user-btn" onclick="toggleAuthDropdown()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-all border border-white/20">
+    <button id="auth-user-btn" onclick="toggleAuthDropdown()" class="btn-profile" style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #475569, #1e293b); display: flex; align-items: center; justify-content: center; color: #fbbf24; font-size: 1.2rem; border: 2px solid rgba(251, 191, 36, 0.3); transition: all 0.3s ease; cursor: pointer;" title="Mi Cuenta">
         <i data-lucide="user" class="w-5 h-5"></i>
-        <span id="auth-user-text">Iniciar Sesión</span>
     </button>
 HTML;
 }
@@ -126,18 +125,23 @@ function getAuthJS($apiBasePath = '')
     
     function updateAuthUI() {
         const btn = document.getElementById('auth-user-btn');
-        const text = document.getElementById('auth-user-text');
         const dropdownName = document.getElementById('dropdown-user-name');
         const dropdownEmail = document.getElementById('dropdown-user-email');
         
         if (currentUser) {
-            if (text) text.textContent = currentUser.nombre.split(' ')[0];
-            if (btn) btn.classList.add('bg-purple-600/30');
+            // Logged in: golden border
+            if (btn) {
+                btn.style.borderColor = '#fbbf24';
+                btn.style.boxShadow = '0 0 15px rgba(251, 191, 36, 0.3)';
+            }
             if (dropdownName) dropdownName.textContent = currentUser.nombre;
             if (dropdownEmail) dropdownEmail.textContent = currentUser.email;
         } else {
-            if (text) text.textContent = 'Iniciar Sesión';
-            if (btn) btn.classList.remove('bg-purple-600/30');
+            // Not logged in: subtle border
+            if (btn) {
+                btn.style.borderColor = 'rgba(251, 191, 36, 0.3)';
+                btn.style.boxShadow = 'none';
+            }
         }
         
         if (typeof lucide !== 'undefined') lucide.createIcons();

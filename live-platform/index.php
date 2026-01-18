@@ -267,6 +267,13 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
             height: 100%;
         }
     </style>
+
+    <!-- Lucide Icons for Auth -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Auth Modal and Dropdown -->
+    <?= getAuthModalHTML() ?>
+    <?= getAuthJS('../') ?>
 </body>
 
 </html>

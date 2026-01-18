@@ -372,6 +372,7 @@
 </head>
 
 <body class="bg-gray-50 text-gray-800">
+    <?php include '../includes/auth-header.php'; ?>
 
     <!-- Header Section - Standardized with EN TIEMPO REAL Style -->
     <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-40">
@@ -393,6 +394,8 @@
                         <a href="index.php" class="nav-link-custom active">Horarios</a>
                         <a href="../noticias/index.php" class="nav-link-custom">Noticias</a>
                     </nav>
+                    <!-- User Auth Button -->
+                    <?= getAuthButtonHTML() ?>
                     <a href="index.php" class="btn-live">
                         <div class="live-dot"></div>
                         <span>EN TIEMPO REAL</span>
@@ -1968,6 +1971,10 @@
     <link rel="stylesheet" href="../assets/css/chatbot-widget.css">
     <div id="chatbot-widget"></div>
     <script src="../assets/js/chatbot-widget.js"></script>
+
+    <!-- Auth Modal and Dropdown -->
+    <?= getAuthModalHTML() ?>
+    <?= getAuthJS('../') ?>
 </body>
 
 </html>
