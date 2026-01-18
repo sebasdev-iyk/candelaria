@@ -1,0 +1,16 @@
+# Enable Rewrite Engine
+RewriteEngine On
+
+# Pass Authorization header to PHP
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+# Also try this method for CGI/FastCGI
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+# Handle CORS for API
+<FilesMatch "\.(php)$">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+</FilesMatch>

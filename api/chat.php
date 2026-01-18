@@ -56,21 +56,45 @@ function validateToken($token, $db)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-// Get Authorization header
+// Get Authorization header (with multiple fallback methods for shared hosting)
 function getAuthHeader()
 {
     $headers = null;
+    $tried = [];
+
+    // Method 1: Direct $_SERVER
     if (isset($_SERVER['Authorization'])) {
         $headers = trim($_SERVER["Authorization"]);
-    } else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        $tried[] = 'Authorization direct';
+    }
+    // Method 2: HTTP_AUTHORIZATION (most common)
+    else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
-    } elseif (function_exists('apache_request_headers')) {
+        $tried[] = 'HTTP_AUTHORIZATION';
+    }
+    // Method 3: REDIRECT_HTTP_AUTHORIZATION (for some Apache configs)
+    else if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+        $headers = trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
+        $tried[] = 'REDIRECT_HTTP_AUTHORIZATION';
+    }
+    // Method 4: apache_request_headers()
+    else if (function_exists('apache_request_headers')) {
         $requestHeaders = apache_request_headers();
-        $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
-        if (isset($requestHeaders['Authorization'])) {
-            $headers = trim($requestHeaders['Authorization']);
+        if ($requestHeaders) {
+            // Try case-insensitive search
+            foreach ($requestHeaders as $key => $value) {
+                if (strtolower($key) === 'authorization') {
+                    $headers = trim($value);
+                    $tried[] = 'apache_request_headers';
+                    break;
+                }
+            }
         }
     }
+
+    // Debug logging (remove after fixing)
+    error_log("[Chat API] Auth header search - Tried: " . implode(', ', $tried) . " | Found: " . ($headers ? 'YES' : 'NO'));
+
     return $headers;
 }
 
