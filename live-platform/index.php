@@ -222,13 +222,16 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
             </div>
 
             <div id="chat-messages" class="chat-messages custom-scrollbar">
-                <!-- Messages injected by JS -->
+                <!-- Messages loaded via API -->
             </div>
 
+            <!-- Hidden stream ID for JS -->
+            <input type="hidden" id="stream-id" value="<?= htmlspecialchars($currentStream['id'] ?? 'default') ?>">
+
             <div class="chat-input-area">
-                <input type="text" id="chat-input" class="chat-input" placeholder="Enviar mensaje...">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Enviar mensaje..." maxlength="200">
                 <div class="flex justify-between items-center mt-2 px-1">
-                    <div class="text-xs text-gray-500">0/200</div>
+                    <div id="char-counter" class="text-xs text-gray-500">0/200</div>
                     <button class="text-candelaria-gold hover:text-white transition-colors">
                         <i class="fas fa-smile text-lg"></i>
                     </button>
@@ -237,9 +240,6 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
         </aside>
 
     </div>
-
-    <!-- Live Script -->
-    <script src="./script.js"></script>
 
     <style>
         .custom-scrollbar::-webkit-scrollbar {
@@ -271,9 +271,12 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
     <!-- Lucide Icons for Auth -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Auth Modal and Dropdown -->
+    <!-- Auth Modal and Dropdown (MUST be before live script) -->
     <?= getAuthModalHTML() ?>
     <?= getAuthJS('../') ?>
+
+    <!-- Live Script (after auth is loaded) -->
+    <script src="./script.js?v=<?= time() ?>"></script>
 </body>
 
 </html>

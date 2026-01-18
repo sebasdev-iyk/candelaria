@@ -1,0 +1,191 @@
+<?php
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+// Include database and auth helpers
+include_once '../src/Config/Database.php';
+use Config\Database;
+
+$database = new Database();
+$db = $database->connect('mipuno_candelaria');
+
+// Chat messages file path
+$chatFile = __DIR__ . '/../live-platform/data/chat_messages.json';
+
+// Helper: Read chat messages
+function readChatMessages($file)
+{
+    if (!file_exists($file)) {
+        return [];
+    }
+    $content = file_get_contents($file);
+    return json_decode($content, true) ?: [];
+}
+
+// Helper: Write chat messages
+function writeChatMessages($file, $messages)
+{
+    file_put_contents($file, json_encode($messages, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+}
+
+// Helper: Validate token and get user
+function validateToken($token, $db)
+{
+    if (!$token)
+        return null;
+
+    $decoded = base64_decode($token);
+    $parts = explode(':', $decoded);
+
+    if (count($parts) < 3)
+        return null;
+
+    $clientId = intval($parts[0]);
+
+    $stmt = $db->prepare("SELECT id, nombre, email FROM clientes WHERE id = :id");
+    $stmt->bindParam(':id', $clientId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+// Get Authorization header
+function getAuthHeader()
+{
+    $headers = null;
+    if (isset($_SERVER['Authorization'])) {
+        $headers = trim($_SERVER["Authorization"]);
+    } else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
+    } elseif (function_exists('apache_request_headers')) {
+        $requestHeaders = apache_request_headers();
+        $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
+        if (isset($requestHeaders['Authorization'])) {
+            $headers = trim($requestHeaders['Authorization']);
+        }
+    }
+    return $headers;
+}
+
+// Generate a random color for new users
+function getUserColor($name)
+{
+    $colors = ['#ef4444', '#3b82f6', '#10b981', '#8b5cf6', '#f59e0b', '#ec4899', '#06b6d4', '#f97316'];
+    $hash = crc32($name);
+    return $colors[abs($hash) % count($colors)];
+}
+
+$method = $_SERVER['REQUEST_METHOD'];
+$action = isset($_GET['action']) ? $_GET['action'] : '';
+
+if ($method === 'GET' && $action === 'messages') {
+    // Get messages for a stream
+    $streamId = isset($_GET['stream_id']) ? $_GET['stream_id'] : 'default';
+    $lastId = isset($_GET['last_id']) ? intval($_GET['last_id']) : 0;
+
+    $allMessages = readChatMessages($chatFile);
+    $streamMessages = isset($allMessages[$streamId]) ? $allMessages[$streamId] : [];
+
+    // Filter messages after lastId for polling
+    if ($lastId > 0) {
+        $streamMessages = array_filter($streamMessages, function ($msg) use ($lastId) {
+            return $msg['id'] > $lastId;
+        });
+        $streamMessages = array_values($streamMessages);
+    }
+
+    // Return only last 50 messages (or new ones if polling)
+    $streamMessages = array_slice($streamMessages, -50);
+
+    echo json_encode([
+        'success' => true,
+        'messages' => $streamMessages
+    ]);
+
+} elseif ($method === 'POST' && $action === 'send') {
+    // Send a message (requires auth)
+    $authHeader = getAuthHeader();
+
+    if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+        http_response_code(401);
+        echo json_encode(['success' => false, 'message' => 'Debes iniciar sesión para enviar mensajes']);
+        exit();
+    }
+
+    $user = validateToken($matches[1], $db);
+
+    if (!$user) {
+        http_response_code(401);
+        echo json_encode(['success' => false, 'message' => 'Token inválido. Por favor inicia sesión nuevamente.']);
+        exit();
+    }
+
+    // Parse request body
+    $data = json_decode(file_get_contents("php://input"));
+
+    if (!isset($data->message) || trim($data->message) === '') {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'El mensaje no puede estar vacío']);
+        exit();
+    }
+
+    $streamId = isset($data->stream_id) ? $data->stream_id : 'default';
+    $messageText = htmlspecialchars(trim($data->message));
+
+    // Limit message length
+    if (strlen($messageText) > 200) {
+        $messageText = substr($messageText, 0, 200);
+    }
+
+    // Read existing messages
+    $allMessages = readChatMessages($chatFile);
+
+    if (!isset($allMessages[$streamId])) {
+        $allMessages[$streamId] = [];
+    }
+
+    // Get last ID
+    $lastId = 0;
+    foreach ($allMessages as $stream => $msgs) {
+        foreach ($msgs as $msg) {
+            if ($msg['id'] > $lastId)
+                $lastId = $msg['id'];
+        }
+    }
+
+    // Create new message
+    $newMessage = [
+        'id' => $lastId + 1,
+        'user_id' => $user['id'],
+        'user' => $user['nombre'],
+        'message' => $messageText,
+        'color' => getUserColor($user['nombre']),
+        'timestamp' => time()
+    ];
+
+    $allMessages[$streamId][] = $newMessage;
+
+    // Keep only last 100 messages per stream
+    if (count($allMessages[$streamId]) > 100) {
+        $allMessages[$streamId] = array_slice($allMessages[$streamId], -100);
+    }
+
+    // Save messages
+    writeChatMessages($chatFile, $allMessages);
+
+    echo json_encode([
+        'success' => true,
+        'message' => $newMessage
+    ]);
+
+} else {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Acción no válida']);
+}

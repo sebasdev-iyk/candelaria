@@ -1,100 +1,310 @@
-/* Live Platform Scripts */
+/* Live Platform Scripts - Real Chat */
+
+// Variables que se inicializan después de DOMContentLoaded
+let chatMessages = null;
+let chatInput = null;
+let streamId = 'default';
+let lastMessageId = 0;
+let chatIsAuthenticated = false;
+
+// Use global currentUser from auth-header.php (don't redeclare!)
+// let currentUser is already defined in auth-header.php
+
+// API base path for chat (renamed to avoid conflict with auth API_BASE)
+const CHAT_API_BASE = '../api/chat.php';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Inicializar elementos del DOM
+    chatMessages = document.getElementById('chat-messages');
+    chatInput = document.getElementById('chat-input');
+    streamId = document.getElementById('stream-id')?.value || 'default';
+
+    console.log('[Chat] Inicializando chat para stream:', streamId);
+    console.log('[Chat] chatMessages elemento:', chatMessages ? 'OK' : 'NO ENCONTRADO');
+    console.log('[Chat] chatInput elemento:', chatInput ? 'OK' : 'NO ENCONTRADO');
+
     initChat();
     initVideoControls();
 });
 
-/* --- Chat Simulation --- */
-const chatMessages = document.getElementById('chat-messages');
-const chatInput = document.getElementById('chat-input');
+// Check auth status from localStorage
+function checkAuthStatus() {
+    const token = localStorage.getItem('clientToken');
+    const userData = localStorage.getItem('clientUser');
 
-const users = [
-    { name: 'JuanPerez', color: '#ef4444' },
-    { name: 'MariaDanza', color: '#3b82f6' },
-    { name: 'CandelariaFan', color: '#fbbf24' },
-    { name: 'PunoTierraMia', color: '#10b981' },
-    { name: 'CaporalW', color: '#8b5cf6' },
-    { name: 'DiabladaKing', color: '#f59e0b' },
-    { name: 'TuristaLima', color: '#ec4899' }
-];
+    if (token && userData) {
+        chatIsAuthenticated = true;
+        // Update global currentUser if not set
+        if (typeof currentUser === 'undefined' || currentUser === null) {
+            window.currentUser = JSON.parse(userData);
+        }
+        updateChatInputState(true);
+    } else {
+        chatIsAuthenticated = false;
+        updateChatInputState(false);
+    }
+}
 
-const messages = [
-    "¡Qué hermosa entrada! 💃🕺",
-    "Saludos desde Lima ❤️",
-    "¡Viva la Virgen de la Candelaria! 🙏",
-    "¿A qué hora sale la morenada?",
-    "Increíble los trajes este año 👏",
-    "Puno capital del folclore 🇵🇪",
-    "¡Esoooo! Dale con todo",
-    "Saludos a la familia Mamani en Juliaca",
-    "¡Qué energía! 🔥",
-    "La banda está espectacular 🎺"
-];
+// Update chat input based on auth state
+function updateChatInputState(loggedIn) {
+    const charCounter = document.getElementById('char-counter');
+
+    if (loggedIn && currentUser) {
+        chatInput.placeholder = `Chatear como ${currentUser.nombre}...`;
+        chatInput.disabled = false;
+        chatInput.classList.remove('cursor-not-allowed', 'opacity-50');
+    } else {
+        chatInput.placeholder = 'Inicia sesión para chatear...';
+        chatInput.disabled = false; // Keep enabled to trigger login modal
+        chatInput.classList.add('cursor-pointer');
+    }
+}
 
 function initChat() {
-    // Add initial messages
-    for (let i = 0; i < 5; i++) {
-        addRandomMessage();
-    }
+    checkAuthStatus();
 
-    // Auto add messages
+    // Load initial messages
+    loadMessages();
+
+    // Poll for new messages every 2 seconds
     setInterval(() => {
-        if (Math.random() > 0.6) {
-            addRandomMessage();
-        }
+        pollNewMessages();
     }, 2000);
 
     // Handle user input
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter' && chatInput.value.trim() !== '') {
-            addUserMessage(chatInput.value);
-            chatInput.value = '';
+            handleSendMessage();
         }
     });
 
-    // Scroll to bottom
-    scrollToBottom();
+    // If not logged in, clicking input opens auth modal
+    chatInput.addEventListener('focus', () => {
+        checkAuthStatus(); // Recheck in case user logged in
+
+        if (!chatIsAuthenticated) {
+            chatInput.blur();
+            // Try to open auth modal
+            if (typeof toggleAuthDropdown === 'function') {
+                toggleAuthDropdown();
+            }
+        }
+    });
+
+    // Listen for auth changes
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'clientToken' || e.key === 'clientUser') {
+            checkAuthStatus();
+        }
+    });
+
+    // Also check periodically for auth changes
+    setInterval(checkAuthStatus, 3000);
 }
 
-function addRandomMessage() {
-    const user = users[Math.floor(Math.random() * users.length)];
-    const text = messages[Math.floor(Math.random() * messages.length)];
-    
-    const msgElement = document.createElement('div');
-    msgElement.className = 'chat-message';
-    msgElement.innerHTML = `<span class="chat-user" style="color:${user.color}">${user.name}:</span> ${text}`;
-    
-    chatMessages.appendChild(msgElement);
-    scrollToBottom();
+// Load initial messages
+async function loadMessages() {
+    console.log('[Chat] loadMessages() llamado, streamId:', streamId);
+    try {
+        const url = `${CHAT_API_BASE}?action=messages&stream_id=${streamId}`;
+        console.log('[Chat] Fetching:', url);
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log('[Chat] Respuesta loadMessages:', data);
+
+        if (data.success && data.messages) {
+            chatMessages.innerHTML = '';
+            data.messages.forEach(msg => {
+                addMessageToChat(msg);
+                if (msg.id > lastMessageId) lastMessageId = msg.id;
+            });
+            scrollToBottom();
+        }
+    } catch (error) {
+        console.error('Error loading messages:', error);
+        // Show fallback messages on error
+        addSystemMessage('Conectando al chat...');
+    }
 }
 
-function addUserMessage(text) {
+// Poll for new messages
+async function pollNewMessages() {
+    try {
+        const url = `${CHAT_API_BASE}?action=messages&stream_id=${streamId}&last_id=${lastMessageId}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        // Solo log si hay mensajes nuevos
+        if (data.success && data.messages && data.messages.length > 0) {
+            console.log('[Chat] Nuevos mensajes recibidos:', data.messages.length);
+            data.messages.forEach(msg => {
+                addMessageToChat(msg);
+                if (msg.id > lastMessageId) lastMessageId = msg.id;
+            });
+            scrollToBottom();
+        }
+    } catch (error) {
+        console.error('Error polling messages:', error);
+    }
+}
+
+// Send message
+async function handleSendMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    console.log('[Chat] Enviando mensaje:', text);
+
+    // Re-check auth
+    checkAuthStatus();
+
+    if (!chatIsAuthenticated) {
+        console.log('[Chat] No autenticado, abriendo modal');
+        if (typeof toggleAuthDropdown === 'function') {
+            toggleAuthDropdown();
+        }
+        return;
+    }
+
+    const token = localStorage.getItem('clientToken');
+    console.log('[Chat] Token presente:', !!token);
+
+    try {
+        const requestBody = {
+            message: text,
+            stream_id: streamId
+        };
+        console.log('[Chat] Request body:', requestBody);
+
+        const response = await fetch(`${CHAT_API_BASE}?action=send`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        const data = await response.json();
+        console.log('[Chat] Respuesta del servidor:', data, 'Status:', response.status);
+
+        if (data.success && data.message) {
+            // Message will appear via polling, but add immediately for responsiveness
+            addMessageToChat(data.message, true);
+            lastMessageId = data.message.id;
+            chatInput.value = '';
+            updateCharCounter(0);
+            scrollToBottom();
+        } else {
+            // Show error
+            if (data.message) {
+                alert(data.message);
+            }
+            // If unauthorized, refresh auth state
+            if (response.status === 401) {
+                localStorage.removeItem('clientToken');
+                localStorage.removeItem('clientUser');
+                checkAuthStatus();
+            }
+        }
+    } catch (error) {
+        console.error('Error sending message:', error);
+        alert('Error al enviar mensaje. Intenta de nuevo.');
+    }
+}
+
+// Add message to chat display
+function addMessageToChat(msg, isOwn = false) {
     const msgElement = document.createElement('div');
     msgElement.className = 'chat-message';
-    msgElement.style.background = 'rgba(255,255,255,0.05)';
-    msgElement.style.padding = '4px 8px';
-    msgElement.style.borderRadius = '4px';
-    // User is always gold/accent
-    msgElement.innerHTML = `<span class="chat-user" style="color:#fbbf24">Tú:</span> ${text}`;
-    
+    msgElement.dataset.id = msg.id;
+
+    if (isOwn || (currentUser && msg.user_id === currentUser.id)) {
+        msgElement.style.background = 'rgba(251, 191, 36, 0.1)';
+        msgElement.style.padding = '4px 8px';
+        msgElement.style.borderRadius = '4px';
+        msgElement.style.borderLeft = '2px solid #fbbf24';
+    }
+
+    const userColor = msg.color || '#fbbf24';
+    msgElement.innerHTML = `<span class="chat-user" style="color:${userColor}">${escapeHtml(msg.user)}:</span> ${escapeHtml(msg.message)}`;
+
     chatMessages.appendChild(msgElement);
-    scrollToBottom();
+}
+
+// Add system message
+function addSystemMessage(text) {
+    const msgElement = document.createElement('div');
+    msgElement.className = 'chat-message';
+    msgElement.style.color = '#94a3b8';
+    msgElement.style.fontStyle = 'italic';
+    msgElement.innerHTML = `<i class="fas fa-info-circle"></i> ${text}`;
+    chatMessages.appendChild(msgElement);
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Update character counter
+function updateCharCounter(length) {
+    const counter = document.getElementById('char-counter');
+    if (counter) {
+        counter.textContent = `${length}/200`;
+        if (length > 180) {
+            counter.style.color = '#ef4444';
+        } else {
+            counter.style.color = '#6b7280';
+        }
+    }
+}
+
+// Character counter on input
+if (chatInput) {
+    chatInput.addEventListener('input', (e) => {
+        const length = e.target.value.length;
+        if (length > 200) {
+            e.target.value = e.target.value.substring(0, 200);
+        }
+        updateCharCounter(Math.min(length, 200));
+    });
 }
 
 function scrollToBottom() {
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+    if (chatMessages) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
 }
 
-/* --- Video Controls Mock --- */
+/* --- Video Controls --- */
 function initVideoControls() {
-    // Viewer count simulation
-    const viewerCount = document.getElementById('viewer-count');
-    let count = 15400;
-    
+    const viewerCount = document.getElementById('count-val');
+    if (!viewerCount) return;
+
+    let count = parseInt(viewerCount.textContent.replace(/,/g, '')) || 15400;
+
     setInterval(() => {
         const change = Math.floor(Math.random() * 50) - 20;
-        count += change;
-        viewerCount.innerText = count.toLocaleString() + ' Viewers';
-    }, 3000);
+        count = Math.max(100, count + change);
+        viewerCount.textContent = count.toLocaleString();
+    }, 5000);
+}
+
+/* --- Follow Button --- */
+function toggleFollow(btn) {
+    btn.classList.toggle('following');
+    const isFollowing = btn.classList.contains('following');
+
+    if (isFollowing) {
+        btn.innerHTML = '<i class="fas fa-heart text-red-500"></i> Siguiendo';
+        btn.classList.remove('bg-purple-600', 'hover:bg-purple-700');
+        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+    } else {
+        btn.innerHTML = '<i class="far fa-heart"></i> Seguir';
+        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+        btn.classList.add('bg-purple-600', 'hover:bg-purple-700');
+    }
 }
