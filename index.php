@@ -559,10 +559,11 @@
 
     @media (max-width: 768px) {
       .hero {
-        /* En móvil el header ocupa más espacio (~120px con menú expandido) */
-        height: calc(100vh - 120px);
-        max-height: calc(100vh - 120px);
-        padding-top: 2vh;
+        /* En móvil el header ocupa más espacio (~130px con banner + nav) */
+        height: calc(100vh - 130px);
+        max-height: calc(100vh - 130px);
+        gap: 2vh;
+        padding-top: 1vh;
         padding-bottom: 1vh;
       }
 
@@ -657,26 +658,28 @@
         font-size: 1rem;
       }
 
-      /* Scroll indicator responsive */
+      /* Scroll indicator responsive - más compacto */
       .scroll-indicator {
-        gap: 6px;
-        padding: 8px 12px;
+        gap: 4px;
+        padding: 6px 10px;
+        border-radius: 12px;
       }
 
       .scroll-text {
-        font-size: 0.65rem;
+        font-size: 0.55rem;
         letter-spacing: 0.5px;
         text-align: center;
-        padding: 0 5px;
+        padding: 0 3px;
       }
 
       .scroll-arrow {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
+        border-width: 2px;
       }
 
       .scroll-arrow i {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
       }
     }
 
@@ -763,24 +766,26 @@
         display: none;
       }
 
-      /* Scroll indicator - móvil pequeño */
+      /* Scroll indicator - móvil pequeño - ultra compacto */
       .scroll-indicator {
-        padding: 6px 10px;
-        gap: 4px;
+        padding: 5px 8px;
+        gap: 3px;
+        border-radius: 10px;
       }
 
       .scroll-text {
-        font-size: 0.6rem;
-        letter-spacing: 0.5px;
+        font-size: 0.5rem;
+        letter-spacing: 0.3px;
       }
 
       .scroll-arrow {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
+        border-width: 2px;
       }
 
       .scroll-arrow i {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
       }
     }
 
@@ -926,24 +931,24 @@
           <nav class="hidden md:flex items-center gap-2">
             <a href="./servicios/index.php" class="nav-link-custom">Servicios</a>
             <a href="./cultura/cultura.html" class="nav-link-custom">Cultura</a>
-              <a href="./horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
+            <a href="./horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
             <a href="./noticias/index.php" class="nav-link-custom">Noticias</a>
-            </nav>
+          </nav>
 
-            <?php include 'includes/auth-header.php'; ?>
-            <!-- User Auth Button -->
-            <?= getAuthButtonHTML() ?>
+          <?php include 'includes/auth-header.php'; ?>
+          <!-- User Auth Button -->
+          <?= getAuthButtonHTML() ?>
 
-            <!-- EN VIVO Button -->
-            <a href="./live-platform/index.php" class="btn-live group">
-              <div class="live-dot"></div>
-              <span class="tracking-wider">EN TIEMPO REAL</span>
-            </a>
+          <!-- EN VIVO Button -->
+          <a href="./live-platform/index.php" class="btn-live group">
+            <div class="live-dot"></div>
+            <span class="tracking-wider">EN TIEMPO REAL</span>
+          </a>
 
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-candelaria-gold transition-colors">
-              <i data-lucide="menu" class="w-8 h-8"></i>
-            </button>
+          <!-- Mobile Menu Button -->
+          <button id="mobile-menu-btn" class="md:hidden text-white hover:text-candelaria-gold transition-colors">
+            <i data-lucide="menu" class="w-8 h-8"></i>
+          </button>
         </div>
       </div>
     </div>
