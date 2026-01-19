@@ -4,30 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candelaria 2025 | Programación</title>
-
-    <!-- Tailwind CSS -->
+    <title>Candelaria 2026 | Programación Oficial</title>
+    <meta name="description"
+        content="Programa oficial de actividades de la Festividad Virgen de la Candelaria 2026 - Puno, Perú. Patrimonio UNESCO.">
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
-
-    <!-- Configuración de Tailwind y Estilos Personalizados -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         candelaria: {
-                            purple: '#4c1d95', // Color principal festivo
-                            gold: '#fbbf24',   // Detalles premium
-                            lake: '#0ea5e9',   // Lago Titicaca
-                            light: '#f5f3ff'   // Fondos suaves
+                            purple: '#4c1d95',
+                            gold: '#fbbf24',
+                            lake: '#0ea5e9',
+                            light: '#f5f3ff'
                         }
                     },
                     fontFamily: {
@@ -52,7 +46,6 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* Animaciones suaves */
         .fade-in {
             animation: fadeIn 0.3s ease-in-out;
         }
@@ -69,7 +62,6 @@
             }
         }
 
-        /* Scrollbar personalizado */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -87,7 +79,6 @@
             background: #94a3b8;
         }
 
-        /* EN TIEMPO REAL Button */
         .btn-live {
             position: relative;
             background: linear-gradient(135deg, #dc2626, #b91c1c);
@@ -187,7 +178,8 @@
             transition: width 0.3s ease;
         }
 
-        .nav-link-custom:hover::after {
+        .nav-link-custom:hover::after,
+        .nav-link-custom.active::after {
             width: 80%;
         }
 
@@ -195,18 +187,78 @@
             color: #fbbf24;
         }
 
-        .nav-link-custom.active::after {
-            width: 80%;
+        .event-card {
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1.5rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .btn-ver-detalles {
+            background: linear-gradient(135deg, #4c1d95, #7c3aed);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-ver-detalles:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 29, 149, 0.4);
         }
     </style>
 </head>
 
 <body class="bg-gray-50 text-gray-800">
-
     <!-- Header -->
     <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-40">
-        <div class="bg-purple-950 text-xs py-1 text-center text-purple-200">Festividad de la Virgen de la Candelaria
-            2025 - Del 2 al 11 de Febrero</div>
+        <div class="bg-purple-950 text-xs py-1 text-center text-purple-200">
+            🎉 LIX Festividad de la Virgen de la Candelaria 2026 - Patrimonio UNESCO 🎉
+        </div>
         <div class="w-full px-6 md:px-12 py-5">
             <div class="flex justify-between items-center">
                 <a href="../../index.php" class="flex items-center cursor-pointer group">
@@ -227,9 +279,8 @@
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu (Hidden by default) -->
         <div id="mobile-menu"
-            class="hidden md:hidden bg-candelaria-purple absolute top-full left-0 w-full shadow-lg border-t border-purple-800 z-30 transition-all duration-300">
+            class="hidden md:hidden bg-candelaria-purple absolute top-full left-0 w-full shadow-lg border-t border-purple-800 z-30">
             <nav class="flex flex-col p-6 space-y-4">
                 <a href="../../servicios/index.php"
                     class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Servicios</a>
@@ -242,12 +293,19 @@
         </div>
     </header>
 
+    <!-- Hero Banner -->
+    <div class="bg-gradient-to-r from-purple-900 via-purple-800 to-purple-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">✨ Programa de Actividades 2026 ✨</h1>
+            <p class="text-purple-200">Festividad Virgen de la Candelaria - Enero y Febrero 2026</p>
+        </div>
+    </div>
 
     <!-- Navigation Tabs -->
     <nav class="flex space-x-1 border-b border-gray-200 mb-6 overflow-x-auto pb-1 scrollbar-hide" aria-label="Tabs">
         <div class="flex space-x-1 min-w-max mx-auto">
             <button onclick="setActiveTab('programacion')" id="tab-programacion"
-                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-candelaria-purple text-candelaria-purple text-gray-900">
+                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-candelaria-purple text-candelaria-purple">
                 <i data-lucide="calendar" class="w-4 h-4"></i> Programación
             </button>
             <button onclick="setActiveTab('consultas')" id="tab-consultas"
@@ -266,204 +324,438 @@
     </nav>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="space-y-6">
-            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                <div class="p-5">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-bold text-gray-800">Enero - Febrero 2025</h2>
-                        <span class="text-sm text-gray-500">(12 eventos)</span>
+        <!-- ENERO 2026 -->
+        <div class="mb-10">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="bg-candelaria-purple text-white px-4 py-2 rounded-lg font-bold">ENERO 2026</div>
+                <div class="h-1 flex-1 bg-gradient-to-r from-candelaria-purple to-transparent rounded"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Congreso de Diablada -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://imgmedia.larepublica.pe/1000x590/larepublica/original/2024/02/03/diablada.webp"
+                        alt="Congreso de Diablada" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-800">CONGRESO</span>
+                            <span class="text-sm text-gray-500">14, 15 y 16 ENE</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Congreso de Diablada</h3>
+                        <p class="text-sm text-gray-600">Congreso Nacional e Internacional de la Diablada Puneña.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Puno, Perú</div>
+                            <button onclick="openModal('congreso-diablada')" class="btn-ver-detalles"><i
+                                    data-lucide="eye" class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div
-                            class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl">
-                            <div class="flex flex-col sm:flex-row">
-                                <div class="w-full sm:w-48 h-48 flex-shrink-0 overflow-hidden">
-                                    <img src="https://files.hozana.org/203582-novena-a-santa-rita-de-cascia!990x427.webp"
-                                        alt="Inicio de Novena" class="w-full h-full object-cover">
-                                </div>
-                                <div class="p-5 flex-1 flex flex-col justify-between">
-                                    <div>
-                                        <div class="flex justify-between items-start">
-                                            <h3 class="text-lg font-bold text-gray-900">Inicio de Novena</h3>
-                                            <span
-                                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800">
-                                                RELIGIOSO
-                                            </span>
-                                        </div>
-                                        <p class="text-sm text-gray-500 mt-1">24 ENE • VIE • 19:00</p>
-                                    </div>
-                                    <div class="flex justify-between items-center mt-4">
-                                        <button
-                                            class="px-4 py-2 bg-candelaria-purple text-white rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors">
-                                            Ver Detalles
-                                        </button>
-                                        <div class="flex items-center">
-                                            <i data-lucide="map-pin" class="w-4 h-4 text-gray-400 mr-1"></i>
-                                            <span class="text-sm text-gray-600">Puno, Perú</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                </div>
+                <!-- Presentación Oficial -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXF7w4K8U0OLT2O8MlL0D2Q6B9Y4dQ7M0K1g&usqp=CAU"
+                        alt="Presentación Oficial" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800">OFICIAL</span>
+                            <span class="text-sm text-gray-500">16 ENE • VIE</span>
                         </div>
-                        <div
-                            class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl">
-                            <div class="flex flex-col sm:flex-row">
-                                <div class="w-full sm:w-48 h-48 flex-shrink-0 overflow-hidden">
-                                    <img src="https://files.hozana.org/198364-hermosa-novena-a-la-inmaculada-concepcion-en-audio!448x200.webp"
-                                        alt="Segundo día de Novena" class="w-full h-full object-cover">
-                                </div>
-                                <div class="p-5 flex-1 flex flex-col justify-between">
-                                    <div>
-                                        <div class="flex justify-between items-start">
-                                            <h3 class="text-lg font-bold text-gray-900">Segundo día de Novena</h3>
-                                            <span
-                                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800">
-                                                RELIGIOSO
-                                            </span>
-                                        </div>
-                                        <p class="text-sm text-gray-500 mt-1">25 ENE • SÁB • 19:00</p>
-                                    </div>
-                                    <div class="flex justify-between items-center mt-4">
-                                        <button
-                                            class="px-4 py-2 bg-candelaria-purple text-white rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors">
-                                            Ver Detalles
-                                        </button>
-                                        <div class="flex items-center">
-                                            <i data-lucide="map-pin" class="w-4 h-4 text-gray-400 mr-1"></i>
-                                            <span class="text-sm text-gray-600">Puno, Perú</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Presentación Oficial</h3>
+                        <p class="text-sm text-gray-600">Presentación oficial de la Festividad Virgen de la Candelaria
+                            2026.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Puno, Perú</div>
+                            <button onclick="openModal('presentacion-oficial')" class="btn-ver-detalles"><i
+                                    data-lucide="eye" class="w-4 h-4"></i>Ver Detalles</button>
                         </div>
-                        <div
-                            class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl">
-                            <div class="flex flex-col sm:flex-row">
-                                <div class="w-full sm:w-48 h-48 flex-shrink-0 overflow-hidden">
-                                    <img src="https://www.caminosalkantay.com/blog/wp-content/uploads/2023/06/La-ceremonia-de-la-boda-andina.jpg"
-                                        alt="Entrada de Qhʼapuas y Ceremonia Andina" class="w-full h-full object-cover">
-                                </div>
-                                <div class="p-5 flex-1 flex flex-col justify-between">
-                                    <div>
-                                        <div class="flex justify-between items-start">
-                                            <h3 class="text-lg font-bold text-gray-900">Entrada de Qhʼapuas y Ceremonia
-                                                Andina</h3>
-                                            <span
-                                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800">
-                                                TRADICIONAL
-                                            </span>
-                                        </div>
-                                        <p class="text-sm text-gray-500 mt-1">28 ENE • MAR • 08:00</p>
-                                    </div>
-                                    <div class="flex justify-between items-center mt-4">
-                                        <button
-                                            class="px-4 py-2 bg-candelaria-purple text-white rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors">
-                                            Ver Detalles
-                                        </button>
-                                        <div class="flex items-center">
-                                            <i data-lucide="map-pin" class="w-4 h-4 text-gray-400 mr-1"></i>
-                                            <span class="text-sm text-gray-600">Puno, Perú</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <!-- Desfile Institucional -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2024/01/desfile-institucional-candelaria.jpg"
+                        alt="Desfile Institucional" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800">INSTITUCIONAL</span>
+                            <span class="text-sm text-gray-500">18 ENE • DOM</span>
                         </div>
-                        <div
-                            class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl">
-                            <div class="flex flex-col sm:flex-row">
-                                <div class="w-full sm:w-48 h-48 flex-shrink-0 overflow-hidden">
-                                    <img src="https://imgmedia.larepublica.pe/1000x590/larepublica/original/2025/02/03/67a12120a8e33d5aa110b300.webp"
-                                        alt="Concurso de Danzas Originarias – Día 1" class="w-full h-full object-cover">
-                                </div>
-                                <div class="p-5 flex-1 flex flex-col justify-between">
-                                    <div>
-                                        <div class="flex justify-between items-start">
-                                            <h3 class="text-lg font-bold text-gray-900">Concurso de Danzas Originarias –
-                                                Día 1</h3>
-                                            <span
-                                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-green-100 text-green-800">
-                                                ORIGINARIAS
-                                            </span>
-                                        </div>
-                                        <p class="text-sm text-gray-500 mt-1">1 FEB • SÁB • 08:00 - 18:00</p>
-                                    </div>
-                                    <div class="flex justify-between items-center mt-4">
-                                        <button
-                                            class="px-4 py-2 bg-candelaria-purple text-white rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors">
-                                            Ver Detalles
-                                        </button>
-                                        <div class="flex items-center">
-                                            <i data-lucide="map-pin" class="w-4 h-4 text-gray-400 mr-1"></i>
-                                            <span class="text-sm text-gray-600">Puno, Perú</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Desfile Institucional</h3>
+                        <p class="text-sm text-gray-600">Aniversario de la Federación Regional de Folklore y Cultura de
+                            Puno. Más de 200 danzas.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Puno, Perú</div>
+                            <button onclick="openModal('desfile-institucional')" class="btn-ver-detalles"><i
+                                    data-lucide="eye" class="w-4 h-4"></i>Ver Detalles</button>
                         </div>
-                        <div
-                            class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl">
-                            <div class="flex flex-col sm:flex-row">
-                                <div class="w-full sm:w-48 h-48 flex-shrink-0 overflow-hidden">
-                                    <img src="https://vivecandelaria.com/wp-content/uploads/2025/02/wifala_san_francisco_javier_de_munani.jpg"
-                                        alt="Concurso de Danzas Originarias – Día 2" class="w-full h-full object-cover">
-                                </div>
-                                <div class="p-5 flex-1 flex flex-col justify-between">
-                                    <div>
-                                        <div class="flex justify-between items-start">
-                                            <h3 class="text-lg font-bold text-gray-900">Concurso de Danzas Originarias –
-                                                Día 2</h3>
-                                            <span
-                                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-green-100 text-green-800">
-                                                ORIGINARIAS
-                                            </span>
-                                        </div>
-                                        <p class="text-sm text-gray-500 mt-1">2 FEB • DOM • 08:00 - 18:00</p>
-                                    </div>
-                                    <div class="flex justify-between items-center mt-4">
-                                        <button
-                                            class="px-4 py-2 bg-candelaria-purple text-white rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors">
-                                            Ver Detalles
-                                        </button>
-                                        <div class="flex items-center">
-                                            <i data-lucide="map-pin" class="w-4 h-4 text-gray-400 mr-1"></i>
-                                            <span class="text-sm text-gray-600">Puno, Perú</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <!-- Pasarela de Trajes -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2024/01/pasarela-trajes-candelaria.jpg"
+                        alt="Pasarela de Trajes" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-pink-100 text-pink-800">PASARELA</span>
+                            <span class="text-sm text-gray-500">22 ENE • JUE</span>
                         </div>
-                        <div
-                            class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl">
-                            <div class="flex flex-col sm:flex-row">
-                                <div class="w-full sm:w-48 h-48 flex-shrink-0 overflow-hidden">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq_qLzzu8qaFxNMO0QpWjNK1BBVkkCtG5gLcohW922qb2idRtVIa1xoYMnMr8HBuJgdn0&usqp=CAU"
-                                        alt="Parada de Veneración – Danzas Originarias"
-                                        class="w-full h-full object-cover">
-                                </div>
-                                <div class="p-5 flex-1 flex flex-col justify-between">
-                                    <div>
-                                        <div class="flex justify-between items-start">
-                                            <h3 class="text-lg font-bold text-gray-900">Parada de Veneración – Danzas
-                                                Originarias</h3>
-                                            <span
-                                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-red-100 text-red-800">
-                                                PARADA
-                                            </span>
-                                        </div>
-                                        <p class="text-sm text-gray-500 mt-1">3 FEB • LUN • 08:00 - 16:00</p>
-                                    </div>
-                                    <div class="flex justify-between items-center mt-4">
-                                        <button
-                                            class="px-4 py-2 bg-candelaria-purple text-white rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors">
-                                            Ver Detalles
-                                        </button>
-                                        <div class="flex items-center">
-                                            <i data-lucide="map-pin" class="w-4 h-4 text-gray-400 mr-1"></i>
-                                            <span class="text-sm text-gray-600">Puno, Perú</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Pasarela de Trajes</h3>
+                        <p class="text-sm text-gray-600">Exhibición de los trajes típicos de la Festividad Virgen de la
+                            Candelaria 2026.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Puno, Perú</div>
+                            <button onclick="openModal('pasarela-trajes')" class="btn-ver-detalles"><i data-lucide="eye"
+                                    class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Elección y Coronación -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2024/01/reina-folklore-candelaria.jpg"
+                        alt="Elección y Coronación" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-yellow-100 text-yellow-800">CORONACIÓN</span>
+                            <span class="text-sm text-gray-500">23 ENE • VIE</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Elección y Coronación</h3>
+                        <p class="text-sm text-gray-600">Señorita Folklore Autóctonos y Luces 2026. Elección de las
+                            reinas de la festividad.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Puno, Perú</div>
+                            <button onclick="openModal('eleccion-coronacion')" class="btn-ver-detalles"><i
+                                    data-lucide="eye" class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Misas de Novena -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://files.hozana.org/203582-novena-a-santa-rita-de-cascia!990x427.webp"
+                        alt="Misas de Novena" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800">RELIGIOSO</span>
+                            <span class="text-sm text-gray-500">24 - 31 ENE</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Misas de Novena</h3>
+                        <p class="text-sm text-gray-600">Misas de Novena a la Virgen de la Candelaria. Horarios: 8:00,
+                            12:00 y 18:00.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Santuario, Puno</div>
+                            <button onclick="openModal('misas-novena')" class="btn-ver-detalles"><i data-lucide="eye"
+                                    class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- LIX Concurso Originarios Día 1 -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://imgmedia.larepublica.pe/1000x590/larepublica/original/2025/02/03/67a12120a8e33d5aa110b300.webp"
+                        alt="Concurso Danzas Originarias" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-green-100 text-green-800">CONCURSO</span>
+                            <span class="text-sm text-gray-500">31 ENE • SÁB</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">LIX Concurso Originarios - Día 1</h3>
+                        <p class="text-sm text-gray-600">Primer día del LIX Concurso de Danzas en Trajes Originarios.
+                            Concurso Sikuris Cancharani.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Estadio Torres Belón</div>
+                            <button onclick="openModal('concurso-originarios-1')" class="btn-ver-detalles"><i
+                                    data-lucide="eye" class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEBRERO 2026 -->
+        <div class="mb-10">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="bg-candelaria-gold text-purple-900 px-4 py-2 rounded-lg font-bold">FEBRERO 2026</div>
+                <div class="h-1 flex-1 bg-gradient-to-r from-candelaria-gold to-transparent rounded"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Concurso Originarios Día 2 -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2025/02/wifala_san_francisco_javier_de_munani.jpg"
+                        alt="Concurso Originarios Día 2" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-green-100 text-green-800">CONCURSO</span>
+                            <span class="text-sm text-gray-500">01 FEB • DOM</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">LIX Concurso Originarios - Día 2</h3>
+                        <p class="text-sm text-gray-600">Segundo día del LIX Concurso de Danzas en Trajes Originarios.
+                        </p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Estadio Torres Belón</div>
+                            <button onclick="openModal('concurso-originarios-2')" class="btn-ver-detalles"><i
+                                    data-lucide="eye" class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Entrada K'hapus -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://www.caminosalkantay.com/blog/wp-content/uploads/2023/06/La-ceremonia-de-la-boda-andina.jpg"
+                        alt="Entrada K'hapus" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800">TRADICIONAL</span>
+                            <span class="text-sm text-gray-500">01 FEB • DOM</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Entrada de K'hapus</h3>
+                        <p class="text-sm text-gray-600">Entrada de K'hapus y Entrada de Caballería tradicional.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Puno, Perú</div>
+                            <button onclick="openModal('entrada-khapus')" class="btn-ver-detalles"><i data-lucide="eye"
+                                    class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Celebración de Vísperas -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_fuegos_artificiales_puno.jpg"
+                        alt="Vísperas" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800">RELIGIOSO</span>
+                            <span class="text-sm text-gray-500">01 FEB • DOM</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Celebración de Vísperas</h3>
+                        <p class="text-sm text-gray-600">Vísperas en Homenaje a la Virgen de la Candelaria. Fuegos
+                            artificiales y fogata.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Santuario, Puno</div>
+                            <button onclick="openModal('visperas')" class="btn-ver-detalles"><i data-lucide="eye"
+                                    class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Noche de Luces -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2024/02/noche-luces-candelaria.jpg"
+                        alt="Noche de Luces" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-yellow-100 text-yellow-800">ESPECIAL</span>
+                            <span class="text-sm text-gray-500">01 FEB • DOM</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Noche de Luces</h3>
+                        <p class="text-sm text-gray-600">Noche de Luces en Homenaje a la Virgen de la Candelaria.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Puno, Perú</div>
+                            <button onclick="openModal('noche-luces')" class="btn-ver-detalles"><i data-lucide="eye"
+                                    class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Solemne Misa de Fiesta -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2024/02/misa-procesion-candelaria.jpg"
+                        alt="Misa de Fiesta" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-red-100 text-red-800">DÍA
+                                CENTRAL</span>
+                            <span class="text-sm text-gray-500">02 FEB • LUN</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Solemne Misa y Procesión</h3>
+                        <p class="text-sm text-gray-600">Solemne Misa y Procesión por las principales arterias de Puno.
+                            Armado de alfombras (Trajes de Luces).</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Catedral de Puno</div>
+                            <button onclick="openModal('misa-procesion')" class="btn-ver-detalles"><i data-lucide="eye"
+                                    class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Exposición de Mantos -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2024/02/mantos-virgen-candelaria.jpg"
+                        alt="Exposición Mantos" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800">EXPOSICIÓN</span>
+                            <span class="text-sm text-gray-500">02 - 20 FEB</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Exposición de Mantos</h3>
+                        <p class="text-sm text-gray-600">Exposición de los Mantos Sagrados de la Virgen de la
+                            Candelaria.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Santuario, Puno</div>
+                            <button onclick="openModal('exposicion-mantos')" class="btn-ver-detalles"><i
+                                    data-lucide="eye" class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Festicandelaria -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://imgmedia.larepublica.pe/600x410/larepublica/original/2024/02/festicandelaria.webp"
+                        alt="Festicandelaria" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-pink-100 text-pink-800">FESTIVAL</span>
+                            <span class="text-sm text-gray-500">03, 04 y 05 FEB</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Festicandelaria 2026</h3>
+                        <p class="text-sm text-gray-600">Festival de música y danza de la Festividad Virgen de la
+                            Candelaria.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Puno, Perú</div>
+                            <button onclick="openModal('festicandelaria')" class="btn-ver-detalles"><i data-lucide="eye"
+                                    class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Gran Concierto de Sikuris -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2024/02/sikuris-candelaria.jpg"
+                        alt="Concierto Sikuris" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800">CONCIERTO</span>
+                            <span class="text-sm text-gray-500">05 FEB • MIÉ</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Gran Concierto de Sikuris</h3>
+                        <p class="text-sm text-gray-600">Phusirís y Zampoñadas 2026. Encuentro de sikuris.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Puno, Perú</div>
+                            <button onclick="openModal('concierto-sikuris')" class="btn-ver-detalles"><i
+                                    data-lucide="eye" class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Misa de Octava -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2024/02/misa-octava-candelaria.jpg"
+                        alt="Misa Octava" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800">RELIGIOSO</span>
+                            <span class="text-sm text-gray-500">06 FEB • VIE</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Misa de Octava</h3>
+                        <p class="text-sm text-gray-600">Misa de Octava a la Virgen de la Candelaria.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Santuario, Puno</div>
+                            <button onclick="openModal('misa-octava')" class="btn-ver-detalles"><i data-lucide="eye"
+                                    class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Recepción de Bandas -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2024/02/bandas-candelaria.jpg"
+                        alt="Recepción Bandas" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-800">MUSICAL</span>
+                            <span class="text-sm text-gray-500">06 FEB • VIE</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Recepción de Bandas</h3>
+                        <p class="text-sm text-gray-600">Recepción de bandas para danzas en Trajes de Luces.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Puno, Perú</div>
+                            <button onclick="openModal('recepcion-bandas')" class="btn-ver-detalles"><i
+                                    data-lucide="eye" class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Concurso Trajes de Luces -->
+                <div class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <img src="https://imgmedia.larepublica.pe/1000x590/larepublica/original/2024/02/03/diablada-morenada.webp"
+                        alt="Concurso Trajes Luces" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800">CONCURSO</span>
+                            <span class="text-sm text-gray-500">08 FEB • DOM</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">LIX Concurso Trajes de Luces</h3>
+                        <p class="text-sm text-gray-600">Concurso de Danzas en Trajes de Luces. Diablada, Morenada,
+                            Caporales y más.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Estadio Torres Belón</div>
+                            <button onclick="openModal('concurso-luces')" class="btn-ver-detalles"><i data-lucide="eye"
+                                    class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Gran Parada Día 1 -->
+                <div
+                    class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden bg-gradient-to-br from-purple-50 to-white border-2 border-purple-200">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2024/02/parada-candelaria.jpg"
+                        alt="Gran Parada Día 1" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-red-100 text-red-800">PARADA
+                                PRINCIPAL</span>
+                            <span class="text-sm text-gray-500">09 FEB • LUN</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Gran Parada y Veneración - Día 1</h3>
+                        <p class="text-sm text-gray-600">Primer día de la Gran Parada y Veneración en honor a la Virgen
+                            de la Candelaria 2026. Misas y procesión (Trajes Originarios).</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Av. Floral, Puno</div>
+                            <button onclick="openModal('gran-parada-1')" class="btn-ver-detalles"><i data-lucide="eye"
+                                    class="w-4 h-4"></i>Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Gran Parada Día 2 -->
+                <div
+                    class="event-card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden bg-gradient-to-br from-yellow-50 to-white border-2 border-yellow-200">
+                    <img src="https://vivecandelaria.com/wp-content/uploads/2024/02/veneracion-candelaria.jpg"
+                        alt="Gran Parada Día 2" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span
+                                class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-red-100 text-red-800">PARADA
+                                PRINCIPAL</span>
+                            <span class="text-sm text-gray-500">10 FEB • MAR</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Gran Parada y Veneración - Día 2</h3>
+                        <p class="text-sm text-gray-600">Segundo día de la Gran Parada. Veneración de Danzas en Trajes
+                            de Luces o Danzas Mestizas.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex items-center text-sm text-gray-500"><i data-lucide="map-pin"
+                                    class="w-4 h-4 mr-1"></i>Av. Floral, Puno</div>
+                            <button onclick="openModal('gran-parada-2')" class="btn-ver-detalles"><i data-lucide="eye"
+                                    class="w-4 h-4"></i>Ver Detalles</button>
                         </div>
                     </div>
                 </div>
@@ -478,12 +770,11 @@
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center gap-2 mb-4">
                         <i data-lucide="sparkles" class="w-6 h-6 text-candelaria-gold"></i>
-                        <span class="text-xl font-bold font-heading">Candelaria 2025</span>
+                        <span class="text-xl font-bold font-heading">Candelaria 2026</span>
                     </div>
-                    <p class="text-gray-400 text-sm mb-6 max-w-md">
-                        Plataforma oficial de servicios turísticos para la Festividad de la Virgen de la Candelaria en
-                        Puno, Patrimonio Cultural Inmaterial de la Humanidad (UNESCO).
-                    </p>
+                    <p class="text-gray-400 text-sm mb-6 max-w-md">Plataforma oficial de servicios turísticos para la
+                        Festividad de la Virgen de la Candelaria en Puno, Patrimonio Cultural Inmaterial de la Humanidad
+                        (UNESCO).</p>
                     <div class="flex space-x-4">
                         <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="facebook"
                                 class="w-5 h-5"></i></a>
@@ -493,7 +784,6 @@
                                 class="w-5 h-5"></i></a>
                     </div>
                 </div>
-
                 <div>
                     <h4 class="text-lg font-bold mb-4 text-white">Enlaces Rápidos</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
@@ -502,57 +792,383 @@
                         <li><a href="#" class="hover:text-candelaria-gold transition-colors">Rutas de Desfile</a></li>
                         <li><a href="#" class="hover:text-candelaria-gold transition-colors">Números de Emergencia</a>
                         </li>
-                        <li><a href="#" class="hover:text-candelaria-gold transition-colors">Historia de la
-                                Festividad</a></li>
+                        <li><a href="../../cultura/cultura.html"
+                                class="hover:text-candelaria-gold transition-colors">Historia de la Festividad</a></li>
                     </ul>
                 </div>
-
                 <div>
                     <h4 class="text-lg font-bold mb-4 text-white">Contacto</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
                         <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> +51 951 123 456
                         </li>
                         <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i>
-                            info@candelaria2025.pe</li>
+                            info@candelaria2026.pe</li>
                         <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Plaza de
                             Armas, Puno</li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
-                &copy; 2025 Gobierno Regional de Puno & Comité de Salvaguardia. Todos los derechos reservados.
+                &copy; 2026 Gobierno Regional de Puno & Comité de Salvaguardia. Todos los derechos reservados.
             </div>
         </div>
     </footer>
 
-    <!-- Scripts: Libraries first (already in head), then Logic -->
-    <script>
-        // Configuración de Lucide Icons
-        lucide.createIcons();
+    <!-- Modal de Detalles -->
+    <div id="event-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="relative">
+                <img id="modal-image" src="" alt="" class="w-full h-64 object-cover rounded-t-2xl">
+                <button onclick="closeModal()"
+                    class="absolute top-4 right-4 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all">
+                    <i data-lucide="x" class="w-5 h-5 text-gray-700"></i>
+                </button>
+                <span id="modal-badge"
+                    class="absolute top-4 left-4 text-xs font-semibold px-3 py-1 rounded-full"></span>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center gap-2 text-purple-600 mb-2">
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                    <span id="modal-date" class="text-sm font-medium"></span>
+                </div>
+                <h2 id="modal-title" class="text-2xl font-bold text-gray-900 mb-3"></h2>
+                <p id="modal-description" class="text-gray-600 mb-4 leading-relaxed"></p>
+                <div class="bg-purple-50 rounded-xl p-4 mb-4">
+                    <h4 class="font-semibold text-purple-900 mb-2">📍 Información del Evento</h4>
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-purple-600"></i>
+                            <span id="modal-location" class="text-gray-700"></span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-purple-600"></i>
+                            <span id="modal-time" class="text-gray-700"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="modal-extra" class="text-sm text-gray-500 mb-4"></div>
+                <div class="flex gap-3">
+                    <button onclick="closeModal()"
+                        class="flex-1 py-3 px-4 border border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+                        Cerrar
+                    </button>
+                    <a id="modal-share" href="#"
+                        class="flex-1 py-3 px-4 bg-candelaria-purple text-white rounded-xl font-semibold text-center hover:bg-purple-700 transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="share-2" class="w-4 h-4"></i> Compartir
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        // Función para establecer pestaña activa
-        function setActiveTab(tabName) {
-            // Redirigir a la pestaña principal en lugar de mantenerse en la página individual
-            window.location.href = `../index.php#${tabName}`;
+    <script>
+        // Datos de todos los eventos
+        const eventosData = {
+            'congreso-diablada': {
+                title: 'Congreso de Diablada',
+                date: '14, 15 y 16 de Enero 2026',
+                time: 'Todo el día',
+                location: 'Puno, Perú',
+                badge: 'CONGRESO',
+                badgeClass: 'bg-orange-100 text-orange-800',
+                image: 'https://imgmedia.larepublica.pe/1000x590/larepublica/original/2024/02/03/diablada.webp',
+                description: 'Congreso Nacional e Internacional de la Diablada Puneña. Este evento reúne a expertos, historiadores y danzantes para discutir la historia, evolución y preservación de la emblemática danza Diablada, símbolo de la festividad.',
+                extra: '🎭 Participan delegaciones de todo el Perú y países vecinos. Incluye conferencias, exposiciones y presentaciones artísticas.'
+            },
+            'presentacion-oficial': {
+                title: 'Presentación Oficial',
+                date: '16 de Enero 2026',
+                time: '10:00 AM',
+                location: 'Plaza de Armas, Puno',
+                badge: 'OFICIAL',
+                badgeClass: 'bg-purple-100 text-purple-800',
+                image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXF7w4K8U0OLT2O8MlL0D2Q6B9Y4dQ7M0K1g&usqp=CAU',
+                description: 'Ceremonia de presentación oficial de la LIX Festividad Virgen de la Candelaria 2026. Autoridades regionales y locales dan inicio formal a las celebraciones.',
+                extra: '📢 Evento con presencia de autoridades municipales, regionales y representantes de la FRFCP.'
+            },
+            'desfile-institucional': {
+                title: 'Desfile Institucional',
+                date: '18 de Enero 2026',
+                time: '08:00 AM - 6:00 PM',
+                location: 'Av. Floral, Puno',
+                badge: 'INSTITUCIONAL',
+                badgeClass: 'bg-blue-100 text-blue-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/01/desfile-institucional-candelaria.jpg',
+                description: 'Desfile conmemorativo por el 61° Aniversario de la Federación Regional de Folklore y Cultura de Puno. Participan más de 200 conjuntos de danzas.',
+                extra: '🎉 Se presentan todas las danzas representativas de la región Puno en un colorido desfile.'
+            },
+            'pasarela-trajes': {
+                title: 'Pasarela de Trajes',
+                date: '22 de Enero 2026',
+                time: '7:00 PM',
+                location: 'Teatro Municipal, Puno',
+                badge: 'PASARELA',
+                badgeClass: 'bg-pink-100 text-pink-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/01/pasarela-trajes-candelaria.jpg',
+                description: 'Exhibición de los trajes típicos de la Festividad Virgen de la Candelaria 2026. Artesanos y diseñadores presentan las mejores creaciones.',
+                extra: '✨ Se exhiben trajes de luces y trajes originarios con bordados tradicionales.'
+            },
+            'eleccion-coronacion': {
+                title: 'Elección y Coronación',
+                date: '23 de Enero 2026',
+                time: '7:00 PM',
+                location: 'Coliseo Cerrado, Puno',
+                badge: 'CORONACIÓN',
+                badgeClass: 'bg-yellow-100 text-yellow-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/01/reina-folklore-candelaria.jpg',
+                description: 'Elección y coronación de la Señorita Folklore Autóctonos y Luces 2026. Las candidatas representan a los diferentes conjuntos de danzas.',
+                extra: '👑 Las ganadoras serán embajadoras culturales de la festividad durante todo el año.'
+            },
+            'misas-novena': {
+                title: 'Misas de Novena',
+                date: '24 al 31 de Enero 2026',
+                time: '8:00 AM, 12:00 PM, 6:00 PM',
+                location: 'Santuario Virgen de la Candelaria',
+                badge: 'RELIGIOSO',
+                badgeClass: 'bg-purple-100 text-purple-800',
+                image: 'https://files.hozana.org/203582-novena-a-santa-rita-de-cascia!990x427.webp',
+                description: 'Celebraciones eucarísticas de la Novena a la Virgen de la Candelaria. Nueve días de oración y preparación espiritual.',
+                extra: '🙏 Devotos de toda la región acuden al Santuario para venerar a la Virgen.'
+            },
+            'concurso-originarios-1': {
+                title: 'LIX Concurso Originarios - Día 1',
+                date: 'Sábado 31 de Enero 2026',
+                time: '08:00 AM - 6:00 PM',
+                location: 'Estadio Enrique Torres Belón',
+                badge: 'CONCURSO',
+                badgeClass: 'bg-green-100 text-green-800',
+                image: 'https://imgmedia.larepublica.pe/1000x590/larepublica/original/2025/02/03/67a12120a8e33d5aa110b300.webp',
+                description: 'Primer día del LIX Concurso de Danzas en Trajes Originarios. Participan conjuntos de danzas autóctonas de toda la región. También se realiza el Concurso Sikuris Cancharani.',
+                extra: '🎵 Las danzas originarias representan la cultura ancestral de las comunidades puneñas.'
+            },
+            'concurso-originarios-2': {
+                title: 'LIX Concurso Originarios - Día 2',
+                date: 'Domingo 01 de Febrero 2026',
+                time: '08:00 AM - 6:00 PM',
+                location: 'Estadio Enrique Torres Belón',
+                badge: 'CONCURSO',
+                badgeClass: 'bg-green-100 text-green-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2025/02/wifala_san_francisco_javier_de_munani.jpg',
+                description: 'Segundo día del LIX Concurso de Danzas en Trajes Originarios. Continúan las presentaciones de danzas autóctonas.',
+                extra: '🏆 Se premian a los mejores conjuntos en diferentes categorías.'
+            },
+            'entrada-khapus': {
+                title: 'Entrada de K\'hapus',
+                date: 'Domingo 01 de Febrero 2026',
+                time: '10:00 AM',
+                location: 'Centro Histórico, Puno',
+                badge: 'TRADICIONAL',
+                badgeClass: 'bg-blue-100 text-blue-800',
+                image: 'https://www.caminosalkantay.com/blog/wp-content/uploads/2023/06/La-ceremonia-de-la-boda-andina.jpg',
+                description: 'Entrada de K\'hapus y Entrada de Caballería tradicional. Ceremonia ancestral que marca el inicio de las celebraciones centrales.',
+                extra: '🐴 Los K\'hapus son personajes tradicionales que representan a los arrieros andinos.'
+            },
+            'visperas': {
+                title: 'Celebración de Vísperas',
+                date: 'Domingo 01 de Febrero 2026',
+                time: '6:00 PM - 12:00 AM',
+                location: 'Plaza del Santuario, Puno',
+                badge: 'RELIGIOSO',
+                badgeClass: 'bg-purple-100 text-purple-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/02/visperas-candelaria.jpg',
+                description: 'Vísperas en Homenaje a la Virgen de la Candelaria. Incluye misa de albas, quema de fuegos artificiales y fogata frente al santuario.',
+                extra: '🎆 Espectáculo pirotécnico y celebración nocturna en honor a la Virgen.'
+            },
+            'noche-luces': {
+                title: 'Noche de Luces',
+                date: 'Domingo 01 de Febrero 2026',
+                time: '8:00 PM',
+                location: 'Centro Histórico, Puno',
+                badge: 'ESPECIAL',
+                badgeClass: 'bg-yellow-100 text-yellow-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/02/noche-luces-candelaria.jpg',
+                description: 'Noche de Luces en Homenaje a la Virgen de la Candelaria. La ciudad se ilumina en honor a la patrona.',
+                extra: '💡 Espectáculo de luces y música en las calles del centro histórico.'
+            },
+            'misa-procesion': {
+                title: 'Solemne Misa y Procesión',
+                date: 'Lunes 02 de Febrero 2026',
+                time: '6:00 AM - 8:00 PM',
+                location: 'Catedral de Puno',
+                badge: 'DÍA CENTRAL',
+                badgeClass: 'bg-red-100 text-red-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/02/misa-procesion-candelaria.jpg',
+                description: 'Día Central de la Festividad. Solemne Misa y Procesión de la Virgen de la Candelaria por las principales arterias de Puno. Armado de alfombras florales (Trajes de Luces).',
+                extra: '⛪ Miles de devotos acompañan a la imagen de la Virgen en su recorrido por la ciudad.'
+            },
+            'exposicion-mantos': {
+                title: 'Exposición de Mantos',
+                date: '02 al 20 de Febrero 2026',
+                time: '9:00 AM - 5:00 PM',
+                location: 'Santuario Virgen de la Candelaria',
+                badge: 'EXPOSICIÓN',
+                badgeClass: 'bg-indigo-100 text-indigo-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/02/mantos-virgen-candelaria.jpg',
+                description: 'Exposición de los Mantos Sagrados de la Virgen de la Candelaria. Se exhiben los mantos donados por devotos a lo largo de los años.',
+                extra: '🎨 Los mantos están finamente bordados con hilos de oro y plata.'
+            },
+            'festicandelaria': {
+                title: 'Festicandelaria 2026',
+                date: '03, 04 y 05 de Febrero 2026',
+                time: '5:00 PM - 12:00 AM',
+                location: 'Explanada del Lago, Puno',
+                badge: 'FESTIVAL',
+                badgeClass: 'bg-pink-100 text-pink-800',
+                image: 'https://imgmedia.larepublica.pe/600x410/larepublica/original/2024/02/festicandelaria.webp',
+                description: 'Festival de música y danza de la Festividad Virgen de la Candelaria. Presentaciones artísticas de grupos folclóricos nacionales e internacionales.',
+                extra: '🎤 Conciertos en vivo con los mejores artistas del folklore peruano.'
+            },
+            'concierto-sikuris': {
+                title: 'Gran Concierto de Sikuris',
+                date: 'Miércoles 05 de Febrero 2026',
+                time: '4:00 PM',
+                location: 'Plaza de Armas, Puno',
+                badge: 'CONCIERTO',
+                badgeClass: 'bg-teal-100 text-teal-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/02/sikuris-candelaria.jpg',
+                description: 'Gran Concierto de Sikuris - Phusirís y Zampoñadas 2026. Encuentro de grupos de sikuris de toda la región.',
+                extra: '🎵 Los sikuris interpretan música ancestral con instrumentos de viento andinos.'
+            },
+            'misa-octava': {
+                title: 'Misa de Octava',
+                date: 'Viernes 06 de Febrero 2026',
+                time: '10:00 AM',
+                location: 'Santuario Virgen de la Candelaria',
+                badge: 'RELIGIOSO',
+                badgeClass: 'bg-purple-100 text-purple-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/02/misa-octava-candelaria.jpg',
+                description: 'Misa de Octava a la Virgen de la Candelaria. Celebración eucarística ocho días después del día central.',
+                extra: '🕯️ Celebración especial con participación de conjuntos de danzas.'
+            },
+            'recepcion-bandas': {
+                title: 'Recepción de Bandas',
+                date: 'Viernes 06 de Febrero 2026',
+                time: '3:00 PM',
+                location: 'Plaza de Armas, Puno',
+                badge: 'MUSICAL',
+                badgeClass: 'bg-orange-100 text-orange-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/02/bandas-candelaria.jpg',
+                description: 'Recepción de bandas para danzas en Trajes de Luces. Llegada de las bandas de músicos que acompañarán el concurso.',
+                extra: '🎺 Más de 100 bandas de músicos participan en la festividad.'
+            },
+            'concurso-luces': {
+                title: 'LIX Concurso Trajes de Luces',
+                date: 'Domingo 08 de Febrero 2026',
+                time: '08:00 AM - 8:00 PM',
+                location: 'Estadio Enrique Torres Belón',
+                badge: 'CONCURSO',
+                badgeClass: 'bg-amber-100 text-amber-800',
+                image: 'https://imgmedia.larepublica.pe/1000x590/larepublica/original/2024/02/03/diablada-morenada.webp',
+                description: 'LIX Concurso de Danzas en Trajes de Luces. Se presentan las danzas más emblemáticas: Diablada, Morenada, Caporales, Kullawada y más.',
+                extra: '✨ Los trajes de luces brillan con lentejuelas, piedras y bordados espectaculares.'
+            },
+            'gran-parada-1': {
+                title: 'Gran Parada y Veneración - Día 1',
+                date: 'Lunes 09 de Febrero 2026',
+                time: '08:00 AM - 8:00 PM',
+                location: 'Av. Floral y calles de Puno',
+                badge: 'PARADA PRINCIPAL',
+                badgeClass: 'bg-red-100 text-red-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/02/parada-candelaria.jpg',
+                description: 'Primer día de la Gran Parada y Veneración en honor a la Virgen de la Candelaria 2026. Solemne Misa y Procesión acompañada por conjuntos (Trajes Originarios). Armado de alfombras.',
+                extra: '🎊 Los conjuntos desfilan por las calles de Puno en homenaje a la Patrona.'
+            },
+            'gran-parada-2': {
+                title: 'Gran Parada y Veneración - Día 2',
+                date: 'Martes 10 de Febrero 2026',
+                time: '08:00 AM - 8:00 PM',
+                location: 'Av. Floral y calles de Puno',
+                badge: 'PARADA PRINCIPAL',
+                badgeClass: 'bg-red-100 text-red-800',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/02/veneracion-candelaria.jpg',
+                description: 'Segundo día de la Gran Parada. Veneración de Danzas en Trajes de Luces o Danzas Mestizas. Cierre de la festividad con colorido desfile.',
+                extra: '🏁 Clausura oficial de la LIX Festividad Virgen de la Candelaria 2026.'
+            }
+        };
+
+        // Función para abrir el modal
+        function openModal(eventId) {
+            const evento = eventosData[eventId];
+            if (!evento) return;
+
+            document.getElementById('modal-image').src = evento.image;
+            document.getElementById('modal-image').alt = evento.title;
+            document.getElementById('modal-title').textContent = evento.title;
+            document.getElementById('modal-date').textContent = evento.date;
+            document.getElementById('modal-time').textContent = evento.time;
+            document.getElementById('modal-location').textContent = evento.location;
+            document.getElementById('modal-description').textContent = evento.description;
+            document.getElementById('modal-extra').textContent = evento.extra;
+
+            const badge = document.getElementById('modal-badge');
+            badge.textContent = evento.badge;
+            badge.className = `absolute top-4 left-4 text-xs font-semibold px-3 py-1 rounded-full ${evento.badgeClass}`;
+
+            // Share link
+            const shareUrl = `https://www.mipuno.pe/candelaria/horarios_y_danzas/programacion/?evento=${eventId}`;
+            document.getElementById('modal-share').onclick = function (e) {
+                e.preventDefault();
+                if (navigator.share) {
+                    navigator.share({
+                        title: evento.title,
+                        text: `${evento.title} - ${evento.date}`,
+                        url: shareUrl
+                    });
+                } else {
+                    navigator.clipboard.writeText(shareUrl);
+                    alert('¡Enlace copiado al portapapeles!');
+                }
+            };
+
+            document.getElementById('event-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
         }
-    </script>
 
-    <!-- Chatbot Widget -->
-    <link rel="stylesheet" href="../../assets/css/chatbot-widget.css">
-    <div id="chatbot-widget"></div>
-    <script src="../../assets/js/chatbot-widget.js"></script>
+        // Función para cerrar el modal
+        function closeModal() {
+            document.getElementById('event-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-    <script>
-        // Mobile Menu Logic
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('event-modal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Inicializar iconos y tabs
+        lucide.createIcons();
+        function setActiveTab(tabName) { window.location.href = `../index.php#${tabName}`; }
+
+        // Mobile menu
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-
         if (mobileMenuBtn && mobileMenu) {
             mobileMenuBtn.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
         }
+
+        // Verificar si hay un evento en la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventoParam = urlParams.get('evento');
+        if (eventoParam && eventosData[eventoParam]) {
+            setTimeout(() => openModal(eventoParam), 500);
+        }
     </script>
+
+    <link rel="stylesheet" href="../../assets/css/chatbot-widget.css">
+    <div id="chatbot-widget"></div>
+    <script src="../../assets/js/chatbot-widget.js"></script>
 </body>
 
 </html>
