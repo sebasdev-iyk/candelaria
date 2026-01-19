@@ -102,32 +102,22 @@ function getAuthJS($apiBasePath = '')
     let currentUser = null;
     const API_BASE = '{$apiBasePath}';
     
-    console.log('[Auth] API_BASE configurado como:', API_BASE);
-    
     // Initialize auth on page load
     document.addEventListener('DOMContentLoaded', function() {
         initAuth();
     });
     
     function initAuth() {
-        console.log('[Auth] initAuth() llamado');
         const token = localStorage.getItem('clientToken');
         const userData = localStorage.getItem('clientUser');
-        
-        console.log('[Auth] Token en localStorage:', token ? 'PRESENTE (' + token.substring(0, 20) + '...)' : 'NO EXISTE');
-        console.log('[Auth] UserData en localStorage:', userData ? 'PRESENTE' : 'NO EXISTE');
         
         if (token && userData) {
             try {
                 currentUser = JSON.parse(userData);
-                console.log('[Auth] Usuario cargado:', currentUser.nombre, currentUser.email);
                 updateAuthUI();
             } catch (e) {
-                console.error('[Auth] Error parseando userData:', e);
                 authLogout();
             }
-        } else {
-            console.log('[Auth] No hay sesión guardada');
         }
         
         setupAuthForms();
@@ -139,7 +129,6 @@ function getAuthJS($apiBasePath = '')
         const dropdownEmail = document.getElementById('dropdown-user-email');
         
         if (currentUser) {
-            console.log('[Auth] updateAuthUI: Usuario logueado -', currentUser.nombre);
             // Logged in: golden border
             if (btn) {
                 btn.style.borderColor = '#fbbf24';
@@ -148,7 +137,6 @@ function getAuthJS($apiBasePath = '')
             if (dropdownName) dropdownName.textContent = currentUser.nombre;
             if (dropdownEmail) dropdownEmail.textContent = currentUser.email;
         } else {
-            console.log('[Auth] updateAuthUI: No hay usuario');
             // Not logged in: subtle border
             if (btn) {
                 btn.style.borderColor = 'rgba(251, 191, 36, 0.3)';
@@ -193,49 +181,27 @@ function getAuthJS($apiBasePath = '')
                 const email = document.getElementById('auth-login-email').value;
                 const password = document.getElementById('auth-login-password').value;
                 
-                const loginUrl = API_BASE + 'api/clientes.php?action=login';
-                console.log('[Auth] Intentando login...');
-                console.log('[Auth] URL:', loginUrl);
-                console.log('[Auth] Email:', email);
-                
                 try {
-                    const res = await fetch(loginUrl, {
+                    const res = await fetch(API_BASE + 'api/clientes.php?action=login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email, password })
                     });
-                    
-                    console.log('[Auth] Respuesta HTTP status:', res.status);
                     const data = await res.json();
-                    console.log('[Auth] Respuesta data:', data);
                     
                     if (res.ok && data.token) {
-                        console.log('[Auth] Login exitoso! Guardando en localStorage...');
                         localStorage.setItem('clientToken', data.token);
                         localStorage.setItem('clientUser', JSON.stringify(data.cliente));
-                        
-                        // Verificar que se guardó
-                        console.log('[Auth] Verificando localStorage después de guardar:');
-                        console.log('[Auth] - clientToken:', localStorage.getItem('clientToken') ? 'GUARDADO' : 'NO SE GUARDÓ');
-                        console.log('[Auth] - clientUser:', localStorage.getItem('clientUser') ? 'GUARDADO' : 'NO SE GUARDÓ');
-                        
                         currentUser = data.cliente;
                         updateAuthUI();
                         closeAuthModal();
                         if (typeof showToast === 'function') showToast('¡Bienvenido!', 'success');
-                        
-                        // Delay reload to ensure localStorage is written
-                        setTimeout(() => {
-                            console.log('[Auth] Recargando página...');
-                            location.reload();
-                        }, 500);
+                        location.reload();
                     } else {
-                        console.error('[Auth] Login falló:', data.message);
                         alert(data.message || 'Error al iniciar sesión');
                     }
                 } catch (err) {
-                    console.error('[Auth] Error de conexión:', err);
-                    alert('Error de conexión: ' + err.message);
+                    alert('Error de conexión');
                 }
             });
         }

@@ -60,40 +60,31 @@ function validateToken($token, $db)
 function getAuthHeader()
 {
     $headers = null;
-    $tried = [];
 
     // Method 1: Direct $_SERVER
     if (isset($_SERVER['Authorization'])) {
         $headers = trim($_SERVER["Authorization"]);
-        $tried[] = 'Authorization direct';
     }
     // Method 2: HTTP_AUTHORIZATION (most common)
     else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
-        $tried[] = 'HTTP_AUTHORIZATION';
     }
     // Method 3: REDIRECT_HTTP_AUTHORIZATION (for some Apache configs)
     else if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
         $headers = trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
-        $tried[] = 'REDIRECT_HTTP_AUTHORIZATION';
     }
     // Method 4: apache_request_headers()
     else if (function_exists('apache_request_headers')) {
         $requestHeaders = apache_request_headers();
         if ($requestHeaders) {
-            // Try case-insensitive search
             foreach ($requestHeaders as $key => $value) {
                 if (strtolower($key) === 'authorization') {
                     $headers = trim($value);
-                    $tried[] = 'apache_request_headers';
                     break;
                 }
             }
         }
     }
-
-    // Debug logging (remove after fixing)
-    error_log("[Chat API] Auth header search - Tried: " . implode(', ', $tried) . " | Found: " . ($headers ? 'YES' : 'NO'));
 
     return $headers;
 }
