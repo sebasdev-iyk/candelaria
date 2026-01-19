@@ -2,17 +2,42 @@
 require_once '../includes/auth-header.php';
 require_once 'includes/live-functions.php';
 
+// Debug logging
+error_log("[LivePlatform Page] Page loaded");
+error_log("[LivePlatform Page] Request ID: " . ($_GET['id'] ?? 'NONE'));
+
 // Get Current Stream (Default to first LIVE one, or first generic)
 $currentId = $_GET['id'] ?? null;
 $liveStreams = getStreams('live');
 $allStreams = getStreams();
 
+// Debug info
+$debugInfo = [
+    'requested_id' => $currentId,
+    'live_streams_count' => count($liveStreams),
+    'all_streams_count' => count($allStreams),
+    'streams_file' => STREAMS_FILE,
+    'file_exists' => file_exists(STREAMS_FILE) ? 'YES' : 'NO'
+];
+
 if ($currentId) {
     $currentStream = getStreamById($currentId);
+    $debugInfo['method'] = 'getStreamById';
+    $debugInfo['found'] = $currentStream ? 'YES' : 'NO';
 } else {
     // Default: Pick first live, or just first available
     $currentStream = !empty($liveStreams) ? reset($liveStreams) : (!empty($allStreams) ? reset($allStreams) : null);
+    $debugInfo['method'] = 'auto-select';
+    $debugInfo['found'] = $currentStream ? 'YES' : 'NO';
 }
+
+if ($currentStream) {
+    $debugInfo['current_stream_id'] = $currentStream['id'];
+    $debugInfo['current_stream_title'] = $currentStream['title'];
+}
+
+// Log debug info
+error_log("[LivePlatform Page] Debug: " . json_encode($debugInfo));
 
 // Separate current from recommendations
 $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStream['id'] ?? ''));
@@ -107,6 +132,35 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
                             EN VIVO
                         </div>
                     <?php endif; ?>
+                <?php else: ?>
+                    <!-- DEBUG: No stream found -->
+                    <div class="bg-red-900/80 border border-red-500 rounded-xl p-6 m-4">
+                        <h2 class="text-xl font-bold text-red-300 mb-4">⚠️ Stream No Encontrado</h2>
+                        <div class="text-sm text-gray-300 space-y-2 font-mono">
+                            <p><strong>ID Solicitado:</strong>
+                                <?= htmlspecialchars($debugInfo['requested_id'] ?? 'ninguno') ?></p>
+                            <p><strong>Método:</strong> <?= $debugInfo['method'] ?? 'N/A' ?></p>
+                            <p><strong>Archivo streams.json existe:</strong> <?= $debugInfo['file_exists'] ?></p>
+                            <p><strong>Ruta del archivo:</strong>
+                                <?= htmlspecialchars($debugInfo['streams_file'] ?? 'N/A') ?></p>
+                            <p><strong>Total streams cargados:</strong> <?= $debugInfo['all_streams_count'] ?></p>
+                            <p><strong>Streams EN VIVO:</strong> <?= $debugInfo['live_streams_count'] ?></p>
+                            <?php if ($debugInfo['all_streams_count'] > 0): ?>
+                                <p><strong>IDs disponibles:</strong></p>
+                                <ul class="ml-4 list-disc">
+                                    <?php foreach ($allStreams as $s): ?>
+                                        <li><?= htmlspecialchars($s['id']) ?> - <?= htmlspecialchars($s['title']) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                        <p class="mt-4 text-yellow-400 text-sm">
+                            💡 Revisa los logs del servidor en Plesk → Logs para más detalles.
+                        </p>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ($currentStream): ?>
 
                     <!-- Render Real Embed -->
                     <div class="absolute inset-0 bg-black">
