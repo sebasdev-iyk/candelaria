@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candelaria 2025 | Horarios y Danzas</title>
+    <title>Candelaria 2026 | Horarios y Danzas</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -377,7 +377,7 @@
     <!-- Header Section - Standardized with EN TIEMPO REAL Style -->
     <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-40">
         <div class="bg-purple-950 text-xs py-1 text-center text-purple-200">
-            Festividad de la Virgen de la Candelaria 2025 - Del 2 al 11 de Febrero
+            Festividad de la Virgen de la Candelaria 2026 - Del 24 de Enero al 15 de Febrero
         </div>
         <div class="w-full px-6 md:px-12 py-5">
             <div class="flex justify-between items-center">
@@ -488,7 +488,7 @@
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center gap-2 mb-4">
                         <i data-lucide="sparkles" class="w-6 h-6 text-candelaria-gold"></i>
-                        <span class="text-xl font-bold font-heading">Candelaria 2025</span>
+                        <span class="text-xl font-bold font-heading">Candelaria 2026</span>
                     </div>
                     <p class="text-gray-400 text-sm mb-6 max-w-md">
                         Plataforma oficial de servicios turísticos para la Festividad de la Virgen de la Candelaria en
@@ -530,7 +530,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
-                &copy; 2025 Gobierno Regional de Puno & Comité de Salvaguardia. Todos los derechos reservados.
+                &copy; 2026 Gobierno Regional de Puno & Comité de Salvaguardia. Todos los derechos reservados.
             </div>
         </div>
     </footer>
@@ -545,18 +545,19 @@
         // Coordenadas base Puno: -15.8402, -70.0219
 
         const eventos = [
-            { id: 1, fecha: '24 ENE', dia: 'VIE', banda: 'Inicio de Novena', genero: 'RELIGIOSO', hora: '19:00', imagen: 'https://files.hozana.org/203582-novena-a-santa-rita-de-cascia!990x427.webp', color: 'linear-gradient(to bottom right, #eab308, #b45309)' },
-            { id: 2, fecha: '25 ENE', dia: 'SÁB', banda: 'Segundo día de Novena', genero: 'RELIGIOSO', hora: '19:00', imagen: 'https://files.hozana.org/198364-hermosa-novena-a-la-inmaculada-concepcion-en-audio!448x200.webp', color: 'linear-gradient(to bottom right, #ca8a04, #b45309)' },
-            { id: 3, fecha: '28 ENE', dia: 'MAR', banda: 'Entrada de Qhʼapuas y Ceremonia Andina', genero: 'TRADICIONAL', hora: '08:00', imagen: 'https://www.caminosalkantay.com/blog/wp-content/uploads/2023/06/La-ceremonia-de-la-boda-andina.jpg', color: 'linear-gradient(to bottom right, #dc2626, #ea580c)' },
-            { id: 4, fecha: '1 FEB', dia: 'SÁB', banda: 'Concurso de Danzas Originarias – Día 1', genero: 'ORIGINARIAS', hora: '08:00 - 18:00', imagen: 'https://imgmedia.larepublica.pe/1000x590/larepublica/original/2025/02/03/67a12120a8e33d5aa110b300.webp', color: 'linear-gradient(to bottom right, #16a34a, #15803d)' },
-            { id: 5, fecha: '2 FEB', dia: 'DOM', banda: 'Concurso de Danzas Originarias – Día 2', genero: 'ORIGINARIAS', hora: '08:00 - 18:00', imagen: 'https://vivecandelaria.com/wp-content/uploads/2025/02/wifala_san_francisco_javier_de_munani.jpg', color: 'linear-gradient(to bottom right, #2563eb, #1e3a8a)' },
-            { id: 6, fecha: '3 FEB', dia: 'LUN', banda: 'Parada de Veneración – Danzas Originarias', genero: 'PARADA', hora: '08:00 - 16:00', imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq_qLzzu8qaFxNMO0QpWjNK1BBVkkCtG5gLcohW922qb2idRtVIa1xoYMnMr8HBuJgdn0&usqp=CAU', color: 'linear-gradient(to bottom right, #0d9488, #15803d)' },
-            { id: 7, fecha: '8 FEB', dia: 'SÁB', banda: 'Concurso de Danzas con Traje de Luces – Día 1', genero: 'TRAJE DE LUCES', hora: '08:00 - 18:00', imagen: 'https://domiruthperutravel.com/es/wp-content/uploads/2021/09/domiruthperutravel-itinerario-puno-candelaria-3.jpg', color: 'linear-gradient(to bottom right, #9333ea, #be185d)' },
-            { id: 8, fecha: '9 FEB', dia: 'DOM', banda: 'Concurso de Danzas con Traje de Luces – Día 2', genero: 'TRAJE DE LUCES', hora: '08:00 - 18:00', imagen: 'https://radioondaazul.com/wp-content/uploads/2024/11/Trajes-de-Luces.jpg', color: 'linear-gradient(to bottom right, #ec4899, #be185d)' },
-            { id: 9, fecha: '10 FEB', dia: 'LUN', banda: 'Parada de Veneración – Traje de Luces (Gran día)', genero: 'PARADA', hora: '08:00 - 20:00', imagen: 'https://diariocorreo.pe/resizer/YSZRetm186Lzt5YSt17DbtPGn_c=/1200x900/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/RIBVOYVJMJCCDKMBU7W25RRPJU.jpg', color: 'linear-gradient(to bottom right, #b91c1c, #7f1d1d)' },
-            { id: 10, fecha: '11 FEB', dia: 'MAR', banda: 'Procesión de la Octava', genero: 'RELIGIOSO', hora: '14:00', imagen: 'https://radioondaazul.com/wp-content/uploads/2024/02/procesion-por-la-octava-de-la-Virgen-de-la-Candelaria.jpg', color: 'linear-gradient(to bottom right, #b45309, #fbbf24)' },
-            { id: 11, fecha: '12 FEB', dia: 'MIÉ', banda: 'Misa Mayor de la Octava', genero: 'RELIGIOSO', hora: '10:00', imagen: 'https://radioondaazul.com/wp-content/uploads/2021/02/Misa-de-Fiesta-Festividad-Virgen-de-la-Candelaria-2021-1.jpg', color: 'linear-gradient(to bottom right, #4b5563, #1f2937)' },
-            { id: 12, fecha: '15 FEB', dia: 'SÁB', banda: 'Cacharpaya – Despedida de la Festividad', genero: 'CIERRE / FIESTA', hora: '12:00', imagen: 'https://www.incasperu.com/wp-content/uploads/2020/08/viaje-a-puno-virgen-candelaria-1280x720.jpg', color: 'linear-gradient(to bottom right, #1e40af, #1e3a8a)' }
+            { id: 1, fecha: '14 ENE', dia: 'MIÉ', banda: 'Congreso de Diablada', genero: 'CONGRESO', hora: 'Todo el día', imagen: 'https://portal.andina.pe/EDPFotografia3/thumbnail/2021/09/17/000808729M.jpg', color: 'linear-gradient(to bottom right, #eab308, #b45309)', description: 'Congreso Nacional e Internacional de la Diablada Puneña. Este evento reúne a expertos, historiadores y danzantes para discutir la historia, evolución y preservación de la emblemática danza Diablada.', extra: 'Participan delegaciones de todo el Perú y países vecinos.', location: 'Puno, Perú' },
+            { id: 2, fecha: '16 ENE', dia: 'VIE', banda: 'Presentación Oficial', genero: 'OFICIAL', hora: '10:00 AM', imagen: 'https://imgmedia.larepublica.pe/1000x590/larepublica/original/2026/01/14/6967c3f063a35248e304ca99.webp', color: 'linear-gradient(to bottom right, #a855f7, #6b21a8)', description: 'Ceremonia de presentación oficial de la LIX Festividad Virgen de la Candelaria 2026. Autoridades regionales y locales dan inicio formal a las celebraciones.', extra: 'Evento con presencia de autoridades municipales, regionales y representantes de la FRFCP.', location: 'Plaza de Armas, Puno' },
+            { id: 3, fecha: '18 ENE', dia: 'DOM', banda: 'Desfile Institucional', genero: 'INSTITUCIONAL', hora: '09:00 AM', imagen: 'https://i.ytimg.com/vi/F_Ps-HAhcy0/hqdefault.jpg', color: 'linear-gradient(to bottom right, #3b82f6, #1d4ed8)', description: 'Desfile conmemorativo por el 61° Aniversario de la Federación Regional de Folklore y Cultura de Puno e Inicio de la Festividad.', extra: 'Se presentan todas las danzas representativas de la región Puno en un colorido desfile.', location: 'Av. Floral, Puno' },
+            { id: 4, fecha: '19 ENE', dia: 'LUN', banda: 'Pasarela de Trajes', genero: 'PASARELA', hora: '18:00 PM', imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWcBtXlSDstjO6POKVJP4pCRpgrxv7Y9FDeA&s', color: 'linear-gradient(to bottom right, #ec4899, #be185d)', description: 'Exhibición de los trajes típicos de la Festividad Virgen de la Candelaria 2026. Artesanos y diseñadores presentan las mejores creaciones.', extra: 'Se exhiben trajes de luces y trajes originarios con bordados tradicionales.', location: 'Teatro Municipal, Puno' },
+            { id: 5, fecha: '23 ENE', dia: 'VIE', banda: 'Elección y Coronación', genero: 'CORONACIÓN', hora: '17:00 PM', imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt0PsphcJScYscxgWG7FCpsVFJ7DFir2ML1A&s', color: 'linear-gradient(to bottom right, #eab308, #a16207)', description: 'Elección y coronación de la Señorita Folklore Autóctonos y Luces 2026.', extra: 'Las ganadoras serán embajadoras culturales de la festividad durante todo el año.', location: 'Coliseo Cerrado, Puno' },
+            { id: 6, fecha: '24 ENE', dia: 'SÁB', banda: 'Misas de Novena', genero: 'RELIGIOSO', hora: 'Todo el día', imagen: 'https://i.ytimg.com/vi/HY-QmjgJU1M/hqdefault.jpg?v=67946c3a', color: 'linear-gradient(to bottom right, #7e22ce, #581c87)', description: 'Celebraciones eucarísticas de la Novena a la Virgen de la Candelaria. Nueve días de oración y preparación espiritual.', extra: 'Devotos de toda la región acuden al Santuario para venerar a la Virgen.', location: 'Santuario Virgen de la Candelaria' },
+            { id: 7, fecha: '31 ENE', dia: 'SÁB', banda: 'LIX Concurso Originarios - Día 1', genero: 'ORIGINARIAS', hora: '07:00 AM', imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDhK-bxOdDkPLOazdNzsfIBHSN_beITM1pUQ&s', color: 'linear-gradient(to bottom right, #16a34a, #15803d)', description: 'Primer día del LIX Concurso de Danzas en Trajes Originarios. Participan conjuntos de danzas autóctonas de toda la región.', extra: 'Las danzas originarias representan la cultura ancestral de las comunidades puneñas.', location: 'Estadio Torres Belón' },
+            { id: 8, fecha: '01 FEB', dia: 'DOM', banda: 'LIX Concurso Originarios - Día 2', genero: 'ORIGINARIAS', hora: '07:00 AM', imagen: 'https://radioondaazul.com/wp-content/uploads/2025/02/2-153-scaled.jpg', color: 'linear-gradient(to bottom right, #2563eb, #1e3a8a)', description: 'Segundo día del LIX Concurso de Danzas en Trajes Originarios.', extra: 'Se premian a los mejores conjuntos en diferentes categorías.', location: 'Estadio Torres Belón' },
+            { id: 9, fecha: '01 FEB', dia: 'DOM', banda: 'Celebración de Vísperas', genero: 'RELIGIOSO', hora: '18:00 PM', imagen: 'https://incaexperience.com/wp-content/uploads/2025/12/Que-es-la-Fiesta-de-la-Virgen-de-la-Candelaria.webp', color: 'linear-gradient(to bottom right, #d97706, #b45309)', description: 'Vísperas en Homenaje a la Virgen de la Candelaria. Incluye misa de albas, quema de fuegos artificiales y fogata.', extra: 'Espectáculo pirotécnico y celebración nocturna en honor a la Virgen.', location: 'Santuario, Puno' },
+            { id: 10, fecha: '02 FEB', dia: 'LUN', banda: 'Solemne Misa y Procesión', genero: 'DÍA CENTRAL', hora: '10:00 AM', imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjDw3aRtiGioDLEdz2xu62nbTynvYKifHWYA&s', color: 'linear-gradient(to bottom right, #dc2626, #991b1b)', description: 'Día Central de la Festividad. Solemne Misa y Procesión de la Virgen de la Candelaria por las principales arterias de Puno.', extra: 'Miles de devotos acompañan a la imagen de la Virgen en su recorrido por la ciudad.', location: 'Catedral de Puno' },
+            { id: 11, fecha: '08 FEB', dia: 'DOM', banda: 'LIX Concurso Trajes de Luces', genero: 'TRAJE DE LUCES', hora: '07:00 AM', imagen: 'https://portal.andina.pe/EDPFotografia3/thumbnail/2024/02/08/001036561M.jpg', color: 'linear-gradient(to bottom right, #eab308, #854d0e)', description: 'LIX Concurso de Danzas en Trajes de Luces. Se presentan las danzas más emblemáticas: Diablada, Morenada, Caporales, Kullawada y más.', extra: 'Los trajes de luces brillan con lentejuelas, piedras y bordados espectaculares.', location: 'Estadio Torres Belón' },
+            { id: 12, fecha: '09 FEB', dia: 'LUN', banda: 'Gran Parada - Día 1', genero: 'PARADA', hora: '08:00 AM', imagen: 'https://imgmedia.larepublica.pe/1200x735/larepublica/original/2026/01/14/6967c3f063a35248e304ca99.jpg', color: 'linear-gradient(to bottom right, #be185d, #831843)', description: 'Primer día de la Gran Parada y Veneración en honor a la Virgen de la Candelaria 2026.', extra: 'Los conjuntos desfilan por las calles de Puno en homenaje a la Patrona.', location: 'Av. Floral y calles de Puno' },
+            { id: 13, fecha: '10 FEB', dia: 'MAR', banda: 'Gran Parada - Día 2', genero: 'PARADA', hora: '08:00 AM', imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8oX5A199kC2fi5FNRkp87a3dkgnJYxOPQ3w&s', color: 'linear-gradient(to bottom right, #be185d, #831843)', description: 'Segundo día de la Gran Parada. Veneración de Danzas en Trajes de Luces o Danzas Mestizas.', extra: 'Clausura oficial de la LIX Festividad Virgen de la Candelaria 2026.', location: 'Av. Floral y calles de Puno' }
         ];
 
         // danzas will be loaded from the API service
@@ -1625,40 +1626,27 @@
                     <div>
                         <div class="modal-section">
                             <h3>Descripción</h3>
-                            <p style="line-height: 1.6; color: #4b5563;">Evento importante como parte de la Festividad de la Virgen de la Candelaria.</p>
+                            <p style="line-height: 1.6; color: #4b5563;">${evento.description || 'No hay descripción disponible para este evento.'}</p>
                         </div>
                         <div class="modal-section">
                             <h3>Detalles Adicionales</h3>
                             <div style="background: #f5f3ff; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #e0e7ff;">
-                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 1rem;">
                                     <div class="info-item">
-                                        <div class="info-label">Ubicación</div>
-                                        <div class="info-value">Puno, Perú</div>
+                                        <div class="info-label">Información Extra</div>
+                                        <div class="info-value">${evento.extra || 'No hay información extra disponible.'}</div>
                                     </div>
-                                    <div class="info-item">
-                                        <div class="info-label">Organizador</div>
-                                        <div class="info-value">Gobierno Regional de Puno</div>
+                                    <div class="info-item" style="margin-top: 1rem;">
+                                        <div class="info-label">Ubicación</div>
+                                        <div class="info-value">${evento.location || 'Puno, Perú'}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="modal-section">
-                    <h3>Ubicación</h3>
-                    <div style="background: #fef3c7; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #fbbf24;">
-                        <p><strong>Lugar Principal:</strong> ${evento.banda}</p>
-                        <p><strong>Ubicación:</strong> Puno, Perú</p>
-                    </div>
-                </div>
-
-                <div class="card-actions">
-                    <button class="btn btn-primary">Ver en Mapa</button>
-                    <button class="btn btn-outline">Compartir</button>
-                    <button class="btn btn-secondary">Recordarme</button>
-                </div>
             `;
+
 
             modal.classList.add('active');
         }
@@ -1704,7 +1692,7 @@
             const detallesValue = danza.detalles || 'Detalles no disponibles';
 
             modalBody.innerHTML = `
-                <div class="dance-details-grid">
+                < div class="dance-details-grid" >
                     <div>
                         <img src="${danza.imagen || 'https://placehold.co/400x300?text=Imagen+no+disponible'}"
                              alt="${nombre}"
@@ -1737,7 +1725,7 @@
                             <p><strong>Detalles:</strong> ${detallesValue}</p>
                         </div>
                     </div>
-                </div>
+                </div >
 
                 <div class="modal-section">
                     <h3>Descripción Completa</h3>
