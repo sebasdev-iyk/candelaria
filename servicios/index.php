@@ -494,7 +494,7 @@
 
         // Function to map DB attributes to Frontend model
         function mapItem(item, type) {
-            let image = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNDAwIDMwMCI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZWRlZGVkIiAvPgo8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9ImFyaWFsIiBmb250LXNpemU9IjIwIiBmaWxsPSIjOTk5OTk5Ij5SinZDbwogSW1hZ2U8L3RleHQ+Cjwvc3ZnPg==';
+            let image = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNDAwIDMwMCI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZWRlZGVkIiAvPgo8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9ImFyaWFsIiBmb250LXNpemU9IjIwIiBmaWxsPSIjOTk5OTk5Ij5SinZDbwogSW1hZ2U8L3RleHQ+Cjwvc3ZnPg==';;
             if (item.imagenes) {
                 if (Array.isArray(item.imagenes) && item.imagenes.length > 0) image = item.imagenes[0];
                 else if (typeof item.imagenes === 'string' && item.imagenes.startsWith('[')) {
@@ -503,13 +503,30 @@
             }
             if (item.imagen) image = item.imagen; // Fallback for comida
 
-            // Fix relative paths to root absolute
-            const originalImage = image;
-            if (image && !image.startsWith('http') && !image.startsWith('data:') && !image.startsWith('/')) {
-                if (image.startsWith('assets/')) image = '/candelaria/' + image;
+            // DEBUG: Log original image URL from API
+            const rawImage = image;
+            console.log(`[DEBUG ${type}] Raw image from API:`, rawImage);
+
+            // Fix image paths - handle multiple scenarios
+            if (image && !image.startsWith('http') && !image.startsWith('data:')) {
+                // If it starts with / it's already an absolute path
+                if (image.startsWith('/')) {
+                    // Handle /candelaria-admin/uploads/ -> might need to access differently
+                    if (image.includes('/candelaria-admin/uploads/')) {
+                        console.warn(`[DEBUG ${type}] Image is in admin folder, may not be accessible:`, image);
+                    }
+                    // Already absolute, leave as is
+                } else if (image.startsWith('assets/')) {
+                    // Relative path like assets/uploads/...
+                    image = '/candelaria/' + image;
+                } else {
+                    // Other relative paths
+                    image = '/candelaria/assets/uploads/' + image;
+                }
             }
-            if (originalImage !== image) {
-                console.log(`[DEBUG] Service Image Fixed: "${originalImage}" -> "${image}"`);
+
+            if (rawImage !== image) {
+                console.log(`[DEBUG ${type}] Image URL fixed: "${rawImage}" -> "${image}"`);
             }
 
             let features = [];
