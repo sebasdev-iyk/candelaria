@@ -41,6 +41,9 @@ error_log("[LivePlatform Page] Debug: " . json_encode($debugInfo));
 
 // Separate current from recommendations
 $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStream['id'] ?? ''));
+
+// Prepare debug data for JavaScript console
+$jsDebugData = json_encode($debugInfo, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -49,6 +52,18 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>En Vivo - Candelaria 2026</title>
+
+    <!-- DEBUG: Output to console -->
+    <script>
+        console.log('[LivePlatform] === DEBUG INFO ===');
+        console.log('[LivePlatform] Debug Data:', <?= $jsDebugData ?>);
+        <?php if ($currentStream): ?>
+                console.log('[LivePlatform] Current Stream:', <?= json_encode(['id' => $currentStream['id'], 'title' => $currentStream['title'], 'platform' => $currentStream['platform']]) ?>);
+        <?php else: ?>
+                console.error('[LivePlatform] ERROR: No currentStream found!');
+        <?php endif; ?>
+            console.log('[LivePlatform] All Streams:', <?= json_encode(array_map(fn($s) => ['id' => $s['id'], 'title' => $s['title']], $allStreams)) ?>);
+    </script>
 
     <!-- Fonts & Icons from Main Project -->
     <link
