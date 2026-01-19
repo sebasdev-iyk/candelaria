@@ -77,7 +77,12 @@ function renderEmbed($stream)
             return "<iframe class='w-full h-full' src='https://www.facebook.com/plugins/video.php?href={$encodedUrl}&show_text=false&t=0' frameborder='0' allowfullscreen='true' allow='autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share'></iframe>";
 
         case 'tiktok':
-            return "<iframe class='w-full h-full' src='https://www.tiktok.com/embed/v2/{$id}?lang=es' frameborder='0'></iframe>";
+            // Support full URL (extract ID) or raw ID
+            $videoId = $id;
+            if (preg_match('/\/video\/(\d+)/', $id, $matches)) {
+                $videoId = $matches[1];
+            }
+            return "<iframe class='w-full h-full' src='https://www.tiktok.com/embed/v2/{$videoId}?lang=es' frameborder='0'></iframe>";
 
         default:
             return "<div class='w-full h-full flex items-center justify-center bg-black text-white'>Plataforma no soportada</div>";

@@ -251,7 +251,7 @@
             <div class="flex justify-between items-center">
                 <!-- Left: Candelaria Branding -->
                 <a href="../index.php" class="flex items-center cursor-pointer group">
-                    <img src="../principal/virgencandelariaa.png" alt="Candelaria"
+                    <img src="../principal/logoc.png" alt="Candelaria"
                         class="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
                 </a>
                 <!-- Right: Navigation + EN TIEMPO REAL -->

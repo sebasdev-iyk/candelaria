@@ -214,8 +214,7 @@ function timeAgo($datetime)
         <div class="w-full px-4 md:px-12 py-4">
             <div class="flex justify-between items-center">
                 <a href="../index.php" class="flex items-center group">
-                    <img src="../principal/virgencandelariaa.png" alt="Candelaria"
-                        class="h-10 md:h-12 w-auto object-contain">
+                    <img src="../principal/logoc.png" alt="Candelaria" class="h-10 md:h-12 w-auto object-contain">
                 </a>
                 <div class="flex items-center gap-6">
                     <nav class="hidden md:flex items-center gap-1">

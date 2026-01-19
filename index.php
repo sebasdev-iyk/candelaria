@@ -340,131 +340,141 @@
       margin-bottom: 15px;
     }
 
-  .scroll-indicator {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  cursor: pointer;
-  z-index: 100;
-  transition: opacity 0.3s ease;
-}
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      cursor: pointer;
+      z-index: 100;
+      transition: opacity 0.3s ease;
+    }
 
-.scroll-indicator:hover {
-  opacity: 0.92;
-}
+    .scroll-indicator:hover {
+      opacity: 0.92;
+    }
 
-/* Premium metallic circle */
-.scroll-circle {
-  width: 72px;
-  height: 72px;
-  background: radial-gradient(circle at 30% 30%, 
-              rgba(255, 255, 255, 0.15) 0%, 
-              rgba(0, 0, 0, 0.3) 70%);
-  border: 1.5px solid rgba(212, 175, 110, 0.45);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 
-    0 8px 30px rgba(0, 0, 0, 0.25),
-    inset 0 2px 8px rgba(255, 255, 255, 0.12),
-    0 0 0 1px rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(4px);
-  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-}
+    /* Premium metallic circle */
+    .scroll-circle {
+      width: 72px;
+      height: 72px;
+      background: radial-gradient(circle at 30% 30%,
+          rgba(255, 255, 255, 0.15) 0%,
+          rgba(0, 0, 0, 0.3) 70%);
+      border: 1.5px solid rgba(212, 175, 110, 0.45);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.25),
+        inset 0 2px 8px rgba(255, 255, 255, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(4px);
+      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
 
-.scroll-circle::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, 
-              rgba(230, 219, 180, 0.08) 0%, 
-              rgba(180, 150, 80, 0.12) 100%);
-  border-radius: 50%;
-}
+    .scroll-circle::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg,
+          rgba(230, 219, 180, 0.08) 0%,
+          rgba(180, 150, 80, 0.12) 100%);
+      border-radius: 50%;
+    }
 
-.scroll-indicator:hover .scroll-circle {
-  transform: translateX(-50%) scale(1.07) translateY(-3px);
-  box-shadow: 
-    0 12px 35px rgba(0, 0, 0, 0.32),
-    inset 0 3px 12px rgba(255, 255, 255, 0.18),
-    0 0 0 2px rgba(212, 175, 110, 0.6);
-  border-color: rgba(212, 175, 110, 0.7);
-}
+    .scroll-indicator:hover .scroll-circle {
+      transform: translateX(-50%) scale(1.07) translateY(-3px);
+      box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.32),
+        inset 0 3px 12px rgba(255, 255, 255, 0.18),
+        0 0 0 2px rgba(212, 175, 110, 0.6);
+      border-color: rgba(212, 175, 110, 0.7);
+    }
 
-/* Minimalist text label */
-.scroll-text {
-  background: rgba(15, 15, 20, 0.78);
-  color: rgba(230, 219, 180, 0.92);
-  padding: 8px 28px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(2px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.35s ease;
-}
+    /* Minimalist text label */
+    .scroll-text {
+      background: rgba(15, 15, 20, 0.78);
+      color: rgba(230, 219, 180, 0.92);
+      padding: 8px 28px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.35s ease;
+    }
 
-.scroll-indicator:hover .scroll-text {
-  background: rgba(10, 10, 15, 0.92);
-  transform: translateY(-3px);
-  box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  color: rgba(230, 219, 180, 1);
-}
+    .scroll-indicator:hover .scroll-text {
+      background: rgba(10, 10, 15, 0.92);
+      transform: translateY(-3px);
+      box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: rgba(230, 219, 180, 1);
+    }
 
-/* Elegant arrow with subtle animation */
-.scroll-arrow {
-  position: relative;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    /* Elegant arrow with subtle animation */
+    .scroll-arrow {
+      position: relative;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.scroll-arrow::before {
-  content: '';
-  position: absolute;
-  width: 2px;
-  height: 18px;
-  background: linear-gradient(to bottom, 
-              transparent, 
-              rgba(230, 219, 180, 0.95));
-  border-radius: 3px;
-  animation: elegantBounce 2.2s infinite ease-in-out;
-}
+    .scroll-arrow::before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 18px;
+      background: linear-gradient(to bottom,
+          transparent,
+          rgba(230, 219, 180, 0.95));
+      border-radius: 3px;
+      animation: elegantBounce 2.2s infinite ease-in-out;
+    }
 
-.scroll-arrow::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 6px solid rgba(230, 219, 180, 0.95);
-}
+    .scroll-arrow::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid rgba(230, 219, 180, 0.95);
+    }
 
-@keyframes elegantBounce {
-  0%, 100% { transform: translateY(0); opacity: 0.7; }
-  50% { transform: translateY(8px); opacity: 1; }
-}
+    @keyframes elegantBounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+        opacity: 0.7;
+      }
+
+      50% {
+        transform: translateY(8px);
+        opacity: 1;
+      }
+    }
+
     /* Botones de Acción (legacy) */
     .button-container {
       display: flex;
@@ -976,7 +986,7 @@
       <div class="flex justify-between items-center">
         <!-- Left: Candelaria Branding -->
         <a href="index.php" class="flex items-center cursor-pointer group">
-          <img src="./principal/virgencandelariaa.png" alt="Candelaria"
+          <img src="./principal/logoc.png" alt="Candelaria"
             class="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
         </a>
         <!-- Right: Navigation + EN TIEMPO REAL -->

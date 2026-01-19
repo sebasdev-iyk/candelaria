@@ -71,7 +71,7 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
             </a>
 
             <a href="../index.php" class="flex items-center gap-2">
-                <img src="../principal/virgencandelariaa.png" alt="Logo" class="h-10 w-auto">
+                <img src="../principal/logoc.png" alt="Logo" class="h-10 w-auto">
                 <span class="font-heading font-bold text-xl tracking-wider text-white hidden md:block">
                     CANDELARIA <span class="text-candelaria-gold">ONE</span>
                 </span>
