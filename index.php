@@ -1231,7 +1231,7 @@
 
     @media (min-width: 1024px) {
       .danzas-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
       }
     }
 
@@ -1964,7 +1964,7 @@
       `;
 
       try {
-        let url = `./api/danzas.php?page=${page}&pageSize=9`;
+        let url = `./api/danzas.php?page=${page}&pageSize=8`;
         if (query && query.trim() !== '') {
           url += `&q=${encodeURIComponent(query)}`;
         }
