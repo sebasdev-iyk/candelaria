@@ -986,7 +986,8 @@
       <div class="w-full flex justify-between items-center h-full">
         <!-- Left: Candelaria Branding -->
         <!-- Left: Candelaria Branding -->
-        <a href="index.php" id="logo-container" class="flex items-center cursor-pointer group h-full relative spark-container">
+        <a href="index.php" id="logo-container"
+          class="flex items-center cursor-pointer group h-full relative spark-container">
           <img src="./principal/logoc.png" alt="Candelaria"
             class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
         </a>
@@ -1109,6 +1110,48 @@
       </div>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white mt-16 border-t-4 border-candelaria-gold">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex flex-col items-center justify-center text-center">
+        <div class="flex items-center gap-2 mb-4">
+          <i data-lucide="sparkles" class="w-5 h-5 text-[#fbbf24]"></i>
+          <span class="text-xl font-bold font-heading">Candelaria 2026</span>
+        </div>
+
+        <div class="text-gray-500 text-sm mb-6">
+          &copy; 2026 Candela Digital. Todos los derechos reservados.
+        </div>
+
+        <div class="flex flex-col gap-4 text-gray-400 text-sm">
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="phone" class="w-4 h-4 text-[#fbbf24]"></i>
+              <span>922191501</span>
+            </div>
+            <span class="text-gray-600">|</span>
+            <div class="flex items-center gap-2">
+              <i data-lucide="mail" class="w-4 h-4 text-[#fbbf24]"></i>
+              <span>antonyzapana550@gmail.com</span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="phone" class="w-4 h-4 text-[#fbbf24]"></i>
+              <span>974526627</span>
+            </div>
+            <span class="text-gray-600">|</span>
+            <div class="flex items-center gap-2">
+              <i data-lucide="mail" class="w-4 h-4 text-[#fbbf24]"></i>
+              <span>p.sebastian.bn@gmail.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <style>
     /* ========== Sección de Danzas con Fondo Transparente ========== */
