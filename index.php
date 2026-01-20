@@ -1074,6 +1074,17 @@
         <p class="danzas-subtitle">Conoce las danzas que dan vida a la celebración más grande del Perú</p>
       </div>
 
+      <!-- Search bar for danzas -->
+      <form id="danzas-search-form" class="danzas-search-form">
+        <div class="search-input-wrapper">
+          <i data-lucide="search" class="search-icon"></i>
+          <input type="text" id="danzas-search-input" class="search-input" placeholder="Buscar danzas por nombre...">
+        </div>
+        <button type="submit" class="search-btn">
+          Buscar
+        </button>
+      </form>
+
       <div id="danzas-grid" class="danzas-grid">
         <!-- Loading skeleton -->
         <div class="danza-card loading-skeleton">
@@ -1102,11 +1113,14 @@
         </div>
       </div>
 
-      <div class="danzas-cta">
-        <a href="./horarios_y_danzas/index.php#danzas" class="btn-ver-danzas">
-          <span>Ver todas las danzas</span>
-          <i data-lucide="arrow-right" class="cta-arrow"></i>
-        </a>
+      <!-- Pagination container -->
+      <div id="pagination-container" class="pagination-container">
+        <div class="pagination-info" id="results-info">
+          Cargando resultados...
+        </div>
+        <div class="pagination-controls" id="pagination">
+          <!-- Pagination controls will be loaded dynamically -->
+        </div>
       </div>
     </div>
   </section>
@@ -1371,40 +1385,277 @@
       }
     }
 
-    /* ========== CTA Button ========== */
-    .danzas-cta {
-      text-align: center;
-    }
-
-    .btn-ver-danzas {
-      display: inline-flex;
-      align-items: center;
+    /* ========== Search Form Styles ========== */
+    .danzas-search-form {
+      display: flex;
       gap: 12px;
-      padding: 16px 40px;
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      color: #4c1d95;
-      font-size: 1.1rem;
-      font-weight: 700;
-      text-decoration: none;
-      border-radius: 50px;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 30px rgba(251, 191, 36, 0.35);
+      max-width: 600px;
+      margin: 0 auto 40px;
     }
 
-    .btn-ver-danzas:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(251, 191, 36, 0.5);
-      background: linear-gradient(135deg, #f59e0b, #d97706);
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
     }
 
-    .btn-ver-danzas .cta-arrow {
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
       width: 20px;
       height: 20px;
-      transition: transform 0.3s ease;
+      color: rgba(255, 255, 255, 0.5);
+      pointer-events: none;
     }
 
-    .btn-ver-danzas:hover .cta-arrow {
-      transform: translateX(5px);
+    .search-input {
+      width: 100%;
+      padding: 14px 16px 14px 50px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #fbbf24;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+    }
+
+    .search-btn {
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #4c1d95;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .search-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
+    }
+
+    /* ========== Pagination Styles ========== */
+    .pagination-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-top: 40px;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .pagination-info {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.95rem;
+    }
+
+    .pagination-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .pagination-controls button {
+      padding: 10px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .pagination-controls button.page-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .pagination-controls button.page-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #fbbf24;
+    }
+
+    .pagination-controls button.page-btn.active {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #4c1d95;
+      border-color: transparent;
+    }
+
+    .pagination-controls button.nav-btn {
+      background: rgba(76, 29, 149, 0.8);
+      color: white;
+      border-color: rgba(76, 29, 149, 0.5);
+    }
+
+    .pagination-controls button.nav-btn:hover:not(:disabled) {
+      background: #5b21b6;
+    }
+
+    .pagination-controls button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination-controls span.ellipsis {
+      padding: 10px 8px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* ========== Modal Styles ========== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 1.5rem;
+      width: 90%;
+      max-width: 1000px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      padding: 1.5rem 2rem;
+      background: linear-gradient(135deg, #4c1d95, #5b21b6);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 1.5rem 1.5rem 0 0;
+    }
+
+    .modal-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      border-radius: 50%;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fbbf24;
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .modal-section {
+      margin-bottom: 2rem;
+    }
+
+    .modal-section h3 {
+      color: #4c1d95;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #fbbf24;
+    }
+
+    .dance-details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .dance-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15);
+    }
+
+    .quick-facts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      color: #6b7280;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .info-value {
+      font-size: 0.95rem;
+      color: #1f2937;
+      font-weight: 700;
     }
 
     /* ========== Responsive ========== */
@@ -1426,9 +1677,29 @@
         gap: 20px;
       }
 
-      .btn-ver-danzas {
-        padding: 14px 30px;
-        font-size: 1rem;
+      .danzas-search-form {
+        flex-direction: column;
+      }
+
+      .search-btn {
+        width: 100%;
+      }
+
+      .modal.active {
+        padding: 1rem;
+      }
+
+      .modal-content {
+        border-radius: 1rem;
+      }
+
+      .modal-header {
+        padding: 1rem 1.5rem;
+        border-radius: 1rem 1rem 0 0;
+      }
+
+      .modal-body {
+        padding: 1.5rem;
       }
     }
 
@@ -1442,6 +1713,11 @@
       .danzas-icon {
         width: 32px;
         height: 32px;
+      }
+
+      .pagination-controls button {
+        padding: 8px 12px;
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -1644,35 +1920,80 @@
       });
     }
 
-    // ========== Cargar Danzas desde API ==========
-    async function loadDanzas() {
+    // ========== Current state for danzas ==========
+    let currentPage = 1;
+    let currentSearchQuery = '';
+
+    // ========== Load Danzas from API with Pagination ==========
+    async function loadDanzas(page = 1, query = '') {
       const danzasGrid = document.getElementById('danzas-grid');
+      const resultsInfo = document.getElementById('results-info');
+      const paginationContainer = document.getElementById('pagination');
+
       if (!danzasGrid) return;
 
+      currentPage = page;
+      currentSearchQuery = query;
+
+      // Show loading state
+      danzasGrid.innerHTML = `
+        <div class="danza-card loading-skeleton">
+          <div class="skeleton-image"></div>
+          <div class="skeleton-content">
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line medium"></div>
+          </div>
+        </div>
+        <div class="danza-card loading-skeleton">
+          <div class="skeleton-image"></div>
+          <div class="skeleton-content">
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line medium"></div>
+          </div>
+        </div>
+        <div class="danza-card loading-skeleton">
+          <div class="skeleton-image"></div>
+          <div class="skeleton-content">
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line medium"></div>
+          </div>
+        </div>
+      `;
+
       try {
-        const response = await fetch('./api/danzas.php');
+        let url = `./api/danzas.php?page=${page}&pageSize=9`;
+        if (query && query.trim() !== '') {
+          url += `&q=${encodeURIComponent(query)}`;
+        }
+
+        const response = await fetch(url);
         if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
         const result = await response.json();
         const danzas = Array.isArray(result) ? result : result.data || [];
+        const pagination = result.pagination || null;
 
         if (danzas.length === 0) {
           danzasGrid.innerHTML = `
             <div class="danza-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-              <p style="color: rgba(255,255,255,0.7);">No se encontraron danzas disponibles</p>
+              <p style="color: rgba(255,255,255,0.7);">${query ? `No se encontraron danzas que coincidan con "${query}"` : 'No se encontraron danzas disponibles'}</p>
             </div>
           `;
+          if (resultsInfo) resultsInfo.textContent = '0 resultados';
+          if (paginationContainer) paginationContainer.innerHTML = '';
           return;
         }
 
-        // Shuffle and take first 6 for homepage display
-        const shuffled = danzas.sort(() => Math.random() - 0.5);
-        const displayDanzas = shuffled.slice(0, 6);
-
-        // Render cards
-        danzasGrid.innerHTML = displayDanzas.map(danza => {
+        // Render danzas cards with modal button
+        danzasGrid.innerHTML = danzas.map(danza => {
           const categoria = danza.categoria || 'TRADICIONAL';
           const imageUrl = danza.foto || `https://placehold.co/400x300/4c1d95/fbbf24?text=${encodeURIComponent(danza.conjunto || 'Danza')}`;
+          const descripcion = (danza.descripcion || '').replace(/'/g, "\\'");
+          const horaValue = danza.hora || 'Hora no especificada';
+          const detallesValue = (danza.detalles || '').replace(/'/g, "\\'");
 
           return `
             <div class="danza-card">
@@ -1687,14 +2008,77 @@
               <div class="card-content">
                 <h3 class="card-title">${danza.conjunto}</h3>
                 ${danza.orden_concurso ? `<span class="card-order">#${danza.orden_concurso} Concurso</span>` : ''}
-                <a href="./horarios_y_danzas/index.php#danzas" class="card-btn">
-                  Ver más
-                  <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
-                </a>
+                <button class="card-btn" onclick="openDanceModal(${danza.id}, '${(danza.conjunto || '').replace(/'/g, "\\'")}', '${descripcion}', '${categoria}', '${horaValue}', '${danza.orden_concurso || ''}', '${danza.orden_veneracion || ''}', '${detallesValue}', '${imageUrl.replace(/'/g, "\\'")}')">
+                  Ver Detalles
+                  <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+                </button>
               </div>
             </div>
           `;
         }).join('');
+
+        // Update pagination info
+        if (pagination) {
+          const start = (pagination.page - 1) * pagination.pageSize + 1;
+          const end = Math.min(pagination.page * pagination.pageSize, pagination.total);
+          if (resultsInfo) {
+            resultsInfo.textContent = `Mostrando ${start} a ${end} de ${pagination.total} danzas`;
+          }
+
+          // Render pagination controls
+          if (paginationContainer) {
+            let paginationHtml = '';
+
+            // Previous button
+            if (pagination.hasPrev) {
+              paginationHtml += `<button class="nav-btn" onclick="changeDanzaPage(${pagination.page - 1})">← Anterior</button>`;
+            } else {
+              paginationHtml += `<button class="nav-btn" disabled>← Anterior</button>`;
+            }
+
+            // Page numbers
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, pagination.page - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(pagination.totalPages, startPage + maxVisiblePages - 1);
+            if (endPage - startPage + 1 < maxVisiblePages) {
+              startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+
+            if (startPage > 1) {
+              paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(1)">1</button>`;
+              if (startPage > 2) {
+                paginationHtml += '<span class="ellipsis">...</span>';
+              }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+              if (i === pagination.page) {
+                paginationHtml += `<button class="page-btn active">${i}</button>`;
+              } else {
+                paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(${i})">${i}</button>`;
+              }
+            }
+
+            if (endPage < pagination.totalPages) {
+              if (endPage < pagination.totalPages - 1) {
+                paginationHtml += '<span class="ellipsis">...</span>';
+              }
+              paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(${pagination.totalPages})">${pagination.totalPages}</button>`;
+            }
+
+            // Next button
+            if (pagination.hasNext) {
+              paginationHtml += `<button class="nav-btn" onclick="changeDanzaPage(${pagination.page + 1})">Siguiente →</button>`;
+            } else {
+              paginationHtml += `<button class="nav-btn" disabled>Siguiente →</button>`;
+            }
+
+            paginationContainer.innerHTML = paginationHtml;
+          }
+        } else {
+          if (resultsInfo) resultsInfo.textContent = `Mostrando ${danzas.length} danzas`;
+          if (paginationContainer) paginationContainer.innerHTML = '';
+        }
 
         // Re-initialize Lucide icons for the new cards
         lucide.createIcons();
@@ -1703,19 +2087,130 @@
         console.error('Error loading danzas:', error);
         danzasGrid.innerHTML = `
           <div class="danza-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-            <p style="color: rgba(255,255,255,0.7);">Error al cargar las danzas</p>
+            <p style="color: rgba(255,255,255,0.7);">Error al cargar las danzas: ${error.message}</p>
           </div>
         `;
       }
     }
 
-    // Load danzas when DOM is ready
-    document.addEventListener('DOMContentLoaded', loadDanzas);
+    // Function to change page
+    function changeDanzaPage(page) {
+      loadDanzas(page, currentSearchQuery);
+      // Scroll to danzas section
+      document.getElementById('danzas-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Function to search danzas
+    function searchDanzas(query) {
+      loadDanzas(1, query);
+    }
+
+    // ========== Dance Modal Functions ==========
+    function openDanceModal(id, conjunto, descripcion, categoria, hora, ordenConcurso, ordenVeneracion, detalles, imagen) {
+      const modal = document.getElementById('dance-modal');
+      const modalTitle = document.getElementById('dance-modal-title');
+      const modalBody = document.getElementById('dance-modal-body');
+
+      if (!modal || !modalBody) return;
+
+      modalTitle.textContent = conjunto || 'Danza';
+
+      modalBody.innerHTML = `
+        <div class="dance-details-grid">
+          <div>
+            <img src="${imagen || 'https://placehold.co/400x300?text=Imagen+no+disponible'}"
+                 alt="${conjunto}"
+                 class="dance-image"
+                 onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';">
+            <div class="quick-facts">
+              <div class="info-item">
+                <div class="info-label">Categoria</div>
+                <div class="info-value">${categoria || 'N/A'}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Hora Estimada</div>
+                <div class="info-value">${hora || 'No especificada'}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Orden Concurso</div>
+                <div class="info-value">${ordenConcurso ? '#' + ordenConcurso : 'N/A'}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Orden Veneracion</div>
+                <div class="info-value">${ordenVeneracion ? '#' + ordenVeneracion : 'N/A'}</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="modal-section">
+              <h3>Descripcion</h3>
+              <p style="line-height: 1.6; color: #4b5563;">${descripcion || 'Descripcion no disponible.'}</p>
+            </div>
+            <div class="modal-section">
+              <h3>Detalles Adicionales</h3>
+              <p style="line-height: 1.6; color: #4b5563;">${detalles || 'No hay detalles adicionales disponibles.'}</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      modal.classList.add('active');
+    }
+
+    function closeDanceModal() {
+      const modal = document.getElementById('dance-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    // ========== Initialize ==========
+    document.addEventListener('DOMContentLoaded', function () {
+      // Load danzas
+      loadDanzas();
+
+      // Set up search form
+      const searchForm = document.getElementById('danzas-search-form');
+      const searchInput = document.getElementById('danzas-search-input');
+
+      if (searchForm) {
+        searchForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const query = searchInput ? searchInput.value : '';
+          searchDanzas(query);
+        });
+      }
+
+      // Set up modal close
+      const modalCloseBtn = document.getElementById('dance-modal-close');
+      if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', closeDanceModal);
+      }
+
+      // Close modal on outside click
+      const modal = document.getElementById('dance-modal');
+      if (modal) {
+        modal.addEventListener('click', function (e) {
+          if (e.target === modal) {
+            closeDanceModal();
+          }
+        });
+      }
+    });
   </script>
   <!-- Chatbot Widget -->
   <link rel="stylesheet" href="assets/css/chatbot-widget.css">
   <div id="chatbot-widget"></div>
   <script src="assets/js/chatbot-widget.js"></script>
+
+  <!-- Dance Details Modal -->
+  <div class="modal" id="dance-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="dance-modal-title">Detalles de la Danza</h2>
+        <button class="modal-close" id="dance-modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="dance-modal-body"></div>
+    </div>
+  </div>
 
   <!-- Auth Modal and Dropdown -->
   <?= getAuthModalHTML() ?>
