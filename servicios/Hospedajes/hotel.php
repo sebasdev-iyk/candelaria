@@ -1567,6 +1567,14 @@
             const token = localStorage.getItem('clientToken');
             const comment = document.getElementById('rate-comment').value;
 
+            // DEBUG LOGS
+            console.log('[DEBUG] Enviando calificacion:', {
+                hospedaje_id: parseInt(hotelId),
+                puntuacion: userRating,
+                comentario: comment,
+                token: token ? 'Token existe' : 'Token NO existe'
+            });
+
             try {
                 const res = await fetch('../../api/calificaciones.php', {
                     method: 'POST',
@@ -1581,7 +1589,16 @@
                     })
                 });
 
+                const contentType = res.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    //
+                } else {
+                    console.warn('[DEBUG] La respuesta no es JSON:', await res.text());
+                }
+
                 if (res.ok) {
+                    const data = await res.json();
+                    console.log('[DEBUG] Respuesta Exitosa:', data);
                     showToast('¡Gracias por tu opinión!', 'success');
                     document.getElementById('rate-comment').value = '';
                     userRating = 0;
@@ -1589,9 +1606,11 @@
                     loadReviews();
                 } else {
                     const err = await res.json();
+                    console.error('[DEBUG] Error del servidor:', err);
                     showToast(err.message || 'Error al enviar', 'error');
                 }
             } catch (e) {
+                console.error('[DEBUG] Error catch:', e);
                 showToast('Error de conexión', 'error');
             }
         }

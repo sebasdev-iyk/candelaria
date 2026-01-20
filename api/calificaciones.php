@@ -10,12 +10,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 include_once '../src/Config/Database.php';
+include_once '../includes/logger.php';
+
 use Config\Database;
 
 $database = new Database();
 $db = $database->connect('mipuno_candelaria');
 
 if (!$db) {
+    custom_log("[ERROR] Error de conexión a BD en calificaciones.php");
     http_response_code(500);
     echo json_encode(["message" => "Error de conexión a BD"]);
     exit();
@@ -56,8 +59,12 @@ function validateToken($token, $db)
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method == 'POST') {
+    $rawInput = file_get_contents("php://input");
+    custom_log("[DEBUG] POST calificaciones raw: " . $rawInput);
+
     $auth = getAuthHeader();
     if (!$auth || !preg_match('/Bearer\s(\S+)/', $auth, $matches)) {
+        custom_log("[WARNING] Intento de calificar sin auth o auth invalido");
         http_response_code(401);
         echo json_encode(["message" => "No autorizado"]);
         exit();
@@ -65,14 +72,16 @@ if ($method == 'POST') {
 
     $user = validateToken($matches[1], $db);
     if (!$user) {
+        custom_log("[WARNING] Token invalido al calificar");
         http_response_code(401);
         echo json_encode(["message" => "Token inválido"]);
         exit();
     }
 
-    $data = json_decode(file_get_contents("php://input"));
+    $data = json_decode($rawInput);
 
     if (!isset($data->hospedaje_id) || !isset($data->puntuacion)) {
+        custom_log("[ERROR] Datos incompletos al calificar: " . $rawInput);
         http_response_code(400);
         echo json_encode(["message" => "Faltan datos (hospedaje_id, puntuacion)"]);
         exit();
@@ -95,6 +104,7 @@ if ($method == 'POST') {
     $checkStmt->bindValue(':hid', $hospedaje_id);
     $checkStmt->execute();
     if ($checkStmt->fetch()) {
+        custom_log("[INFO] El usuario {$user['id']} ya califico hospedaje {$hospedaje_id}");
         http_response_code(409);
         echo json_encode(["message" => "Ya has calificado este hospedaje"]);
         exit();
@@ -102,7 +112,7 @@ if ($method == 'POST') {
 
     try {
         // Insert rating
-        $query = "INSERT INTO calificaciones (cliente_id, hospedaje_id, puntuacion, comentario) VALUES (:cid, :hid, :pts, :com)";
+        $query = "INSERT INTO calificaciones (cliente_id, hospedaje_id, estrellas, comentario) VALUES (:cid, :hid, :pts, :com)";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':cid', $user['id']);
         $stmt->bindParam(':hid', $hospedaje_id);
@@ -110,8 +120,10 @@ if ($method == 'POST') {
         $stmt->bindParam(':com', $comentario);
         $stmt->execute();
 
+        custom_log("[INFO] Calificación insertada correctamente ID: " . $db->lastInsertId());
+
         // Update Average
-        $avgQuery = "UPDATE hospedajes SET calificacion = (SELECT AVG(puntuacion) FROM calificaciones WHERE hospedaje_id = :hid) WHERE id = :hid";
+        $avgQuery = "UPDATE hospedajes SET calificacion = (SELECT AVG(estrellas) FROM calificaciones WHERE hospedaje_id = :hid) WHERE id = :hid";
         $avgStmt = $db->prepare($avgQuery);
         $avgStmt->bindParam(':hid', $hospedaje_id);
         $avgStmt->execute();
@@ -119,6 +131,7 @@ if ($method == 'POST') {
         echo json_encode(["message" => "Calificación guardada"]);
 
     } catch (PDOException $e) {
+        custom_log("[ERROR] Error DB al calificar: " . $e->getMessage());
         http_response_code(500);
         echo json_encode(["message" => "Error DB: " . $e->getMessage()]);
     }
@@ -133,7 +146,8 @@ if ($method == 'POST') {
 
     try {
         // Get reviews
-        $query = "SELECT c.*, cl.nombre as cliente_nombre FROM calificaciones c 
+        $query = "SELECT c.id, c.hospedaje_id, c.cliente_id, c.estrellas as puntuacion, c.comentario, c.created_at, cl.nombre as cliente_nombre 
+                 FROM calificaciones c 
                  JOIN clientes cl ON c.cliente_id = cl.id 
                  WHERE c.hospedaje_id = :hid 
                  ORDER BY c.created_at DESC";
@@ -155,6 +169,7 @@ if ($method == 'POST') {
             "reviews" => $items
         ]);
     } catch (PDOException $e) {
+        custom_log("[ERROR] Error DB al obtener calificaciones: " . $e->getMessage());
         http_response_code(500);
         echo json_encode(["message" => "Error DB: " . $e->getMessage()]);
     }
