@@ -15,17 +15,17 @@ body {
 }
 
 /* Layout Grid */
+/* Layout Grid -> Converted to Flex */
 .live-container {
-  display: grid;
-  grid-template-columns: 1fr 350px;
-  grid-template-rows: calc(100vh - 80px);
-  /* Adjust for header height */
+  display: flex;
+  flex-direction: row;
   height: calc(100vh - 80px);
+  overflow: hidden;
 }
 
 /* Video Section */
 .main-stage {
-  grid-column: 1;
+  flex: 1;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -123,7 +123,8 @@ body {
 
 /* Chat Section */
 .chat-sidebar {
-  grid-column: 2;
+  width: 350px;
+  flex-shrink: 0;
   background: var(--live-panel);
   border-left: 1px solid var(--live-border);
   display: flex;
@@ -271,13 +272,13 @@ body {
 
 @media (max-width: 1024px) {
   .live-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 500px;
+    flex-direction: column;
     height: auto;
+    overflow-y: auto;
   }
 
   .chat-sidebar {
-    grid-column: 1;
+    width: 100%;
     height: 500px;
     border-left: none;
     border-top: 1px solid var(--live-border);

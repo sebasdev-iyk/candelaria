@@ -354,20 +354,185 @@ document.addEventListener('DOMContentLoaded', () => {
 function switchView(viewName) {
     const liveView = document.getElementById('view-live');
     const scoresView = document.getElementById('view-scores');
+    const mapView = document.getElementById('view-map');
+
     const tabLive = document.getElementById('tab-live');
     const tabScores = document.getElementById('tab-scores');
+    const tabMap = document.getElementById('tab-map');
+
+    const chatSidebar = document.getElementById('chat-sidebar');
+
+    // Reset all
+    liveView.classList.add('hidden');
+    scoresView.classList.add('hidden');
+    mapView.classList.add('hidden');
+
+    tabLive.classList.remove('active');
+    tabScores.classList.remove('active');
+    tabMap.classList.remove('active');
 
     if (viewName === 'live') {
         liveView.classList.remove('hidden');
-        scoresView.classList.add('hidden');
         tabLive.classList.add('active');
-        tabScores.classList.remove('active');
+        if (chatSidebar) chatSidebar.style.display = 'flex'; // Show chat
     } else {
-        liveView.classList.add('hidden');
-        scoresView.classList.remove('hidden');
-        tabLive.classList.remove('active');
-        tabScores.classList.add('active');
+        if (chatSidebar) chatSidebar.style.display = 'none'; // Hide chat for other views
+
+        if (viewName === 'scores') {
+            scoresView.classList.remove('hidden');
+            tabScores.classList.add('active');
+        } else if (viewName === 'map') {
+            mapView.classList.remove('hidden');
+            tabMap.classList.add('active');
+            // Initialize map if needed
+            setTimeout(initMapLive, 200);
+        }
     }
+}
+
+/* --- Real-Time Map Logic --- */
+let map;
+let routeLine = null;
+let routePoints = [];
+let dansas = [];
+let totalRouteLength = 0;
+let updateInterval;
+let danceMarkers = {};
+let mapInitialized = false;
+
+// API Path relative to live-platform/index.php -> ../../php-admin/api/admin/mapa.php
+const MAP_API_BASE = '../../php-admin/api/admin/mapa.php';
+
+async function initMapLive() {
+    if (mapInitialized) {
+        map.invalidateSize(); // Fix leafet render issues when showing from hidden
+        return;
+    }
+
+    const mapElement = document.getElementById('map-live-container');
+    if (!mapElement) return;
+
+    map = L.map('map-live-container').setView([-15.8407, -70.0214], 14); // Puno
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Load Data
+    await loadRoute();
+    await loadDances();
+
+    // Start Polling
+    if (updateInterval) clearInterval(updateInterval);
+    updateInterval = setInterval(updateDancesState, 2000);
+
+    mapInitialized = true;
+}
+
+async function loadRoute() {
+    try {
+        const response = await fetch(`${MAP_API_BASE}/route-points`);
+        if (response.ok) {
+            routePoints = await response.json();
+            drawRoute();
+        }
+    } catch (error) {
+        console.error('Error loading route:', error);
+    }
+}
+
+function drawRoute() {
+    if (!map) return;
+    if (routeLine) map.removeLayer(routeLine);
+
+    if (routePoints && routePoints.length >= 2) {
+        const latlngs = routePoints.map(p => [p.lat, p.lng]);
+        routeLine = L.polyline(latlngs, {
+            color: '#4CAF50',
+            weight: 6,
+            opacity: 0.7,
+            smoothFactor: 1,
+            lineCap: 'round',
+            lineJoin: 'round',
+            dashArray: '10, 10'
+        }).addTo(map);
+
+        map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
+    }
+}
+
+async function loadDances() {
+    try {
+        const response = await fetch(`${MAP_API_BASE}/dances`);
+        if (response.ok) {
+            dansas = await response.json();
+            updateMapMarkers();
+        }
+    } catch (error) {
+        console.error('Error loading dances:', error);
+    }
+}
+
+async function updateDancesState() {
+    try {
+        const response = await fetch(`${MAP_API_BASE}/dances`);
+        if (response.ok) {
+            dansas = await response.json();
+            updateMapMarkers();
+        }
+    } catch (error) {
+        console.error('Error updating dances:', error);
+    }
+}
+
+function updateMapMarkers() {
+    if (!map) return;
+
+    Object.keys(danceMarkers).forEach(markerId => {
+        const stillExists = dansas.some(danza => danza.id === markerId);
+        if (!stillExists) {
+            if (map.hasLayer(danceMarkers[markerId])) map.removeLayer(danceMarkers[markerId]);
+            delete danceMarkers[markerId];
+        }
+    });
+
+    dansas.forEach(danza => {
+        const shouldShowMarker = danza.started || (danza.distance_traveled > 0 && !danza.finished);
+
+        if (danceMarkers[danza.id]) {
+            if (shouldShowMarker) {
+                const newLatLng = [danza.lat, danza.lng];
+                danceMarkers[danza.id].setLatLng(newLatLng);
+                danceMarkers[danza.id].setPopupContent(createPopupContent(danza));
+                if (!map.hasLayer(danceMarkers[danza.id])) danceMarkers[danza.id].addTo(map);
+            } else {
+                if (map.hasLayer(danceMarkers[danza.id])) map.removeLayer(danceMarkers[danza.id]);
+            }
+        } else if (shouldShowMarker) {
+            const icon = L.divIcon({
+                html: `<div style="font-size: 28px; color: ${danza.color}; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">${danza.icon || '💃'}</div>`,
+                className: 'custom-dance-icon',
+                iconSize: [35, 35],
+                iconAnchor: [17, 17]
+            });
+
+            const marker = L.marker([danza.lat, danza.lng], { icon: icon }).addTo(map);
+            marker.bindPopup(createPopupContent(danza));
+            marker.on('click', function () { map.setView([danza.lat, danza.lng], map.getZoom()); });
+            danceMarkers[danza.id] = marker;
+        }
+    });
+}
+
+function createPopupContent(danza) {
+    return `
+        <div style="text-align: center; color: #333;">
+            <h3 style="color: ${danza.color}; margin-bottom: 5px; font-weight: bold;">${danza.name}</h3>
+            <p><strong>Tipo:</strong> ${danza.type}</p>
+            <p><strong>Progreso:</strong> ${danza.progress.toFixed(1)}%</p>
+            <p><strong>Distancia:</strong> ${danza.distance_traveled.toFixed(2)} km</p>
+        </div>
+    `;
 }
 
 function switchScoreType(type) {

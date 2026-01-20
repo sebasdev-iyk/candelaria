@@ -71,6 +71,14 @@
             "message": "hola",
             "color": "#ec4899",
             "timestamp": 1768877341
+        },
+        {
+            "id": 10,
+            "user_id": 1,
+            "user": "sebas",
+            "message": "asdsa",
+            "color": "#ec4899",
+            "timestamp": 1768880202
         }
     ]
 }
