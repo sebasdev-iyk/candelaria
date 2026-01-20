@@ -159,10 +159,7 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
     <header
         class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-50 h-20 md:h-22 flex items-center justify-between px-6 border-b border-purple-800">
         <div class="flex items-center gap-4 h-full">
-            <!-- Back to Main -->
-            <a href="../index.php" class="text-purple-300 hover:text-white transition-colors">
-                <i class="fas fa-arrow-left text-xl"></i>
-            </a>
+            <!-- Back to Main removed -->
 
             <a href="../index.php" id="logo-container"
                 class="flex items-center gap-2 h-full relative spark-container group">
