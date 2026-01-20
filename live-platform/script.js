@@ -467,30 +467,13 @@ function drawRoute() {
 
 async function loadDances() {
     try {
-        const url = `${MAP_API_BASE}/dances`;
-        console.log('[Map] Loading dances from:', url);
-        const response = await fetch(url);
+        const response = await fetch(`${MAP_API_BASE}/dances`);
         if (response.ok) {
-            const rawText = await response.text();
-            console.log('[Map] Raw response (first 500 chars):', rawText.substring(0, 500));
-
-            // Parse JSON
-            dansas = JSON.parse(rawText);
-
-            // Check foto field
-            const withFotos = dansas.filter(d => d.foto && d.foto !== null && d.foto !== 'null');
-            console.log('[Map] Total dances:', dansas.length, '| With photos:', withFotos.length);
-
-            if (withFotos.length > 0) {
-                console.log('[Map] ✅ First dance with foto:', withFotos[0].name, '->', withFotos[0].foto);
-            } else if (dansas.length > 0) {
-                console.log('[Map] ⚠️ Sample dance (NO foto):', dansas[0].name, 'foto field:', dansas[0].foto);
-            }
-
+            dansas = await response.json();
             updateMapMarkers();
         }
     } catch (error) {
-        console.error('[Map] Error:', error);
+        console.error('[Map] Error loading dances:', error);
     }
 }
 
@@ -531,31 +514,31 @@ function updateMapMarkers() {
             }
         } else if (shouldShowMarker) {
             let iconHtml;
+            const shortName = danza.name.length > 20 ? danza.name.substring(0, 18) + '...' : danza.name;
 
             // Use photo if available, otherwise fallback to emoji
             if (danza.foto && danza.foto.trim() !== '') {
                 iconHtml = `
-                    <div style="
-                        width: 44px;
-                        height: 44px;
-                        border-radius: 50%;
-                        border: 3px solid ${danza.color};
-                        background-image: url('${danza.foto}');
-                        background-size: cover;
-                        background-position: center;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-                    "></div>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div style="background: rgba(76, 29, 149, 0.9); color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-bottom: 2px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">${shortName}</div>
+                        <div style="width: 44px; height: 44px; border-radius: 50%; border: 3px solid ${danza.color}; background-image: url('${danza.foto}'); background-size: cover; background-position: center; box-shadow: 0 2px 8px rgba(0,0,0,0.4);"></div>
+                    </div>
                 `;
             } else {
-                // Fallback to emoji
-                iconHtml = `<div style="font-size: 28px; color: ${danza.color}; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">${danza.icon || '💃'}</div>`;
+                // Fallback to emoji with name
+                iconHtml = `
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div style="background: rgba(76, 29, 149, 0.9); color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-bottom: 2px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">${shortName}</div>
+                        <div style="font-size: 28px; color: ${danza.color}; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">${danza.icon || '💃'}</div>
+                    </div>
+                `;
             }
 
             const icon = L.divIcon({
                 html: iconHtml,
                 className: 'custom-dance-icon',
-                iconSize: [44, 44],
-                iconAnchor: [22, 22]
+                iconSize: [60, 70],
+                iconAnchor: [30, 60]
             });
 
             const marker = L.marker([danza.lat, danza.lng], { icon: icon }).addTo(map);
