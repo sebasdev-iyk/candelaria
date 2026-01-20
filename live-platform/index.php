@@ -55,6 +55,8 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
         }
     </script>
 
+    <!-- Lucide Icons for Auth -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Custom Live Styles -->
     <link rel="stylesheet" href="./style.css">
     <!-- Spark Effect -->
@@ -399,10 +401,6 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
         </aside>
     </div>
 
-
-
-    <!-- Lucide Icons for Auth -->
-    <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Auth Modal and Dropdown (MUST be before live script) -->
     <?= getAuthModalHTML() ?>

@@ -121,6 +121,9 @@ function getAuthJS($apiBasePath = '')
         }
         
         setupAuthForms();
+        
+        // Always create icons on init (for the user button in header)
+        if (typeof lucide !== 'undefined') lucide.createIcons();
     }
     
     function updateAuthUI() {
