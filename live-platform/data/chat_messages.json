@@ -63,6 +63,14 @@
             "message": "oa como estar",
             "color": "#ec4899",
             "timestamp": 1768778194
+        },
+        {
+            "id": 9,
+            "user_id": 1,
+            "user": "sebas",
+            "message": "hola",
+            "color": "#ec4899",
+            "timestamp": 1768877341
         }
     ]
 }

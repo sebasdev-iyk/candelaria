@@ -321,3 +321,124 @@ function toggleFollow(btn) {
         btn.classList.add('bg-purple-600', 'hover:bg-purple-700');
     }
 }
+
+/* --- Tabs & Rankings Logic --- */
+const MOCK_SCORES = {
+    autoctonos: [
+        { name: "Asoc. Cultural Sikuris Claveles Rojos", parada: 85.50, estadio: 88.00, final: 86.75 },
+        { name: "Conjunto de Zampoñas de Yunguyo", parada: 84.00, estadio: 86.50, final: 85.25 },
+        { name: "Agrupación Zampoñistas del Altiplano", parada: 88.00, estadio: 89.50, final: 88.75 },
+        { name: "Unión de Sikuris de Puno", parada: 82.50, estadio: 83.00, final: 82.75 },
+        { name: "Asociación Juvenil Puno", parada: 87.00, estadio: 85.50, final: 86.25 },
+        { name: "Sikuris Mañazo", parada: 89.50, estadio: 88.00, final: 88.75 },
+        { name: "Juventud Obrera", parada: 83.50, estadio: 84.00, final: 83.75 },
+        { name: "Sikuris 27 de Junio", parada: 86.00, estadio: 87.50, final: 86.75 }
+    ],
+    luces: [
+        { name: "Morenada Laykakota", parada: 92.00, estadio: 94.50, final: 93.25 },
+        { name: "Diablada Bellavista", parada: 95.00, estadio: 96.00, final: 95.50 },
+        { name: "Caporales Centralistas", parada: 91.50, estadio: 92.00, final: 91.75 },
+        { name: "Tinkus del Valle", parada: 89.00, estadio: 90.50, final: 89.75 },
+        { name: "Waca Waca San Román", parada: 88.50, estadio: 87.00, final: 87.75 },
+        { name: "Morenada Orkapata", parada: 90.00, estadio: 91.50, final: 90.75 },
+        { name: "Diablada Azoguini", parada: 93.50, estadio: 92.00, final: 92.75 },
+        { name: "Rey Caporal", parada: 88.00, estadio: 89.50, final: 88.75 }
+    ]
+};
+
+// Start with a default render
+document.addEventListener('DOMContentLoaded', () => {
+    renderScores('autoctonos');
+});
+
+function switchView(viewName) {
+    const liveView = document.getElementById('view-live');
+    const scoresView = document.getElementById('view-scores');
+    const tabLive = document.getElementById('tab-live');
+    const tabScores = document.getElementById('tab-scores');
+
+    if (viewName === 'live') {
+        liveView.classList.remove('hidden');
+        scoresView.classList.add('hidden');
+        tabLive.classList.add('active');
+        tabScores.classList.remove('active');
+    } else {
+        liveView.classList.add('hidden');
+        scoresView.classList.remove('hidden');
+        tabLive.classList.remove('active');
+        tabScores.classList.add('active');
+    }
+}
+
+function switchScoreType(type) {
+    const btnAuto = document.getElementById('btn-autoctonos');
+    const btnLuces = document.getElementById('btn-luces');
+
+    const activeClass = ['bg-purple-600', 'text-white', 'shadow-lg'];
+    // Classes for inactive state: transparent bg, lighter text
+    const inactiveClass = ['text-gray-300', 'hover:text-white', 'bg-transparent', 'shadow-none'];
+
+    // Helper to switch classes
+    const setBtnState = (btn, isActive) => {
+        // First remove everything to be safe
+        btn.classList.remove('bg-purple-600', 'text-white', 'shadow-lg', 'text-gray-300', 'hover:text-white', 'bg-transparent', 'shadow-none');
+
+        if (isActive) {
+            btn.classList.add('bg-purple-600', 'text-white', 'shadow-lg');
+        } else {
+            btn.classList.add('text-gray-300', 'hover:text-white', 'bg-transparent', 'shadow-none');
+        }
+    };
+
+    if (type === 'autoctonos') {
+        setBtnState(btnAuto, true);
+        setBtnState(btnLuces, false);
+    } else {
+        setBtnState(btnAuto, false);
+        setBtnState(btnLuces, true);
+    }
+
+    renderScores(type);
+}
+
+function renderScores(type) {
+    const listContainer = document.getElementById('scores-list');
+    if (!listContainer) return;
+
+    listContainer.innerHTML = '';
+    const scores = MOCK_SCORES[type] || [];
+
+    // Sort by final score desc
+    scores.sort((a, b) => b.final - a.final);
+
+    scores.forEach((item, index) => {
+        const rank = index + 1;
+        let rankColor = 'text-gray-400';
+        let rowBg = 'hover:bg-gray-700/50';
+
+        if (rank === 1) { rankColor = 'text-yellow-400'; rowBg = 'bg-yellow-900/10 hover:bg-yellow-900/20'; }
+        if (rank === 2) { rankColor = 'text-gray-300'; }
+        if (rank === 3) { rankColor = 'text-amber-600'; }
+
+        const html = `
+            <div class="grid grid-cols-12 p-5 items-center transition-colors ${rowBg}">
+                <div class="col-span-6 md:col-span-5 flex items-center gap-4 pl-4">
+                    <span class="text-2xl font-bold font-heading w-8 ${rankColor}">#${rank}</span>
+                    <span class="font-medium text-gray-100">${item.name}</span>
+                </div>
+                <div class="col-span-2 text-center text-gray-400 hidden md:block font-mono bg-black/20 py-1 rounded mx-2">
+                    ${item.parada.toFixed(2)}
+                </div>
+                <div class="col-span-2 text-center text-gray-400 hidden md:block font-mono bg-black/20 py-1 rounded mx-2">
+                    ${item.estadio.toFixed(2)}
+                </div>
+                <div class="col-span-6 md:col-span-3 text-center">
+                    <span class="text-xl font-bold text-candelaria-gold bg-yellow-400/10 px-3 py-1 rounded-lg border border-yellow-400/20">
+                        ${item.final.toFixed(2)}
+                    </span>
+                </div>
+            </div>
+        `;
+        listContainer.insertAdjacentHTML('beforeend', html);
+    });
+}

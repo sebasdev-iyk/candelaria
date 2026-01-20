@@ -63,6 +63,75 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
 
 <body>
 
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        .video-player-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Nav Link Styles from Main */
+        .nav-link-custom {
+            color: #e9d5ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 16px;
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link-custom:hover {
+            color: #fbbf24;
+        }
+
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: #fbbf24;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link-custom:hover::after {
+            width: 80%;
+        }
+
+        .nav-link-custom.active {
+            color: #fbbf24;
+        }
+
+        .nav-link-custom.active::after {
+            width: 80%;
+        }
+    </style>
+
     <!-- Header (Consistent with Main Project) -->
     <header
         class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-50 h-20 md:h-22 flex items-center justify-between px-6 border-b border-purple-800">
@@ -72,11 +141,10 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
                 <i class="fas fa-arrow-left text-xl"></i>
             </a>
 
-            <a href="../index.php" id="logo-container" class="flex items-center gap-2 h-full relative spark-container group">
-                <img src="../principal/logoc.png" alt="Logo" class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
-                <span class="font-heading font-bold text-xl tracking-wider text-white hidden md:block">
-                    CANDELARIA <span class="text-candelaria-gold">ONE</span>
-                </span>
+            <a href="../index.php" id="logo-container"
+                class="flex items-center gap-2 h-full relative spark-container group">
+                <img src="../principal/logoc.png" alt="Logo"
+                    class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
             </a>
 
             <div class="hidden md:flex ml-8 bg-purple-900/50 rounded-full px-4 py-2 border border-purple-700">
@@ -87,6 +155,16 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
         </div>
 
         <div class="flex items-center gap-6">
+            <!-- Navigation Tabs -->
+            <nav class="hidden md:flex items-center gap-2">
+                <div class="nav-link-custom active" id="tab-live" onclick="switchView('live')">
+                    En Vivo
+                </div>
+                <div class="nav-link-custom" id="tab-scores" onclick="switchView('scores')">
+                    Puntajes
+                </div>
+            </nav>
+
             <!-- User Auth Section -->
             <div class="flex items-center">
                 <?= getAuthButtonHTML() ?>
@@ -94,9 +172,8 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
         </div>
     </header>
 
-    <!-- Main Content Grid -->
-    <div class="live-container">
-
+    <!-- Main Live View -->
+    <div id="view-live" class="live-container">
         <!-- Center Stage: Video & Info -->
         <main class="main-stage custom-scrollbar">
 
@@ -114,9 +191,6 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
                     <div class="absolute inset-0 bg-black">
                         <?= renderEmbed($currentStream) ?>
                     </div>
-
-                    <!-- Fallback Overlay for Controls (Only if needed, usually embeds handle controls) -->
-                    <!-- Removed custom controls overlay as real embeds have their own -->
 
                     <div class="viewers-badge" id="viewer-count">
                         <i class="fas fa-user-friends text-candelaria-gold"></i>
@@ -240,7 +314,47 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
                 </div>
             </div>
         </aside>
+    </div>
 
+    <!-- Scores View (Hidden) -->
+    <div id="view-scores" class="hidden min-h-[calc(100vh-80px)] bg-gray-900 p-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
+                <h2 class="text-4xl font-bold text-white flex items-center gap-3">
+                    <i class="fas fa-trophy text-yellow-500"></i>
+                    Resultados y Puntajes
+                </h2>
+
+                <!-- Tabs Autoctonos vs Trajes de Luces -->
+                <div class="bg-purple-900/50 p-1 rounded-xl flex">
+                    <button onclick="switchScoreType('autoctonos')" id="btn-autoctonos"
+                        class="px-6 py-2 rounded-lg font-semibold text-white bg-purple-600 shadow-lg transition-all duration-300">
+                        Autóctonos
+                    </button>
+                    <button onclick="switchScoreType('luces')" id="btn-luces"
+                        class="px-6 py-2 rounded-lg font-semibold text-gray-300 hover:text-white transition-all duration-300">
+                        Trajes de Luces
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scores List -->
+            <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-2xl border border-gray-700">
+                <!-- Table Header -->
+                <div
+                    class="grid grid-cols-12 bg-purple-950/80 p-4 text-purple-200 font-bold uppercase text-sm tracking-wider">
+                    <div class="col-span-6 md:col-span-5 pl-4">Conjunto / Danza</div>
+                    <div class="col-span-2 text-center hidden md:block">Parada</div>
+                    <div class="col-span-2 text-center hidden md:block">Estadio</div>
+                    <div class="col-span-6 md:col-span-3 text-center">Puntaje Final</div>
+                </div>
+
+                <!-- List Content -->
+                <div id="scores-list" class="divide-y divide-gray-700">
+                    <!-- Javascript will populate this -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <style>
