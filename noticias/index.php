@@ -229,13 +229,32 @@ function timeAgo($datetime)
                     </nav>
                     <?php include '../includes/auth-header.php'; ?>
                     <?= getAuthButtonHTML() ?>
-                    <a href="../live-platform/index.php" class="btn-live text-white font-bold no-underline">
-                        <div class="live-dot"></div> EN VIVO
+                    <a href="../live-platform/index.php"
+                        class="btn-live text-white font-bold no-underline group !p-2.5 md:!px-6 md:!py-2.5">
+                        <div class="live-dot"></div> <span class="tracking-wider hidden md:inline">EN TIEMPO REAL</span>
                     </a>
+                    <button class="md:hidden text-white ml-4" id="mobile-menu-btn">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu"
+        class="hidden md:hidden bg-candelaria-purple absolute top-20 left-0 w-full shadow-lg border-t border-purple-800 z-40 transition-all duration-300">
+        <nav class="flex flex-col p-6 space-y-4">
+            <a href="../servicios/index.php"
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Servicios</a>
+            <a href="../cultura/cultura.php"
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
+            <a href="../horarios_y_danzas/index.php"
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Horarios</a>
+            <a href="index.php"
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 active text-candelaria-gold">Noticias</a>
+        </nav>
+    </div>
 
     <!-- Breaking News Ticker -->
     <div class="bg-gray-900 border-b border-gray-800">
@@ -393,6 +412,25 @@ function timeAgo($datetime)
     <!-- Auth Modal and Dropdown -->
     <?= getAuthModalHTML() ?>
     <?= getAuthJS('../') ?>
+    <script>
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close on outside click
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
