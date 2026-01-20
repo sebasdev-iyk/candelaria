@@ -12,9 +12,6 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Leaflet CSS (Mapa) -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
     <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"
@@ -442,10 +439,7 @@
                 class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-transparent text-gray-500 hover:border-candelaria-purple hover:text-candelaria-purple transition-colors">
                 <i data-lucide="users" class="w-4 h-4"></i> Danzas
             </button>
-            <button onclick="setActiveTab('mapa')" id="tab-mapa"
-                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-transparent text-gray-500 hover:border-candelaria-purple hover:text-candelaria-purple transition-colors">
-                <i data-lucide="map-pin" class="w-4 h-4"></i> Mapa
-            </button>
+
         </div>
     </nav>
 
@@ -529,7 +523,7 @@
     </footer>
 
     <!-- Scripts: Libraries first (already in head), then Logic -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script src="../assets/js/spark-effect.js"></script>
 
     <script>
@@ -620,25 +614,7 @@
             container.innerHTML = '';
 
             // Handle map display for the mapa tab
-            if (state.activeTab === 'mapa') {
-                // Show the map in the main content area
-                container.innerHTML = `
-                    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                        <div class="p-4 bg-white border-b border-gray-100 flex justify-between items-center">
-                            <h3 class="font-bold text-gray-800 flex items-center">
-                                <i data-lucide="map-pin" class="w-5 h-5 mr-2 text-candelaria-purple"></i>
-                                Mapa en Tiempo Real
-                            </h3>
-                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-medium">En vivo</span>
-                        </div>
-                        <div id="map-container-full" class="w-full h-[600px] z-0 bg-gray-100 relative"></div>
-                    </div>
-                `;
-                lucide.createIcons();
-
-                // Initialize the map after a short delay to ensure DOM is ready
-                setTimeout(initMap, 100);
-            } else {
+            {
                 // Mostrar contenido según pestaña activa in the main content area
                 switch (state.activeTab) {
                     case 'programacion':
@@ -1216,288 +1192,7 @@
 
 
         // Renderizar mapa
-        function renderMapa() {
-            const container = document.getElementById('events-container');
-            if (!container) return;
 
-            container.innerHTML = `
-                <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden h-[650px]">
-                    <div class="p-4 bg-white border-b border-gray-100 flex justify-between items-center">
-                        <h3 class="font-bold text-gray-800 flex items-center">
-                            <i data-lucide="map-pin" class="w-5 h-5 mr-2 text-candelaria-purple"></i>
-                            Mapa en Tiempo Real
-                        </h3>
-                        <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-medium">En vivo</span>
-                    </div>
-                    <div id="map-container-full" class="w-full h-full z-0 bg-gray-100 relative"></div>
-                </div>
-            `;
-
-            // Inicializar el mapa
-            setTimeout(() => {
-                initMap();
-            }, 100);
-
-            // Actualizar los íconos de Lucide
-            lucide.createIcons();
-        }
-
-        // Variables globales para el mapa en tiempo real
-        let map;
-        let routeLine = null;
-        let routePoints = [];
-        let dansas = [];
-        let totalRouteLength = 0;
-        let updateInterval;
-        let danceMarkers = {};
-
-        // Inicializar mapa en tiempo real
-        async function initMap() {
-            const mapElement = document.getElementById('map-container-full');
-            if (!mapElement) return;
-
-            // Destruir mapa anterior si existe para evitar conflictos
-            if (map && typeof map.remove === 'function') {
-                map.remove();
-            }
-
-            map = L.map(mapElement).setView([-15.8407, -70.0214], 14); // Coordenadas de Puno
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-            // Cargar datos iniciales
-            await loadRoute();
-            await loadDances();
-
-            // Iniciar polling para actualizaciones en tiempo real
-            if (updateInterval) {
-                clearInterval(updateInterval);
-            }
-            updateInterval = setInterval(updateDancesState, 2000);
-        }
-
-        // Cargar ruta
-        async function loadRoute() {
-            // DETECCIÓN AUTOMÁTICA DE ENTORNO
-            const HOST = window.location.hostname;
-            const API_BASE_URL = (HOST === 'localhost' || HOST === '127.0.0.1')
-                ? '/php-candelaria/php-admin/api/admin/mapa.php'
-                : '/candelaria-admin/api/admin/mapa.php';
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/route-points`);
-                if (response.ok) {
-                    routePoints = await response.json();
-                    drawRoute();
-                }
-
-                const lengthResponse = await fetch(`${API_BASE_URL}/route-length`);
-                if (lengthResponse.ok) {
-                    const data = await lengthResponse.json();
-                    totalRouteLength = data.total_length || 0;
-                }
-            } catch (error) {
-                console.error('Error cargando ruta:', error);
-            }
-        }
-
-        // Dibujar ruta en el mapa
-        function drawRoute() {
-            // Check if map is defined before operating
-            if (!map) {
-                console.warn('⚠️ Map not initialized yet, skipping route draw');
-                return;
-            }
-
-            if (routeLine) {
-                map.removeLayer(routeLine);
-            }
-
-            if (routePoints && routePoints.length >= 2) {
-                const latlngs = routePoints.map(p => [p.lat, p.lng]);
-
-                routeLine = L.polyline(latlngs, {
-                    color: '#4CAF50',
-                    weight: 6,
-                    opacity: 0.7,
-                    smoothFactor: 1,
-                    lineCap: 'round',
-                    lineJoin: 'round',
-                    dashArray: '10, 10'  // Dashed line to make it more visible
-                }).addTo(map);
-
-                // Ajustar vista para mostrar toda la ruta
-                map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
-            }
-        }
-
-        // Cargar lista de danzas inicial
-        async function loadDances() {
-            // DETECCIÓN AUTOMÁTICA DE ENTORNO
-            const HOST = window.location.hostname;
-            const API_BASE_URL = (HOST === 'localhost' || HOST === '127.0.0.1')
-                ? '/php-candelaria/php-admin/api/admin/mapa.php'
-                : '/candelaria-admin/api/admin/mapa.php';
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/dances`);
-                if (response.ok) {
-                    dansas = await response.json();
-                    updateMapMarkers();
-                }
-            } catch (error) {
-                console.error('Error cargando danzas:', error);
-            }
-        }
-
-        // Actualizar estado de las danzas (polling)
-        async function updateDancesState() {
-            // DETECCIÓN AUTOMÁTICA DE ENTORNO
-            const PROTOCOL = window.location.protocol;
-            const HOST = window.location.hostname;
-            const API_BASE_URL = (HOST === 'localhost' || HOST === '127.0.0.1')
-                ? '/php-candelaria/php-admin/api/admin/mapa.php'
-                : '/candelaria-admin/api/admin/mapa.php';
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/dances`);
-                if (response.ok) {
-                    const newDances = await response.json();
-                    console.log('📊 Dances updated:', newDances);
-
-                    // Actualizar datos locales
-                    dansas = newDances;
-
-                    // Actualizar mapa
-                    updateMapMarkers();
-
-                    // Also refresh route length periodically to keep it updated
-                    const lengthResponse = await fetch(`${API_BASE_URL}/route-length`);
-                    if (lengthResponse.ok) {
-                        const data = await lengthResponse.json();
-                        totalRouteLength = data.total_length || 0;
-                    }
-                } else {
-                    console.error('❌ Failed to fetch dances:', response.status);
-                }
-            } catch (error) {
-                console.error('❌ Error actualizando estado:', error);
-            }
-        }
-
-        // Actualizar marcadores en el mapa
-        function updateMapMarkers() {
-            // Check if map is defined before operating
-            if (!map) {
-                console.warn('⚠️ Map not initialized yet, skipping marker update');
-                return;
-            }
-
-            console.log('🗺️ Updating map markers for', dansas.length, 'dances');
-
-            // First, remove any markers that no longer exist in the API response
-            Object.keys(danceMarkers).forEach(markerId => {
-                const stillExists = dansas.some(danza => danza.id === markerId);
-                if (!stillExists) {
-                    if (map.hasLayer(danceMarkers[markerId])) {
-                        map.removeLayer(danceMarkers[markerId]);
-                    }
-                    delete danceMarkers[markerId];
-                }
-            });
-
-            // Update or create markers for each dance
-            dansas.forEach(danza => {
-                // Only show markers for dances that have started or are not finished
-                const shouldShowMarker = danza.started || (danza.distance_traveled > 0 && !danza.finished);
-
-                if (danceMarkers[danza.id]) {
-                    // Markers exist, update position if they should be visible
-                    if (shouldShowMarker) {
-                        // Update position
-                        const newLatLng = [danza.lat, danza.lng];
-                        console.log(`📍 Updating ${danza.name} to [${danza.lat}, ${danza.lng}], progress: ${danza.progress}%`);
-                        danceMarkers[danza.id].setLatLng(newLatLng);
-
-                        // Update popup content
-                        danceMarkers[danza.id].setPopupContent(`
-                            <div style="text-align: center;">
-                                <h3 style="color: ${danza.color}; margin-bottom: 5px;">${danza.name}</h3>
-                                <p><strong>Tipo:</strong> ${danza.type}</p>
-                                <p><strong>Progreso:</strong> ${danza.progress.toFixed(1)}%</p>
-                                <p><strong>Distancia:</strong> ${danza.distance_traveled.toFixed(2)} km</p>
-                            </div>
-                        `);
-
-                        // Show marker if it was hidden
-                        if (!map.hasLayer(danceMarkers[danza.id])) {
-                            danceMarkers[danza.id].addTo(map);
-                        }
-                    } else {
-                        // Remove marker if it shouldn't be visible
-                        if (map.hasLayer(danceMarkers[danza.id])) {
-                            map.removeLayer(danceMarkers[danza.id]);
-                        }
-                    }
-                } else if (shouldShowMarker) {
-                    // Create new marker only if it should be visible
-                    console.log(`➕ Creating marker for ${danza.name} at [${danza.lat}, ${danza.lng}]`);
-                    // Create a shorter label from the dance name (first 2-4 characters)
-                    let shortName = danza.name.substring(0, 4);
-                    if (danza.name.length < 2) {
-                        shortName = danza.name;  // Use full name if shorter than 2 chars
-                    } else if (danza.name.length < 3) {
-                        shortName = danza.name.substring(0, 2);  // Use 2 chars if 2 chars
-                    } else if (danza.name.length < 5) {
-                        shortName = danza.name.substring(0, 3);  // Use 3 chars if 3-4 chars
-                    }
-
-                    const icon = L.divIcon({
-                        html: `<div style="font-size: 28px; color: ${danza.color}; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">${danza.icon || '💃'}</div>`,
-                        className: 'custom-dance-icon',
-                        iconSize: [35, 35],
-                        iconAnchor: [17, 17]
-                    });
-
-                    const marker = L.marker([danza.lat, danza.lng], {
-                        icon: icon
-                    }).addTo(map);
-
-                    marker.bindPopup(`
-                        <div style="text-align: center; min-width: 200px;">
-                            <h3 style="color: ${danza.color}; margin-bottom: 5px; font-size: 1.1em;">${danza.name}</h3>
-                            <p><strong>Tipo:</strong> ${danza.type}</p>
-                            <p><strong>Progreso:</strong> ${danza.progress.toFixed(1)}%</p>
-                            <p><strong>Distancia:</strong> ${danza.distance_traveled.toFixed(2)} km</p>
-                        </div>
-                    `);
-
-                    // Add click event to center map on marker
-                    marker.on('click', function () {
-                        map.setView([danza.lat, danza.lng], map.getZoom());
-                    });
-
-                    danceMarkers[danza.id] = marker;
-                }
-            });
-
-            // If there are active dances, adjust map view to show them
-            const activeDances = dansas.filter(d => d.started && !d.finished);
-            if (activeDances.length > 0) {
-                // Focus on the map to follow active dances
-                const activePositions = activeDances.map(d => [d.lat, d.lng]);
-                if (activePositions.length > 0) {
-                    const bounds = L.latLngBounds(activePositions);
-                    // Only adjust bounds if they are valid and not too zoomed out
-                    if (bounds.isValid() && bounds.getNorthEast() && bounds.getSouthWest()) {
-                        // Add some padding to ensure markers are not too close to the edge
-                        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
-                    }
-                }
-            }
-        }
 
 
         // Helper function to open image in new tab
@@ -1513,7 +1208,7 @@
         function initApp() {
             // Verificar si hay una pestaña específica en la URL (hash)
             const hash = window.location.hash.substring(1);
-            if (hash && ['programacion', 'consultas', 'danzas', 'mapa'].includes(hash)) {
+            if (hash && ['programacion', 'consultas', 'danzas'].includes(hash)) {
                 setActiveTab(hash);
             } else {
                 // Establecer la pestaña activa por defecto
@@ -1529,10 +1224,7 @@
                 });
             }
 
-            // Configurar el mapa si estamos en la pestaña de mapa
-            if (state.activeTab === 'mapa') {
-                setTimeout(initMap, 500);
-            }
+
         }
 
         // Inicializar la aplicación cuando se cargue el DOM
@@ -1541,7 +1233,7 @@
         // Actualizar la pestaña activa si cambia el hash de la URL
         window.addEventListener('hashchange', function () {
             const hash = window.location.hash.substring(1);
-            if (hash && ['programacion', 'consultas', 'danzas', 'mapa'].includes(hash)) {
+            if (hash && ['programacion', 'consultas', 'danzas'].includes(hash)) {
                 setActiveTab(hash);
             }
         });
