@@ -14,8 +14,9 @@
 
     <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&family=Manrope:wght@200..800&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
     <!-- Configuración de Tailwind y Estilos Personalizados -->
     <script>
@@ -27,12 +28,16 @@
                             purple: '#4c1d95', // Color principal festivo
                             gold: '#fbbf24',   // Detalles premium
                             lake: '#0ea5e9',   // Lago Titicaca
-                            light: '#f5f3ff'   // Fondos suaves
+                            light: '#f5f3ff',   // Fondos suaves
+                            primary: '#ec1325', // Requested Primary Red
+                            'background-light': '#f8f6f6',
+                            'surface-light': '#ffffff'
                         }
                     },
                     fontFamily: {
                         sans: ['Open Sans', 'sans-serif'],
                         heading: ['Montserrat', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
                     }
                 }
             }
@@ -431,6 +436,10 @@
                 class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-candelaria-purple text-candelaria-purple text-gray-900">
                 <i data-lucide="calendar" class="w-4 h-4"></i> Programación
             </button>
+            <button onclick="setActiveTab('simulador')" id="tab-simulador"
+                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-transparent text-gray-500 hover:border-candelaria-purple hover:text-candelaria-purple transition-colors">
+                <i data-lucide="play-circle" class="w-4 h-4"></i> Simulador
+            </button>
             <button onclick="setActiveTab('consultas')" id="tab-consultas"
                 class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-transparent text-gray-500 hover:border-candelaria-purple hover:text-candelaria-purple transition-colors">
                 <i data-lucide="help-circle" class="w-4 h-4"></i> Consultas
@@ -564,6 +573,7 @@
         // ==========================================
         let state = {
             activeTab: 'programacion',
+            activeDay: 'day2',
             search: '',
             filters: {
                 bestRated: false,
@@ -572,6 +582,11 @@
                 rating: 0
             }
         };
+
+        function setActiveDay(day) {
+            state.activeDay = day;
+            renderEvents();
+        }
 
         // ==========================================
         // 3. FUNCIONALIDADES DE INTERFAZ (UI LOGIC)
@@ -620,6 +635,9 @@
                     case 'programacion':
                         renderEvents();
                         break;
+                    case 'simulador':
+                        renderSimulador();
+                        break;
                     case 'consultas':
                         renderConsultas();
                         break;
@@ -632,7 +650,7 @@
             }
         }
 
-        // Renderizar eventos
+        // Renderizar eventos (Programación - Original List View)
         function renderEvents() {
             const container = document.getElementById('events-container');
             if (!container) return;
@@ -664,6 +682,278 @@
 
             // Actualizar los íconos de Lucide
             lucide.createIcons();
+        }
+
+        // Renderizar Simulador (Real-Time Schedule UI)
+        function renderSimulador() {
+            const container = document.getElementById('events-container');
+            if (!container) return;
+
+            // Updated Layout for "Real-Time" with Cheerful/Professional Theme
+            const isDay1 = state.activeDay === 'day1';
+            const isDay2 = state.activeDay === 'day2';
+            const isDay3 = state.activeDay === 'day3';
+
+            container.innerHTML = `
+                <!-- Heading & Tabs -->
+                <div class="flex flex-col gap-6 mb-8 font-display">
+                    <div class="flex flex-wrap justify-between items-end gap-4">
+                        <div class="flex flex-col gap-2">
+                            <h1 class="text-gray-900 text-3xl md:text-5xl font-black tracking-tight">Horario en Vivo</h1>
+                            <p class="text-gray-500 text-lg max-w-2xl">Sigue el orden oficial de presentación de la Festividad de la Candelaria.</p>
+                        </div>
+                        <!-- Date Toggle -->
+                        <div class="bg-white p-1 rounded-full inline-flex border border-gray-200 self-start md:self-end shadow-sm">
+                            <button onclick="setActiveDay('day1')" class="px-5 py-2 rounded-full text-sm font-bold transition-colors ${state.activeDay === 'day1' ? 'bg-candelaria-primary text-white shadow-md' : 'text-gray-500 hover:text-gray-900'}">
+                                Día 1
+                            </button>
+                            <button onclick="setActiveDay('day2')" class="px-5 py-2 rounded-full text-sm font-bold transition-colors ${state.activeDay === 'day2' ? 'bg-candelaria-primary text-white shadow-md' : 'text-gray-500 hover:text-gray-900'}">
+                                Día 2: Trajes de Luces
+                            </button>
+                            <button onclick="setActiveDay('day3')" class="px-5 py-2 rounded-full text-sm font-bold transition-colors ${state.activeDay === 'day3' ? 'bg-candelaria-primary text-white shadow-md' : 'text-gray-500 hover:text-gray-900'}">
+                                Día 3
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="flex flex-col gap-1 rounded-2xl p-5 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-2 text-gray-500 mb-1">
+                                <span class="material-symbols-outlined text-xl">groups</span>
+                                <span class="text-sm font-bold uppercase tracking-wider">Participación</span>
+                            </div>
+                            <p class="text-gray-900 text-3xl font-bold">45 <span class="text-gray-400 text-xl font-medium">/ 80</span></p>
+                            <p class="text-xs text-gray-500">Conjuntos presentados</p>
+                        </div>
+                        <div class="flex flex-col gap-1 rounded-2xl p-5 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-2 text-gray-500 mb-1">
+                                <span class="material-symbols-outlined text-xl">schedule</span>
+                                <span class="text-sm font-bold uppercase tracking-wider">Retraso Promedio</span>
+                            </div>
+                            <p class="text-candelaria-primary text-3xl font-bold">+25 min</p>
+                            <p class="text-xs text-gray-500">Detrás del horario</p>
+                        </div>
+                        <div class="flex flex-col gap-1 rounded-2xl p-5 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow sm:col-span-2 lg:col-span-1">
+                            <div class="flex items-center gap-2 text-gray-500 mb-1">
+                                <span class="material-symbols-outlined text-xl">sunny</span>
+                                <span class="text-sm font-bold uppercase tracking-wider">Clima (Puno)</span>
+                            </div>
+                            <p class="text-gray-900 text-3xl font-bold">14°C</p>
+                            <p class="text-xs text-gray-500">Parcialmente Nublado, UV Alto</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Section -->
+                <div class="relative mt-4 pl-4 md:pl-0 font-display">
+                    <!-- Vertical Line -->
+                    <div class="absolute left-6 md:left-10 top-4 bottom-0 w-0.5 bg-gradient-to-b from-gray-200 via-gray-200 to-transparent"></div>
+                    <div class="flex flex-col gap-10">
+
+                        <!-- Past Item 1 -->
+                        <div class="relative pl-16 md:pl-20 group opacity-60 hover:opacity-90 transition-opacity">
+                            <div class="absolute left-[21px] md:left-[37px] top-2 size-3 bg-gray-300 rounded-full ring-4 ring-white"></div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-transparent hover:border-gray-200 hover:bg-white hover:shadow-sm transition-all">
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-gray-500 font-mono text-sm">07:45 AM</span>
+                                        <span class="px-2 py-0.5 rounded-full bg-gray-100 border border-gray-200 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Finalizado</span>
+                                    </div>
+                                    <h3 class="text-gray-800 text-lg font-bold leading-tight">Asociación Cultural Caporales Centralistas</h3>
+                                </div>
+                                <div class="text-right sm:text-left">
+                                    <span class="text-sm text-green-600 font-medium">A tiempo</span>
+                                </div>
+                            </div>
+                        </div>
+
+                         <!-- Past Item 2 -->
+                        <div class="relative pl-16 md:pl-20 group opacity-70 hover:opacity-100 transition-opacity">
+                            <div class="absolute left-[21px] md:left-[37px] top-2 size-3 bg-gray-300 rounded-full ring-4 ring-white"></div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-transparent hover:border-gray-200 hover:bg-white hover:shadow-sm transition-all">
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-gray-500 font-mono text-sm">08:15 AM</span>
+                                        <span class="px-2 py-0.5 rounded-full bg-gray-100 border border-gray-200 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Finalizado</span>
+                                    </div>
+                                    <h3 class="text-gray-800 text-lg font-bold leading-tight">Conjunto Sicuris del Barrio Mañazo</h3>
+                                </div>
+                                <div class="text-right sm:text-left">
+                                    <span class="text-sm text-red-500 font-medium">+10m Retraso</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LIVE ITEM -->
+                        <div class="relative pl-0 md:pl-16">
+                            <!-- Custom Node for Live -->
+                            <div class="absolute left-[37px] top-1/2 -translate-y-1/2 hidden md:block">
+                                <span class="relative flex h-4 w-4">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-candelaria-primary opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-4 w-4 bg-candelaria-primary"></span>
+                                </span>
+                            </div>
+                            
+                            <!-- Live Card -->
+                            <div class="bg-white rounded-2xl border border-candelaria-primary/30 shadow-[0_10px_40px_-10px_rgba(236,19,37,0.15)] overflow-hidden relative">
+                                <!-- Live Banner -->
+                                <div class="bg-candelaria-primary/5 border-b border-candelaria-primary/10 px-6 py-2 flex items-center justify-between">
+                                    <div class="flex items-center gap-2 text-candelaria-primary font-black tracking-wider text-sm uppercase">
+                                        <span class="material-symbols-outlined text-lg animate-pulse fill-1">circle</span>
+                                        Escenario Principal
+                                    </div>
+                                    <div class="flex items-center gap-2 opacity-80">
+                                        <span class="material-symbols-outlined text-candelaria-primary text-lg">visibility</span>
+                                        <span class="text-gray-800 text-xs font-bold">12.5k viendo</span>
+                                    </div>
+                                </div>
+
+                                <div class="p-6 grid grid-cols-1 md:grid-cols-12 gap-6">
+                                    <!-- Info Column -->
+                                    <div class="md:col-span-7 flex flex-col justify-between gap-6">
+                                        <div>
+                                            <div class="flex items-center gap-3 mb-2">
+                                                <span class="text-gray-500 font-mono text-sm">Prog: 08:30 AM</span>
+                                                <span class="px-3 py-1 rounded-full bg-candelaria-primary text-white text-[10px] font-black uppercase tracking-wider shadow-sm">Presentándose Ahora</span>
+                                            </div>
+                                            <h2 class="text-3xl font-black text-gray-900 leading-tight mb-2">Diablada Bellavista</h2>
+                                            <p class="text-gray-500 text-sm">Tradicional diablada con más de 400 danzarines y 3 bandas de músicos. Conocidos por sus máscaras intrincadas.</p>
+                                        </div>
+                                        
+                                        <div class="grid grid-cols-3 gap-2 mt-2">
+                                            <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">Inicio Real</p>
+                                                <p class="text-gray-900 font-mono font-bold">08:50</p>
+                                            </div>
+                                            <div class="bg-gray-50 rounded-xl p-3 border border-gray-100 border-l-2 border-l-candelaria-primary">
+                                                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">Retraso</p>
+                                                <p class="text-candelaria-primary font-mono font-bold">+20m</p>
+                                            </div>
+                                            <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">Fin Est.</p>
+                                                <p class="text-gray-900 font-mono font-bold">09:35</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex gap-3 mt-2">
+                                            <a href="../live-platform/index.php" class="flex-1 bg-gray-900 text-white hover:bg-gray-800 py-3 rounded-full font-bold text-sm transition-colors flex items-center justify-center gap-2 shadow-lg shadow-gray-900/20">
+                                                <span class="material-symbols-outlined text-lg">play_circle</span>
+                                                Ver Transmisión
+                                            </a>
+                                            <button class="size-11 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:text-candelaria-primary hover:border-candelaria-primary hover:bg-red-50 transition-colors" title="Compartir">
+                                                <span class="material-symbols-outlined text-lg">share</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Visual Column -->
+                                    <div class="md:col-span-5 relative h-48 md:h-auto rounded-xl overflow-hidden bg-gray-100 group/video cursor-pointer border border-gray-200">
+                                        <img alt="Diablada" class="absolute inset-0 w-full h-full object-cover group-hover/video:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAerOl6EH8tGjccvYLHzd4uCFj3lQ9XCX3mg5C-FIzOD_zoMA6bJkUMs-zAqc4MpETwE9viTXg2UqGvyziBVELeRqtPl5KC3eT5Rg_1wCMppAmujAa9l8qJs9iaglBK4GbMRI2IJCauU-OSeYOgg1yU4JNspVW_k1wJMJJWyWVMdt4KvWmCCcSdvw1H_Ur44PkCmhygNeGM0BurSWDPzrx-6OrG2KMMJ63iXEDQeJu6Z9fpFHcw1GGHvSYqv3ikq-eUaVOMQjq4KXgM">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <div class="size-12 rounded-full bg-white/90 text-candelaria-primary flex items-center justify-center shadow-lg group-hover/video:scale-110 transition-transform">
+                                                <span class="material-symbols-outlined text-2xl">play_arrow</span>
+                                            </div>
+                                        </div>
+                                        <div class="absolute bottom-3 left-3">
+                                            <p class="text-white text-xs font-bold shadow-black drop-shadow-md">En Vivo • Escenario Principal</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Item 1 -->
+                        <div class="relative pl-16 md:pl-20 group">
+                            <!-- Node -->
+                            <div class="absolute left-[21px] md:left-[37px] top-6 size-3 bg-white border-2 border-gray-300 rounded-full"></div>
+                            <!-- Connector (Dotted) -->
+                            <div class="absolute left-6 md:left-10 top-9 bottom-[-40px] w-px border-l border-dashed border-gray-300"></div>
+                            
+                            <div class="flex flex-col gap-3 p-4 rounded-xl hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-gray-100 cursor-pointer">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-gray-900 font-mono font-bold text-lg">09:35 AM</span>
+                                        <span class="px-2 py-0.5 rounded-full bg-gray-100 border border-gray-200 text-[10px] font-bold text-gray-700 uppercase tracking-wider">A Continuación</span>
+                                    </div>
+                                    <div class="flex items-center gap-1 text-orange-500 text-sm font-medium">
+                                        <span class="material-symbols-outlined text-base">warning</span>
+                                        <span>Est. +25m Tarde</span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="size-12 rounded-full bg-gray-100 border border-gray-200 flex-shrink-0 overflow-hidden">
+                                        <img alt="Morenada" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD62isiJ67ZgQT7JTAIxUL8Ely53D_ukcAcCn1qMbbky7AiTJGb1itVxMtj9kYyXDZafHtesTetDXqV0A-cp49dZcrtswdUVHrFqQMlf1EaVTOkYhUoJpw4gmXtC7eNCCtjlKfSWJybF3n187gHlwiqrEIhpUEA8ks48rq3B5CnhBAOKLtu3Tgtf__wYXmrOspwLoukyDrtPV15iW6aBRwAYs1aG3S2M7U8QMp63EiS7flcrjXE8IA-PdLQtTlTzqtTlMuqupHuRR-T">
+                                    </div>
+                                    <div>
+                                        <h3 class="text-gray-900 text-xl font-bold">Morenada Laykakota</h3>
+                                        <p class="text-gray-500 text-sm mt-1">Una de las fraternidades más antiguas. Se espera retraso por cambio de vestuario.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <!-- Upcoming Item 2 -->
+                        <div class="relative pl-16 md:pl-20 group">
+                            <!-- Node -->
+                            <div class="absolute left-[21px] md:left-[37px] top-6 size-3 bg-gray-300 rounded-full"></div>
+                            
+                            <div class="flex flex-col gap-3 p-4 rounded-xl hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-gray-100 cursor-pointer opacity-70 hover:opacity-100">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-gray-500 font-mono font-medium text-lg">10:15 AM</span>
+                                        <span class="px-2 py-0.5 rounded-full border border-gray-200 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Programado</span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="size-12 rounded-full bg-gray-100 border border-gray-200 flex-shrink-0 flex items-center justify-center text-gray-400 font-black text-xs">
+                                        FC
+                                    </div>
+                                    <div>
+                                        <h3 class="text-gray-900 text-xl font-bold">Fraternidad Caporales San Carlos</h3>
+                                        <p class="text-gray-500 text-sm mt-1">Inicio Est: 10:40 AM (+25m)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <!-- Upcoming Item 3 -->
+                        <div class="relative pl-16 md:pl-20 group">
+                            <!-- Node -->
+                            <div class="absolute left-[21px] md:left-[37px] top-6 size-3 bg-gray-300 rounded-full"></div>
+                            
+                            <div class="flex flex-col gap-3 p-4 rounded-xl hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-gray-100 cursor-pointer opacity-70 hover:opacity-100">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-gray-500 font-mono font-medium text-lg">11:00 AM</span>
+                                        <span class="px-2 py-0.5 rounded-full border border-gray-200 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Programado</span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="size-12 rounded-full bg-gray-100 border border-gray-200 flex-shrink-0 flex items-center justify-center text-gray-400 font-black text-xs">
+                                        TK
+                                    </div>
+                                    <div>
+                                        <h3 class="text-gray-900 text-xl font-bold">Tinkus Kay Sur</h3>
+                                        <p class="text-gray-500 text-sm mt-1">Inicio Est: 11:25 AM (+25m)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="flex justify-center py-8">
+                            <button class="flex items-center gap-2 text-gray-400 hover:text-gray-900 transition-colors text-sm font-bold uppercase tracking-wide">
+                                <span>Cargar los 35 restantes</span>
+                                <span class="material-symbols-outlined">expand_more</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Re-render icons just in case
+            // lucide.createIcons(); // Not needed for Material Symbols but kept for other tabs
         }
 
         // Renderizar consultas
