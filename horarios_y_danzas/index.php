@@ -381,9 +381,7 @@
 
     <!-- Header Section - Standardized with EN TIEMPO REAL Style -->
     <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-40">
-        <div class="bg-purple-950 text-xs py-1 text-center text-purple-200">
-            Festividad de la Virgen de la Candelaria 2026 - Del 24 de Enero al 15 de Febrero
-        </div>
+        <!-- Banner superior removed -->
         <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center">
             <div class="flex justify-between items-center w-full h-full">
                 <!-- Left: Candelaria Branding -->
