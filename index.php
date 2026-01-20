@@ -904,6 +904,18 @@
       justify-content: center;
     }
 
+    @media (max-width: 768px) {
+      .header-manta-premium {
+        height: auto !important;
+        min-height: 80px;
+      }
+
+      .header-manta-premium.scrolled {
+        height: auto !important;
+        min-height: 70px;
+      }
+    }
+
     .header-manta-premium.scrolled {
       height: 90px;
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
@@ -1021,7 +1033,7 @@
       Festividad de la Virgen de la Candelaria 2025 - Del 2 al 11 de Febrero
     </div>
 
-    <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center">
+    <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center relative z-50">
       <div class="w-full flex justify-between items-center h-full">
         <!-- Left: Candelaria Branding -->
         <!-- Left: Candelaria Branding -->
@@ -1070,8 +1082,6 @@
         <a href="./noticias/index.php"
           class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Noticias</a>
       </nav>
-    </div>
-    </div>
     </div>
     </div>
   </header>
@@ -2030,8 +2040,25 @@
     const mobileMenu = document.getElementById('mobile-menu');
 
     if (mobileMenuBtn && mobileMenu) {
-      mobileMenuBtn.addEventListener('click', () => {
+      // Toggle menu
+      mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         mobileMenu.classList.toggle('hidden');
+      });
+
+      // Close on outside click
+      document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+          mobileMenu.classList.add('hidden');
+        }
+      });
+
+      // Close on link click
+      const menuLinks = mobileMenu.querySelectorAll('a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+        });
       });
     }
 
