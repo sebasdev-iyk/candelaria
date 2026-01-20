@@ -28,9 +28,9 @@ function getAuthModalHTML()
                         <h2 class="text-2xl font-bold text-gray-900 mb-6">Iniciar Sesión</h2>
                         <form id="auth-login-form" class="space-y-4">
                             <input type="email" id="auth-login-email" placeholder="Correo electrónico" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500">
+                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
                             <input type="password" id="auth-login-password" placeholder="Contraseña" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500">
+                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
                             <button type="submit" class="w-full bg-purple-700 text-white py-3 rounded-xl font-bold hover:bg-purple-800">
                                 Iniciar Sesión
                             </button>
@@ -45,13 +45,13 @@ function getAuthModalHTML()
                         <h2 class="text-2xl font-bold text-gray-900 mb-6">Crear Cuenta</h2>
                         <form id="auth-register-form" class="space-y-4">
                             <input type="text" id="auth-reg-nombre" placeholder="Nombre completo" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500">
+                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
                             <input type="email" id="auth-reg-email" placeholder="Correo electrónico" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500">
+                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
                             <input type="tel" id="auth-reg-telefono" placeholder="Teléfono" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500">
+                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
                             <input type="password" id="auth-reg-password" placeholder="Contraseña" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500">
+                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
                             <button type="submit" class="w-full bg-purple-700 text-white py-3 rounded-xl font-bold hover:bg-purple-800">
                                 Crear Cuenta
                             </button>

@@ -308,7 +308,7 @@
                             class="w-5 h-5 text-gray-400 group-focus-within:text-candelaria-purple transition-colors"></i>
                     </div>
                     <input type="text" id="search-input"
-                        class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple sm:text-sm transition-all shadow-sm"
+                        class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg leading-5 bg-gray-50 placeholder-gray-500 text-gray-900 focus:outline-none focus:bg-white focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple sm:text-sm transition-all shadow-sm"
                         placeholder="Buscar hoteles, restaurantes...">
                 </div>
 

@@ -387,7 +387,8 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
             <input type="hidden" id="stream-id" value="<?= htmlspecialchars($currentStream['id'] ?? 'default') ?>">
 
             <div class="chat-input-area">
-                <input type="text" id="chat-input" class="chat-input" placeholder="Enviar mensaje..." maxlength="200">
+                <input type="text" id="chat-input" class="chat-input text-white" placeholder="Enviar mensaje..."
+                    maxlength="200">
                 <div class="flex justify-between items-center mt-2 px-1">
                     <div id="char-counter" class="text-xs text-gray-500">0/200</div>
                     <button class="text-candelaria-gold hover:text-white transition-colors">
