@@ -1,0 +1,38 @@
+/* Spark Effect Styles */
+#logo-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.spark {
+    position: absolute;
+    bottom: 0;
+    width: var(--size, 5px);
+    height: var(--size, 5px);
+    background: radial-gradient(circle, rgba(255, 230, 100, 1) 0%, rgba(255, 150, 50, 0.9) 30%, rgba(255, 100, 0, 0.5) 60%, rgba(255, 0, 0, 0) 100%);
+    border-radius: 50%;
+    box-shadow:
+        0 0 10px rgba(255, 200, 0, 0.8),
+        0 0 20px rgba(255, 150, 0, 0.5),
+        0 0 30px rgba(255, 100, 0, 0.3);
+    filter: blur(0.5px);
+    z-index: 20;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 1;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-150px) translateX(var(--tx, 0)) scale(0.3) rotate(360deg);
+        opacity: 0;
+    }
+}

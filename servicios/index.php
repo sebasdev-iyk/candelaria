@@ -216,6 +216,8 @@
             width: 80%;
         }
     </style>
+    <!-- Spark Effect CSS -->
+    <link rel="stylesheet" href="../assets/css/sparks.css">
 </head>
 
 <body class="bg-gray-50 text-gray-800">
@@ -247,12 +249,12 @@
             Festividad de la Virgen de la Candelaria 2025 - Del 2 al 11 de Febrero
         </div>
 
-        <div class="w-full px-6 md:px-12 py-5">
-            <div class="flex justify-between items-center">
+        <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center">
+            <div class="flex justify-between items-center w-full h-full">
                 <!-- Left: Candelaria Branding -->
-                <a href="../index.php" class="flex items-center cursor-pointer group">
+                <a href="../index.php" id="logo-container" class="flex items-center cursor-pointer group h-full relative spark-container">
                     <img src="../principal/logoc.png" alt="Candelaria"
-                        class="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+                        class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
                 </a>
                 <!-- Right: Navigation + EN TIEMPO REAL -->
                 <div class="flex items-center gap-6">
@@ -1058,6 +1060,7 @@
     <!-- Auth Modal and Dropdown -->
     <?= getAuthModalHTML() ?>
     <?= getAuthJS('../') ?>
+    <script src="../assets/js/spark-effect.js"></script>
 </body>
 
 </html>

@@ -57,21 +57,23 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
 
     <!-- Custom Live Styles -->
     <link rel="stylesheet" href="./style.css">
+    <!-- Spark Effect -->
+    <link rel="stylesheet" href="../assets/css/sparks.css">
 </head>
 
 <body>
 
     <!-- Header (Consistent with Main Project) -->
     <header
-        class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-50 h-[80px] flex items-center justify-between px-6 border-b border-purple-800">
-        <div class="flex items-center gap-4">
+        class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-50 h-20 md:h-22 flex items-center justify-between px-6 border-b border-purple-800">
+        <div class="flex items-center gap-4 h-full">
             <!-- Back to Main -->
             <a href="../index.php" class="text-purple-300 hover:text-white transition-colors">
                 <i class="fas fa-arrow-left text-xl"></i>
             </a>
 
-            <a href="../index.php" class="flex items-center gap-2">
-                <img src="../principal/logoc.png" alt="Logo" class="h-10 w-auto">
+            <a href="../index.php" id="logo-container" class="flex items-center gap-2 h-full relative spark-container group">
+                <img src="../principal/logoc.png" alt="Logo" class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
                 <span class="font-heading font-bold text-xl tracking-wider text-white hidden md:block">
                     CANDELARIA <span class="text-candelaria-gold">ONE</span>
                 </span>
@@ -277,6 +279,8 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
 
     <!-- Live Script (after auth is loaded) -->
     <script src="./script.js?v=<?= time() ?>"></script>
+    <!-- Spark Effect Script -->
+    <script src="../assets/js/spark-effect.js"></script>
 </body>
 
 </html>

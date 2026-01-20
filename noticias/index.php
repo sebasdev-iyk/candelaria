@@ -204,6 +204,8 @@ function timeAgo($datetime)
             transform: scale(1.05);
         }
     </style>
+    <!-- Spark Effect CSS -->
+    <link rel="stylesheet" href="../assets/css/sparks.css">
 </head>
 
 <body>
@@ -211,10 +213,10 @@ function timeAgo($datetime)
     <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-50">
         <div class="bg-purple-950 text-xs py-1 text-center text-purple-200">Festividad de la Virgen de la Candelaria
             2025 - Del 2 al 11 de Febrero</div>
-        <div class="w-full px-4 md:px-12 py-4">
-            <div class="flex justify-between items-center">
-                <a href="../index.php" class="flex items-center group">
-                    <img src="../principal/logoc.png" alt="Candelaria" class="h-10 md:h-12 w-auto object-contain">
+        <div class="w-full px-4 md:px-12 h-20 md:h-22 flex items-center">
+            <div class="flex justify-between items-center w-full h-full">
+                <a href="../index.php" id="logo-container" class="flex items-center group h-full relative spark-container">
+                    <img src="../principal/logoc.png" alt="Candelaria" class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
                 </a>
                 <div class="flex items-center gap-6">
                     <nav class="hidden md:flex items-center gap-1">
@@ -351,6 +353,7 @@ function timeAgo($datetime)
         </div>
     </footer>
     <script>lucide.createIcons();</script>
+    <script src="../assets/js/spark-effect.js"></script>
 </body>
 
 </html>

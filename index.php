@@ -885,42 +885,8 @@
         padding-bottom: 20px;
       }
     }
-  .spark-container {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 5;
-}
-
-.spark {
-  position: absolute;
-  bottom: 0;
-  width: var(--size, 5px);
-  height: var(--size, 5px);
-  background: radial-gradient(circle, rgba(255,230,100,1) 0%, rgba(255,150,50,0.9) 30%, rgba(255,100,0,0.5) 60%, rgba(255,0,0,0) 100%);
-  border-radius: 50%;
-  box-shadow: 
-    0 0 10px rgba(255,200,0,0.8),
-    0 0 20px rgba(255,150,0,0.5),
-    0 0 30px rgba(255,100,0,0.3);
-  filter: blur(0.5px);
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) translateX(0) scale(1);
-    opacity: 1;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-150px) translateX(var(--tx, 0)) scale(0.3) rotate(360deg);
-    opacity: 0;
-  }
-}
-</style>
+  </style>
+  <link rel="stylesheet" href="./assets/css/sparks.css">
 </head>
 
 <body>
@@ -1712,59 +1678,7 @@
   <?= getAuthModalHTML() ?>
   <?= getAuthJS('') ?>
   <!-- Spark Effect Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const logoContainer = document.getElementById('logo-container');
-      
-      if (!logoContainer) return;
-
-      function createSpark() {
-        const spark = document.createElement('div');
-        spark.classList.add('spark');
-        
-        // Random properties for a more realistic spark effect
-        const size = Math.random() * 4 + 2; // 2px to 6px
-        const left = Math.random() * 100; // 0% to 100%
-        const duration = Math.random() * 1.5 + 1; // 1s to 2.5s
-        const tx = (Math.random() - 0.5) * 100; // -50px to 50px horizontal drift
-        
-        spark.style.width = `${size}px`;
-        spark.style.height = `${size}px`;
-        spark.style.left = `${left}%`;
-        spark.style.setProperty('--tx', `${tx}px`);
-        spark.style.animation = `floatUp ${duration}s ease-out forwards`;
-        
-        logoContainer.appendChild(spark);
-
-        setTimeout(() => {
-          spark.remove();
-        }, duration * 1000);
-      }
-
-      // Generar chispas constantemente con más frecuencia
-      setInterval(createSpark, 80); // Cada 80ms para un efecto más denso
-      
-      // Chispas extra al hacer hover sobre el logo
-      logoContainer.addEventListener('mouseenter', () => {
-        // Burst de chispas al hacer hover
-        for(let i = 0; i < 10; i++) {
-          setTimeout(() => createSpark(), i * 30);
-        }
-      });
-      
-      // Chispas durante el hover
-      let hoverInterval;
-      logoContainer.addEventListener('mouseenter', () => {
-        hoverInterval = setInterval(createSpark, 40);
-      });
-      
-      logoContainer.addEventListener('mouseleave', () => {
-        if(hoverInterval) {
-          clearInterval(hoverInterval);
-        }
-      });
-    });
-  </script>
+  <script src="./assets/js/spark-effect.js"></script>
 </body>
 
 </html>
