@@ -2060,11 +2060,15 @@
 
         // Render danzas cards with modal button
         danzasGrid.innerHTML = danzas.map(danza => {
-          const categoria = danza.categoria || 'TRADICIONAL';
+          const categoriaRaw = danza.categoria || 'TRADICIONAL';
+          // Display "Traje de Luces" instead of "Luces Parada"
+          const displayCategory = categoriaRaw === 'Luces Parada' ? 'TRAJE DE LUCES' : categoriaRaw.toUpperCase();
           const imageUrl = danza.foto || `https://placehold.co/400x300/4c1d95/fbbf24?text=${encodeURIComponent(danza.conjunto || 'Danza')}`;
           const descripcion = (danza.descripcion || '').replace(/'/g, "\\'");
           const horaValue = danza.hora || 'Hora no especificada';
           const detallesValue = (danza.detalles || '').replace(/'/g, "\\'");
+          const diaConcurso = danza.dia_concurso || '';
+          const diaVeneracion = danza.dia_veneracion || '';
 
           return `
             <div class="danza-card">
@@ -2074,12 +2078,12 @@
                      alt="${danza.conjunto}"
                      onerror="this.onerror=null; this.src='https://placehold.co/400x300/4c1d95/fbbf24?text=Danza';">
                 <div class="card-image-overlay"></div>
-                <span class="card-category">${categoria}</span>
+                <span class="card-category">${displayCategory}</span>
               </div>
               <div class="card-content">
                 <h3 class="card-title">${danza.conjunto}</h3>
                 ${danza.orden_concurso ? `<span class="card-order">#${danza.orden_concurso} Concurso</span>` : ''}
-                <button class="card-btn" onclick="openDanceModal(${danza.id}, '${(danza.conjunto || '').replace(/'/g, "\\'")}', '${descripcion}', '${categoria}', '${horaValue}', '${danza.orden_concurso || ''}', '${danza.orden_veneracion || ''}', '${detallesValue}', '${imageUrl.replace(/'/g, "\\'")}')">
+                <button class="card-btn" onclick="openDanceModal(${danza.id}, '${(danza.conjunto || '').replace(/'/g, "\\'")}', '${descripcion}', '${categoriaRaw}', '${horaValue}', '${danza.orden_concurso || ''}', '${danza.orden_veneracion || ''}', '${detallesValue}', '${imageUrl.replace(/'/g, "\\'")}', '${diaConcurso}', '${diaVeneracion}')">
                   Ver Detalles
                   <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
                 </button>
@@ -2198,7 +2202,7 @@
     }
 
     // ========== Dance Modal Functions ==========
-    function openDanceModal(id, conjunto, descripcion, categoria, hora, ordenConcurso, ordenVeneracion, detalles, imagen) {
+    function openDanceModal(id, conjunto, descripcion, categoria, hora, ordenConcurso, ordenVeneracion, detalles, imagen, diaConcurso, diaVeneracion) {
       const modal = document.getElementById('dance-modal');
       const modalTitle = document.getElementById('dance-modal-title');
       const modalBody = document.getElementById('dance-modal-body');
@@ -2206,6 +2210,18 @@
       if (!modal || !modalBody) return;
 
       modalTitle.textContent = conjunto || 'Danza';
+
+      // Format dates for display
+      const formatDate = (dateStr) => {
+        if (!dateStr || dateStr === 'null' || dateStr === '') return 'No especificada';
+        return dateStr;
+      };
+
+      // Format categoria - change "Luces Parada" to "Traje de Luces"
+      const displayCategoria = (cat) => {
+        if (cat === 'Luces Parada') return 'Traje de Luces';
+        return cat || 'N/A';
+      };
 
       modalBody.innerHTML = `
         <div class="dance-details-grid">
@@ -2217,11 +2233,15 @@
             <div class="quick-facts">
               <div class="info-item">
                 <div class="info-label">Categoria</div>
-                <div class="info-value">${categoria || 'N/A'}</div>
+                <div class="info-value">${displayCategoria(categoria)}</div>
               </div>
               <div class="info-item">
-                <div class="info-label">Hora Estimada</div>
-                <div class="info-value">${hora || 'No especificada'}</div>
+                <div class="info-label">Dia de Concurso</div>
+                <div class="info-value">${formatDate(diaConcurso)}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Dia de Veneracion</div>
+                <div class="info-value">${formatDate(diaVeneracion)}</div>
               </div>
               <div class="info-item">
                 <div class="info-label">Orden Concurso</div>
@@ -2231,16 +2251,6 @@
                 <div class="info-label">Orden Veneracion</div>
                 <div class="info-value">${ordenVeneracion ? '#' + ordenVeneracion : 'N/A'}</div>
               </div>
-            </div>
-          </div>
-          <div>
-            <div class="modal-section">
-              <h3>Descripcion</h3>
-              <p style="line-height: 1.6; color: #4b5563;">${descripcion || 'Descripcion no disponible.'}</p>
-            </div>
-            <div class="modal-section">
-              <h3>Detalles Adicionales</h3>
-              <p style="line-height: 1.6; color: #4b5563;">${detalles || 'No hay detalles adicionales disponibles.'}</p>
             </div>
           </div>
         </div>
