@@ -885,6 +885,42 @@
         padding-bottom: 20px;
       }
     }
+    /* Header Manta Premium Style - Professional Edition */
+    .header-manta-premium {
+      height: 140px; /* Thicker header to show the fabric's full vertical patterns */
+      background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('./principal/headerfondo2.jpg');
+      background-size: auto 100%; /* Shows the 'COMPLETE' vertical image, let width repeat */
+      background-repeat: repeat-x;
+      background-position: center;
+      position: relative;
+      border-bottom: 3px solid #fbbf24;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .header-manta-premium.scrolled {
+      height: 90px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+      /* Darker overlay on scroll for better link legibility */
+      background-image: linear-gradient(rgba(45, 10, 80, 0.75), rgba(15, 5, 30, 0.9)), url('./principal/headerfondo1.jpg');
+    }
+
+    .header-manta-premium::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.2) 100%);
+      pointer-events: none;
+    }
+
+    /* Ensure internal content is always centered regardless of height */
+    .header-manta-premium > div {
+      position: relative;
+      z-index: 2;
+    }
   </style>
   <link rel="stylesheet" href="./assets/css/sparks.css">
 </head>
@@ -976,7 +1012,7 @@
 
   <!-- Header Mejorado -->
   <!-- Header Section - Standardized with EN VIVO Style -->
-  <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-40">
+  <header class="header-manta-premium text-white shadow-lg sticky top-0 z-40">
     <!-- Banner superior -->
     <div class="bg-purple-950 text-xs py-1 text-center text-purple-200">
       Festividad de la Virgen de la Candelaria 2025 - Del 2 al 11 de Febrero
@@ -1803,6 +1839,15 @@
       }
 
       // Efecto adicional en navbar
+      const header = document.querySelector('.header-manta-premium');
+      if (header) {
+        if (scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }
+
       const navbar = document.getElementById('navbar');
       if (navbar) {
         if (scrollY > 50) {
