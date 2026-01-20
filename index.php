@@ -885,11 +885,14 @@
         padding-bottom: 20px;
       }
     }
+
     /* Header Manta Premium Style - Professional Edition */
     .header-manta-premium {
-      height: 140px; /* Thicker header to show the fabric's full vertical patterns */
+      height: 140px;
+      /* Thicker header to show the fabric's full vertical patterns */
       background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('./principal/headerfondo2.jpg');
-      background-size: auto 100%; /* Shows the 'COMPLETE' vertical image, let width repeat */
+      background-size: auto 100%;
+      /* Shows the 'COMPLETE' vertical image, let width repeat */
       background-repeat: repeat-x;
       background-position: center;
       position: relative;
@@ -912,12 +915,12 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.2) 100%);
+      background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
       pointer-events: none;
     }
 
     /* Ensure internal content is always centered regardless of height */
-    .header-manta-premium > div {
+    .header-manta-premium>div {
       position: relative;
       z-index: 2;
     }
@@ -1041,9 +1044,9 @@
           <?= getAuthButtonHTML() ?>
 
           <!-- EN VIVO Button -->
-          <a href="./live-platform/index.php" class="btn-live group">
+          <a href="./live-platform/index.php" class="btn-live group !p-2.5 md:!px-6 md:!py-2.5">
             <div class="live-dot"></div>
-            <span class="tracking-wider">EN TIEMPO REAL</span>
+            <span class="tracking-wider hidden md:inline">EN TIEMPO REAL</span>
           </a>
 
           <!-- Mobile Menu Button -->
