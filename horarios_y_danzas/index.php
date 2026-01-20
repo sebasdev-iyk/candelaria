@@ -16,7 +16,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&family=Manrope:wght@200..800&display=swap"
         rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
 
     <!-- Configuración de Tailwind y Estilos Personalizados -->
     <script>
@@ -401,9 +402,9 @@
                     </nav>
                     <!-- User Auth Button -->
                     <?= getAuthButtonHTML() ?>
-                    <a href="../live-platform/index.php" class="btn-live">
+                    <a href="../live-platform/index.php" class="btn-live group !p-2.5 md:!px-6 md:!py-2.5">
                         <div class="live-dot"></div>
-                        <span>EN TIEMPO REAL</span>
+                        <span class="tracking-wider hidden md:inline">EN TIEMPO REAL</span>
                     </a>
                     <button class="md:hidden text-white" id="mobile-menu-btn">
                         <i data-lucide="menu" class="w-6 h-6"></i>
@@ -951,7 +952,7 @@
                     </div>
                 </div>
             `;
-            
+
             // Re-render icons just in case
             // lucide.createIcons(); // Not needed for Material Symbols but kept for other tabs
         }

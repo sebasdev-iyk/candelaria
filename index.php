@@ -906,7 +906,7 @@
 
     @media (max-width: 768px) {
       .header-manta-premium {
-        height: auto !important;
+        height: 80px !important;
         min-height: 80px;
       }
 
