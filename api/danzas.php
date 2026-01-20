@@ -15,16 +15,27 @@ if ($db) {
         $page = isset($_GET['page']) ? max(1, (int) $_GET['page']) : 1;
         $pageSize = isset($_GET['pageSize']) ? max(1, min(50, (int) $_GET['pageSize'])) : 10;
         $searchQuery = isset($_GET['q']) ? trim($_GET['q']) : '';
+        $categoryFilter = isset($_GET['category']) ? trim($_GET['category']) : '';
 
-        // Build query with search filter
+        // Build query with search and category filters
         $baseQuery = "FROM candela_list";
         $params = [];
+        $conditions = [];
 
         if (!empty($searchQuery)) {
-            $baseQuery .= " WHERE conjunto LIKE :search OR categoria LIKE :search2 OR descripcion LIKE :search3";
+            $conditions[] = "(conjunto LIKE :search OR categoria LIKE :search2 OR descripcion LIKE :search3)";
             $params[':search'] = '%' . $searchQuery . '%';
             $params[':search2'] = '%' . $searchQuery . '%';
             $params[':search3'] = '%' . $searchQuery . '%';
+        }
+
+        if (!empty($categoryFilter)) {
+            $conditions[] = "categoria = :category";
+            $params[':category'] = $categoryFilter;
+        }
+
+        if (!empty($conditions)) {
+            $baseQuery .= " WHERE " . implode(" AND ", $conditions);
         }
 
         // Get total count

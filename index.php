@@ -1085,6 +1085,22 @@
         </button>
       </form>
 
+      <!-- Category Filter Buttons -->
+      <div class="category-filter-container">
+        <button class="category-filter-btn active" data-category="" onclick="filterByCategory('')">
+          <i data-lucide="grid-3x3" style="width: 16px; height: 16px;"></i>
+          Todos
+        </button>
+        <button class="category-filter-btn" data-category="Autoctonos" onclick="filterByCategory('Autoctonos')">
+          <i data-lucide="mountain" style="width: 16px; height: 16px;"></i>
+          Autóctonos
+        </button>
+        <button class="category-filter-btn" data-category="Luces Parada" onclick="filterByCategory('Luces Parada')">
+          <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+          Traje de Luces
+        </button>
+      </div>
+
       <div id="danzas-grid" class="danzas-grid">
         <!-- Loading skeleton -->
         <div class="danza-card loading-skeleton">
@@ -1447,6 +1463,57 @@
     .search-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
+    }
+
+    /* ========== Category Filter Styles ========== */
+    .category-filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 25px 0;
+      flex-wrap: wrap;
+    }
+
+    .category-filter-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .category-filter-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(251, 191, 36, 0.5);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .category-filter-btn.active {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      border-color: #fbbf24;
+      color: #1e1b4b;
+      box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+    }
+
+    .category-filter-btn.active:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
+    }
+
+    @media (max-width: 480px) {
+      .category-filter-btn {
+        padding: 10px 18px;
+        font-size: 0.85rem;
+      }
     }
 
     /* ========== Pagination Styles ========== */
@@ -1923,6 +1990,7 @@
     // ========== Current state for danzas ==========
     let currentPage = 1;
     let currentSearchQuery = '';
+    let currentCategory = '';
 
     // ========== Load Danzas from API with Pagination ==========
     async function loadDanzas(page = 1, query = '') {
@@ -1967,6 +2035,9 @@
         let url = `./api/danzas.php?page=${page}&pageSize=8`;
         if (query && query.trim() !== '') {
           url += `&q=${encodeURIComponent(query)}`;
+        }
+        if (currentCategory && currentCategory.trim() !== '') {
+          url += `&category=${encodeURIComponent(currentCategory)}`;
         }
 
         const response = await fetch(url);
@@ -2103,6 +2174,27 @@
     // Function to search danzas
     function searchDanzas(query) {
       loadDanzas(1, query);
+    }
+
+    // ========== Category Filter Function ==========
+    function filterByCategory(category) {
+      // Update active button state
+      document.querySelectorAll('.category-filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.category === category) {
+          btn.classList.add('active');
+        }
+      });
+
+      // Update current category and reload
+      currentCategory = category;
+      currentPage = 1;
+      loadDanzas(1, currentSearchQuery);
+
+      // Re-initialize icons
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
     }
 
     // ========== Dance Modal Functions ==========
