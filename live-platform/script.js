@@ -509,11 +509,32 @@ function updateMapMarkers() {
                 if (map.hasLayer(danceMarkers[danza.id])) map.removeLayer(danceMarkers[danza.id]);
             }
         } else if (shouldShowMarker) {
+            let iconHtml;
+
+            // Use photo if available, otherwise fallback to emoji
+            if (danza.foto && danza.foto.trim() !== '') {
+                iconHtml = `
+                    <div style="
+                        width: 44px;
+                        height: 44px;
+                        border-radius: 50%;
+                        border: 3px solid ${danza.color};
+                        background-image: url('${danza.foto}');
+                        background-size: cover;
+                        background-position: center;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+                    "></div>
+                `;
+            } else {
+                // Fallback to emoji
+                iconHtml = `<div style="font-size: 28px; color: ${danza.color}; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">${danza.icon || '💃'}</div>`;
+            }
+
             const icon = L.divIcon({
-                html: `<div style="font-size: 28px; color: ${danza.color}; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">${danza.icon || '💃'}</div>`,
+                html: iconHtml,
                 className: 'custom-dance-icon',
-                iconSize: [35, 35],
-                iconAnchor: [17, 17]
+                iconSize: [44, 44],
+                iconAnchor: [22, 22]
             });
 
             const marker = L.marker([danza.lat, danza.lng], { icon: icon }).addTo(map);
@@ -525,8 +546,13 @@ function updateMapMarkers() {
 }
 
 function createPopupContent(danza) {
+    const photoHtml = danza.foto && danza.foto.trim() !== ''
+        ? `<img src="${danza.foto}" alt="${danza.name}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; display: block; border: 2px solid ${danza.color};">`
+        : '';
+
     return `
-        <div style="text-align: center; color: #333;">
+        <div style="text-align: center; color: #333; min-width: 150px;">
+            ${photoHtml}
             <h3 style="color: ${danza.color}; margin-bottom: 5px; font-weight: bold;">${danza.name}</h3>
             <p><strong>Tipo:</strong> ${danza.type}</p>
             <p><strong>Progreso:</strong> ${danza.progress.toFixed(1)}%</p>
