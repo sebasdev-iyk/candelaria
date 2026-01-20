@@ -400,8 +400,12 @@ let updateInterval;
 let danceMarkers = {};
 let mapInitialized = false;
 
-// API Path relative to live-platform/index.php -> ../../php-admin/api/admin/mapa.php
-const MAP_API_BASE = '../../php-admin/api/admin/mapa.php';
+// API Path - Dynamic based on environment
+// Local: /php-admin/, Production: /candelaria-admin/
+const isProduction = window.location.hostname.includes('mipuno.pe');
+const MAP_API_BASE = isProduction
+    ? '/candelaria-admin/api/admin/mapa.php'
+    : '../../php-admin/api/admin/mapa.php';
 
 async function initMapLive() {
     if (mapInitialized) {
@@ -463,13 +467,24 @@ function drawRoute() {
 
 async function loadDances() {
     try {
+        console.log('[Map] 🔍 Loading dances from:', MAP_API_BASE + '/dances');
         const response = await fetch(`${MAP_API_BASE}/dances`);
+        console.log('[Map] 📡 Response status:', response.status);
         if (response.ok) {
             dansas = await response.json();
+            console.log('[Map] 💃 Dances loaded:', dansas.length, 'dances');
+            // Debug: Check foto field in first few dances
+            const withFotos = dansas.filter(d => d.foto && d.foto.trim() !== '');
+            console.log('[Map] 📸 Dances with photos:', withFotos.length);
+            if (dansas.length > 0) {
+                console.log('[Map] 🔍 Sample dance:', JSON.stringify(dansas[0]));
+            }
             updateMapMarkers();
+        } else {
+            console.error('[Map] ❌ Failed to load dances:', response.status, response.statusText);
         }
     } catch (error) {
-        console.error('Error loading dances:', error);
+        console.error('[Map] ❌ Error loading dances:', error);
     }
 }
 
