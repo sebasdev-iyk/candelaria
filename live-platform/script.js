@@ -467,24 +467,30 @@ function drawRoute() {
 
 async function loadDances() {
     try {
-        console.log('[Map] 🔍 Loading dances from:', MAP_API_BASE + '/dances');
-        const response = await fetch(`${MAP_API_BASE}/dances`);
-        console.log('[Map] 📡 Response status:', response.status);
+        const url = `${MAP_API_BASE}/dances`;
+        console.log('[Map] Loading dances from:', url);
+        const response = await fetch(url);
         if (response.ok) {
-            dansas = await response.json();
-            console.log('[Map] 💃 Dances loaded:', dansas.length, 'dances');
-            // Debug: Check foto field in first few dances
-            const withFotos = dansas.filter(d => d.foto && d.foto.trim() !== '');
-            console.log('[Map] 📸 Dances with photos:', withFotos.length);
-            if (dansas.length > 0) {
-                console.log('[Map] 🔍 Sample dance:', JSON.stringify(dansas[0]));
+            const rawText = await response.text();
+            console.log('[Map] Raw response (first 500 chars):', rawText.substring(0, 500));
+
+            // Parse JSON
+            dansas = JSON.parse(rawText);
+
+            // Check foto field
+            const withFotos = dansas.filter(d => d.foto && d.foto !== null && d.foto !== 'null');
+            console.log('[Map] Total dances:', dansas.length, '| With photos:', withFotos.length);
+
+            if (withFotos.length > 0) {
+                console.log('[Map] ✅ First dance with foto:', withFotos[0].name, '->', withFotos[0].foto);
+            } else if (dansas.length > 0) {
+                console.log('[Map] ⚠️ Sample dance (NO foto):', dansas[0].name, 'foto field:', dansas[0].foto);
             }
+
             updateMapMarkers();
-        } else {
-            console.error('[Map] ❌ Failed to load dances:', response.status, response.statusText);
         }
     } catch (error) {
-        console.error('[Map] ❌ Error loading dances:', error);
+        console.error('[Map] Error:', error);
     }
 }
 
