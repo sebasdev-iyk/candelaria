@@ -141,7 +141,7 @@ if ($method == 'POST') {
         }
 
         try {
-            $stmt = $db->prepare("SELECT id, nombre, email, telefono, password_hash FROM clientes WHERE email = :email");
+            $stmt = $db->prepare("SELECT id, nombre, email, telefono, password_hash, created_at FROM clientes WHERE email = :email");
             $stmt->bindParam(':email', $data->email);
             $stmt->execute();
 
@@ -222,7 +222,7 @@ if ($method == 'POST') {
             $stmt->execute();
 
             $reservaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            echo json_encode($reservaciones);
+            echo json_encode(["reservaciones" => $reservaciones]);
         } catch (PDOException $e) {
             http_response_code(500);
             echo json_encode(["message" => "Error: " . $e->getMessage()]);

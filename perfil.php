@@ -90,10 +90,15 @@
                         class="w-20 h-20 bg-gradient-to-br from-candelaria-purple to-purple-600 rounded-full flex items-center justify-center text-white text-3xl font-bold">
                         <span id="user-initial">U</span>
                     </div>
-                    <div>
+                    <div class="flex-1">
                         <h2 id="user-name" class="text-2xl font-bold text-gray-900"></h2>
                         <p id="user-email" class="text-gray-500"></p>
                     </div>
+                    <button onclick="logout()"
+                        class="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition-colors font-semibold">
+                        <i data-lucide="log-out" class="w-5 h-5"></i>
+                        Cerrar Sesión
+                    </button>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -156,6 +161,12 @@
         function showNotLoggedIn() {
             document.getElementById('loading-state').classList.add('hidden');
             document.getElementById('not-logged-in').classList.remove('hidden');
+        }
+
+        function logout() {
+            localStorage.removeItem('clientToken');
+            localStorage.removeItem('clientUser');
+            window.location.href = 'index.php';
         }
 
         function showProfile() {

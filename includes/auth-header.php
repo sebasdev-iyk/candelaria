@@ -72,7 +72,7 @@ function getAuthModalHTML()
             <p class="text-sm text-gray-500" id="dropdown-user-email"></p>
         </div>
         <div class="p-2">
-            <a href="/php-candelaria/candelaria/perfil.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-50 text-gray-700">
+            <a href="#" onclick="navigateToProfile(); return false;" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-50 text-gray-700">
                 <i data-lucide="user" class="w-5 h-5"></i>
                 Mi Perfil
             </a>
@@ -249,6 +249,20 @@ function getAuthJS($apiBasePath = '')
         updateAuthUI();
         document.getElementById('user-dropdown').classList.add('hidden');
         location.reload();
+    }
+    
+    // Navigate to profile page dynamically
+    function navigateToProfile() {
+        const path = window.location.pathname;
+        // Find the base path to /candelaria/
+        const candelariaIndex = path.indexOf('/candelaria/');
+        if (candelariaIndex !== -1) {
+            const basePath = path.substring(0, candelariaIndex + '/candelaria/'.length);
+            window.location.href = basePath + 'perfil.php';
+        } else {
+            // Fallback: try relative path
+            window.location.href = 'perfil.php';
+        }
     }
     
     // Close dropdown when clicking outside
