@@ -1,0 +1,257 @@
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f3f4f6;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* Timeline Styles */
+.timeline-item {
+    position: relative;
+    padding-left: 5rem;
+}
+
+.timeline-item.past {
+    opacity: 0.5;
+}
+
+.timeline-item.past:hover {
+    opacity: 0.8;
+}
+
+.timeline-item.upcoming {
+    opacity: 0.8;
+}
+
+.timeline-item.upcoming:hover {
+    opacity: 1;
+}
+
+.timeline-node {
+    position: absolute;
+    left: 1.25rem;
+    top: 0.5rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: #d1d5db;
+    border-radius: 9999px;
+    border: 4px solid #ffffff;
+    z-index: 10;
+}
+
+.timeline-node.live {
+    background: #4c1d95;
+    border-color: #ffffff;
+    animation: pulse-live 2s infinite;
+}
+
+.timeline-node.live::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    background: #4c1d95;
+    opacity: 0.3;
+    animation: ping-live 2s infinite;
+}
+
+@keyframes pulse-live {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes ping-live {
+    0% {
+        transform: scale(1);
+        opacity: 0.75;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.timeline-connector {
+    position: absolute;
+    left: 1.5rem;
+    top: 2.25rem;
+    bottom: -2.5rem;
+    width: 1px;
+    border-left: 1px dashed rgba(209, 213, 219, 0.6);
+}
+
+/* Card Styles */
+.timeline-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.timeline-card:hover {
+    border-color: #e5e7eb;
+    background: #f9fafb;
+}
+
+.timeline-card.live {
+    background: #ffffff;
+    border-radius: 1rem;
+    border: 2px solid #4c1d95;
+    box-shadow: 0 4px 20px rgba(76, 29, 149, 0.1);
+    overflow: hidden;
+}
+
+.live-banner {
+    background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4c1d95;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+.live-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #dc2626;
+    border-radius: 9999px;
+    animation: blink-dot 1s infinite;
+}
+
+@keyframes blink-dot {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.status-badge {
+    display: inline-flex;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.625rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status-badge.finished {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+}
+
+.status-badge.performing {
+    background: #4c1d95;
+    color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.status-badge.upnext {
+    background: #fef3c7;
+    border: 1px solid #fbbf24;
+    color: #92400e;
+}
+
+.status-badge.scheduled {
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+}
+
+.delay-indicator {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.delay-indicator.on-time {
+    color: #86efac;
+}
+
+.delay-indicator.delayed {
+    color: #fca5a5;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.stat-box {
+    background: #f9fafb;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid #e5e7eb;
+}
+
+.stat-box.highlight {
+    border-left: 2px solid #4c1d95;
+}
+
+.stat-label {
+    font-size: 0.625rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.stat-value {
+    color: #111827;
+    font-family: monospace;
+    font-weight: 900;
+}
+
+.stat-value.accent {
+    color: #4c1d95;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .timeline-item {
+        padding-left: 4rem;
+    }
+    
+    .timeline-node {
+        left: 1rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
