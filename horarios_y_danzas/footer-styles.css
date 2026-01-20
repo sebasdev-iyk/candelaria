@@ -1,0 +1,26 @@
+/* Footer Animations */
+.delay-75 {
+    animation-delay: 75ms;
+}
+
+.delay-150 {
+    animation-delay: 150ms;
+}
+
+/* Sparkle Effects */
+.sparkle-glow {
+    position: relative;
+    overflow: visible;
+}
+
+/* Gradient Text */
+.bg-clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+/* Glassmorphism */
+.backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
