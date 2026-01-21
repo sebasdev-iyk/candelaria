@@ -1092,7 +1092,7 @@
       <img src="./principal/Festividad.png" alt="Festividad" class="title-image">
       <img src="./principal/virgencandelariaa.png" alt="Virgen de la Candelaria" class="subtitle-image">
 
-      <div class="date-info">Del <span>2 al 12 de Febrero</span> | Puno, Perú</div>
+      <div class="date-info">Del <span>16 de Enero al 10 de Febrero</span> | Puno, Perú</div>
 
       <!-- Countdown -->
       <div class="countdown" id="countdown">
