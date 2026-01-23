@@ -299,6 +299,80 @@
             box-shadow: 0 6px 25px rgba(220, 38, 38, 0.6);
         }
 
+        /* Modal Button Styles */
+        .btn-modal-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 8px;
+            /* Slightly rounded as per image */
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-modal-live {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            /* Red Gradient */
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            animation: pulseLive 2s infinite;
+        }
+
+        .btn-modal-live:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+        }
+
+        .btn-modal-score {
+            background: #fbbf24;
+            /* Candelaria Gold */
+            color: #4c1d95;
+            /* Deep Purple Text */
+        }
+
+        .btn-modal-score:hover {
+            background: #f59e0b;
+            transform: translateY(-2px);
+        }
+
+        .btn-modal-map {
+            background: #f59e0b;
+            /* Orange/Amber */
+            color: white;
+        }
+
+        .btn-modal-map:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+
+        .btn-modal-share {
+            background: white;
+            color: #f59e0b;
+            border: 2px solid #f59e0b;
+        }
+
+        .btn-modal-share:hover {
+            background: #fffbeb;
+            transform: translateY(-2px);
+        }
+
+        .btn-modal-recordarme {
+            background: #4c1d95;
+            /* Candelaria Purple */
+            color: white;
+        }
+
+        .btn-modal-recordarme:hover {
+            background: #5b21b6;
+            transform: translateY(-2px);
+        }
+
         .live-dot {
             width: 10px;
             height: 10px;
@@ -1772,15 +1846,17 @@
                 ` : ''}
 
                 <div class="card-actions">
-                    <button class="btn btn-primary" onclick="window.location.href='../live-platform/index.php#live'" style="background: linear-gradient(135deg, #ef4444, #b91c1c); border: none; box-shadow: 0 0 15px rgba(239, 68, 68, 0.5); animation: pulse 2s infinite;">
-                        <i data-lucide="radio" style="width: 16px; height: 16px; margin-right: 6px;"></i> Ver En Vivo
+                    <button class="btn-modal-action btn-modal-live" onclick="window.location.href='../live-platform/index.php#live'">
+                        <i data-lucide="radio" style="width: 18px; height: 18px; margin-right: 8px;"></i> Ver En Vivo
                     </button>
-                    <button class="btn btn-primary" onclick="window.location.href='../live-platform/index.php#scores'" style="background: #fbbf24; color: #4b5563; border: none;">
-                        <i data-lucide="trophy" style="width: 16px; height: 16px; margin-right: 6px;"></i> Ver Puntaje
+                    <button class="btn-modal-action btn-modal-score" onclick="window.location.href='../live-platform/index.php#scores'">
+                        <i data-lucide="trophy" style="width: 18px; height: 18px; margin-right: 8px;"></i> Ver Puntaje
                     </button>
-                    <button class="btn btn-primary" onclick="window.location.href='../live-platform/index.php#map'">Ver en Mapa</button>
-                    <button class="btn btn-outline">Compartir</button>
-                    <button class="btn btn-secondary">Recordarme</button>
+                    <button class="btn-modal-action btn-modal-map" onclick="window.location.href='../live-platform/index.php#map'">
+                        Ver en Mapa
+                    </button>
+                    <button class="btn-modal-action btn-modal-share">Compartir</button>
+                    <button class="btn-modal-action btn-modal-recordarme">Recordarme</button>
                 </div>
             `;
 
