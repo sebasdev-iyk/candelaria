@@ -353,45 +353,83 @@
     </script>
 
     <!-- Grok Chatbot Widget -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <div id="candelaria-bot-widget" class="candelaria-bot-widget">
-        <div class="candelaria-bot-header">
-            <div class="candelaria-bot-avatar-container">
-                <video id="candelaria-avatar-video" class="candelaria-bot-avatar-video" autoplay loop muted playsinline>
-                    <source src="../../chatbot/assets/chatbotggs.mp4" type="video/mp4">
-                </video>
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-content">
+                <div class="bot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="bot-info">
+                    <h1>Asistente Candelaria</h1>
+                    <p class="status"><span class="status-dot"></span> En línea</p>
+                </div>
             </div>
-            <div class="candelaria-bot-info">
-                <span class="candelaria-bot-name">Candelaria Bot</span>
-                <span class="candelaria-bot-status"><span class="status-dot"></span>En línea</span>
-            </div>
-            <button id="candelaria-close-btn" class="candelaria-bot-close"><i class="fas fa-chevron-down"></i></button>
+            <button class="close-btn" onclick="toggleChatbot()" title="Minimizar">
+                <i class="fas fa-chevron-down"></i>
+            </button>
         </div>
-        <div id="candelaria-messages" class="candelaria-bot-messages">
-            <div class="candelaria-message bot-message">
-                ¡Hola! Soy tu asistente virtual de la Festividad. 🎭<br>¿En qué puedo ayudarte hoy?
-            </div>
-            <div class="candelaria-quick-replies">
-                <button class="quick-reply-btn" onclick="sendQuickReply('¿Qué danzas se presentan hoy?')">💃 Danzas
-                    hoy</button>
-                <button class="quick-reply-btn" onclick="sendQuickReply('¿Dónde es la parada?')">📍 Ubicación</button>
-                <button class="quick-reply-btn" onclick="sendQuickReply('Horario de misas')">⛪ Misas</button>
-                <button class="quick-reply-btn" onclick="sendQuickReply('Conocer historia')">📜 Historia</button>
+
+        <!-- Messages Area -->
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        <p>¡Hola! 👋 Soy tu asistente virtual de la Festividad de la Virgen de la Candelaria 2026.</p>
+                        <p>Puedo ayudarte con información sobre:</p>
+                        <ul>
+                            <li>📅 <strong>Eventos y Programación</strong> - Horarios, fechas importantes</li>
+                            <li>🎭 <strong>Danzas y Conjuntos</strong> - Categorías, participantes, concursos</li>
+                            <li>🏨 <strong>Servicios</strong> - Hospedajes, restaurantes, transporte</li>
+                            <li>📍 <strong>Ubicaciones</strong> - Lugares importantes, mapas</li>
+                            <li>📖 <strong>Historia y Cultura</strong> - Tradiciones, origen de la festividad</li>
+                            <li>📰 <strong>Noticias</strong> - Últimas actualizaciones del evento</li>
+                        </ul>
+                        <p>¿En qué puedo ayudarte hoy?</p>
+                    </div>
+                    <span class="message-time">Ahora</span>
+                </div>
             </div>
         </div>
-        <div class="candelaria-bot-input-area">
-            <input type="text" id="candelaria-input" placeholder="Escribe tu pregunta..." autocomplete="off">
-            <button id="candelaria-send-btn"><i class="fas fa-paper-plane"></i></button>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typingIndicator" style="display: none;">
+            <div class="message-avatar"><i class="fas fa-robot"></i></div>
+            <div class="typing-dots"><span></span><span></span><span></span></div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input">
+            <form id="chatForm" onsubmit="sendMessage(event)">
+                <div class="input-wrapper">
+                    <textarea id="messageInput" placeholder="Escribe tu pregunta aquí..." rows="1" maxlength="500"
+                        required></textarea>
+                    <button type="submit" class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Video Avatar (Canvas for Transparency) -->
+        <div class="video-avatar-container">
+            <canvas id="video-canvas" width="250" height="300"></canvas>
+            <video id="source-video" src="../../chatbot/assets/chatbotggs.mp4" loop muted playsinline
+                crossorigin="anonymous" style="display: none;"></video>
         </div>
     </div>
 
+    <!-- Chatbot Floating Button -->
     <button id="candelariaTriggerBtn" class="candelaria-bot-trigger" title="Asistente Virtual">
-        <div class="trigger-avatar-container">
-            <i class="fas fa-robot" style="font-size: 24px;"></i>
-        </div>
+        <!-- Canvas para el video preview en el botón -->
+        <canvas id="trigger-video-canvas" width="100" height="100"></canvas>
     </button>
 
+    <!-- Chatbot Styles & Script -->
     <link rel="stylesheet" href="../../chatbot/style.css">
+    <script>
+        // Define Global Base Path for JS
+        window.CANDELARIA_BASE_PATH = "../../";
+    </script>
     <script src="../../chatbot/script.js"></script>
 
     <script>
