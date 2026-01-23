@@ -1324,7 +1324,7 @@
                     dances.forEach(danza => {
                         const card = document.createElement('div');
                         card.className = 'event-card';
-                        card.innerHTML = `<div class="event-image-container"><img class="event-image" src="${fixPhotoPath(danza.foto)}" alt="${danza.conjunto}" onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';"></div><div class="event-content"><div class="event-genre">${danza.categoria || 'N/A'}</div><h3 class="event-title">${danza.conjunto}</h3><div class="event-time"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>${danza.hora || 'Hora no especificada'}</div><p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem; flex-grow: 1;"><span style="background: #fbbf24; color: #4c1d95; padding: 0.25rem 0.5rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 800; margin-right: 0.5rem;">#${danza.orden_concurso || 'N/A'}</span>${danza.orden_veneracion ? 'Veneración #' + danza.orden_veneracion : ''}</p><button class="event-btn" onclick="openDanceModal(${danza.id})">Ver Detalles</button></div>`;
+                        card.innerHTML = `<div class="event-image-container"><img class="event-image" src="${fixPhotoPath(danza.foto)}" alt="${danza.conjunto}" onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';"></div><div class="event-content"><div class="event-genre">${danza.categoria || 'N/A'}</div><h3 class="event-title">${danza.conjunto}</h3><button class="event-btn" onclick="openDanceModal(${danza.id})">Ver Detalles</button></div>`;
                         danzasGrid.appendChild(card);
                     });
                 }
@@ -1451,24 +1451,13 @@
                             card.className = 'event-card';
                             card.innerHTML = `
                                 <div class="event-image-container">
-                                    <img class="event-image" src="${danza.imagen || 'https://placehold.co/400x300?text=Imagen+no+disponible'}"
+                                    <img class="event-image" src="${(danza.imagen || danza.foto) ? fixPhotoPath(danza.imagen || danza.foto) : 'https://placehold.co/400x300?text=Imagen+no+disponible'}"
                                          alt="${danza.conjunto}"
                                          onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';">
                                 </div>
                                 <div class="event-content">
                                     <div class="event-genre">${categoria}</div>
                                     <h3 class="event-title">${danza.conjunto}</h3>
-                                    <div class="event-time">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <polyline points="12 6 12 12 16 14"></polyline>
-                                        </svg>
-                                        ${horaValue}
-                                    </div>
-                                    <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem; flex-grow: 1;">
-                                        <span style="background: #fbbf24; color: #4c1d95; padding: 0.25rem 0.5rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 800; margin-right: 0.5rem;">#${danza.orden_concurso}</span>
-                                        ${danza.orden_veneracion ? 'Veneración #' + danza.orden_veneracion : ''}
-                                    </p>
                                     <button class="event-btn"
                                             onclick="openDanceModal(${danza.id})">
                                         Ver Detalles
