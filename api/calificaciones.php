@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 include_once '../src/Config/Database.php';
 include_once '../includes/logger.php';
+include_once '../includes/supabase-middleware.php';
 
 use Config\Database;
 
@@ -24,37 +25,7 @@ if (!$db) {
     exit();
 }
 
-function getAuthHeader()
-{
-    $headers = null;
-    if (isset($_SERVER['Authorization'])) {
-        $headers = trim($_SERVER["Authorization"]);
-    } else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-        $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
-    } elseif (function_exists('apache_request_headers')) {
-        $requestHeaders = apache_request_headers();
-        $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
-        if (isset($requestHeaders['Authorization'])) {
-            $headers = trim($requestHeaders['Authorization']);
-        }
-    }
-    return $headers;
-}
-
-function validateToken($token, $db)
-{
-    if (!$token)
-        return null;
-    $decoded = base64_decode($token);
-    $parts = explode(':', $decoded);
-    if (count($parts) < 3)
-        return null;
-    $clientId = intval($parts[0]);
-    $stmt = $db->prepare("SELECT id, nombre FROM clientes WHERE id = :id");
-    $stmt->bindParam(':id', $clientId, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
+// Note: Auth is now handled by supabase-middleware.php
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -62,21 +33,21 @@ if ($method == 'POST') {
     $rawInput = file_get_contents("php://input");
     custom_log("[DEBUG] POST calificaciones raw: " . $rawInput);
 
-    $auth = getAuthHeader();
-    if (!$auth || !preg_match('/Bearer\s(\S+)/', $auth, $matches)) {
-        custom_log("[WARNING] Intento de calificar sin auth o auth invalido");
+    // Use Supabase auth instead of legacy token validation
+    $supabaseUser = validateSupabaseToken();
+    if (!$supabaseUser) {
+        custom_log("[WARNING] Intento de calificar sin auth Supabase válido");
         http_response_code(401);
-        echo json_encode(["message" => "No autorizado"]);
+        echo json_encode(["message" => "No autorizado. Inicia sesión con Google.", "requiresAuth" => true]);
         exit();
     }
 
-    $user = validateToken($matches[1], $db);
-    if (!$user) {
-        custom_log("[WARNING] Token invalido al calificar");
-        http_response_code(401);
-        echo json_encode(["message" => "Token inválido"]);
-        exit();
-    }
+    // Map Supabase user to expected format
+    $user = [
+        'id' => $supabaseUser['id'], // UUID string
+        'nombre' => $supabaseUser['name'] ?? $supabaseUser['email'],
+        'email' => $supabaseUser['email']
+    ];
 
     $data = json_decode($rawInput);
 
@@ -97,10 +68,10 @@ if ($method == 'POST') {
         exit();
     }
 
-    // Check if already rated
-    $checkQuery = "SELECT id FROM calificaciones WHERE cliente_id = :cid AND hospedaje_id = :hid";
+    // Check if already rated (using user_id - UUID string)
+    $checkQuery = "SELECT id FROM calificaciones WHERE user_id = :uid AND hospedaje_id = :hid";
     $checkStmt = $db->prepare($checkQuery);
-    $checkStmt->bindValue(':cid', $user['id']);
+    $checkStmt->bindValue(':uid', $user['id'], PDO::PARAM_STR);
     $checkStmt->bindValue(':hid', $hospedaje_id);
     $checkStmt->execute();
     if ($checkStmt->fetch()) {
@@ -111,13 +82,15 @@ if ($method == 'POST') {
     }
 
     try {
-        // Insert rating
-        $query = "INSERT INTO calificaciones (cliente_id, hospedaje_id, estrellas, comentario) VALUES (:cid, :hid, :pts, :com)";
+        // Insert rating with Supabase user_id (UUID)
+        $query = "INSERT INTO calificaciones (user_id, hospedaje_id, estrellas, comentario, user_name, user_email) VALUES (:uid, :hid, :pts, :com, :uname, :uemail)";
         $stmt = $db->prepare($query);
-        $stmt->bindParam(':cid', $user['id']);
+        $stmt->bindParam(':uid', $user['id'], PDO::PARAM_STR);
         $stmt->bindParam(':hid', $hospedaje_id);
         $stmt->bindParam(':pts', $puntuacion);
         $stmt->bindParam(':com', $comentario);
+        $stmt->bindParam(':uname', $user['nombre'], PDO::PARAM_STR);
+        $stmt->bindParam(':uemail', $user['email'], PDO::PARAM_STR);
         $stmt->execute();
 
         custom_log("[INFO] Calificación insertada correctamente ID: " . $db->lastInsertId());
@@ -145,10 +118,11 @@ if ($method == 'POST') {
     }
 
     try {
-        // Get reviews
-        $query = "SELECT c.id, c.hospedaje_id, c.cliente_id, c.estrellas as puntuacion, c.comentario, c.created_at, cl.nombre as cliente_nombre 
+        // Get reviews (support both old cliente_id and new user_id)
+        $query = "SELECT c.id, c.hospedaje_id, c.user_id, c.estrellas as puntuacion, c.comentario, c.created_at, 
+                 COALESCE(c.user_name, cl.nombre, 'Usuario') as cliente_nombre 
                  FROM calificaciones c 
-                 JOIN clientes cl ON c.cliente_id = cl.id 
+                 LEFT JOIN clientes cl ON c.cliente_id = cl.id 
                  WHERE c.hospedaje_id = :hid 
                  ORDER BY c.created_at DESC";
         $stmt = $db->prepare($query);

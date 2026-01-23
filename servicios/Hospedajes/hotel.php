@@ -285,7 +285,8 @@
                     </a>
 
                     <!-- Mobile Menu Button -->
-                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-candelaria-gold transition-colors">
+                    <button id="mobile-menu-btn"
+                        class="md:hidden text-white hover:text-candelaria-gold transition-colors">
                         <i data-lucide="menu" class="w-8 h-8"></i>
                     </button>
                 </div>
@@ -695,27 +696,27 @@
                     try {
                         const user = e.detail;
                         updateReservationUI(user);
-                        if(typeof loadReviews === 'function') loadReviews();
-                    } catch(e) { console.error("Auth change error", e); }
+                        if (typeof loadReviews === 'function') loadReviews();
+                    } catch (e) { console.error("Auth change error", e); }
                 });
 
                 // Initial check in case it loaded before listener
-                if(window.currentUser) {
+                if (window.currentUser) {
                     updateReservationUI(window.currentUser);
                 }
 
                 if (typeof lucide !== 'undefined') lucide.createIcons();
-                
+
                 await loadHotelData();
                 initDatePickers();
-                
-                if(typeof loadReviews === 'function') loadReviews(); 
-                if(typeof setupGalleryCarousel === 'function') setupGalleryCarousel();
-                
+
+                if (typeof loadReviews === 'function') loadReviews();
+                if (typeof setupGalleryCarousel === 'function') setupGalleryCarousel();
+
             } catch (initError) {
                 console.error("CRITICAL INITIALIZATION ERROR:", initError);
                 const loadingState = document.getElementById('loading-state');
-                if(loadingState) {
+                if (loadingState) {
                     loadingState.innerHTML = `
                         <div class="max-w-md mx-auto mt-10 p-6 bg-red-50 border border-red-200 rounded-xl text-center">
                             <h3 class="text-red-800 font-bold mb-2">Error de carga</h3>
@@ -726,35 +727,58 @@
                 }
             }
         });
-        
+
         // Helper to update local UI parts that depend on user
         function updateReservationUI(user) {
-             const loginRequired = document.getElementById('login-required-section');
-             const formContainer = document.getElementById('reservation-form-container');
-             const reservingAs = document.getElementById('reserving-as');
+            const loginRequired = document.getElementById('login-required-section');
+            const formContainer = document.getElementById('reservation-form-container');
+            const reservingAs = document.getElementById('reserving-as');
 
-             if (user) {
-                if(loginRequired) loginRequired.classList.add('hidden');
-                if(formContainer) formContainer.classList.remove('hidden');
-                
+            if (user) {
+                if (loginRequired) loginRequired.classList.add('hidden');
+                if (formContainer) formContainer.classList.remove('hidden');
+
                 if (reservingAs) {
                     const userName = user.name || user.nombre || 'Usuario';
                     const userEmail = user.email || '';
                     reservingAs.textContent = `${userName} (${userEmail})`;
                 }
-                
+
                 // Update Ratings UI too
                 const loginMsg = document.getElementById('login-to-rate');
-                if(loginMsg) loginMsg.classList.add('hidden');
+                if (loginMsg) loginMsg.classList.add('hidden');
             } else {
-                if(loginRequired) loginRequired.classList.remove('hidden');
-                if(formContainer) formContainer.classList.add('hidden');
-                
+                if (loginRequired) loginRequired.classList.remove('hidden');
+                if (formContainer) formContainer.classList.add('hidden');
+
                 const loginMsg = document.getElementById('login-to-rate');
-                if(loginMsg) loginMsg.classList.remove('hidden');
+                if (loginMsg) loginMsg.classList.remove('hidden');
             }
         }
-        
+
+        // Alias for backwards compatibility (called from selectRoom)
+        function updateReservationSection() {
+            updateReservationUI(window.currentUser);
+        }
+
+        // Helper to get access token (Supabase or legacy)
+        function getAccessToken() {
+            // Try Supabase token from cookies
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'sb-access-token' && value) {
+                    return decodeURIComponent(value);
+                }
+            }
+            // Fallback to SupabaseCore if available
+            if (typeof SupabaseCore !== 'undefined' && SupabaseCore.getAccessToken) {
+                return SupabaseCore.getAccessToken();
+            }
+            // Fallback to legacy token
+            return localStorage.getItem('clientToken');
+        }
+
         // ============================================
         // AUTHENTICATION FUNCTIONS REMOVED
         // (Handled by global auth-header.js)
@@ -783,7 +807,7 @@
                 if (typeof hotel.imagenes === 'string' && hotel.imagenes) {
                     try { hotel.imagenes = JSON.parse(hotel.imagenes); } catch (e) { hotel.imagenes = []; console.error('Error parsing imagenes:', e); }
                 } else if (!hotel.imagenes) {
-                     hotel.imagenes = [];
+                    hotel.imagenes = [];
                 }
 
                 // Fetch rooms
@@ -791,15 +815,15 @@
                     const roomsRes = await fetch(`../../api/habitaciones.php?hospedaje_id=${hotelId}`);
                     if (roomsRes.ok) {
                         const roomsData = await roomsRes.json();
-                         // Handle potential object wrapper {success:true, habitaciones: []}
-                        if(roomsData.habitaciones) {
+                        // Handle potential object wrapper {success:true, habitaciones: []}
+                        if (roomsData.habitaciones) {
                             rooms = roomsData.habitaciones;
-                        } else if(Array.isArray(roomsData)) {
-                             rooms = roomsData;
+                        } else if (Array.isArray(roomsData)) {
+                            rooms = roomsData;
                         } else {
                             rooms = [];
                         }
-                        
+
                         // Parse JSON fields for rooms
                         rooms.forEach(room => {
                             if (typeof room.amenidades === 'string') {
@@ -810,11 +834,11 @@
                             }
                         });
                     }
-                } catch(roomErr) {
-                     console.warn('Error loading rooms, continuing with hotel data', roomErr);
-                     rooms = [];
+                } catch (roomErr) {
+                    console.warn('Error loading rooms, continuing with hotel data', roomErr);
+                    rooms = [];
                 }
-                
+
                 console.log('Hotel loaded:', hotel);
 
                 // Render everything
@@ -829,7 +853,7 @@
 
             } catch (error) {
                 console.error('CRITICAL Error loading hotel:', error);
-                
+
                 // Show detailed error in UI for debugging
                 const errorMsg = error.message || 'Error desconocido';
                 document.getElementById('loading-state').innerHTML = `
@@ -845,11 +869,11 @@
                 lucide.createIcons();
             }
         }
-        
+
         // Render hotel info
         function renderHotel() {
-            if(!hotel) return; // Safety check
-            
+            if (!hotel) return; // Safety check
+
             document.title = `Candelaria 2025 | ${hotel.nombre}`;
             document.getElementById('breadcrumb-name').textContent = hotel.nombre;
             document.getElementById('hotel-name').textContent = hotel.nombre;
@@ -859,14 +883,14 @@
             document.getElementById('hotel-description').textContent = hotel.descripcion || 'Sin descripción disponible';
             document.getElementById('hotel-rating').textContent = parseFloat(hotel.calificacion || 4.5).toFixed(1);
             const mapAddr = document.getElementById('map-address');
-            if(mapAddr) mapAddr.querySelector('span').textContent = hotel.ubicacion;
+            if (mapAddr) mapAddr.querySelector('span').textContent = hotel.ubicacion;
 
             // Gallery
             let rawImages = [];
-            if(hotel.imagenes && Array.isArray(hotel.imagenes) && hotel.imagenes.length > 0) {
-                 rawImages = hotel.imagenes;
+            if (hotel.imagenes && Array.isArray(hotel.imagenes) && hotel.imagenes.length > 0) {
+                rawImages = hotel.imagenes;
             } else {
-                 rawImages = ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'];
+                rawImages = ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'];
             }
 
             const images = rawImages.map(img => fixImagePath(img));
@@ -1184,15 +1208,19 @@
 
             if (!window.currentUser) {
                 showToast('Debes iniciar sesión para reservar', 'warning');
-                if(typeof window.openAuthModal === 'function') {
-                     window.openAuthModal();
+                if (typeof window.openAuthModal === 'function') {
+                    window.openAuthModal();
                 } else {
-                     console.error("Auth modal function not found");
+                    console.error("Auth modal function not found");
                 }
                 return;
             }
 
-            const token = localStorage.getItem('candelaria_user'); // Re-using user object as token or similar if backend allows
+            const token = getAccessToken();
+            if (!token) {
+                showToast('No se encontró token de autenticación', 'error');
+                return;
+            }
 
             const formData = {
                 habitacion_id: parseInt(document.getElementById('selected-room-id').value),
@@ -1210,6 +1238,7 @@
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
+                    credentials: 'include', // Include cookies for Supabase
                     body: JSON.stringify(formData)
                 });
 
@@ -1219,13 +1248,14 @@
                     showToast('¡Reservación creada exitosamente!', 'success');
 
                     // Show confirmation
+                    const userEmail = (window.currentUser && window.currentUser.email) ? window.currentUser.email : 'tu correo';
                     document.getElementById('reservation-section').innerHTML = `
                         <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
                             <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                                 <i data-lucide="check-circle" class="w-10 h-10 text-green-500"></i>
                             </div>
                             <h2 class="text-2xl font-bold text-gray-900 mb-4">¡Reservación Confirmada!</h2>
-                            <p class="text-gray-600 mb-6">Tu reservación #${result.id} ha sido creada exitosamente. Hemos enviado los detalles a <strong>${currentUser.email}</strong></p>
+                            <p class="text-gray-600 mb-6">Tu reservación #${result.id} ha sido creada exitosamente. Hemos enviado los detalles a <strong>${userEmail}</strong></p>
                             <div class="bg-gray-50 rounded-xl p-6 mb-6 text-left max-w-md mx-auto">
                                 <p><strong>Hotel:</strong> ${hotel.nombre}</p>
                                 <p><strong>Habitación:</strong> ${selectedRoom.nombre}</p>
@@ -1328,8 +1358,9 @@
             }
 
             // Update auth UI for ratings
-            if (currentUser) {
-                const userHasRated = data.reviews && data.reviews.some(r => r.cliente_id == currentUser.id);
+            const user = window.currentUser;
+            if (user) {
+                const userHasRated = data.reviews && data.reviews.some(r => r.user_id == user.id || r.cliente_id == user.id);
 
                 const formContainer = document.getElementById('rate-form-container');
                 const loginMsg = document.getElementById('login-to-rate');
@@ -1412,7 +1443,7 @@
                 return;
             }
 
-            const token = localStorage.getItem('clientToken');
+            const token = getAccessToken();
             const comment = document.getElementById('rate-comment').value;
 
             // DEBUG LOGS
@@ -1430,6 +1461,7 @@
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
+                    credentials: 'include', // Include cookies for Supabase
                     body: JSON.stringify({
                         hospedaje_id: parseInt(hotelId),
                         puntuacion: userRating,
@@ -1526,9 +1558,10 @@
     <!-- Global Auth JS (from auth-header.php) -->
     <?= getAuthJS('../../') ?>
 
-    <?php 
+    <?php
     $footerDepth = 2;
-    include '../../includes/standard-footer.php'; 
+    include '../../includes/standard-footer.php';
     ?>
 </body>
+
 </html>
