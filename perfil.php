@@ -303,7 +303,7 @@
                 // Provider badge
                 const providerBadge = document.getElementById('profile-provider-badge');
                 const providerDetail = document.getElementById('detail-provider');
-                
+
                 if (user.provider === 'google') {
                     providerBadge.textContent = 'Google';
                     providerBadge.className = 'px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full uppercase';
@@ -328,11 +328,11 @@
         async function loadReservations() {
             const list = document.getElementById('reservations-list');
             const loading = document.getElementById('reservations-loading');
-            
+
             try {
                 // Get token from cookie (SupabaseCore sets it)
                 const token = document.cookie.match(new RegExp('(^| )sb-access-token=([^;]+)'))?.[2];
-                
+
                 if (!token) {
                     loading.innerHTML = '<p class="text-gray-500">Inicia sesión nuevamente para ver tus reservas.</p>';
                     return;
@@ -341,13 +341,13 @@
                 const res = await fetch('api/mis-reservas.php', {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
-                
+
                 if (!res.ok) throw new Error('Error fetching');
-                
+
                 const reservations = await res.json();
-                
+
                 loading.classList.add('hidden');
-                
+
                 if (reservations.length === 0) {
                     list.innerHTML = `
                         <div class="text-center py-6 bg-gray-50 rounded-xl border border-dashed border-gray-300">
@@ -360,10 +360,19 @@
                     return;
                 }
 
-                list.innerHTML = reservations.map(r => `
+                list.innerHTML = reservations.map(r => {
+                    // Fix Image Path Logic
+                    let imgUrl = r.hospedaje_imagen || 'assets/placeholder.png';
+
+                    // If it's a bare filename (common in legacy uploads), prepend assets/uploads/
+                    if (imgUrl && !imgUrl.startsWith('http') && !imgUrl.startsWith('assets/') && !imgUrl.startsWith('data:')) {
+                        imgUrl = 'assets/uploads/' + imgUrl;
+                    }
+
+                    return `
                     <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex flex-col md:flex-row gap-4 items-start md:items-center">
                         <div class="h-16 w-16 bg-gray-200 rounded-lg overflow-hidden shrink-0">
-                             <img src="${r.hospedaje_imagen || 'assets/placeholder.png'}" class="w-full h-full object-cover">
+                             <img src="${imgUrl}" class="w-full h-full object-cover" onerror="this.src='assets/placeholder.png'">
                         </div>
                         <div class="flex-grow">
                             <h4 class="font-bold text-gray-900">${r.hospedaje_nombre}</h4>
@@ -380,8 +389,8 @@
                             </span>
                         </div>
                     </div>
-                `).join('');
-                
+                `}).join('');
+
                 lucide.createIcons();
 
             } catch (e) {
@@ -391,7 +400,7 @@
         }
 
         function getStatusColor(status) {
-             const colors = {
+            const colors = {
                 'pendiente': 'bg-yellow-100 text-yellow-800',
                 'confirmada': 'bg-green-100 text-green-800',
                 'cancelada': 'bg-red-100 text-red-800',
