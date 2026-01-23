@@ -1772,6 +1772,7 @@
                 ` : ''}
 
                 <div class="card-actions">
+                    <button class="btn btn-primary" onclick="window.location.href='../live-platform/index.php#live'" style="background: #ef4444; border-color: #ef4444;">Ver En Vivo</button>
                     <button class="btn btn-primary" onclick="window.location.href='../live-platform/index.php#map'">Ver en Mapa</button>
                     <button class="btn btn-outline">Compartir</button>
                     <button class="btn btn-secondary">Recordarme</button>
