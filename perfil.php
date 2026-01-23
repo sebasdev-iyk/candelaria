@@ -170,6 +170,21 @@
             </div>
         </div>
 
+        <!-- Reservations Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <i data-lucide="ticket" class="w-6 h-6 text-candelaria-purple"></i>
+                Mis Reservaciones
+            </h2>
+            <div id="reservations-loading" class="text-center py-8">
+                <i data-lucide="loader" class="w-8 h-8 animate-spin mx-auto text-purple-600"></i>
+                <p class="mt-2 text-gray-500">Cargando reservaciones...</p>
+            </div>
+            <div id="reservations-list" class="space-y-4">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
         <!-- Quick Actions -->
         <div class="bg-white rounded-2xl shadow-lg p-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
@@ -288,7 +303,7 @@
                 // Provider badge
                 const providerBadge = document.getElementById('profile-provider-badge');
                 const providerDetail = document.getElementById('detail-provider');
-
+                
                 if (user.provider === 'google') {
                     providerBadge.textContent = 'Google';
                     providerBadge.className = 'px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full uppercase';
@@ -303,10 +318,86 @@
                     providerDetail.textContent = 'Email/Contraseña';
                 }
 
+                loadReservations();
+
             } catch (e) {
                 console.error('Error updating profile UI:', e);
-                // Don't redirect here, just log error so user can see partial data
             }
+        }
+
+        async function loadReservations() {
+            const list = document.getElementById('reservations-list');
+            const loading = document.getElementById('reservations-loading');
+            
+            try {
+                // Get token from cookie (SupabaseCore sets it)
+                const token = document.cookie.match(new RegExp('(^| )sb-access-token=([^;]+)'))?.[2];
+                
+                if (!token) {
+                    loading.innerHTML = '<p class="text-gray-500">Inicia sesión nuevamente para ver tus reservas.</p>';
+                    return;
+                }
+
+                const res = await fetch('api/mis-reservas.php', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                
+                if (!res.ok) throw new Error('Error fetching');
+                
+                const reservations = await res.json();
+                
+                loading.classList.add('hidden');
+                
+                if (reservations.length === 0) {
+                    list.innerHTML = `
+                        <div class="text-center py-6 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+                            <i data-lucide="calendar-x" class="w-10 h-10 text-gray-300 mx-auto mb-2"></i>
+                            <p class="text-gray-500">No tienes reservaciones activas</p>
+                            <a href="servicios/index.php" class="mt-4 inline-block text-candelaria-purple font-bold hover:underline">Explorar Hospedajes</a>
+                        </div>
+                    `;
+                    lucide.createIcons();
+                    return;
+                }
+
+                list.innerHTML = reservations.map(r => `
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex flex-col md:flex-row gap-4 items-start md:items-center">
+                        <div class="h-16 w-16 bg-gray-200 rounded-lg overflow-hidden shrink-0">
+                             <img src="${r.hospedaje_imagen || 'assets/placeholder.png'}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-gray-900">${r.hospedaje_nombre}</h4>
+                            <p class="text-sm text-gray-600">${r.habitacion_nombre} • ${r.num_huespedes} Huéspedes</p>
+                            <div class="text-xs text-gray-500 mt-1">
+                                <i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>
+                                ${r.fecha_entrada} - ${r.fecha_salida}
+                            </div>
+                        </div>
+                        <div class="text-right w-full md:w-auto flex flex-row md:flex-col justify-between items-center md:items-end">
+                            <span class="block font-bold text-lg text-candelaria-purple">$${r.precio_total}</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-bold uppercase ${getStatusColor(r.estado)}">
+                                ${r.estado}
+                            </span>
+                        </div>
+                    </div>
+                `).join('');
+                
+                lucide.createIcons();
+
+            } catch (e) {
+                console.error(e);
+                loading.innerHTML = '<p class="text-red-500">Error al cargar reservaciones.</p>';
+            }
+        }
+
+        function getStatusColor(status) {
+             const colors = {
+                'pendiente': 'bg-yellow-100 text-yellow-800',
+                'confirmada': 'bg-green-100 text-green-800',
+                'cancelada': 'bg-red-100 text-red-800',
+                'completada': 'bg-blue-100 text-blue-800'
+            };
+            return colors[status] || 'bg-gray-100 text-gray-800';
         }
 
         function confirmLogout() {
