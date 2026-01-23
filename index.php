@@ -2021,6 +2021,17 @@
       });
     }
 
+    // ========== Photo path helper function ==========
+    function fixPhotoPath(foto) {
+      if (!foto || foto === 'null' || foto === '') return null;
+      // Already a full URL
+      if (foto.startsWith('http://') || foto.startsWith('https://')) return foto;
+      // Already has assets/uploads path
+      if (foto.includes('assets/uploads')) return foto;
+      // Just filename - prepend the uploads path
+      return `./assets/uploads/${foto}`;
+    }
+
     // ========== Current state for danzas ==========
     let currentPage = 1;
     let currentSearchQuery = '';
@@ -2097,7 +2108,7 @@
           const categoriaRaw = danza.categoria || 'TRADICIONAL';
           // Display "Traje de Luces" instead of "Luces Parada"
           const displayCategory = categoriaRaw === 'Luces Parada' ? 'TRAJE DE LUCES' : categoriaRaw.toUpperCase();
-          const imageUrl = danza.foto || `https://placehold.co/400x300/4c1d95/fbbf24?text=${encodeURIComponent(danza.conjunto || 'Danza')}`;
+          const imageUrl = fixPhotoPath(danza.foto) || `https://placehold.co/400x300/4c1d95/fbbf24?text=${encodeURIComponent(danza.conjunto || 'Danza')}`;
           const descripcion = (danza.descripcion || '').replace(/'/g, "\\'");
           const horaValue = danza.hora || 'Hora no especificada';
           const detallesValue = (danza.detalles || '').replace(/'/g, "\\'");
@@ -2260,7 +2271,7 @@
       modalBody.innerHTML = `
         <div class="dance-details-grid">
           <div>
-            <img src="${imagen || 'https://placehold.co/400x300?text=Imagen+no+disponible'}"
+            <img src="${fixPhotoPath(imagen) || 'https://placehold.co/400x300?text=Imagen+no+disponible'}"
                  alt="${conjunto}"
                  class="dance-image"
                  onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';">
@@ -2403,7 +2414,8 @@
     <div class="chat-input">
       <form id="chatForm" onsubmit="sendMessage(event)">
         <div class="input-wrapper">
-          <textarea id="messageInput" placeholder="Escribe tu pregunta aquí..." rows="1" maxlength="500" required></textarea>
+          <textarea id="messageInput" placeholder="Escribe tu pregunta aquí..." rows="1" maxlength="500"
+            required></textarea>
           <button type="submit" class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button>
         </div>
       </form>
@@ -2412,7 +2424,8 @@
     <!-- Video Avatar (Canvas for Transparency) -->
     <div class="video-avatar-container">
       <canvas id="video-canvas" width="250" height="300"></canvas>
-      <video id="source-video" src="chatbot/assets/chatbotggs.mp4" loop muted playsinline crossorigin="anonymous" style="display: none;"></video>
+      <video id="source-video" src="chatbot/assets/chatbotggs.mp4" loop muted playsinline crossorigin="anonymous"
+        style="display: none;"></video>
     </div>
   </div>
 
