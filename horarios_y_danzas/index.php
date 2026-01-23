@@ -1072,6 +1072,10 @@
                     if (dances.length === 0) {
                         danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">No se encontraron dansas en la base de datos</div>`;
                     } else {
+                        // Store in global danzas array for modal access
+                        danzas = dances;
+                        console.log('[DEBUG] Danzas cargadas:', danzas.length);
+
                         danzasGrid.innerHTML = '';
                         dances.forEach(danza => {
                             const categoria = danza.categoria || 'N/A';
@@ -1111,8 +1115,7 @@
                                         <span style="background: #fbbf24; color: #4c1d95; padding: 0.25rem 0.5rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 800; margin-right: 0.5rem;">#${danza.orden_concurso}</span>
                                         ${danza.orden_veneracion ? 'Veneración #' + danza.orden_veneracion : ''}
                                     </p>
-                                    <button class="event-btn"
-                                            onclick="openDanceModal(${danza.id}, '${danza.conjunto}', '${descripcionValue}', '${categoria}', '${horaValue}', '${danza.orden_concurso}', '${danza.orden_veneracion || 'N/A'}', '${detallesValue}')">
+                                    <button class="event-btn" onclick="openDanceModal(${danza.id})">
                                         Ver Detalles
                                     </button>
                                 </div>
@@ -1227,11 +1230,15 @@
                 if (dances.length === 0) {
                     danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">No se encontraron danzas${query ? ` que coincidan con "${query}"` : ''}</div>`;
                 } else {
+                    // Store in global danzas array for modal access
+                    danzas = dances;
+                    console.log('[DEBUG searchDanzas] Danzas cargadas:', danzas.length);
+
                     danzasGrid.innerHTML = '';
                     dances.forEach(danza => {
                         const card = document.createElement('div');
                         card.className = 'event-card';
-                        card.innerHTML = `<div class="event-image-container"><img class="event-image" src="${danza.foto || 'https://placehold.co/400x300?text=Imagen+no+disponible'}" alt="${danza.conjunto}" onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';"></div><div class="event-content"><div class="event-genre">${danza.categoria || 'N/A'}</div><h3 class="event-title">${danza.conjunto}</h3><div class="event-time"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>${danza.hora || 'Hora no especificada'}</div><p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem; flex-grow: 1;"><span style="background: #fbbf24; color: #4c1d95; padding: 0.25rem 0.5rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 800; margin-right: 0.5rem;">#${danza.orden_concurso}</span>${danza.orden_veneracion ? 'Veneración #' + danza.orden_veneracion : ''}</p><button class="event-btn" onclick="openDanceModal(${danza.id}, '${(danza.conjunto || '').replace(/'/g, "\\'")}', '${(danza.descripcion || 'Descripción no disponible').replace(/'/g, "\\'")}', '${danza.categoria || 'N/A'}', '${danza.hora || 'Hora no especificada'}', '${danza.orden_concurso}', '${danza.orden_veneracion || 'N/A'}', '${(danza.detalles || 'Detalles no disponibles').replace(/'/g, "\\'")}')">Ver Detalles</button></div>`;
+                        card.innerHTML = `<div class="event-image-container"><img class="event-image" src="${danza.foto || 'https://placehold.co/400x300?text=Imagen+no+disponible'}" alt="${danza.conjunto}" onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';"></div><div class="event-content"><div class="event-genre">${danza.categoria || 'N/A'}</div><h3 class="event-title">${danza.conjunto}</h3><div class="event-time"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>${danza.hora || 'Hora no especificada'}</div><p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem; flex-grow: 1;"><span style="background: #fbbf24; color: #4c1d95; padding: 0.25rem 0.5rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 800; margin-right: 0.5rem;">#${danza.orden_concurso || 'N/A'}</span>${danza.orden_veneracion ? 'Veneración #' + danza.orden_veneracion : ''}</p><button class="event-btn" onclick="openDanceModal(${danza.id})">Ver Detalles</button></div>`;
                         danzasGrid.appendChild(card);
                     });
                 }
@@ -1377,7 +1384,7 @@
                                         ${danza.orden_veneracion ? 'Veneración #' + danza.orden_veneracion : ''}
                                     </p>
                                     <button class="event-btn"
-                                            onclick="openDanceModal(${danza.id}, '${danza.conjunto}', '${descripcionValue}', '${categoria}', '${horaValue}', '${danza.orden_concurso}', '${danza.orden_veneracion || 'N/A'}', '${detallesValue}')">
+                                            onclick="openDanceModal(${danza.id})">
                                         Ver Detalles
                                     </button>
                                 </div>
@@ -1614,28 +1621,27 @@
         }
 
         // Open dance modal
-        function openDanceModal(danzaId, conjunto, descripcion, categoria, hora, ordenConcurso, ordenVeneracion, detalles) {
-            // For now, search in danzas array if it's populated, otherwise create the modal with provided params
-            let danza = typeof danzas !== 'undefined' && danzas.length > 0 ? danzas.find(d => d.id == danzaId) : null;
+        - simplified to use only ID
+        function openDanceModal(danzaId) {
+            console.log('[DEBUG openDanceModal] Called with ID:', danzaId);
+            console.log('[DEBUG openDanceModal] Global danzas array length:', danzas ? danzas.length : 'undefined');
 
-            // If danza not found in danzas array, use the parameters passed
-            if (!danza && conjunto) {
-                danza = {
-                    id: danzaId,
-                    name: conjunto,
-                    conjunto: conjunto,
-                    descripcion: descripcion,
-                    categoria: categoria,
-                    hora: hora,
-                    orden_concurso: ordenConcurso,
-                    orden_veneracion: ordenVeneracion,
-                    detalles: detalles
-                };
+            // Search in global danzas array
+            let danza = null;
+            if (typeof danzas !== 'undefined' && danzas.length > 0) {
+                danza = danzas.find(d => d.id == danzaId);
+                console.log('[DEBUG openDanceModal] Found danza:', danza ? 'YES' : 'NO');
+                if (danza) {
+                    console.log('[DEBUG openDanceModal] Danza data:', JSON.stringify(danza, null, 2).substring(0, 500));
+                }
+            } else {
+                console.error('[DEBUG openDanceModal] danzas array is empty or undefined!');
             }
 
-            // If danza is still not found, return
+            // If danza is not found, show error
             if (!danza) {
-                console.error("Danza not found with ID: " + danzaId);
+                console.error("[DEBUG openDanceModal] Danza not found with ID: " + danzaId);
+                alert('Error: No se pudo cargar la información de la danza. Por favor recarga la página.');
                 return;
             }
 
