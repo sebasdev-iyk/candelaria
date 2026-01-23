@@ -22,10 +22,33 @@ if (!$db) {
 }
 echo "DB Connected.<br>";
 
-// Test Auth (simulated, or just skip if we want to test DB query first)
-// Let's print the token if it exists
-$token = isset($_COOKIE['sb-access-token']) ? $_COOKIE['sb-access-token'] : 'NONE';
-echo "Cookie Token: " . substr($token, 0, 10) . "...<br>";
+// Test Auth
+echo "Calling requireAuth()...<br>";
+try {
+    $user = requireAuth();
+    echo "Auth Successful. User ID: " . $user['id'] . "<br>";
+
+    // Test Query
+    echo "Testing Query...<br>";
+    $userId = $user['id'];
+    $query = "SELECT r.*, h.nombre as habitacion_nombre, ho.nombre as hospedaje_nombre, ho.imagen as hospedaje_imagen
+              FROM reservaciones r
+              JOIN habitaciones h ON r.habitacion_id = h.id
+              JOIN hospedajes ho ON r.hospedaje_id = ho.id
+              WHERE r.user_id = :user_id
+              ORDER BY r.created_at DESC";
+
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':user_id', $userId);
+    $stmt->execute();
+    $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo "Query Successful. Found " . count($res) . " rows.<br>";
+
+} catch (Exception $e) {
+    echo "Exception: " . $e->getMessage() . "<br>";
+} catch (Error $e) {
+    echo "Fatal Error: " . $e->getMessage() . "<br>";
+}
 
 echo "Done.";
 ?>
