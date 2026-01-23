@@ -2128,7 +2128,7 @@
               <div class="card-content">
                 <h3 class="card-title">${danza.conjunto}</h3>
                 ${danza.orden_concurso ? `<span class="card-order">#${danza.orden_concurso} Concurso</span>` : ''}
-                <button class="card-btn" onclick="openDanceModal(${danza.id}, '${(danza.conjunto || '').replace(/'/g, "\\'")}', '${descripcion}', '${categoriaRaw}', '${horaValue}', '${danza.orden_concurso || ''}', '${danza.orden_veneracion || ''}', '${detallesValue}', '${imageUrl.replace(/'/g, "\\'")}', '${diaConcurso}', '${diaVeneracion}')">
+                <button class="card-btn" onclick="window.location.href='./horarios_y_danzas/index.php?danzaId=${danza.id}#danzas'">
                   Ver Detalles
                   <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
                 </button>

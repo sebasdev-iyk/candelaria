@@ -1519,6 +1519,21 @@
                 });
             }
 
+            // Detectar parámetro danzaId para abrir modal automáticamente
+            const urlParams = new URLSearchParams(window.location.search);
+            const danzaId = urlParams.get('danzaId');
+            if (danzaId) {
+                // Esperar a que las danzas se carguen y luego abrir el modal
+                const checkAndOpenModal = setInterval(() => {
+                    if (danzas && danzas.length > 0) {
+                        clearInterval(checkAndOpenModal);
+                        const id = parseInt(danzaId, 10);
+                        openDanceModal(id);
+                    }
+                }, 200);
+                // Timeout después de 5 segundos
+                setTimeout(() => clearInterval(checkAndOpenModal), 5000);
+            }
 
         }
 
