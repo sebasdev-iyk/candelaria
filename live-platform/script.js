@@ -397,7 +397,19 @@ const MOCK_SCORES = {
 
 // Start with a default render
 document.addEventListener('DOMContentLoaded', () => {
+    // Render scores initially regardless of view
     renderScores('autoctonos');
+
+    // Check URL hash for initial view
+    const hash = window.location.hash.substring(1);
+    if (hash === 'map') {
+        switchView('map');
+    } else if (hash === 'scores') {
+        switchView('scores');
+    } else {
+        // Default to live view if no hash or 'live'
+        switchView('live');
+    }
 });
 
 function switchView(viewName) {
