@@ -360,20 +360,8 @@
                     return;
                 }
 
-                list.innerHTML = reservations.map(r => {
-                    // Fix Image Path Logic
-                    let imgUrl = r.hospedaje_imagen || 'assets/placeholder.png';
-
-                    // If it's a bare filename (common in legacy uploads), prepend assets/uploads/
-                    if (imgUrl && !imgUrl.startsWith('http') && !imgUrl.startsWith('assets/') && !imgUrl.startsWith('data:')) {
-                        imgUrl = 'assets/uploads/' + imgUrl;
-                    }
-
-                    return `
+                list.innerHTML = reservations.map(r => `
                     <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex flex-col md:flex-row gap-4 items-start md:items-center">
-                        <div class="h-16 w-16 bg-gray-200 rounded-lg overflow-hidden shrink-0">
-                             <img src="${imgUrl}" class="w-full h-full object-cover" onerror="this.src='assets/placeholder.png'">
-                        </div>
                         <div class="flex-grow">
                             <h4 class="font-bold text-gray-900">${r.hospedaje_nombre}</h4>
                             <p class="text-sm text-gray-600">${r.habitacion_nombre} • ${r.num_huespedes} Huéspedes</p>
@@ -389,7 +377,7 @@
                             </span>
                         </div>
                     </div>
-                `}).join('');
+                `).join('');
 
                 lucide.createIcons();
 
