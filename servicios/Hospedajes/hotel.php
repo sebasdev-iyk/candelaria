@@ -722,10 +722,26 @@
         function fixImagePath(url) {
             const original = url;
             let finalUrl = url;
-            if (!url) finalUrl = '';
-            else if (url.startsWith('http') || url.startsWith('data:')) finalUrl = url;
-            else if (url.startsWith('/')) finalUrl = url;
-            else if (url.startsWith('assets/')) finalUrl = '/candelaria/' + url; // Root relative
+
+            if (!url) {
+                finalUrl = 'https://picsum.photos/800/600';
+            }
+            else if (url.startsWith('http') || url.startsWith('data:')) {
+                finalUrl = url;
+            }
+            else if (url.startsWith('/')) {
+                finalUrl = url;
+            }
+            else if (url.startsWith('assets/')) {
+                finalUrl = '../../' + url;
+            }
+            else if (url.startsWith('uploads/')) {
+                finalUrl = '../../assets/' + url;
+            }
+            else {
+                // Assume bare filename in uploads (standard for new uploads)
+                finalUrl = '../../assets/uploads/' + url;
+            }
 
             console.log(`[DEBUG] Image Path Fix: "${original}" -> "${finalUrl}"`);
             return finalUrl;
