@@ -1772,7 +1772,7 @@
                 ` : ''}
 
                 <div class="card-actions">
-                    <button class="btn btn-primary">Ver en Mapa</button>
+                    <button class="btn btn-primary" onclick="window.location.href='../live-platform/index.php#en-vivo'">Ver en Mapa</button>
                     <button class="btn btn-outline">Compartir</button>
                     <button class="btn btn-secondary">Recordarme</button>
                 </div>
