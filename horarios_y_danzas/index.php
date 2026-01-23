@@ -1772,14 +1772,23 @@
                 ` : ''}
 
                 <div class="card-actions">
-                    <button class="btn btn-primary" onclick="window.location.href='../live-platform/index.php#live'" style="background: #ef4444; border-color: #ef4444;">Ver En Vivo</button>
+                    <button class="btn btn-primary" onclick="window.location.href='../live-platform/index.php#live'" style="background: linear-gradient(135deg, #ef4444, #b91c1c); border: none; box-shadow: 0 0 15px rgba(239, 68, 68, 0.5); animation: pulse 2s infinite;">
+                        <i data-lucide="radio" style="width: 16px; height: 16px; margin-right: 6px;"></i> Ver En Vivo
+                    </button>
+                    <button class="btn btn-primary" onclick="window.location.href='../live-platform/index.php#scores'" style="background: #fbbf24; color: #4b5563; border: none;">
+                        <i data-lucide="trophy" style="width: 16px; height: 16px; margin-right: 6px;"></i> Ver Puntaje
+                    </button>
                     <button class="btn btn-primary" onclick="window.location.href='../live-platform/index.php#map'">Ver en Mapa</button>
                     <button class="btn btn-outline">Compartir</button>
                     <button class="btn btn-secondary">Recordarme</button>
                 </div>
             `;
 
-        modal.classList.add('active');
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            modal.classList.add('active');
         }
     </script>
 
