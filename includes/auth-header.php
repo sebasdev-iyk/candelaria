@@ -638,9 +638,15 @@ function getAuthJS()
 
                     if (error) throw error;
 
+                    // Check for implicit duplicate (Email Enumeration Protection)
+                    if (data.user && data.user.identities && data.user.identities.length === 0) {
+                        showToast('Este correo ya está registrado. Intenta iniciar sesión.', 'warning');
+                        return;
+                    }
+
                     // If email confirmation is enabled, session might be null
                     if (data.user && !data.session) {
-                        showToast('Cuenta creada. ¡Revisa tu email para confirmar!', 'success');
+                        showToast('Cuenta creada o ya existente. ¡Revisa tu email!', 'success');
                         closeAuthModal();
                     } else if (data.user && data.session) {
                         const user = {
