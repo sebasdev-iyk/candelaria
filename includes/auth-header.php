@@ -135,7 +135,11 @@ function getAuthModalHTML()
     <!-- Simple Toast Notification Container -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-[200] flex flex-col gap-2"></div>
 
-    <!-- SDKs Loading -->
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/candelaria/assets/js/supabase-core.js"></script>
+
+    <!-- Legacy Google SDK (fallback) -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <div id="g_id_onload"
          data-client_id="{$googleClientId}"
@@ -221,7 +225,32 @@ function getAuthJS()
     <script>
     // --- Auth State Management ---
     
-    function initAuth() {
+    async function initAuth() {
+        // First, check for Supabase session (priority)
+        if (typeof SupabaseCore !== 'undefined') {
+            try {
+                const supabaseUser = await SupabaseCore.getCurrentUser();
+                if (supabaseUser) {
+                    const userData = {
+                        id: supabaseUser.id,
+                        name: supabaseUser.user_metadata?.full_name || supabaseUser.email?.split('@')[0] || 'Usuario',
+                        email: supabaseUser.email,
+                        picture: supabaseUser.user_metadata?.avatar_url || supabaseUser.user_metadata?.picture,
+                        provider: 'supabase'
+                    };
+                    window.currentUser = userData;
+                    showLoggedInState(userData);
+                    console.log('[Auth] Supabase session active:', userData.email);
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                    setupEmailAuthForms();
+                    return;
+                }
+            } catch (e) {
+                console.log('[Auth] No Supabase session found');
+            }
+        }
+        
+        // Fallback to legacy localStorage
         const user = localStorage.getItem('candelaria_user');
         if (user) {
             try {
@@ -338,9 +367,22 @@ function getAuthJS()
     }
 
     // --- Logout ---
-    window.handleLogout = function() {
+    window.handleLogout = async function() {
         if(confirm('¿Estás seguro de cerrar sesión?')) {
+            // Clear Supabase session first (priority)
+            if (typeof SupabaseCore !== 'undefined') {
+                try {
+                    await SupabaseCore.signOut();
+                    console.log('[Auth] Supabase session cleared');
+                } catch (e) {
+                    console.error('[Auth] Error clearing Supabase session:', e);
+                }
+            }
+            
+            // Clear legacy localStorage
             localStorage.removeItem('candelaria_user');
+            localStorage.removeItem('clientToken');
+            localStorage.removeItem('clientUser');
             
             // Also logout from Google if possible
             if (typeof google !== 'undefined' && google.accounts) {
@@ -356,35 +398,47 @@ function getAuthJS()
         }
     }
 
-    // --- Google Login Handler ---
-    window.handleGoogleLogin = function() {
-        console.log('Google login button clicked');
+    // --- Google Login Handler (Supabase OAuth) ---
+    window.handleGoogleLogin = async function() {
+        console.log('[Auth] Google login button clicked');
         
-        // Check if Google SDK is loaded
+        // Use Supabase OAuth for Google login
+        if (typeof SupabaseCore !== 'undefined') {
+            try {
+                showToast('Redirigiendo a Google...', 'info');
+                await SupabaseCore.signInWithGoogle();
+                // This will redirect to Google OAuth
+                return;
+            } catch (e) {
+                console.error('[Auth] Supabase Google login error:', e);
+                showToast('Error al conectar con Google. Intenta de nuevo.', 'error');
+            }
+        } else {
+            console.warn('[Auth] SupabaseCore not loaded, falling back to legacy Google SDK');
+            // Fallback to legacy Google SDK
+            handleLegacyGoogleLogin();
+        }
+    }
+    
+    // Legacy Google login (fallback)
+    function handleLegacyGoogleLogin() {
         if (typeof google === 'undefined' || !google.accounts) {
             showToast('Cargando Google... Espera un momento y vuelve a intentar.', 'warning');
-            
-            // Try to reload the SDK
-            setTimeout(() => {
-                location.reload();
-            }, 2000);
+            setTimeout(() => location.reload(), 2000);
             return;
         }
 
         try {
-            // Initialize Google Sign-In if not already done
             google.accounts.id.initialize({
                 client_id: '<?= GOOGLE_CLIENT_ID ?>',
                 callback: handleGoogleCredentialResponse,
                 auto_select: false
             });
 
-            // Trigger the One Tap prompt
             google.accounts.id.prompt((notification) => {
                 if (notification.isNotDisplayed()) {
                     console.log('Google prompt not displayed:', notification.getNotDisplayedReason());
                     
-                    // If One Tap doesn't work, try rendering a button
                     const googleBtnContainer = document.createElement('div');
                     googleBtnContainer.id = 'google-signin-btn-temp';
                     googleBtnContainer.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);';

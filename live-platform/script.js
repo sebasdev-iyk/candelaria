@@ -1,4 +1,4 @@
-/* Live Platform Scripts - Real Chat */
+/* Live Platform Scripts - Real Chat with Supabase Auth */
 
 // Variables que se inicializan después de DOMContentLoaded
 let chatMessages = null;
@@ -6,12 +6,16 @@ let chatInput = null;
 let streamId = 'default';
 let lastMessageId = 0;
 let chatIsAuthenticated = false;
+let supabaseUser = null;
 
 // Use global currentUser from auth-header.php (don't redeclare!)
 // let currentUser is already defined in auth-header.php
 
 // API base path for chat (renamed to avoid conflict with auth API_BASE)
 const CHAT_API_BASE = '../api/chat.php';
+
+// Import Supabase functions if available (loaded from supabase-core.js)
+// Functions: SupabaseCore.getAccessToken(), SupabaseCore.getCurrentUser(), etc.
 
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializar elementos del DOM
@@ -27,19 +31,42 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoControls();
 });
 
-// Check auth status from localStorage
-function checkAuthStatus() {
-    const token = localStorage.getItem('clientToken');
-    const userData = localStorage.getItem('clientUser');
-
-    if (token && userData) {
-        chatIsAuthenticated = true;
-        // Update global currentUser if not set
-        if (typeof currentUser === 'undefined' || currentUser === null) {
-            window.currentUser = JSON.parse(userData);
+// Check auth status from Supabase (via cookies)
+async function checkAuthStatus() {
+    try {
+        // Check if SupabaseCore is available (loaded from supabase-core.js)
+        if (typeof SupabaseCore !== 'undefined' && SupabaseCore.isAuthenticated()) {
+            supabaseUser = await SupabaseCore.getCurrentUser();
+            if (supabaseUser) {
+                chatIsAuthenticated = true;
+                // Update global currentUser for compatibility
+                window.currentUser = {
+                    id: supabaseUser.id,
+                    nombre: supabaseUser.user_metadata?.full_name || supabaseUser.email?.split('@')[0] || 'Usuario',
+                    email: supabaseUser.email
+                };
+                updateChatInputState(true);
+                return;
+            }
         }
-        updateChatInputState(true);
-    } else {
+
+        // Fallback: Check legacy localStorage (for backwards compatibility during migration)
+        const token = localStorage.getItem('clientToken');
+        const userData = localStorage.getItem('clientUser');
+        if (token && userData) {
+            chatIsAuthenticated = true;
+            if (typeof currentUser === 'undefined' || currentUser === null) {
+                window.currentUser = JSON.parse(userData);
+            }
+            updateChatInputState(true);
+            return;
+        }
+
+        // Not authenticated
+        chatIsAuthenticated = false;
+        updateChatInputState(false);
+    } catch (error) {
+        console.error('[Chat] Error checking auth status:', error);
         chatIsAuthenticated = false;
         updateChatInputState(false);
     }
@@ -48,9 +75,10 @@ function checkAuthStatus() {
 // Update chat input based on auth state
 function updateChatInputState(loggedIn) {
     const charCounter = document.getElementById('char-counter');
+    const displayName = currentUser?.nombre || supabaseUser?.user_metadata?.full_name || 'Usuario';
 
-    if (loggedIn && currentUser) {
-        chatInput.placeholder = `Chatear como ${currentUser.nombre}...`;
+    if (loggedIn && (currentUser || supabaseUser)) {
+        chatInput.placeholder = `Chatear como ${displayName}...`;
         chatInput.disabled = false;
         chatInput.classList.remove('cursor-not-allowed', 'opacity-50');
     } else {
@@ -91,15 +119,23 @@ function initChat() {
         }
     });
 
-    // Listen for auth changes
+    // Listen for auth changes (legacy localStorage)
     window.addEventListener('storage', (e) => {
-        if (e.key === 'clientToken' || e.key === 'clientUser') {
+        if (e.key === 'clientToken' || e.key === 'clientUser' || e.key === 'sb-access-token') {
             checkAuthStatus();
         }
     });
 
+    // Listen for Supabase auth state changes
+    if (typeof SupabaseCore !== 'undefined') {
+        SupabaseCore.onAuthStateChange((event, session) => {
+            console.log('[Chat] Supabase auth state changed:', event);
+            checkAuthStatus();
+        });
+    }
+
     // Also check periodically for auth changes
-    setInterval(checkAuthStatus, 3000);
+    setInterval(checkAuthStatus, 5000);
 }
 
 // Load initial messages
@@ -156,7 +192,7 @@ async function handleSendMessage() {
     console.log('[Chat] Enviando mensaje:', text);
 
     // Re-check auth
-    checkAuthStatus();
+    await checkAuthStatus();
 
     if (!chatIsAuthenticated) {
         console.log('[Chat] No autenticado, abriendo modal');
@@ -166,7 +202,15 @@ async function handleSendMessage() {
         return;
     }
 
-    const token = localStorage.getItem('clientToken');
+    // Get token - prefer Supabase, fallback to legacy
+    let token = null;
+    if (typeof SupabaseCore !== 'undefined') {
+        token = SupabaseCore.getAccessToken();
+    }
+    if (!token) {
+        token = localStorage.getItem('clientToken');
+    }
+
     console.log('[Chat] Token presente:', !!token);
 
     try {
@@ -182,6 +226,7 @@ async function handleSendMessage() {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
+            credentials: 'include', // Include cookies for Supabase token
             body: JSON.stringify(requestBody)
         });
 
@@ -204,6 +249,10 @@ async function handleSendMessage() {
             if (response.status === 401) {
                 localStorage.removeItem('clientToken');
                 localStorage.removeItem('clientUser');
+                // Also clear Supabase session if available
+                if (typeof SupabaseCore !== 'undefined') {
+                    SupabaseCore.signOut();
+                }
                 checkAuthStatus();
             }
         }

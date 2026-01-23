@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 include_once '../src/Config/Database.php';
+include_once '../includes/supabase-middleware.php';
 use Config\Database;
 
 $database = new Database();
@@ -36,45 +37,6 @@ if (!$db) {
     http_response_code(500);
     echo json_encode(["message" => "Error de conexión a BD"]);
     exit();
-}
-
-// Helper function to validate client token
-function validateClientToken($token, $db)
-{
-    if (!$token)
-        return null;
-
-    $decoded = base64_decode($token);
-    $parts = explode(':', $decoded);
-
-    if (count($parts) < 3)
-        return null;
-
-    $clientId = intval($parts[0]);
-
-    $stmt = $db->prepare("SELECT id, nombre, email, telefono FROM clientes WHERE id = :id");
-    $stmt->bindParam(':id', $clientId, PDO::PARAM_INT);
-    $stmt->execute();
-
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
-
-// Get Authorization header
-function getAuthHeader()
-{
-    $headers = null;
-    if (isset($_SERVER['Authorization'])) {
-        $headers = trim($_SERVER["Authorization"]);
-    } else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-        $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
-    } elseif (function_exists('apache_request_headers')) {
-        $requestHeaders = apache_request_headers();
-        $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
-        if (isset($requestHeaders['Authorization'])) {
-            $headers = trim($requestHeaders['Authorization']);
-        }
-    }
-    return $headers;
 }
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -113,32 +75,10 @@ if ($method == 'GET') {
     }
 
 } elseif ($method == 'POST') {
-    // Require authentication
-    $authHeader = getAuthHeader();
+    // Require Supabase authentication
+    $supabaseUser = requireAuth(); // Dies with 401 if not authenticated
 
-    if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-        http_response_code(401);
-        echo json_encode(["message" => "Debe iniciar sesión para hacer una reservación", "requiresAuth" => true]);
-        exit();
-    }
-
-    try {
-        $cliente = validateClientToken($matches[1], $db);
-    } catch (PDOException $e) {
-        // Table might not exist - provide helpful message
-        http_response_code(500);
-        echo json_encode([
-            "message" => "Error de base de datos. Por favor reinicie la BD con: sudo mysql < php-db/init_mariadb.sql",
-            "debug" => $e->getMessage()
-        ]);
-        exit();
-    }
-
-    if (!$cliente) {
-        http_response_code(401);
-        echo json_encode(["message" => "Sesión inválida o expirada", "requiresAuth" => true]);
-        exit();
-    }
+    // $supabaseUser contains: id (UUID), email, name, picture, provider
 
     $data = json_decode(file_get_contents("php://input"));
 
@@ -198,15 +138,17 @@ if ($method == 'GET') {
 
         $precio_total = floatval($room['precio_noche']) * $noches;
 
-        // Create reservation using cliente_id from token
+        // Create reservation using Supabase user_id (UUID)
         $query = "INSERT INTO reservaciones 
-                  (cliente_id, habitacion_id, hospedaje_id, fecha_entrada, fecha_salida, num_huespedes, precio_total, notas, estado)
+                  (user_id, habitacion_id, hospedaje_id, fecha_entrada, fecha_salida, num_huespedes, precio_total, notas, estado, user_email, user_name)
                   VALUES 
-                  (:cliente_id, :habitacion_id, :hospedaje_id, :fecha_entrada, :fecha_salida, :num_huespedes, :precio_total, :notas, 'pendiente')";
+                  (:user_id, :habitacion_id, :hospedaje_id, :fecha_entrada, :fecha_salida, :num_huespedes, :precio_total, :notas, 'pendiente', :user_email, :user_name)";
 
         $stmt = $db->prepare($query);
 
-        $cliente_id = $cliente['id'];
+        $user_id = $supabaseUser['id']; // UUID string
+        $user_email = $supabaseUser['email'];
+        $user_name = $supabaseUser['name'];
         $habitacion_id = $data->habitacion_id;
         $hospedaje_id = $data->hospedaje_id;
         $fecha_entrada = $data->fecha_entrada;
@@ -214,7 +156,7 @@ if ($method == 'GET') {
         $num_huespedes = isset($data->num_huespedes) ? intval($data->num_huespedes) : 1;
         $notas = isset($data->notas) ? htmlspecialchars(strip_tags($data->notas)) : null;
 
-        $stmt->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
         $stmt->bindParam(':habitacion_id', $habitacion_id, PDO::PARAM_INT);
         $stmt->bindParam(':hospedaje_id', $hospedaje_id, PDO::PARAM_INT);
         $stmt->bindParam(':fecha_entrada', $fecha_entrada);
@@ -222,6 +164,8 @@ if ($method == 'GET') {
         $stmt->bindParam(':num_huespedes', $num_huespedes, PDO::PARAM_INT);
         $stmt->bindParam(':precio_total', $precio_total);
         $stmt->bindParam(':notas', $notas);
+        $stmt->bindParam(':user_email', $user_email, PDO::PARAM_STR);
+        $stmt->bindParam(':user_name', $user_name, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             $reserva_id = $db->lastInsertId();
@@ -232,7 +176,11 @@ if ($method == 'GET') {
                 "precio_total" => $precio_total,
                 "noches" => $noches,
                 "estado" => "pendiente",
-                "cliente" => $cliente
+                "user" => [
+                    "id" => $supabaseUser['id'],
+                    "email" => $supabaseUser['email'],
+                    "name" => $supabaseUser['name']
+                ]
             ]);
         } else {
             http_response_code(500);

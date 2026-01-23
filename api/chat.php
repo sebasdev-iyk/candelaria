@@ -9,8 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit();
 }
 
-// Include database and auth helpers
+// Include database and Supabase auth middleware
 include_once '../src/Config/Database.php';
+include_once '../includes/supabase-middleware.php';
 use Config\Database;
 
 $database = new Database();
@@ -35,59 +36,15 @@ function writeChatMessages($file, $messages)
     file_put_contents($file, json_encode($messages, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 }
 
-// Helper: Validate token and get user
-function validateToken($token, $db)
+// Helper: Validate Supabase token (uses middleware)
+// This function is now a wrapper around the Supabase middleware
+function validateSupabaseUser()
 {
-    if (!$token)
-        return null;
-
-    $decoded = base64_decode($token);
-    $parts = explode(':', $decoded);
-
-    if (count($parts) < 3)
-        return null;
-
-    $clientId = intval($parts[0]);
-
-    $stmt = $db->prepare("SELECT id, nombre, email FROM clientes WHERE id = :id");
-    $stmt->bindParam(':id', $clientId, PDO::PARAM_INT);
-    $stmt->execute();
-
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    return optionalAuth(); // Returns user data or null
 }
 
-// Get Authorization header (with multiple fallback methods for shared hosting)
-function getAuthHeader()
-{
-    $headers = null;
-
-    // Method 1: Direct $_SERVER
-    if (isset($_SERVER['Authorization'])) {
-        $headers = trim($_SERVER["Authorization"]);
-    }
-    // Method 2: HTTP_AUTHORIZATION (most common)
-    else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-        $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
-    }
-    // Method 3: REDIRECT_HTTP_AUTHORIZATION (for some Apache configs)
-    else if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
-        $headers = trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
-    }
-    // Method 4: apache_request_headers()
-    else if (function_exists('apache_request_headers')) {
-        $requestHeaders = apache_request_headers();
-        if ($requestHeaders) {
-            foreach ($requestHeaders as $key => $value) {
-                if (strtolower($key) === 'authorization') {
-                    $headers = trim($value);
-                    break;
-                }
-            }
-        }
-    }
-
-    return $headers;
-}
+// Note: getAuthHeader is now handled by supabase-middleware.php
+// via getSupabaseToken() which checks cookies and Authorization header
 
 // Generate a random color for new users
 function getUserColor($name)
@@ -125,22 +82,21 @@ if ($method === 'GET' && $action === 'messages') {
     ]);
 
 } elseif ($method === 'POST' && $action === 'send') {
-    // Send a message (requires auth)
-    $authHeader = getAuthHeader();
+    // Send a message (requires Supabase auth)
+    $supabaseUser = validateSupabaseToken();
 
-    if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+    if (!$supabaseUser) {
         http_response_code(401);
-        echo json_encode(['success' => false, 'message' => 'Debes iniciar sesión para enviar mensajes']);
+        echo json_encode(['success' => false, 'message' => 'Debes iniciar sesión para enviar mensajes', 'requiresAuth' => true]);
         exit();
     }
 
-    $user = validateToken($matches[1], $db);
-
-    if (!$user) {
-        http_response_code(401);
-        echo json_encode(['success' => false, 'message' => 'Token inválido. Por favor inicia sesión nuevamente.']);
-        exit();
-    }
+    // Map Supabase user to expected format
+    $user = [
+        'id' => $supabaseUser['id'], // UUID string
+        'nombre' => $supabaseUser['name'] ?? $supabaseUser['email'],
+        'email' => $supabaseUser['email']
+    ];
 
     // Parse request body
     $data = json_decode(file_get_contents("php://input"));
@@ -175,14 +131,16 @@ if ($method === 'GET' && $action === 'messages') {
         }
     }
 
-    // Create new message
+    // Create new message with Supabase user data
+    $userName = $user['nombre'];
     $newMessage = [
         'id' => $lastId + 1,
-        'user_id' => $user['id'],
-        'user' => $user['nombre'],
+        'user_id' => $user['id'], // Supabase UUID
+        'user' => $userName,
         'message' => $messageText,
-        'color' => getUserColor($user['nombre']),
-        'timestamp' => time()
+        'color' => getUserColor($userName),
+        'timestamp' => time(),
+        'email' => $user['email']
     ];
 
     $allMessages[$streamId][] = $newMessage;
