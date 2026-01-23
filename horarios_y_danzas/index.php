@@ -1620,8 +1620,7 @@
             modal.classList.add('active');
         }
 
-        // Open dance modal
-        - simplified to use only ID
+        // Open dance modal - simplified to use only ID
         function openDanceModal(danzaId) {
             console.log('[DEBUG openDanceModal] Called with ID:', danzaId);
             console.log('[DEBUG openDanceModal] Global danzas array length:', danzas ? danzas.length : 'undefined');
