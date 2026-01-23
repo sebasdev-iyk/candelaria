@@ -1648,21 +1648,34 @@
             const nombre = danza.name || danza.conjunto || 'Danza';
             const descValue = danza.descripcion || 'Descripción no disponible';
             const catValue = danza.categoria || 'N/A';
+            // Show "Traje de Luces" for "Luces Parada" or "Luces Estadio"
+            const catDisplay = catValue.toLowerCase().includes('luces') ? 'Traje de Luces' : catValue;
             const horaValue = danza.hora || 'Hora no especificada';
             const ordenConcursoValue = danza.orden_concurso || 'N/A';
             const ordenVeneracionValue = danza.orden_veneracion || 'N/A';
-            const detallesValue = danza.detalles || 'Detalles no disponibles';
+            const detallesValue = danza.detalles || '';
+            // New extended fields
+            const historiaValue = danza.historia || '';
+            const juntaDirectivaValue = danza.junta_directiva || '';
+            const bloquesValue = danza.bloques || '';
+            const bandasValue = danza.bandas || '';
+            // FIX: Use danza.foto instead of danza.imagen
+            const fotoValue = danza.foto || 'https://placehold.co/400x300?text=Imagen+no+disponible';
 
             modalBody.innerHTML = `
-                < div class="dance-details-grid" >
+                <div class="dance-details-grid">
                     <div>
-                        <img src="${danza.imagen || 'https://placehold.co/400x300?text=Imagen+no+disponible'}"
+                        <img src="${fotoValue}"
                              alt="${nombre}"
                              class="dance-image"
                              onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';">
                         <div style="margin-top: 1.5rem;">
                             <h3>Información de Presentación</h3>
                             <div class="quick-facts">
+                                <div class="info-item">
+                                    <div class="info-label">Categoría</div>
+                                    <div class="info-value">${catDisplay}</div>
+                                </div>
                                 <div class="info-item">
                                     <div class="info-label">Orden en Concurso</div>
                                     <div class="info-value">#${ordenConcursoValue}</div>
@@ -1681,18 +1694,37 @@
                     <div>
                         <div class="modal-section">
                             <h3>Datos del Conjunto</h3>
-                            <p><strong>Categoría:</strong> ${catValue}</p>
                             <p><strong>Conjunto:</strong> ${nombre}</p>
                             <p><strong>Descripción:</strong> ${descValue}</p>
-                            <p><strong>Detalles:</strong> ${detallesValue}</p>
+                            ${detallesValue ? `<p><strong>Detalles:</strong> ${detallesValue}</p>` : ''}
                         </div>
+                        ${juntaDirectivaValue ? `
+                        <div class="modal-section" style="margin-top: 1rem;">
+                            <h3>Junta Directiva</h3>
+                            <p style="line-height: 1.6; color: #4b5563;">${juntaDirectivaValue}</p>
+                        </div>
+                        ` : ''}
+                        ${bandasValue ? `
+                        <div class="modal-section" style="margin-top: 1rem;">
+                            <h3>Bandas</h3>
+                            <p style="line-height: 1.6; color: #4b5563;">${bandasValue}</p>
+                        </div>
+                        ` : ''}
+                        ${bloquesValue ? `
+                        <div class="modal-section" style="margin-top: 1rem;">
+                            <h3>Bloques</h3>
+                            <p style="line-height: 1.6; color: #4b5563;">${bloquesValue}</p>
+                        </div>
+                        ` : ''}
                     </div>
-                </div >
-
-                <div class="modal-section">
-                    <h3>Descripción Completa</h3>
-                    <p style="line-height: 1.6; color: #4b5563;">${descValue}</p>
                 </div>
+
+                ${historiaValue ? `
+                <div class="modal-section">
+                    <h3>Historia del Conjunto</h3>
+                    <p style="line-height: 1.6; color: #4b5563;">${historiaValue}</p>
+                </div>
+                ` : ''}
 
                 <div class="card-actions">
                     <button class="btn btn-primary">Ver en Mapa</button>
@@ -1926,9 +1958,10 @@
     <?= getAuthModalHTML() ?>
     <?= getAuthJS('../') ?>
 
-    <?php 
+    <?php
     $footerDepth = 1;
-    include '../includes/standard-footer.php'; 
+    include '../includes/standard-footer.php';
     ?>
 </body>
+
 </html>
