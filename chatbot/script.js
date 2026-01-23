@@ -16,7 +16,9 @@ const HD_HEIGHT = 1080;
 const TOLERANCE = { r: 40, g: 40, b: 40 }; // Tolerancia para fondo NEGRO
 
 // Configuración API
-const API_URL = 'chatbot/api/chat.php';
+// Use global base path if available (defined in grok-chatbot.php), otherwise try to guess or use relative
+const BASE_PATH = window.CANDELARIA_BASE_PATH || '';
+const API_URL = BASE_PATH + 'chatbot/api/chat.php';
 
 // ============================================
 // INICIALIZACIÓN

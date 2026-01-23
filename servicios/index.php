@@ -1037,15 +1037,12 @@
 
     </script>
 
-    <?php 
+    <?php
     $footerDepth = 1;
-    include '../includes/standard-footer.php'; 
+    include '../includes/standard-footer.php';
     ?>
-    
-    <!-- Chatbot Widget -->
-    <link rel="stylesheet" href="../assets/chatbot-widget.css">
-    <div id="chatbot-widget"></div>
-    <script src="../assets/js/chatbot-widget.js"></script>
+
+    <!-- Chatbot Widget Removed -->
 
     <script>
         // Mobile Menu Logic
@@ -1061,7 +1058,7 @@
 
     <!-- Auth Modal and Dropdown -->
     <?= getAuthModalHTML() ?>
-    <?= getAuthJS('../') ?>
+    <?= getAuthJS() ?>
     <script src="../assets/js/spark-effect.js"></script>
 </body>
 

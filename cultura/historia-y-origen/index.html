@@ -364,10 +364,47 @@
 
     <script src="script.js"></script>
 
-    <!-- Chatbot Widget -->
-    <link rel="stylesheet" href="../../assets/css/chatbot-widget.css">
-    <div id="chatbot-widget"></div>
-    <script src="../../assets/js/chatbot-widget.js"></script>
+    <!-- Grok Chatbot Widget -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <div id="candelaria-bot-widget" class="candelaria-bot-widget">
+        <div class="candelaria-bot-header">
+            <div class="candelaria-bot-avatar-container">
+                <video id="candelaria-avatar-video" class="candelaria-bot-avatar-video" autoplay loop muted playsinline>
+                    <source src="../../chatbot/assets/chatbotggs.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="candelaria-bot-info">
+                <span class="candelaria-bot-name">Candelaria Bot</span>
+                <span class="candelaria-bot-status"><span class="status-dot"></span>En línea</span>
+            </div>
+            <button id="candelaria-close-btn" class="candelaria-bot-close"><i class="fas fa-chevron-down"></i></button>
+        </div>
+        <div id="candelaria-messages" class="candelaria-bot-messages">
+            <div class="candelaria-message bot-message">
+                ¡Hola! Soy tu asistente virtual de la Festividad. 🎭<br>¿En qué puedo ayudarte hoy?
+            </div>
+            <div class="candelaria-quick-replies">
+                <button class="quick-reply-btn" onclick="sendQuickReply('¿Qué danzas se presentan hoy?')">💃 Danzas
+                    hoy</button>
+                <button class="quick-reply-btn" onclick="sendQuickReply('¿Dónde es la parada?')">📍 Ubicación</button>
+                <button class="quick-reply-btn" onclick="sendQuickReply('Horario de misas')">⛪ Misas</button>
+                <button class="quick-reply-btn" onclick="sendQuickReply('Conocer historia')">📜 Historia</button>
+            </div>
+        </div>
+        <div class="candelaria-bot-input-area">
+            <input type="text" id="candelaria-input" placeholder="Escribe tu pregunta..." autocomplete="off">
+            <button id="candelaria-send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <button id="candelariaTriggerBtn" class="candelaria-bot-trigger" title="Asistente Virtual">
+        <div class="trigger-avatar-container">
+            <i class="fas fa-robot" style="font-size: 24px;"></i>
+        </div>
+    </button>
+
+    <link rel="stylesheet" href="../../chatbot/style.css">
+    <script src="../../chatbot/script.js"></script>
 
     <script>
         // Mobile Menu Logic

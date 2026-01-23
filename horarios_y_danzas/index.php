@@ -2045,10 +2045,7 @@
         }
     </style>
 
-    <!-- Chatbot Widget -->
-    <link rel="stylesheet" href="../assets/css/chatbot-widget.css">
-    <div id="chatbot-widget"></div>
-    <script src="../assets/js/chatbot-widget.js"></script>
+    <!-- Chatbot Widget Removed -->
 
     <script>
         // Mobile Menu Logic
@@ -2061,14 +2058,11 @@
             });
         }
     </script>
-    <!-- Chatbot Widget -->
-    <link rel="stylesheet" href="../assets/css/chatbot-widget.css">
-    <div id="chatbot-widget"></div>
-    <script src="../assets/js/chatbot-widget.js"></script>
+    <!-- Chatbot Widget Removed (Duplicate) -->
 
     <!-- Auth Modal and Dropdown -->
     <?= getAuthModalHTML() ?>
-    <?= getAuthJS('../') ?>
+    <?= getAuthJS() ?>
 
     <?php
     $footerDepth = 1;
