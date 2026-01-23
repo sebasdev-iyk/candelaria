@@ -613,8 +613,8 @@
             // Actualizar contenido según pestaña
             updateContent();
 
-            // Actualizar la URL para reflejar la pestaña actual sin recargar
-            const newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + `#${tabName}`;
+            // Actualizar la URL para reflejar la pestaña actual sin recargar (preservando query params)
+            const newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + window.location.search + `#${tabName}`;
             window.history.pushState({ tab: tabName }, '', newURL);
         }
 
@@ -1778,7 +1778,7 @@
                 </div>
             `;
 
-            modal.classList.add('active');
+        modal.classList.add('active');
         }
     </script>
 
