@@ -57,12 +57,20 @@ function getImg($path)
 {
     if (!$path)
         return 'https://picsum.photos/800/600';
-    // If path starts with assets/, it's relative to root. 
-    // From candelaria/noticias/, we need ../../assets/
-    // If it's http, use it.
     if (strpos($path, 'http') === 0)
         return $path;
-    return '../../' . $path; // Assuming stored as 'assets/uploads/...'
+
+    // Logic from detalle.php:
+    // If stored as uploads/img.jpg -> ../assets/uploads/img.jpg
+    if (strpos($path, 'uploads/') === 0)
+        return '../assets/' . $path;
+
+    // If it starts with slash, return as is
+    if (strpos($path, '/') === 0)
+        return $path;
+
+    // Fallback for bare filenames (e.g. img_67bfc.jpg) -> ../assets/uploads/img_67bfc.jpg
+    return '../assets/uploads/' . $path;
 }
 
 function timeAgo($datetime)
@@ -90,7 +98,7 @@ function timeAgo($datetime)
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
     <script>
         tailwind.config = {
             theme: {

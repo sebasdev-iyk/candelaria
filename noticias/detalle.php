@@ -218,18 +218,18 @@ function timeAgo($datetime)
                         // The public site is in candelaria/noticias/, admin uploads are in php-admin/uploads/
                         // Relative path needed: ../../php-admin/uploads/
                     
-                        // 1. Reset any existing relative prefixes to a clean state if possible, or just catch them in regex
-                    
-                        // 2. Catch src="uploads/..." and turn into src="../../php-admin/uploads/..."
-                        $content = preg_replace('/src="uploads\/([^"]+)"/', 'src="../../php-admin/uploads/$1"', $content);
+                        // 1. Convert any double-up to single-up if it was wrongly fixed
+                        $content = str_replace('../../assets', '../assets', $content);
 
-                        // 3. Catch src="../uploads/..." (if stored that way) and turn into src="../../php-admin/uploads/..."
-                        $content = preg_replace('/src="\.\.\/uploads\/([^"]+)"/', 'src="../../php-admin/uploads/$1"', $content);
+                        // 2. Fix key paths (assets/uploads) to use ../
+                        // Catches src="...assets/uploads/img.png" -> src="../assets/uploads/img.png"
+                        $content = preg_replace('/src=".*?assets\/uploads\/([^"]+)"/', 'src="../assets/uploads/$1"', $content);
+                        $content = preg_replace('/src=\'.*?assets\/uploads\/([^\']+)\'/', 'src="../assets/uploads/$1"', $content);
 
-                        // 4. Catch bare filenames if they look like uploads (optional, but risky if not careful)
-                        // Limiting to common image extensions to be safe
-                        // This handles cases where src="image.jpg" might be stored
-                        $content = preg_replace('/src="([^"\/]+?\.(png|jpg|jpeg|webp))"/', 'src="../../php-admin/uploads/$1"', $content);
+                        // 3. Catch bare filenames (uploads usually stored this way)
+                        // src="img.png" -> src="../assets/uploads/img.png"
+                        $content = preg_replace('/src="([^"\/]+?\.(png|jpg|jpeg|webp|gif))"/', 'src="../assets/uploads/$1"', $content);
+                        $content = preg_replace('/src=\'([^\'\/]+?\.(png|jpg|jpeg|webp|gif))\'/', 'src="../assets/uploads/$1"', $content);
 
                         echo $content;
                         ?>
