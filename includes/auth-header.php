@@ -285,16 +285,16 @@ function getAuthJS()
         const profileDiv = document.getElementById('auth-user-profile');
 
         if(btnLogin) {
-            btnLogin.classList.add('hidden');
+            // btnLogin.classList.add('hidden');
             btnLogin.style.display = 'none'; // Force hide
         }
         if(btnLoginMobile) {
-            btnLoginMobile.classList.add('hidden');
+            // btnLoginMobile.classList.add('hidden');
             btnLoginMobile.style.display = 'none'; // Force hide
         }
         
         if(profileDiv) {
-            profileDiv.classList.remove('hidden');
+            // profileDiv.classList.remove('hidden');
             profileDiv.style.display = 'block'; // Force show
             
             const avatar = document.getElementById('user-avatar');
@@ -328,17 +328,17 @@ function getAuthJS()
 
         // Show login buttons with explicit style reset
         if(btnLogin) {
-            btnLogin.classList.remove('hidden');
-            btnLogin.style.display = ''; // Reset to default (flex)
+            // btnLogin.classList.remove('hidden'); // REMOVED: Breaks responsive utility
+            btnLogin.style.display = ''; // Reset to default (let CSS classes handle it)
         }
         if(btnLoginMobile) {
-            btnLoginMobile.classList.remove('hidden');
-            btnLoginMobile.style.display = ''; // Reset to default (flex)
+            // btnLoginMobile.classList.remove('hidden');
+            btnLoginMobile.style.display = ''; // Reset to default
         }
         
         // Hide profile dropdown with explicit style
         if(profileDiv) {
-            profileDiv.classList.add('hidden');
+            // profileDiv.classList.add('hidden');
             profileDiv.style.display = 'none';
         }
         
