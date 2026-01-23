@@ -330,7 +330,6 @@
         // Auth
         signInWithGoogle,
         signInWithFacebook,
-        signInWithFacebook,
         signOut,
         getCurrentUser,
         getSession,

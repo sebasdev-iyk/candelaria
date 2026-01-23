@@ -539,28 +539,8 @@ function getAuthJS()
         return JSON.parse(jsonPayload);
     }
 
-    // --- Facebook Login Handler ---
-    window.handleFacebookLogin = function() {
-        if (typeof FB === 'undefined') {
-            showToast('Facebook SDK no cargado aún.', 'warning');
-            return;
-        }
-        FB.login(function(response) {
-            if (response.authResponse) {
-                FB.api('/me', {fields: 'name,email,picture'}, function(response) {
-                    const user = {
-                        name: response.name,
-                        email: response.email || 'No disponible', 
-                        picture: response.picture.data.url,
-                        provider: 'facebook'
-                    };
-                    loginUser(user);
-                });
-            } else {
-                showToast('Inicio de sesión cancelado.', 'info');
-            }
-        }, {scope: 'public_profile,email'});
-    }
+    // --- Legacy Facebook Handler Removed ---
+    // (Consolidated with Supabase handler above)
 
     // --- Email Auth Toggle ---
     window.toggleEmailAuth = function(mode) {
