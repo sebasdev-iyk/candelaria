@@ -11,6 +11,9 @@ function getAuthModalHTML()
     $googleClientId = GOOGLE_CLIENT_ID;
     $fbAppId = FB_APP_ID;
 
+    // Base URL for links
+    $baseUrl = defined('BASE_URL') ? BASE_URL : '/candelaria/';
+
     return <<<HTML
     <!-- Auth Modal (Light Theme) -->
     <div id="auth-modal" class="fixed inset-0 z-[100] hidden transition-opacity duration-300" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -90,7 +93,7 @@ function getAuthModalHTML()
                                         Iniciar Sesión
                                     </button>
                                     <div class="text-center">
-                                        <a href="forgot_password.php" class="text-xs text-purple-600 hover:text-purple-700 font-medium">¿Olvidaste tu contraseña?</a>
+                                        <a href="{$baseUrl}forgot_password.php" class="text-xs text-purple-600 hover:text-purple-700 font-medium">¿Olvidaste tu contraseña?</a>
                                     </div>
                                     <p class="text-center text-xs text-gray-500">
                                         ¿No tienes cuenta? <button type="button" onclick="toggleEmailAuth('register')" class="font-bold text-purple-600 hover:text-purple-700">Regístrate aquí</button>
@@ -124,7 +127,7 @@ function getAuthModalHTML()
                         </div>
 
                         <p class="mt-8 text-center text-xs text-gray-500">
-                            Al continuar, aceptas nuestros <a href="#" class="font-semibold text-purple-600 hover:text-purple-500">Términos de Servicio</a> y <a href="#" class="font-semibold text-purple-600 hover:text-purple-500">Política de Privacidad</a>.
+                            Al continuar, aceptas nuestros <a href="{$baseUrl}terms.php" target="_blank" class="font-semibold text-purple-600 hover:text-purple-500">Términos de Servicio</a> y <a href="{$baseUrl}privacy.php" target="_blank" class="font-semibold text-purple-600 hover:text-purple-500">Política de Privacidad</a>.
                         </p>
                     </div>
                 </div>

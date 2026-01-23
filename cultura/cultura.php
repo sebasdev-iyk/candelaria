@@ -1115,48 +1115,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white mt-16 border-t-4 border-candelaria-gold">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="flex flex-col items-center justify-center text-center">
-                <div class="flex items-center gap-2 mb-4">
-                    <i data-lucide="sparkles" class="w-5 h-5 text-[#fbbf24]"></i>
-                    <span class="text-xl font-bold font-heading">Candelaria 2026</span>
-                </div>
 
-                <div class="text-gray-500 text-sm mb-6">
-                    &copy; 2026 Candela Digital. Todos los derechos reservados.
-                </div>
-
-                <div class="flex flex-col gap-4 mb-8 text-gray-400 text-sm">
-                    <div class="flex flex-wrap items-center justify-center gap-3">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="phone" class="w-4 h-4 text-[#fbbf24]"></i>
-                            <span>922191501</span>
-                        </div>
-                        <span class="text-gray-600">|</span>
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="mail" class="w-4 h-4 text-[#fbbf24]"></i>
-                            <span>antonyzapana550@gmail.com</span>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-wrap items-center justify-center gap-3">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="phone" class="w-4 h-4 text-[#fbbf24]"></i>
-                            <span>974526627</span>
-                        </div>
-                        <span class="text-gray-600">|</span>
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="mail" class="w-4 h-4 text-[#fbbf24]"></i>
-                            <span>p.sebastian.bn@gmail.com</span>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-    </footer>
 
     <!-- Modal para conjuntos (oculto inicialmente) -->
     <div id="conjunto-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog"
@@ -1601,6 +1560,10 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
     <!-- Auth Modal and Dropdown -->
     <?= getAuthModalHTML() ?>
     <?= getAuthJS('../') ?>
-</body>
 
+    <?php 
+    $footerDepth = 1;
+    include '../includes/standard-footer.php'; 
+    ?>
+</body>
 </html>
