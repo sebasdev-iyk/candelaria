@@ -201,6 +201,15 @@ function getAuthJS()
 {
     // Fix: Add showToast function and simple close logic
     return <<<SCRIPT
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX9MYN69SZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QX9MYN69SZ');
+    </script>
+
     <script>
     // --- Auth State Management ---
     
