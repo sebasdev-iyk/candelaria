@@ -129,6 +129,7 @@
             font-size: 0.9rem;
             padding: 8px 16px;
             transition: color 0.3s ease;
+            text-transform: uppercase;
         }
 
         .nav-link-custom:hover {
@@ -194,6 +195,56 @@
             background: rgba(251, 191, 36, 0.2);
             border-color: rgba(251, 191, 36, 0.5);
         }
+
+        /* Header Manta Premium Style - Professional Edition (Lliclla Pattern) */
+        .header-manta-premium {
+            height: 140px;
+            background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('../../principal/headerfondo2.jpg');
+            background-size: auto 100%;
+            background-repeat: repeat-x;
+            background-position: center;
+            position: relative;
+            border-bottom: 3px solid #fbbf24;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .header-manta-premium {
+                height: 80px !important;
+                min-height: 80px;
+            }
+
+            .header-manta-premium.scrolled {
+                height: auto !important;
+                min-height: 70px;
+            }
+        }
+
+        .header-manta-premium.scrolled {
+            height: 90px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+            background-image: linear-gradient(rgba(45, 10, 80, 0.75), rgba(15, 5, 30, 0.9)), url('../../principal/headerfondo1.jpg');
+        }
+
+        .header-manta-premium::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
+            pointer-events: none;
+        }
+
+        .header-manta-premium>div {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 
@@ -201,137 +252,59 @@
     <!-- Toast Container -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
 
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="fixed inset-0 z-50 hidden">
-        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 backdrop-blur-sm" onclick="closeAuthModal()"></div>
-        <div class="fixed inset-0 z-10 overflow-y-auto">
-            <div class="flex min-h-full items-center justify-center p-4">
-                <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
-                    <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-                        <i data-lucide="x" class="w-6 h-6"></i>
-                    </button>
+    <!-- Auth Modal moved to global includes -->
+    <!-- User Dropdown moved to global includes -->
 
-                    <!-- Tab Navigation -->
-                    <div class="flex border-b border-gray-200 mb-6">
-                        <button id="tab-login" onclick="switchAuthTab('login')"
-                            class="flex-1 py-3 text-center font-bold text-candelaria-purple border-b-2 border-candelaria-purple">Iniciar
-                            Sesión</button>
-                        <button id="tab-register" onclick="switchAuthTab('register')"
-                            class="flex-1 py-3 text-center font-bold text-gray-400 border-b-2 border-transparent hover:text-gray-600">Registrarse</button>
-                    </div>
-
-                    <!-- Login Form -->
-                    <form id="login-form" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
-                            <input type="email" id="login-email" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-candelaria-purple"
-                                placeholder="tu@email.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
-                            <input type="password" id="login-password" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-candelaria-purple"
-                                placeholder="••••••••">
-                        </div>
-                        <button type="submit"
-                            class="w-full bg-candelaria-purple text-white py-3 rounded-xl font-bold hover:bg-purple-800 transition-all">
-                            Iniciar Sesión
-                        </button>
-                    </form>
-
-                    <!-- Register Form -->
-                    <form id="register-form" class="space-y-4 hidden">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo *</label>
-                            <input type="text" id="register-name" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-candelaria-purple"
-                                placeholder="Tu nombre">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico *</label>
-                            <input type="email" id="register-email" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-candelaria-purple"
-                                placeholder="tu@email.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Teléfono *</label>
-                            <input type="tel" id="register-phone" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-candelaria-purple"
-                                placeholder="+51 999 999 999">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña *</label>
-                            <input type="password" id="register-password" required minlength="6"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-candelaria-purple"
-                                placeholder="Mínimo 6 caracteres">
-                        </div>
-                        <button type="submit"
-                            class="w-full bg-candelaria-purple text-white py-3 rounded-xl font-bold hover:bg-purple-800 transition-all">
-                            Crear Cuenta
-                        </button>
-                    </form>
-
-                    <!-- Logged In View - Now just shows logout if they open modal while logged in -->
-                    <div id="logged-in-view" class="hidden text-center">
-                        <p class="text-gray-500 mb-4">Ya has iniciado sesión</p>
-                        <button onclick="closeAuthModal()"
-                            class="w-full bg-candelaria-purple text-white py-3 rounded-xl font-bold hover:bg-purple-800 transition-all">
-                            Cerrar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- User Dropdown (when logged in) -->
-    <div id="user-dropdown"
-        class="fixed top-20 right-6 bg-white rounded-xl shadow-xl border border-gray-200 w-64 z-50 hidden">
-        <div class="p-4 border-b border-gray-100">
-            <p class="font-bold text-gray-900" id="dropdown-user-name"></p>
-            <p class="text-sm text-gray-500" id="dropdown-user-email"></p>
-        </div>
-        <div class="p-2">
-            <a href="../../perfil.php"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-50 text-gray-700">
-                <i data-lucide="user" class="w-5 h-5"></i>
-                Mi Perfil
-            </a>
-            <button onclick="logout()"
-                class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-red-50 text-red-600">
-                <i data-lucide="log-out" class="w-5 h-5"></i>
-                Cerrar Sesión
-            </button>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-40">
-        <div class="w-full px-6 md:px-12 py-5">
-            <div class="flex justify-between items-center">
-                <a href="../../index.php" class="flex items-center cursor-pointer group">
+    <!-- Header Section - Standardized with EN VIVO Style -->
+    <header class="header-manta-premium text-white shadow-lg sticky top-0 z-40">
+        <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center relative z-50">
+            <div class="w-full flex justify-between items-center h-full">
+                <!-- Left: Candelaria Branding -->
+                <a href="../../index.php" id="logo-container"
+                    class="flex items-center cursor-pointer group h-full relative spark-container">
                     <img src="../../principal/logoc.png" alt="Candelaria"
-                        class="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+                        class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
                 </a>
+                <!-- Right: Navigation + EN TIEMPO REAL -->
                 <div class="flex items-center gap-6">
                     <nav class="hidden md:flex items-center gap-2">
-                        <a href="../index.php" class="nav-link-custom">Servicios</a>
+                        <a href="../../servicios/index.php" class="nav-link-custom">Servicios</a>
                         <a href="../../cultura/cultura.php" class="nav-link-custom">Cultura</a>
                         <a href="../../horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
                         <a href="../../noticias/index.php" class="nav-link-custom">Noticias</a>
                     </nav>
-                    <!-- User Login Button -->
-                    <button id="user-btn" onclick="toggleAuthModal()" class="user-btn">
-                        <i data-lucide="user" class="w-5 h-5"></i>
-                        <span id="user-btn-text">Iniciar Sesión</span>
-                    </button>
-                    <a href="../../horarios_y_danzas/index.php" class="btn-live">
+
+                    <?php include '../../includes/auth-header.php'; ?>
+                    <!-- User Auth Button -->
+                    <?= getAuthButtonHTML() ?>
+
+                    <!-- EN VIVO Button -->
+                    <a href="../../live-platform/index.php" class="btn-live group !p-2.5 md:!px-6 md:!py-2.5">
                         <div class="live-dot"></div>
-                        <span>EN TIEMPO REAL</span>
+                        <span class="tracking-wider hidden md:inline">EN TIEMPO REAL</span>
                     </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-candelaria-gold transition-colors">
+                        <i data-lucide="menu" class="w-8 h-8"></i>
+                    </button>
                 </div>
             </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-candelaria-purple absolute top-full left-0 w-full shadow-lg border-t border-purple-800 z-30 transition-all duration-300">
+            <nav class="flex flex-col p-6 space-y-4">
+                <a href="../../servicios/index.php"
+                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Servicios</a>
+                <a href="../../cultura/cultura.php"
+                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
+                <a href="../../horarios_y_danzas/index.php"
+                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Horarios</a>
+                <a href="../../noticias/index.php"
+                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Noticias</a>
+            </nav>
         </div>
     </header>
 
@@ -716,7 +689,7 @@
         let checkinDate = null;
         let checkoutDate = null;
         let mapInstance = null;
-        let currentUser = null; // User authentication state
+        // currentUser handled globally
 
         // Helper to fix image paths
         function fixImagePath(url) {
@@ -757,204 +730,76 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
-            lucide.createIcons();
-            checkAuthStatus(); // Check if user is logged in
-            await loadHotelData();
-            initDatePickers();
-            setupAuthForms();
-            loadReviews(); // Load ratings and reviews
-            setupGalleryCarousel(); // Setup photo carousel
-        });
+            try {
+                // Handle Global Auth Changes
+                window.addEventListener('auth-changed', (e) => {
+                    try {
+                        const user = e.detail;
+                        updateReservationUI(user);
+                        if(typeof loadReviews === 'function') loadReviews();
+                    } catch(e) { console.error("Auth change error", e); }
+                });
 
-        // ============================================
-        // AUTHENTICATION FUNCTIONS
-        // ============================================
+                // Initial check in case it loaded before listener
+                if(window.currentUser) {
+                    updateReservationUI(window.currentUser);
+                }
 
-        function checkAuthStatus() {
-            const token = localStorage.getItem('clientToken');
-            const userData = localStorage.getItem('clientUser');
-
-            if (token && userData) {
-                try {
-                    currentUser = JSON.parse(userData);
-                    updateUserUI();
-                } catch (e) {
-                    logout();
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+                
+                await loadHotelData();
+                initDatePickers();
+                
+                if(typeof loadReviews === 'function') loadReviews(); 
+                if(typeof setupGalleryCarousel === 'function') setupGalleryCarousel();
+                
+            } catch (initError) {
+                console.error("CRITICAL INITIALIZATION ERROR:", initError);
+                const loadingState = document.getElementById('loading-state');
+                if(loadingState) {
+                    loadingState.innerHTML = `
+                        <div class="max-w-md mx-auto mt-10 p-6 bg-red-50 border border-red-200 rounded-xl text-center">
+                            <h3 class="text-red-800 font-bold mb-2">Error de carga</h3>
+                            <p class="text-red-600 mb-4">${initError.message || 'Error desconocido al iniciar la página'}</p>
+                            <button onclick="location.reload()" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm">Reintentar</button>
+                        </div>
+                    `;
                 }
             }
-        }
+        });
+        
+        // Helper to update local UI parts that depend on user
+        function updateReservationUI(user) {
+             const loginRequired = document.getElementById('login-required-section');
+             const formContainer = document.getElementById('reservation-form-container');
+             const reservingAs = document.getElementById('reserving-as');
 
-        function updateUserUI() {
-            const btn = document.getElementById('user-btn');
-            const btnText = document.getElementById('user-btn-text');
-
-            if (currentUser) {
-                btn.classList.add('logged-in');
-                btnText.textContent = currentUser.nombre.split(' ')[0]; // First name only
-
-                // Update reservation section if visible
-                updateReservationSection();
-            } else {
-                btn.classList.remove('logged-in');
-                btnText.textContent = 'Iniciar Sesión';
-            }
-            lucide.createIcons();
-        }
-
-        function updateReservationSection() {
-            const loginRequired = document.getElementById('login-required-section');
-            const formContainer = document.getElementById('reservation-form-container');
-
-            if (currentUser) {
-                loginRequired?.classList.add('hidden');
-                formContainer?.classList.remove('hidden');
-                const reservingAs = document.getElementById('reserving-as');
+             if (user) {
+                if(loginRequired) loginRequired.classList.add('hidden');
+                if(formContainer) formContainer.classList.remove('hidden');
+                
                 if (reservingAs) {
-                    reservingAs.textContent = `${currentUser.nombre} (${currentUser.email})`;
+                    const userName = user.name || user.nombre || 'Usuario';
+                    const userEmail = user.email || '';
+                    reservingAs.textContent = `${userName} (${userEmail})`;
                 }
+                
+                // Update Ratings UI too
+                const loginMsg = document.getElementById('login-to-rate');
+                if(loginMsg) loginMsg.classList.add('hidden');
             } else {
-                loginRequired?.classList.remove('hidden');
-                formContainer?.classList.add('hidden');
-            }
-            lucide.createIcons();
-        }
-
-        function toggleAuthModal() {
-            if (currentUser) {
-                // Show dropdown instead of modal when logged in
-                const dropdown = document.getElementById('user-dropdown');
-                dropdown.classList.toggle('hidden');
-
-                // Populate dropdown info
-                document.getElementById('dropdown-user-name').textContent = currentUser.nombre;
-                document.getElementById('dropdown-user-email').textContent = currentUser.email;
-                lucide.createIcons();
-            } else {
-                // Show login modal
-                const modal = document.getElementById('auth-modal');
-                modal.classList.remove('hidden');
-                switchAuthTab('login');
-                document.getElementById('logged-in-view').classList.add('hidden');
-                lucide.createIcons();
+                if(loginRequired) loginRequired.classList.remove('hidden');
+                if(formContainer) formContainer.classList.add('hidden');
+                
+                const loginMsg = document.getElementById('login-to-rate');
+                if(loginMsg) loginMsg.classList.remove('hidden');
             }
         }
-
-        function closeUserDropdown() {
-            document.getElementById('user-dropdown').classList.add('hidden');
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            const dropdown = document.getElementById('user-dropdown');
-            const btn = document.getElementById('user-btn');
-            if (dropdown && btn && !dropdown.contains(e.target) && !btn.contains(e.target)) {
-                dropdown.classList.add('hidden');
-            }
-        });
-
-        function closeAuthModal() {
-            document.getElementById('auth-modal').classList.add('hidden');
-        }
-
-        function switchAuthTab(tab) {
-            const loginTab = document.getElementById('tab-login');
-            const registerTab = document.getElementById('tab-register');
-            const loginForm = document.getElementById('login-form');
-            const registerForm = document.getElementById('register-form');
-
-            if (tab === 'login') {
-                loginTab.classList.add('text-candelaria-purple', 'border-candelaria-purple');
-                loginTab.classList.remove('text-gray-400', 'border-transparent');
-                registerTab.classList.remove('text-candelaria-purple', 'border-candelaria-purple');
-                registerTab.classList.add('text-gray-400', 'border-transparent');
-                loginForm.classList.remove('hidden');
-                registerForm.classList.add('hidden');
-            } else {
-                registerTab.classList.add('text-candelaria-purple', 'border-candelaria-purple');
-                registerTab.classList.remove('text-gray-400', 'border-transparent');
-                loginTab.classList.remove('text-candelaria-purple', 'border-candelaria-purple');
-                loginTab.classList.add('text-gray-400', 'border-transparent');
-                registerForm.classList.remove('hidden');
-                loginForm.classList.add('hidden');
-            }
-        }
-
-        function setupAuthForms() {
-            // Login form
-            document.getElementById('login-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-
-                try {
-                    const res = await fetch('../../api/clientes.php?action=login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, password })
-                    });
-
-                    const result = await res.json();
-
-                    if (res.ok) {
-                        localStorage.setItem('clientToken', result.token);
-                        localStorage.setItem('clientUser', JSON.stringify(result.cliente));
-                        currentUser = result.cliente;
-                        closeAuthModal();
-                        updateUserUI();
-                        showToast('¡Bienvenido ' + currentUser.nombre + '!', 'success');
-                    } else {
-                        showToast(result.message || 'Error de autenticación', 'error');
-                    }
-                } catch (error) {
-                    showToast('Error de conexión', 'error');
-                }
-            });
-
-            // Register form
-            document.getElementById('register-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const data = {
-                    nombre: document.getElementById('register-name').value,
-                    email: document.getElementById('register-email').value,
-                    telefono: document.getElementById('register-phone').value,
-                    password: document.getElementById('register-password').value
-                };
-
-                try {
-                    const res = await fetch('../../api/clientes.php?action=register', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
-
-                    const result = await res.json();
-
-                    if (res.ok) {
-                        localStorage.setItem('clientToken', result.token);
-                        localStorage.setItem('clientUser', JSON.stringify(result.cliente));
-                        currentUser = result.cliente;
-                        closeAuthModal();
-                        updateUserUI();
-                        showToast('¡Cuenta creada exitosamente!', 'success');
-                    } else {
-                        showToast(result.message || 'Error al registrar', 'error');
-                    }
-                } catch (error) {
-                    showToast('Error de conexión', 'error');
-                }
-            });
-        }
-
-        function logout() {
-            localStorage.removeItem('clientToken');
-            localStorage.removeItem('clientUser');
-            currentUser = null;
-            closeAuthModal();
-            updateUserUI();
-            showToast('Sesión cerrada', 'info');
-        }
+        
+        // ============================================
+        // AUTHENTICATION FUNCTIONS REMOVED
+        // (Handled by global auth-header.js)
+        // ============================================
 
         // Load hotel data
         async function loadHotelData() {
@@ -970,30 +815,48 @@
                     hotel = hotelData;
                 }
 
-                if (!hotel) throw new Error('Hotel no encontrado');
+                if (!hotel) throw new Error('Hotel no encontrado en la respuesta');
 
                 // Parse JSON fields
-                if (typeof hotel.servicios === 'string') {
-                    try { hotel.servicios = JSON.parse(hotel.servicios); } catch (e) { hotel.servicios = []; }
+                if (typeof hotel.servicios === 'string' && hotel.servicios) {
+                    try { hotel.servicios = JSON.parse(hotel.servicios); } catch (e) { hotel.servicios = []; console.error('Error parsing servicios:', e); }
                 }
-                if (typeof hotel.imagenes === 'string') {
-                    try { hotel.imagenes = JSON.parse(hotel.imagenes); } catch (e) { hotel.imagenes = []; }
+                if (typeof hotel.imagenes === 'string' && hotel.imagenes) {
+                    try { hotel.imagenes = JSON.parse(hotel.imagenes); } catch (e) { hotel.imagenes = []; console.error('Error parsing imagenes:', e); }
+                } else if (!hotel.imagenes) {
+                     hotel.imagenes = [];
                 }
 
                 // Fetch rooms
-                const roomsRes = await fetch(`../../api/habitaciones.php?hospedaje_id=${hotelId}`);
-                if (roomsRes.ok) {
-                    rooms = await roomsRes.json();
-                    // Parse JSON fields for rooms
-                    rooms.forEach(room => {
-                        if (typeof room.amenidades === 'string') {
-                            try { room.amenidades = JSON.parse(room.amenidades); } catch (e) { room.amenidades = []; }
+                try {
+                    const roomsRes = await fetch(`../../api/habitaciones.php?hospedaje_id=${hotelId}`);
+                    if (roomsRes.ok) {
+                        const roomsData = await roomsRes.json();
+                         // Handle potential object wrapper {success:true, habitaciones: []}
+                        if(roomsData.habitaciones) {
+                            rooms = roomsData.habitaciones;
+                        } else if(Array.isArray(roomsData)) {
+                             rooms = roomsData;
+                        } else {
+                            rooms = [];
                         }
-                        if (typeof room.imagenes === 'string') {
-                            try { room.imagenes = JSON.parse(room.imagenes); } catch (e) { room.imagenes = []; }
-                        }
-                    });
+                        
+                        // Parse JSON fields for rooms
+                        rooms.forEach(room => {
+                            if (typeof room.amenidades === 'string') {
+                                try { room.amenidades = JSON.parse(room.amenidades); } catch (e) { room.amenidades = []; }
+                            }
+                            if (typeof room.imagenes === 'string') {
+                                try { room.imagenes = JSON.parse(room.imagenes); } catch (e) { room.imagenes = []; }
+                            }
+                        });
+                    }
+                } catch(roomErr) {
+                     console.warn('Error loading rooms, continuing with hotel data', roomErr);
+                     rooms = [];
                 }
+                
+                console.log('Hotel loaded:', hotel);
 
                 // Render everything
                 renderHotel();
@@ -1006,13 +869,16 @@
                 document.getElementById('main-content').classList.remove('hidden');
 
             } catch (error) {
-                console.error('Error loading hotel:', error);
+                console.error('CRITICAL Error loading hotel:', error);
+                
+                // Show detailed error in UI for debugging
+                const errorMsg = error.message || 'Error desconocido';
                 document.getElementById('loading-state').innerHTML = `
                     <div class="text-center py-20">
                         <i data-lucide="alert-circle" class="w-16 h-16 mx-auto text-red-500 mb-4"></i>
-                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Hotel no encontrado</h2>
-                        <p class="text-gray-600 mb-6">El hospedaje que buscas no existe o ha sido eliminado.</p>
-                        <a href="../index.php" class="inline-block bg-candelaria-purple text-white px-6 py-3 rounded-full font-bold">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Error al cargar hotel</h2>
+                        <p class="text-gray-600 mb-6">Detalles: ${errorMsg}</p>
+                        <a href="../../servicios/index.php" class="inline-block bg-candelaria-purple text-white px-6 py-3 rounded-full font-bold">
                             Volver a Servicios
                         </a>
                     </div>
@@ -1020,9 +886,11 @@
                 lucide.createIcons();
             }
         }
-
+        
         // Render hotel info
         function renderHotel() {
+            if(!hotel) return; // Safety check
+            
             document.title = `Candelaria 2025 | ${hotel.nombre}`;
             document.getElementById('breadcrumb-name').textContent = hotel.nombre;
             document.getElementById('hotel-name').textContent = hotel.nombre;
@@ -1031,12 +899,16 @@
             document.getElementById('hotel-capacity').textContent = hotel.capacidad || '50';
             document.getElementById('hotel-description').textContent = hotel.descripcion || 'Sin descripción disponible';
             document.getElementById('hotel-rating').textContent = parseFloat(hotel.calificacion || 4.5).toFixed(1);
-            document.getElementById('map-address').querySelector('span').textContent = hotel.ubicacion;
+            const mapAddr = document.getElementById('map-address');
+            if(mapAddr) mapAddr.querySelector('span').textContent = hotel.ubicacion;
 
             // Gallery
-            const rawImages = hotel.imagenes && hotel.imagenes.length > 0
-                ? hotel.imagenes
-                : ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'];
+            let rawImages = [];
+            if(hotel.imagenes && Array.isArray(hotel.imagenes) && hotel.imagenes.length > 0) {
+                 rawImages = hotel.imagenes;
+            } else {
+                 rawImages = ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'];
+            }
 
             const images = rawImages.map(img => fixImagePath(img));
 
@@ -1351,13 +1223,17 @@
         document.getElementById('reservation-form').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            if (!currentUser) {
+            if (!window.currentUser) {
                 showToast('Debes iniciar sesión para reservar', 'warning');
-                toggleAuthModal();
+                if(typeof window.openAuthModal === 'function') {
+                     window.openAuthModal();
+                } else {
+                     console.error("Auth modal function not found");
+                }
                 return;
             }
 
-            const token = localStorage.getItem('clientToken');
+            const token = localStorage.getItem('candelaria_user'); // Re-using user object as token or similar if backend allows
 
             const formData = {
                 habitacion_id: parseInt(document.getElementById('selected-room-id').value),
@@ -1685,6 +1561,11 @@
             });
         }
     </script>
+
+    <!-- Global Auth Modal (from auth-header.php) -->
+    <?= getAuthModalHTML() ?>
+    <!-- Global Auth JS (from auth-header.php) -->
+    <?= getAuthJS('../../') ?>
 </body>
 
 </html>

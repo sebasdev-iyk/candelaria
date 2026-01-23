@@ -153,11 +153,39 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
         .custom-dance-icon div {
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
+
+        /* Header Manta Premium Style - Lliclla Pattern */
+        .header-manta-premium {
+            height: 140px;
+            background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('../principal/headerfondo2.jpg');
+            background-size: auto 100%;
+            background-repeat: repeat-x;
+            background-position: center;
+            position: relative;
+            border-bottom: 3px solid #fbbf24;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header-manta-premium::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
+            pointer-events: none;
+        }
+
+        .header-manta-premium>div {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 
     <!-- Header (Consistent with Main Project) -->
-    <header
-        class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-50 h-20 md:h-22 flex items-center justify-between px-6 border-b border-purple-800">
+    <header class="header-manta-premium text-white shadow-lg sticky top-0 z-50">
+        <div class="h-20 md:h-22 flex items-center justify-between px-6">
         <div class="flex items-center gap-4 h-full">
             <!-- Back to Main removed -->
 

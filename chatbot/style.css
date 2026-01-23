@@ -1,0 +1,448 @@
+/**
+ * Candelaria Video Bot Styles - Responsive Edition
+ * Optimizado para móvil y desktop
+ */
+
+/* ============================================
+   WIDGET FLOTANTE (CONTENEDOR)
+   ============================================ */
+.candelaria-bot-widget {
+    position: fixed;
+    bottom: 0px;
+    left: 20px;
+    width: 380px;
+    height: 600px;
+    max-height: 85vh;
+
+    background: rgba(15, 23, 42, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+    display: none !important;
+    opacity: 0;
+    flex-direction: column;
+    overflow: hidden;
+
+    z-index: 2147483647;
+    transform-origin: bottom left;
+}
+
+.candelaria-bot-widget.active {
+    display: flex !important;
+    opacity: 1 !important;
+    animation: growFromCorner 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+@keyframes growFromCorner {
+    from {
+        opacity: 0;
+        transform: scale(0.1);
+        border-radius: 50%;
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+        border-radius: 20px 20px 0 0;
+    }
+}
+
+/* ============================================
+   TRIGGER (PERSONAJE FLOTANTE)
+   ============================================ */
+.candelaria-bot-trigger {
+    position: fixed;
+    bottom: 0px;
+    left: 20px;
+    width: 180px;
+    /* Más ancho */
+    height: 240px;
+    /* Más alto */
+
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 2147483640;
+    cursor: pointer;
+    overflow: visible;
+
+    pointer-events: auto !important;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.candelaria-bot-trigger:hover {
+    transform: scale(1.05);
+}
+
+.candelaria-bot-trigger canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ============================================
+   AVATAR GRANDE (OCULTO - NO TAPA CONVERSACIÓN)
+   ============================================ */
+.video-avatar-container {
+    /* Completamente oculto para no tapar mensajes */
+    display: none !important;
+}
+
+#video-canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.chat-header {
+    background: linear-gradient(to right, #4c1d95, #6d28d9);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bot-avatar {
+    width: 40px;
+    height: 40px;
+    background: rgba(251, 191, 36, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fbbf24;
+}
+
+.bot-info h1 {
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.status {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin: 0;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.close-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   MENSAJES
+   ============================================ */
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: radial-gradient(circle at bottom left, rgba(76, 29, 149, 0.1), transparent);
+}
+
+.message {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(76, 29, 149, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #fbbf24;
+}
+
+.message-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.message-bubble {
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: white;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.bot-message {
+    align-self: flex-start;
+}
+
+.bot-message .message-bubble {
+    background: rgba(76, 29, 149, 0.6);
+    border-top-left-radius: 2px;
+}
+
+.user-message {
+    flex-direction: row-reverse;
+    align-self: flex-end;
+}
+
+.user-message .message-avatar {
+    background: rgba(251, 191, 36, 0.3);
+    color: #4c1d95;
+}
+
+.user-message .message-content {
+    align-items: flex-end;
+}
+
+.user-message .message-bubble {
+    background: rgba(251, 191, 36, 0.2);
+    border-top-right-radius: 2px;
+}
+
+.message-time {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 0 4px;
+}
+
+/* ============================================
+   INPUT
+   ============================================ */
+.chat-input {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.input-wrapper {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+#messageInput {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    resize: none;
+    max-height: 100px;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+#messageInput:focus {
+    outline: none;
+    border-color: #fbbf24;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+#messageInput::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.send-btn {
+    background: #fbbf24;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #4c1d95;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+    flex-shrink: 0;
+}
+
+.send-btn:hover {
+    background: #fcd34d;
+    transform: scale(1.05);
+}
+
+.send-btn:active {
+    transform: scale(0.95);
+}
+
+/* ============================================
+   TYPING INDICATOR
+   ============================================ */
+.typing-indicator {
+    padding: 0 20px 10px;
+    display: none;
+    gap: 5px;
+}
+
+.typing-dots {
+    background: rgba(76, 29, 149, 0.6);
+    padding: 10px 15px;
+    border-radius: 12px;
+    border-top-left-radius: 2px;
+}
+
+.typing-dots span {
+    width: 6px;
+    height: 6px;
+    background: #fbbf24;
+    border-radius: 50%;
+    animation: typing 1s infinite;
+    margin-right: 3px;
+    display: inline-block;
+}
+
+.typing-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translateY(-5px);
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL
+   ============================================ */
+@media (max-width: 768px) {
+    .candelaria-bot-widget {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .candelaria-bot-trigger {
+        left: 10px;
+        bottom: 10px;
+        width: 140px;
+        height: 180px;
+    }
+
+    .video-avatar-container {
+        display: none !important;
+        /* Ocultar avatar en móvil para dar más espacio */
+    }
+
+    .chat-messages {
+        padding: 15px;
+        padding-right: 15px;
+        /* Sin espacio extra en móvil */
+    }
+
+    .message-bubble {
+        font-size: 0.9rem;
+        padding: 10px 14px;
+    }
+
+    .chat-input {
+        padding: 12px;
+    }
+
+    #messageInput {
+        font-size: 16px;
+        /* Evita zoom en iOS */
+    }
+}
+
+@media (max-width: 480px) {
+    .candelaria-bot-trigger {
+        width: 100px;
+        height: 140px;
+    }
+
+    .bot-info h1 {
+        font-size: 1rem;
+    }
+
+    .status {
+        font-size: 0.75rem;
+    }
+}
+
+/* ============================================
+   SCROLLBAR PERSONALIZADO
+   ============================================ */
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(251, 191, 36, 0.3);
+    border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(251, 191, 36, 0.5);
+}

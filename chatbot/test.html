@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4c1d95;
+        }
+
+        h2 {
+            color: #6d28d9;
+            margin-top: 0;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        button {
+            background: #4c1d95;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #6d28d9;
+        }
+
+        pre {
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧪 Test del Chatbot</h1>
+
+    <div class="test-section">
+        <h2>1. Verificación de Archivos</h2>
+        <div id="fileCheck">Verificando...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Test de API</h2>
+        <button onclick="testAPI()">Probar API</button>
+        <div id="apiResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Test de Video</h2>
+        <div id="videoCheck">Verificando...</div>
+        <div id="videoPreview" style="margin-top: 10px;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Abrir Chatbot</h2>
+        <button onclick="window.open('index.html', '_blank')">Abrir Chatbot</button>
+        <div class="info status">
+            El chatbot se abrirá en una nueva pestaña
+        </div>
+    </div>
+
+    <script>
+        // Test 1: Verificar archivos
+        async function checkFiles() {
+            const files = [
+                'index.html',
+                'style.css',
+                'script.js',
+                'api/chat.php',
+                'config/config.php',
+                'assets/chatbot-avatar.webm'
+            ];
+
+            let html = '<ul>';
+            for (const file of files) {
+                try {
+                    const response = await fetch(file, { method: 'HEAD' });
+                    if (response.ok) {
+                        html += `<li class="success status">✅ ${file}</li>`;
+                    } else {
+                        html += `<li class="error status">❌ ${file} (${response.status})</li>`;
+                    }
+                } catch (error) {
+                    html += `<li class="error status">❌ ${file} (Error: ${error.message})</li>`;
+                }
+            }
+            html += '</ul>';
+            document.getElementById('fileCheck').innerHTML = html;
+        }
+
+        // Test 2: Probar API
+        async function testAPI() {
+            const resultDiv = document.getElementById('apiResult');
+            resultDiv.innerHTML = '<div class="info status">Probando API...</div>';
+
+            try {
+                const response = await fetch('api/chat.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: 'Hola, esto es una prueba' })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success status">✅ API funcionando correctamente</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error status">❌ Error en API: ${data.error}</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error status">❌ Error de conexión: ${error.message}</div>
+                `;
+            }
+        }
+
+        // Test 3: Verificar video
+        async function checkVideo() {
+            const videoCheck = document.getElementById('videoCheck');
+            const videoPreview = document.getElementById('videoPreview');
+
+            try {
+                const response = await fetch('assets/chatbot-avatar.webm', { method: 'HEAD' });
+                if (response.ok) {
+                    const size = response.headers.get('content-length');
+                    const sizeMB = (size / 1024 / 1024).toFixed(2);
+
+                    videoCheck.innerHTML = `
+                        <div class="success status">
+                            ✅ Video encontrado (${sizeMB} MB)
+                        </div>
+                    `;
+
+                    videoPreview.innerHTML = `
+                        <p><strong>Vista previa del video:</strong></p>
+                        <div style="background: linear-gradient(135deg, #1e1b4b, #0f172a); padding: 20px; border-radius: 8px;">
+                            <video autoplay loop muted playsinline style="width: 200px; height: 250px; object-fit: contain; mix-blend-mode: multiply; filter: contrast(1.3) brightness(1.2) saturate(1.1);">
+                                <source src="assets/chatbot-avatar.webm" type="video/webm">
+                            </video>
+                        </div>
+                        <p class="info status">
+                            Si ves fondo blanco, el CSS lo hará transparente en el chatbot
+                        </p>
+                    `;
+                } else {
+                    videoCheck.innerHTML = '<div class="error status">❌ Video no encontrado</div>';
+                }
+            } catch (error) {
+                videoCheck.innerHTML = `<div class="error status">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        // Ejecutar tests al cargar
+        window.onload = () => {
+            checkFiles();
+            checkVideo();
+        };
+    </script>
+</body>
+
+</html>

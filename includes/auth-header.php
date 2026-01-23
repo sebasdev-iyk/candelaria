@@ -1,63 +1,130 @@
 <?php
 /**
  * Global Auth Header Component
- * Include this in all pages that need user authentication UI
- * 
- * Usage: 
- * 1. Include this file in your PHP page
- * 2. Call renderAuthHeader() where you want the button
- * 3. Include the modal HTML before </body>
- * 4. Include the JS at the end
+ * Theme: Light (Clean/Modern)
  */
+require_once __DIR__ . '/auth_config.php';
 
 function getAuthModalHTML()
 {
+    // Client IDs for JS
+    $googleClientId = GOOGLE_CLIENT_ID;
+    $fbAppId = FB_APP_ID;
+
     return <<<HTML
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="fixed inset-0 z-50 hidden">
-        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 backdrop-blur-sm" onclick="closeAuthModal()"></div>
+    <!-- Auth Modal (Light Theme) -->
+    <div id="auth-modal" class="fixed inset-0 z-[100] hidden transition-opacity duration-300" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div id="auth-backdrop" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity opacity-0" onclick="closeAuthModal()"></div>
+
+        <!-- Modal Panel -->
         <div class="fixed inset-0 z-10 overflow-y-auto">
-            <div class="flex min-h-full items-center justify-center p-4">
-                <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
-                    <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-                        <i data-lucide="x" class="w-6 h-6"></i>
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <div id="auth-panel" class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all opacity-0 scale-95 sm:my-8 sm:w-full sm:max-w-[480px] border border-gray-100">
+                    
+                    <!-- Close Button -->
+                    <button type="button" onclick="closeAuthModal()" class="absolute top-4 right-4 p-2 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors z-20">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
                     </button>
-                    
-                    <!-- Login Tab -->
-                    <div id="auth-login-tab">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Iniciar Sesión</h2>
-                        <form id="auth-login-form" class="space-y-4">
-                            <input type="email" id="auth-login-email" placeholder="Correo electrónico" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
-                            <input type="password" id="auth-login-password" placeholder="Contraseña" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
-                            <button type="submit" class="w-full bg-purple-700 text-white py-3 rounded-xl font-bold hover:bg-purple-800">
-                                Iniciar Sesión
+
+                    <div class="px-8 py-10">
+                        <!-- Logo / Header -->
+                        <div class="text-center mb-8">
+                            <h2 class="text-3xl font-black font-heading text-gray-900 tracking-tight">Iniciar Sesión</h2>
+                            <p class="mt-2 text-sm text-gray-500 font-medium">Accede a contenido exclusivo de Candelaria 2026</p>
+                        </div>
+
+                        <!-- Social Login Buttons -->
+                        <div class="space-y-3">
+                            <!-- Google Button -->
+                            <button onclick="handleGoogleLogin()" class="relative flex w-full items-center justify-center gap-3 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-bold text-gray-700 shadow-sm hover:bg-gray-50 hover:shadow-md transition-all duration-200">
+                                <svg class="h-5 w-5" viewBox="0 0 24 24">
+                                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                                </svg>
+                                <span>Continuar con Google</span>
                             </button>
-                        </form>
-                        <p class="text-center mt-4 text-sm text-gray-600">
-                            ¿No tienes cuenta? <button onclick="switchAuthTab('register')" class="text-purple-700 font-bold">Registrarse</button>
-                        </p>
-                    </div>
-                    
-                    <!-- Register Tab -->
-                    <div id="auth-register-tab" class="hidden">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Crear Cuenta</h2>
-                        <form id="auth-register-form" class="space-y-4">
-                            <input type="text" id="auth-reg-nombre" placeholder="Nombre completo" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
-                            <input type="email" id="auth-reg-email" placeholder="Correo electrónico" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
-                            <input type="tel" id="auth-reg-telefono" placeholder="Teléfono" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
-                            <input type="password" id="auth-reg-password" placeholder="Contraseña" required 
-                                class="w-full p-3 rounded-lg border border-gray-300 text-gray-900 focus:ring-purple-500 focus:border-purple-500">
-                            <button type="submit" class="w-full bg-purple-700 text-white py-3 rounded-xl font-bold hover:bg-purple-800">
-                                Crear Cuenta
+
+                            <!-- Facebook Button -->
+                            <button onclick="handleFacebookLogin()" class="relative flex w-full items-center justify-center gap-3 rounded-xl bg-[#1877F2] px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-[#166fe5] hover:shadow-md transition-all duration-200">
+                                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                                <span>Continuar con Facebook</span>
                             </button>
-                        </form>
-                        <p class="text-center mt-4 text-sm text-gray-600">
-                            ¿Ya tienes cuenta? <button onclick="switchAuthTab('login')" class="text-purple-700 font-bold">Iniciar Sesión</button>
+                            
+                            <!-- Microsoft/Apple (Disabled) -->
+                             <div class="flex gap-3 text-xs text-gray-400 justify-center">
+                                Otros métodos próximamente: Apple • Microsoft
+                             </div>
+                        </div>
+
+                        <!-- Divider -->
+                        <div class="relative my-8">
+                            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                                <div class="w-full border-t border-gray-200"></div>
+                            </div>
+                            <div class="relative flex justify-center">
+                                <span class="bg-white px-2 text-xs font-semibold uppercase text-gray-400 tracking-wider">O continúa con email</span>
+                            </div>
+                        </div>
+
+                        <!-- Email Login/Register Toggle -->
+                        <div id="email-auth-section">
+                            <!-- Login Form (Default) -->
+                            <div id="email-login-form-container">
+                                <form id="email-login-form" class="space-y-4">
+                                    <div>
+                                        <label for="email-login-input" class="sr-only">Correo electrónico</label>
+                                        <input type="email" id="email-login-input" required class="block w-full rounded-xl border-gray-300 bg-gray-50 p-3 text-gray-900 placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500 sm:text-sm" placeholder="Correo electrónico">
+                                    </div>
+                                    <div>
+                                        <label for="email-login-password" class="sr-only">Contraseña</label>
+                                        <input type="password" id="email-login-password" required class="block w-full rounded-xl border-gray-300 bg-gray-50 p-3 text-gray-900 placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500 sm:text-sm" placeholder="Contraseña">
+                                    </div>
+                                    <button type="submit" class="w-full rounded-xl bg-candelaria-purple py-3 text-sm font-bold text-white hover:bg-purple-800 transition-colors">
+                                        Iniciar Sesión
+                                    </button>
+                                    <div class="text-center">
+                                        <a href="forgot_password.php" class="text-xs text-purple-600 hover:text-purple-700 font-medium">¿Olvidaste tu contraseña?</a>
+                                    </div>
+                                    <p class="text-center text-xs text-gray-500">
+                                        ¿No tienes cuenta? <button type="button" onclick="toggleEmailAuth('register')" class="font-bold text-purple-600 hover:text-purple-700">Regístrate aquí</button>
+                                    </p>
+                                </form>
+                            </div>
+
+                            <!-- Register Form (Hidden by default) -->
+                            <div id="email-register-form-container" class="hidden">
+                                <form id="email-register-form" class="space-y-4">
+                                    <div>
+                                        <label for="email-register-name" class="sr-only">Nombre completo</label>
+                                        <input type="text" id="email-register-name" required class="block w-full rounded-xl border-gray-300 bg-gray-50 p-3 text-gray-900 placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500 sm:text-sm" placeholder="Nombre completo">
+                                    </div>
+                                    <div>
+                                        <label for="email-register-input" class="sr-only">Correo electrónico</label>
+                                        <input type="email" id="email-register-input" required class="block w-full rounded-xl border-gray-300 bg-gray-50 p-3 text-gray-900 placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500 sm:text-sm" placeholder="Correo electrónico">
+                                    </div>
+                                    <div>
+                                        <label for="email-register-password" class="sr-only">Contraseña</label>
+                                        <input type="password" id="email-register-password" required class="block w-full rounded-xl border-gray-300 bg-gray-50 p-3 text-gray-900 placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500 sm:text-sm" placeholder="Contraseña (mín. 6 caracteres)">
+                                    </div>
+                                    <button type="submit" class="w-full rounded-xl bg-candelaria-purple py-3 text-sm font-bold text-white hover:bg-purple-800 transition-colors">
+                                        Crear Cuenta
+                                    </button>
+                                    <p class="text-center text-xs text-gray-500">
+                                        ¿Ya tienes cuenta? <button type="button" onclick="toggleEmailAuth('login')" class="font-bold text-purple-600 hover:text-purple-700">Inicia sesión</button>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+
+                        <p class="mt-8 text-center text-xs text-gray-500">
+                            Al continuar, aceptas nuestros <a href="#" class="font-semibold text-purple-600 hover:text-purple-500">Términos de Servicio</a> y <a href="#" class="font-semibold text-purple-600 hover:text-purple-500">Política de Privacidad</a>.
                         </p>
                     </div>
                 </div>
@@ -65,217 +132,521 @@ function getAuthModalHTML()
         </div>
     </div>
     
-    <!-- User Dropdown (when logged in) -->
-    <div id="user-dropdown" class="fixed top-16 right-4 bg-white rounded-xl shadow-xl border border-gray-200 w-64 z-50 hidden">
-        <div class="p-4 border-b border-gray-100">
-            <p class="font-bold text-gray-900" id="dropdown-user-name"></p>
-            <p class="text-sm text-gray-500" id="dropdown-user-email"></p>
-        </div>
-        <div class="p-2">
-            <a href="#" onclick="navigateToProfile(); return false;" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-50 text-gray-700">
-                <i data-lucide="user" class="w-5 h-5"></i>
-                Mi Perfil
-            </a>
-            <button onclick="authLogout()" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-red-50 text-red-600">
-                <i data-lucide="log-out" class="w-5 h-5"></i>
-                Cerrar Sesión
-            </button>
-        </div>
+    <!-- Simple Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-[200] flex flex-col gap-2"></div>
+
+    <!-- SDKs Loading -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+         data-client_id="{$googleClientId}"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-callback="handleGoogleCredentialResponse"
+         data-auto_select="false">
     </div>
-HTML;
+
+    <!-- Facebook SDK -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '{$fbAppId}',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v18.0'
+        });
+        
+        FB.AppEvents.logPageView();   
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/es_LA/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+    HTML;
 }
 
 function getAuthButtonHTML()
 {
+    // Check if user is logged in (via JS check mostly, but structure is here)
     return <<<HTML
-    <button id="auth-user-btn" onclick="toggleAuthDropdown()" class="btn-profile" style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #475569, #1e293b); display: flex; align-items: center; justify-content: center; color: #fbbf24; font-size: 1.2rem; border: 2px solid rgba(251, 191, 36, 0.3); transition: all 0.3s ease; cursor: pointer;" title="Mi Cuenta">
-        <i data-lucide="user" class="w-5 h-5"></i>
-    </button>
-HTML;
+    <div id="auth-header-container" class="relative">
+        <!-- Logged Out State Button -->
+        <button id="auth-btn-login" onclick="openAuthModal()" class="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-gray-900 font-bold border border-gray-200 hover:bg-gray-50 hover:shadow-md hover:border-purple-200 transition-all duration-300">
+            <span class="bg-gray-100 p-1 rounded-full"><i data-lucide="user" class="w-4 h-4 text-gray-600"></i></span>
+            <span>Ingresar</span>
+        </button>
+
+        <!-- Mobile Icon (Only Icon) -->
+        <button id="auth-btn-login-mobile" onclick="openAuthModal()" class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-900 border border-gray-200 shadow-sm">
+            <i data-lucide="user" class="w-5 h-5"></i>
+        </button>
+
+        <!-- Logged In State (Hidden by default) -->
+        <div id="auth-user-profile" class="hidden relative group">
+            <button class="flex items-center gap-2 focus:outline-none">
+                <img id="user-avatar" src="" alt="Profile" class="h-10 w-10 rounded-full border-2 border-white shadow-sm object-cover ring-2 ring-transparent group-hover:ring-purple-500 transition-all">
+                <div class="hidden md:block text-left">
+                    <p id="user-name" class="text-sm font-bold text-white leading-tight">Usuario</p>
+                    <p class="text-[10px] text-purple-200 uppercase font-bold tracking-wider">Miembro</p>
+                </div>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50 border border-gray-100">
+                <div class="px-4 py-3 border-b border-gray-100 bg-gray-50/50">
+                    <p class="text-xs text-gray-500 uppercase tracking-wider font-bold">Conectado como</p>
+                    <p id="dropdown-email" class="text-sm font-medium text-gray-900 truncate">usuario@email.com</p>
+                </div>
+                <a href="/candelaria/perfil.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors">
+                    <i data-lucide="user" class="w-4 h-4 inline-block mr-2"></i> Mi Perfil
+                </a>
+                <hr class="my-1 border-gray-100">
+                <button onclick="handleLogout()" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors">
+                    <i data-lucide="log-out" class="w-4 h-4 inline-block mr-2"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </div>
+    HTML;
 }
 
-function getAuthJS($apiBasePath = '')
+function getAuthJS()
 {
+    // Fix: Add showToast function and simple close logic
     return <<<SCRIPT
     <script>
-    // Auth State
-    let currentUser = null;
-    const API_BASE = '{$apiBasePath}';
-    
-    // Initialize auth on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        initAuth();
-    });
+    // --- Auth State Management ---
     
     function initAuth() {
-        const token = localStorage.getItem('clientToken');
-        const userData = localStorage.getItem('clientUser');
-        
-        if (token && userData) {
+        const user = localStorage.getItem('candelaria_user');
+        if (user) {
             try {
-                currentUser = JSON.parse(userData);
-                updateAuthUI();
+                const userData = JSON.parse(user);
+                window.currentUser = userData; // Expose globally
+                showLoggedInState(userData);
             } catch (e) {
-                authLogout();
+                console.error("Auth Error", e);
+                localStorage.removeItem('candelaria_user');
+                window.currentUser = null;
+                showLoggedOutState();
             }
-        }
-        
-        setupAuthForms();
-        
-        // Always create icons on init (for the user button in header)
-        if (typeof lucide !== 'undefined') lucide.createIcons();
-    }
-    
-    function updateAuthUI() {
-        const btn = document.getElementById('auth-user-btn');
-        const dropdownName = document.getElementById('dropdown-user-name');
-        const dropdownEmail = document.getElementById('dropdown-user-email');
-        
-        if (currentUser) {
-            // Logged in: golden border
-            if (btn) {
-                btn.style.borderColor = '#fbbf24';
-                btn.style.boxShadow = '0 0 15px rgba(251, 191, 36, 0.3)';
-            }
-            if (dropdownName) dropdownName.textContent = currentUser.nombre;
-            if (dropdownEmail) dropdownEmail.textContent = currentUser.email;
         } else {
-            // Not logged in: subtle border
-            if (btn) {
-                btn.style.borderColor = 'rgba(251, 191, 36, 0.3)';
-                btn.style.boxShadow = 'none';
+            window.currentUser = null;
+            showLoggedOutState();
+        }
+        
+        // Setup email auth forms
+        setupEmailAuthForms();
+        
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function showLoggedInState(user) {
+        window.currentUser = user; // Ensure global sync
+        console.log('Showing logged in state for:', user);
+        
+        // Safe check for elements before accessing classList
+        const btnLogin = document.getElementById('auth-btn-login');
+        const btnLoginMobile = document.getElementById('auth-btn-login-mobile');
+        const profileDiv = document.getElementById('auth-user-profile');
+
+        if(btnLogin) {
+            btnLogin.classList.add('hidden');
+            btnLogin.style.display = 'none'; // Force hide
+        }
+        if(btnLoginMobile) {
+            btnLoginMobile.classList.add('hidden');
+            btnLoginMobile.style.display = 'none'; // Force hide
+        }
+        
+        if(profileDiv) {
+            profileDiv.classList.remove('hidden');
+            profileDiv.style.display = 'block'; // Force show
+            
+            const avatar = document.getElementById('user-avatar');
+            const userName = document.getElementById('user-name');
+            const userEmail = document.getElementById('dropdown-email');
+            
+            if(avatar) {
+                avatar.src = user.picture || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name);
+            }
+            if(userName) {
+                userName.innerText = user.name.split(' ')[0]; // First name only
+            }
+            if(userEmail) {
+                userEmail.innerText = user.email || 'Email oculto';
             }
         }
         
-        if (typeof lucide !== 'undefined') lucide.createIcons();
+        // Trigger event for other scripts
+        window.dispatchEvent(new CustomEvent('auth-changed', { detail: user }));
+        
+        console.log('UI state updated successfully');
     }
-    
-    function toggleAuthDropdown() {
-        if (currentUser) {
-            const dropdown = document.getElementById('user-dropdown');
-            dropdown.classList.toggle('hidden');
-        } else {
-            openAuthModal();
+
+    function showLoggedOutState() {
+        window.currentUser = null; // Ensure global sync
+        const btnLogin = document.getElementById('auth-btn-login');
+        const btnLoginMobile = document.getElementById('auth-btn-login-mobile');
+        const profileDiv = document.getElementById('auth-user-profile');
+
+        if(btnLogin) btnLogin.classList.remove('hidden');
+        if(btnLoginMobile) btnLoginMobile.classList.remove('hidden'); 
+        if(profileDiv) profileDiv.classList.add('hidden');
+        
+        window.dispatchEvent(new CustomEvent('auth-changed', { detail: null }));
+    }
+
+    // --- Modal Control (ID based for robustness) ---
+    window.openAuthModal = function() {
+        const modal = document.getElementById('auth-modal');
+        const backdrop = document.getElementById('auth-backdrop');
+        const panel = document.getElementById('auth-panel');
+        
+        modal.classList.remove('hidden');
+        
+        // Small delay to allow display:block to apply before transition
+        setTimeout(() => {
+            if(backdrop) {
+                backdrop.classList.remove('opacity-0');
+            }
+            if(panel) {
+                panel.classList.remove('opacity-0', 'scale-95');
+                panel.classList.add('opacity-100', 'scale-100');
+            }
+        }, 10);
+    }
+
+    window.closeAuthModal = function() {
+        const modal = document.getElementById('auth-modal');
+        const backdrop = document.getElementById('auth-backdrop');
+        const panel = document.getElementById('auth-panel');
+        
+        if(backdrop) backdrop.classList.add('opacity-0');
+        if(panel) {
+            panel.classList.remove('opacity-100', 'scale-100');
+            panel.classList.add('opacity-0', 'scale-95');
+        }
+        
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+
+    // --- Logout ---
+    window.handleLogout = function() {
+        if(confirm('¿Estás seguro de cerrar sesión?')) {
+            localStorage.removeItem('candelaria_user');
+            
+            // Also logout from Google if possible
+            if (typeof google !== 'undefined' && google.accounts) {
+                google.accounts.id.disableAutoSelect();
+            }
+            // Logout Facebook
+            if (typeof FB !== 'undefined') {
+                FB.logout();
+            }
+            
+            showToast('Has cerrado sesión correctamente', 'info');
+            setTimeout(() => location.reload(), 1000);
         }
     }
-    
-    function openAuthModal() {
-        document.getElementById('auth-modal').classList.remove('hidden');
-        switchAuthTab('login');
-        if (typeof lucide !== 'undefined') lucide.createIcons();
-    }
-    
-    function closeAuthModal() {
-        document.getElementById('auth-modal').classList.add('hidden');
-    }
-    
-    function switchAuthTab(tab) {
-        document.getElementById('auth-login-tab').classList.toggle('hidden', tab !== 'login');
-        document.getElementById('auth-register-tab').classList.toggle('hidden', tab !== 'register');
-    }
-    
-    function setupAuthForms() {
-        const loginForm = document.getElementById('auth-login-form');
-        const registerForm = document.getElementById('auth-register-form');
+
+    // --- Google Login Handler ---
+    window.handleGoogleLogin = function() {
+        console.log('Google login button clicked');
         
+        // Check if Google SDK is loaded
+        if (typeof google === 'undefined' || !google.accounts) {
+            showToast('Cargando Google... Espera un momento y vuelve a intentar.', 'warning');
+            
+            // Try to reload the SDK
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+            return;
+        }
+
+        try {
+            // Initialize Google Sign-In if not already done
+            google.accounts.id.initialize({
+                client_id: '<?= GOOGLE_CLIENT_ID ?>',
+                callback: handleGoogleCredentialResponse,
+                auto_select: false
+            });
+
+            // Trigger the One Tap prompt
+            google.accounts.id.prompt((notification) => {
+                if (notification.isNotDisplayed()) {
+                    console.log('Google prompt not displayed:', notification.getNotDisplayedReason());
+                    
+                    // If One Tap doesn't work, try rendering a button
+                    const googleBtnContainer = document.createElement('div');
+                    googleBtnContainer.id = 'google-signin-btn-temp';
+                    googleBtnContainer.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);';
+                    
+                    const closeBtn = document.createElement('button');
+                    closeBtn.textContent = '✕';
+                    closeBtn.style.cssText = 'position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;';
+                    closeBtn.onclick = () => document.body.removeChild(googleBtnContainer);
+                    
+                    googleBtnContainer.appendChild(closeBtn);
+                    document.body.appendChild(googleBtnContainer);
+                    
+                    google.accounts.id.renderButton(googleBtnContainer, {
+                        theme: 'outline',
+                        size: 'large',
+                        text: 'continue_with',
+                        shape: 'rectangular'
+                    });
+                }
+            });
+        } catch (e) {
+            console.error('Google login error:', e);
+            showToast('Error al iniciar Google. Revisa tu conexión.', 'error');
+        }
+    }
+
+    // Callback from Google
+    window.handleGoogleCredentialResponse = function(response) {
+        // Decode JWT
+        const responsePayload = parseJwt(response.credential);
+        
+        // Save User
+        const user = {
+            name: responsePayload.name,
+            email: responsePayload.email,
+            picture: responsePayload.picture,
+            provider: 'google'
+        };
+        
+        loginUser(user);
+    }
+
+    function parseJwt (token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
+
+    // --- Facebook Login Handler ---
+    window.handleFacebookLogin = function() {
+        if (typeof FB === 'undefined') {
+            showToast('Facebook SDK no cargado aún.', 'warning');
+            return;
+        }
+        FB.login(function(response) {
+            if (response.authResponse) {
+                FB.api('/me', {fields: 'name,email,picture'}, function(response) {
+                    const user = {
+                        name: response.name,
+                        email: response.email || 'No disponible', 
+                        picture: response.picture.data.url,
+                        provider: 'facebook'
+                    };
+                    loginUser(user);
+                });
+            } else {
+                showToast('Inicio de sesión cancelado.', 'info');
+            }
+        }, {scope: 'public_profile,email'});
+    }
+
+    // --- Email Auth Toggle ---
+    window.toggleEmailAuth = function(mode) {
+        const loginContainer = document.getElementById('email-login-form-container');
+        const registerContainer = document.getElementById('email-register-form-container');
+        
+        if (mode === 'register') {
+            loginContainer.classList.add('hidden');
+            registerContainer.classList.remove('hidden');
+        } else {
+            registerContainer.classList.add('hidden');
+            loginContainer.classList.remove('hidden');
+        }
+    }
+
+    // --- Email Login Handler ---
+    function setupEmailAuthForms() {
+        const loginForm = document.getElementById('email-login-form');
+        const registerForm = document.getElementById('email-register-form');
+
         if (loginForm) {
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const email = document.getElementById('auth-login-email').value;
-                const password = document.getElementById('auth-login-password').value;
                 
+                const email = document.getElementById('email-login-input').value.trim();
+                const password = document.getElementById('email-login-password').value;
+
+                if (!email || !password) {
+                    showToast('Por favor completa todos los campos', 'warning');
+                    return;
+                }
+
                 try {
-                    const res = await fetch(API_BASE + 'api/clientes.php?action=login', {
+                    const apiBase = window.location.origin + '/candelaria/api/';
+                    const response = await fetch(apiBase + 'auth_email.php', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, password })
+                        body: JSON.stringify({ action: 'login', email, password })
                     });
-                    const data = await res.json();
-                    
-                    if (res.ok && data.token) {
-                        localStorage.setItem('clientToken', data.token);
-                        localStorage.setItem('clientUser', JSON.stringify(data.cliente));
-                        currentUser = data.cliente;
-                        updateAuthUI();
-                        closeAuthModal();
-                        if (typeof showToast === 'function') showToast('¡Bienvenido!', 'success');
-                        location.reload();
+
+                    const data = await response.json();
+
+                    if (data.success && data.user) {
+                        loginUser(data.user);
                     } else {
-                        alert(data.message || 'Error al iniciar sesión');
+                        showToast(data.message || 'Error al iniciar sesión', 'error');
                     }
-                } catch (err) {
-                    alert('Error de conexión');
+                } catch (error) {
+                    console.error('Login error:', error);
+                    showToast('Error de conexión. Intenta de nuevo.', 'error');
                 }
             });
         }
-        
+
         if (registerForm) {
             registerForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const data = {
-                    nombre: document.getElementById('auth-reg-nombre').value,
-                    email: document.getElementById('auth-reg-email').value,
-                    telefono: document.getElementById('auth-reg-telefono').value,
-                    password: document.getElementById('auth-reg-password').value
-                };
                 
+                const name = document.getElementById('email-register-name').value.trim();
+                const email = document.getElementById('email-register-input').value.trim();
+                const password = document.getElementById('email-register-password').value;
+
+                if (!name || !email || !password) {
+                    showToast('Por favor completa todos los campos', 'warning');
+                    return;
+                }
+
+                if (password.length < 6) {
+                    showToast('La contraseña debe tener al menos 6 caracteres', 'warning');
+                    return;
+                }
+
                 try {
-                    const res = await fetch(API_BASE + 'api/clientes.php?action=register', {
+                    const apiBase = window.location.origin + '/candelaria/api/';
+                    const response = await fetch(apiBase + 'auth_email.php', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
+                        body: JSON.stringify({ action: 'register', name, email, password })
                     });
-                    const result = await res.json();
-                    
-                    if (res.ok && result.token) {
-                        localStorage.setItem('clientToken', result.token);
-                        localStorage.setItem('clientUser', JSON.stringify(result.cliente));
-                        currentUser = result.cliente;
-                        updateAuthUI();
-                        closeAuthModal();
-                        if (typeof showToast === 'function') showToast('¡Cuenta creada!', 'success');
-                        location.reload();
+
+                    const data = await response.json();
+
+                    if (data.success && data.user) {
+                        loginUser(data.user);
                     } else {
-                        alert(result.message || 'Error al crear cuenta');
+                        showToast(data.message || 'Error al crear cuenta', 'error');
                     }
-                } catch (err) {
-                    alert('Error de conexión');
+                } catch (error) {
+                    console.error('Register error:', error);
+                    showToast('Error de conexión. Intenta de nuevo.', 'error');
                 }
             });
         }
     }
-    
-    function authLogout() {
-        localStorage.removeItem('clientToken');
-        localStorage.removeItem('clientUser');
-        currentUser = null;
-        updateAuthUI();
-        document.getElementById('user-dropdown').classList.add('hidden');
-        location.reload();
+
+    // --- Global Login Finalizer ---
+    function loginUser(user) {
+        console.log('Logging in user:', user);
+        
+        // 1. Save to Local Storage
+        localStorage.setItem('candelaria_user', JSON.stringify(user));
+        
+        // 2. UI Updates - Force immediate update
+        closeAuthModal();
+        
+        // Force UI update with a small delay to ensure DOM is ready
+        setTimeout(() => {
+            showLoggedInState(user);
+            
+            // Re-initialize icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }, 100);
+        
+        // 3. Feedback
+        showToast('¡Bienvenido ' + user.name.split(' ')[0] + '! Sesión iniciada.', 'success');
+        
+        // 4. Backend Sync
+        const apiBase = window.location.origin + '/candelaria/api/';
+        fetch(apiBase + 'auth.php', { 
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user) 
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Backend Sync:', data);
+            if (!data.success) {
+                console.error('Backend sync failed:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error syncing session:', error);
+            // Don't show error to user, login still works with localStorage
+        });
     }
-    
-    // Navigate to profile page dynamically
-    function navigateToProfile() {
-        const path = window.location.pathname;
-        // Find the base path to /candelaria/
-        const candelariaIndex = path.indexOf('/candelaria/');
-        if (candelariaIndex !== -1) {
-            const basePath = path.substring(0, candelariaIndex + '/candelaria/'.length);
-            window.location.href = basePath + 'perfil.php';
-        } else {
-            // Fallback: try relative path
-            window.location.href = 'perfil.php';
+
+    // --- Toast Notification System ---
+    window.showToast = function(message, type = 'info') {
+        const container = document.getElementById('toast-container');
+        if (!container) return; // Should exist in HTML above
+
+        // Colors
+        let bgClass = 'bg-gray-800';
+        let icon = '<i data-lucide="info" class="w-5 h-5 text-white"></i>';
+
+        if (type === 'success') {
+            bgClass = 'bg-green-600';
+            icon = '<i data-lucide="check-circle" class="w-5 h-5 text-white"></i>';
+        } else if (type === 'error') {
+            bgClass = 'bg-red-600';
+            icon = '<i data-lucide="alert-circle" class="w-5 h-5 text-white"></i>';
+        } else if (type === 'warning') {
+            bgClass = 'bg-yellow-600';
+            icon = '<i data-lucide="alert-triangle" class="w-5 h-5 text-white"></i>';
         }
+
+        const toast = document.createElement('div');
+        toast.className = `flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl text-white transform transition-all duration-300 translate-y-10 opacity-0 \${bgClass}`;
+        toast.innerHTML = `
+            \${icon}
+            <span class="font-bold text-sm">\${message}</span>
+        `;
+
+        container.appendChild(toast);
+
+        // Initialize icons for new element
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+        // Animate In
+        requestAnimationFrame(() => {
+            toast.classList.remove('translate-y-10', 'opacity-0');
+        });
+
+        // Remove after 3s
+        setTimeout(() => {
+            toast.classList.add('transform', 'translate-y-10', 'opacity-0');
+            setTimeout(() => {
+                if(container.contains(toast)) container.removeChild(toast);
+            }, 300);
+        }, 3000);
     }
-    
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-        const dropdown = document.getElementById('user-dropdown');
-        const btn = document.getElementById('auth-user-btn');
-        if (dropdown && !dropdown.contains(e.target) && !btn.contains(e.target)) {
-            dropdown.classList.add('hidden');
-        }
-    });
+
+    // Auto-init
+    document.addEventListener('DOMContentLoaded', initAuth);
+
     </script>
 SCRIPT;
 }
+?>

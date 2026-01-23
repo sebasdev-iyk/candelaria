@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil - Candelaria</title>
+    <title>Mi Perfil | Candelaria 2026</title>
 
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap"
-        rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -21,258 +24,327 @@
                             purple: '#4c1d95',
                             gold: '#fbbf24',
                             lake: '#0ea5e9',
-                            light: '#f5f3ff'
+                            light: '#f5f3ff',
+                            primary: '#ec1325',
+                            'background-light': '#f8f6f6',
+                            'surface-light': '#ffffff'
                         }
                     },
                     fontFamily: {
                         sans: ['Open Sans', 'sans-serif'],
                         heading: ['Montserrat', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
+
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
         }
 
-        h1,
-        h2,
-        h3 {
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
         }
+
+        /* Header Manta Premium Style - Lliclla Pattern */
+        .header-manta-premium {
+            height: 140px;
+            background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('principal/headerfondo2.jpg');
+            background-size: auto 100%;
+            background-repeat: repeat-x;
+            background-position: center;
+            position: relative;
+            border-bottom: 3px solid #fbbf24;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header-manta-premium::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
+            pointer-events: none;
+        }
+
+        .header-manta-premium>div {
+            position: relative;
+            z-index: 2;
+        }
     </style>
+
+    <!-- Spark Effect CSS -->
+    <link rel="stylesheet" href="assets/css/sparks.css">
 </head>
 
-<body class="bg-gray-50 min-h-screen">
-    <!-- Header -->
-    <header class="bg-gradient-to-r from-candelaria-purple to-purple-800 text-white shadow-lg">
-        <div class="max-w-5xl mx-auto px-4 py-6">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h1 class="text-2xl font-bold">Mi Perfil</h1>
-                    <p class="text-purple-200 text-sm">Gestiona tu cuenta y reservaciones</p>
-                </div>
-                <a href="index.php"
-                    class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full font-bold flex items-center gap-2">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                    Inicio
+<body class="bg-gray-50">
+    <?php include 'includes/auth-header.php'; ?>
+
+    <!-- Header Section -->
+    <header class="header-manta-premium text-white shadow-lg sticky top-0 z-40">
+        <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center">
+            <div class="flex justify-between items-center w-full h-full">
+                <a href="index.php" class="flex items-center cursor-pointer group h-full relative spark-container">
+                    <img src="principal/logoc.png" alt="Candelaria" class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
                 </a>
+                <div class="flex items-center gap-6">
+                    <nav class="hidden md:flex items-center gap-2">
+                        <a href="servicios/index.php" class="nav-link-custom">Servicios</a>
+                        <a href="cultura/cultura.php" class="nav-link-custom">Cultura</a>
+                        <a href="horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
+                        <a href="noticias/index.php" class="nav-link-custom">Noticias</a>
+                    </nav>
+                    <?= getAuthButtonHTML() ?>
+                    <a href="live-platform/index.php" class="btn-live group !p-2.5 md:!px-6 md:!py-2.5">
+                        <div class="live-dot"></div>
+                        <span class="tracking-wider hidden md:inline">EN TIEMPO REAL</span>
+                    </a>
+                </div>
             </div>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 py-8">
-        <!-- Loading State -->
-        <div id="loading-state" class="text-center py-12">
-            <i data-lucide="loader-2" class="w-12 h-12 mx-auto animate-spin text-candelaria-purple"></i>
-            <p class="mt-4 text-gray-500">Cargando perfil...</p>
-        </div>
-
-        <!-- Not Logged In -->
-        <div id="not-logged-in" class="hidden text-center py-12">
-            <i data-lucide="user-x" class="w-16 h-16 mx-auto text-gray-300 mb-4"></i>
-            <h2 class="text-xl font-bold text-gray-700 mb-2">No has iniciado sesión</h2>
-            <p class="text-gray-500 mb-4">Inicia sesión para ver tu perfil y reservaciones</p>
-            <a href="index.php"
-                class="inline-block bg-candelaria-purple text-white px-6 py-3 rounded-xl font-bold hover:bg-purple-800">
-                Ir al Inicio
-            </a>
-        </div>
-
-        <!-- Profile Content -->
-        <div id="profile-content" class="hidden">
-            <!-- User Info Card -->
-            <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
-                <div class="flex items-center gap-4 mb-6">
-                    <div
-                        class="w-20 h-20 bg-gradient-to-br from-candelaria-purple to-purple-600 rounded-full flex items-center justify-center text-white text-3xl font-bold">
-                        <span id="user-initial">U</span>
-                    </div>
-                    <div class="flex-1">
-                        <h2 id="user-name" class="text-2xl font-bold text-gray-900"></h2>
-                        <p id="user-email" class="text-gray-500"></p>
-                    </div>
-                    <button onclick="logout()"
-                        class="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition-colors font-semibold">
-                        <i data-lucide="log-out" class="w-5 h-5"></i>
-                        Cerrar Sesión
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-gray-50 p-4 rounded-xl">
-                        <p class="text-sm text-gray-500 mb-1">Correo Electrónico</p>
-                        <p id="info-email" class="font-medium text-gray-800"></p>
-                    </div>
-                    <div class="bg-gray-50 p-4 rounded-xl">
-                        <p class="text-sm text-gray-500 mb-1">Teléfono</p>
-                        <p id="info-telefono" class="font-medium text-gray-800"></p>
-                    </div>
-                    <div class="bg-gray-50 p-4 rounded-xl">
-                        <p class="text-sm text-gray-500 mb-1">Miembro desde</p>
-                        <p id="info-fecha" class="font-medium text-gray-800"></p>
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Profile Header -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
+            <div class="bg-gradient-to-r from-candelaria-purple to-purple-800 h-32"></div>
+            <div class="px-8 pb-8">
+                <div class="flex flex-col sm:flex-row items-center sm:items-end -mt-16 sm:-mt-12">
+                    <img id="profile-avatar" src="" alt="Avatar" class="w-32 h-32 rounded-full border-4 border-white shadow-xl object-cover">
+                    <div class="mt-4 sm:mt-0 sm:ml-6 text-center sm:text-left">
+                        <h1 id="profile-name" class="text-3xl font-bold text-gray-900">Cargando...</h1>
+                        <p id="profile-email" class="text-gray-600 mt-1">email@ejemplo.com</p>
+                        <div class="flex items-center justify-center sm:justify-start gap-2 mt-2">
+                            <span id="profile-provider-badge" class="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full uppercase">
+                                Email
+                            </span>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full uppercase">
+                                Miembro
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Reservations Section -->
-            <div id="reservaciones" class="bg-white rounded-2xl shadow-lg p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <i data-lucide="calendar-check" class="w-6 h-6 text-candelaria-purple"></i>
-                    Mis Reservaciones
-                </h3>
-
-                <div id="reservations-container">
-                    <div class="text-center py-8 text-gray-500">
-                        <i data-lucide="loader-2" class="w-8 h-8 mx-auto animate-spin"></i>
-                        <p class="mt-2">Cargando reservaciones...</p>
-                    </div>
+        <!-- Account Details -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <i data-lucide="user" class="w-6 h-6 text-candelaria-purple"></i>
+                Información de la Cuenta
+            </h2>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                    <span class="text-gray-600 font-medium">Nombre completo</span>
+                    <span id="detail-name" class="text-gray-900 font-bold">-</span>
+                </div>
+                <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                    <span class="text-gray-600 font-medium">Correo electrónico</span>
+                    <span id="detail-email" class="text-gray-900 font-bold">-</span>
+                </div>
+                <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                    <span class="text-gray-600 font-medium">Método de inicio de sesión</span>
+                    <span id="detail-provider" class="text-gray-900 font-bold">-</span>
+                </div>
+                <div class="flex items-center justify-between py-3">
+                    <span class="text-gray-600 font-medium">Miembro desde</span>
+                    <span id="detail-joined" class="text-gray-900 font-bold">Hoy</span>
                 </div>
             </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <i data-lucide="zap" class="w-6 h-6 text-candelaria-gold"></i>
+                Acciones Rápidas
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <a href="horarios_y_danzas/index.php" class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all group">
+                    <div class="p-3 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors">
+                        <i data-lucide="calendar" class="w-6 h-6 text-candelaria-purple"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900">Ver Horarios</h3>
+                        <p class="text-sm text-gray-600">Programación completa</p>
+                    </div>
+                </a>
+                <a href="live-platform/index.php" class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-red-300 hover:bg-red-50 transition-all group">
+                    <div class="p-3 bg-red-100 rounded-lg group-hover:bg-red-200 transition-colors">
+                        <i data-lucide="video" class="w-6 h-6 text-red-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900">En Vivo</h3>
+                        <p class="text-sm text-gray-600">Transmisiones en directo</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="mt-8 text-center">
+            <button onclick="confirmLogout()" class="px-8 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl">
+                <i data-lucide="log-out" class="w-5 h-5 inline-block mr-2"></i>
+                Cerrar Sesión
+            </button>
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-16 border-t-4 border-candelaria-gold">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col items-center justify-center text-center">
+                <div class="flex items-center gap-2 mb-4">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-candelaria-gold"></i>
+                    <span class="text-xl font-bold font-heading">Candelaria 2026</span>
+                </div>
+                <div class="text-gray-500 text-sm mb-6">
+                    &copy; 2026 Candela Digital. Todos los derechos reservados.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <?= getAuthModalHTML() ?>
+
+    <!-- Auth JS -->
+    <?= getAuthJS() ?>
+
+    <!-- Spark Effect -->
+    <script src="assets/js/spark-effect.js"></script>
+
+    <!-- Profile Page Logic -->
     <script>
-        let currentUser = null;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            checkAuth();
-        });
-
-        function checkAuth() {
-            const token = localStorage.getItem('clientToken');
-            const userData = localStorage.getItem('clientUser');
-
-            if (token && userData) {
-                try {
-                    currentUser = JSON.parse(userData);
-                    showProfile();
-                } catch (e) {
-                    showNotLoggedIn();
-                }
-            } else {
-                showNotLoggedIn();
-            }
-        }
-
-        function showNotLoggedIn() {
-            document.getElementById('loading-state').classList.add('hidden');
-            document.getElementById('not-logged-in').classList.remove('hidden');
-        }
-
-        function logout() {
-            localStorage.removeItem('clientToken');
-            localStorage.removeItem('clientUser');
-            window.location.href = 'index.php';
-        }
-
-        function showProfile() {
-            document.getElementById('loading-state').classList.add('hidden');
-            document.getElementById('profile-content').classList.remove('hidden');
-
-            // Fill user info
-            document.getElementById('user-initial').textContent = currentUser.nombre.charAt(0).toUpperCase();
-            document.getElementById('user-name').textContent = currentUser.nombre;
-            document.getElementById('user-email').textContent = currentUser.email;
-            document.getElementById('info-email').textContent = currentUser.email;
-            document.getElementById('info-telefono').textContent = currentUser.telefono || 'No registrado';
-            document.getElementById('info-fecha').textContent = new Date(currentUser.created_at || Date.now()).toLocaleDateString('es-ES', { year: 'numeric', month: 'long' });
-
-            loadReservations();
-            lucide.createIcons();
-        }
-
-        async function loadReservations() {
-            const token = localStorage.getItem('clientToken');
-            const container = document.getElementById('reservations-container');
-
-            try {
-                const res = await fetch('api/clientes.php?action=reservaciones', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    renderReservations(data.reservaciones || []);
-                } else {
-                    container.innerHTML = '<p class="text-center text-red-500 py-4">Error al cargar reservaciones</p>';
-                }
-            } catch (e) {
-                container.innerHTML = '<p class="text-center text-red-500 py-4">Error de conexión</p>';
-            }
-        }
-
-        function renderReservations(reservations) {
-            const container = document.getElementById('reservations-container');
-
-            if (reservations.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-8">
-                        <i data-lucide="calendar-x" class="w-12 h-12 mx-auto text-gray-300 mb-3"></i>
-                        <p class="text-gray-500">No tienes reservaciones aún</p>
-                        <a href="servicios/index.php" class="inline-block mt-4 bg-candelaria-purple text-white px-6 py-2 rounded-lg font-bold hover:bg-purple-800">
-                            Explorar Hospedajes
-                        </a>
-                    </div>
-                `;
-                lucide.createIcons();
+        // Load user data
+        function loadUserProfile() {
+            const userDataStr = localStorage.getItem('candelaria_user');
+            
+            if (!userDataStr) {
+                // Not logged in, redirect to home
+                window.location.href = 'index.php';
                 return;
             }
 
-            const estadoColors = {
-                'pendiente': 'bg-yellow-100 text-yellow-800 border-yellow-300',
-                'confirmada': 'bg-green-100 text-green-800 border-green-300',
-                'cancelada': 'bg-red-100 text-red-800 border-red-300',
-                'completada': 'bg-blue-100 text-blue-800 border-blue-300'
-            };
+            try {
+                const user = JSON.parse(userDataStr);
+                
+                // Update profile UI
+                document.getElementById('profile-avatar').src = user.picture || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name);
+                document.getElementById('profile-name').textContent = user.name;
+                document.getElementById('profile-email').textContent = user.email || 'Email no disponible';
+                
+                document.getElementById('detail-name').textContent = user.name;
+                document.getElementById('detail-email').textContent = user.email || 'No disponible';
+                
+                // Provider badge
+                const providerBadge = document.getElementById('profile-provider-badge');
+                const providerDetail = document.getElementById('detail-provider');
+                
+                if (user.provider === 'google') {
+                    providerBadge.textContent = 'Google';
+                    providerBadge.className = 'px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full uppercase';
+                    providerDetail.textContent = 'Google';
+                } else if (user.provider === 'facebook') {
+                    providerBadge.textContent = 'Facebook';
+                    providerBadge.className = 'px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full uppercase';
+                    providerDetail.textContent = 'Facebook';
+                } else {
+                    providerBadge.textContent = 'Email';
+                    providerBadge.className = 'px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full uppercase';
+                    providerDetail.textContent = 'Email/Contraseña';
+                }
 
-            const estadoIcons = {
-                'pendiente': 'clock',
-                'confirmada': 'check-circle',
-                'cancelada': 'x-circle',
-                'completada': 'check-check'
-            };
-
-            container.innerHTML = reservations.map(r => `
-                <div class="border rounded-xl p-4 mb-4 ${estadoColors[r.estado]} border">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h4 class="font-bold text-gray-900">${r.hospedaje_nombre || 'Hospedaje'}</h4>
-                            <p class="text-sm text-gray-600">${r.habitacion_nombre || 'Habitación'}</p>
-                        </div>
-                        <div class="flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold ${estadoColors[r.estado]}">
-                            <i data-lucide="${estadoIcons[r.estado]}" class="w-4 h-4"></i>
-                            ${r.estado.charAt(0).toUpperCase() + r.estado.slice(1)}
-                        </div>
-                    </div>
-                    <div class="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
-                        <div>
-                            <span class="text-gray-500">Check-in:</span>
-                            <span class="font-medium">${r.fecha_entrada}</span>
-                        </div>
-                        <div>
-                            <span class="text-gray-500">Check-out:</span>
-                            <span class="font-medium">${r.fecha_salida}</span>
-                        </div>
-                        <div>
-                            <span class="text-gray-500">Huéspedes:</span>
-                            <span class="font-medium">${r.num_huespedes}</span>
-                        </div>
-                        <div>
-                            <span class="text-gray-500">Total:</span>
-                            <span class="font-bold text-candelaria-purple">$${parseFloat(r.precio_total).toFixed(0)}</span>
-                        </div>
-                    </div>
-                    ${r.notas ? `<p class="mt-2 text-sm text-gray-600 italic">"${r.notas}"</p>` : ''}
-                </div>
-            `).join('');
-
-            lucide.createIcons();
+            } catch (e) {
+                console.error('Error loading profile:', e);
+                window.location.href = 'index.php';
+            }
         }
+
+        function confirmLogout() {
+            if (confirm('¿Estás seguro de cerrar sesión?')) {
+                localStorage.removeItem('candelaria_user');
+                
+                // Logout from Google if possible
+                if (typeof google !== 'undefined' && google.accounts) {
+                    google.accounts.id.disableAutoSelect();
+                }
+                // Logout Facebook
+                if (typeof FB !== 'undefined') {
+                    FB.logout();
+                }
+                
+                window.location.href = 'index.php';
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserProfile();
+            lucide.createIcons();
+        });
     </script>
+
+    <style>
+        .btn-live {
+            position: relative;
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            overflow: hidden;
+            animation: pulseLive 2s infinite;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            animation: blinkDot 1s infinite;
+        }
+
+        @keyframes blinkDot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes pulseLive {
+            0%, 100% { box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); }
+            50% { box-shadow: 0 4px 25px rgba(220, 38, 38, 0.7), 0 0 30px rgba(220, 38, 38, 0.4); }
+        }
+
+        .nav-link-custom {
+            color: #e9d5ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 16px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link-custom:hover {
+            color: #fbbf24;
+        }
+    </style>
 </body>
 
 </html>

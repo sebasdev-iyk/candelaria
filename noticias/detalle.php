@@ -148,13 +148,41 @@ function timeAgo($datetime)
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             margin: 2rem 0;
         }
+
+        /* Header Manta Premium Style - Lliclla Pattern */
+        .header-manta-premium {
+            height: 140px;
+            background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('../principal/headerfondo2.jpg');
+            background-size: auto 100%;
+            background-repeat: repeat-x;
+            background-position: center;
+            position: relative;
+            border-bottom: 3px solid #fbbf24;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header-manta-premium::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
+            pointer-events: none;
+        }
+
+        .header-manta-premium>div {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 
 <body class="bg-gray-50">
     <!-- Header -->
     <!-- Navbar -->
-    <header class="bg-candelaria-purple text-white shadow-lg sticky top-0 z-50">
+    <header class="header-manta-premium text-white shadow-lg sticky top-0 z-50">
         <div class="bg-purple-950 text-xs py-1 text-center text-purple-200">Festividad de la Virgen de la Candelaria
             2025 - Del 2 al 11 de Febrero</div>
         <div class="w-full px-4 md:px-12 py-4">
