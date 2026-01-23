@@ -53,9 +53,12 @@ function getAuthModalHTML()
                             </button>
 
                             <!-- Facebook Button -->
-                            <!-- Facbook Removed -->
-                            
-                            <!-- Microsoft/Apple (Disabled) -->
+                            <button onclick="handleFacebookLogin()" class="relative flex w-full items-center justify-center gap-3 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-bold text-gray-700 shadow-sm hover:bg-gray-50 hover:shadow-md transition-all duration-200">
+                                <svg class="h-5 w-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                                <span>Continuar con Facebook</span>
+                            </button>
                              <div class="flex gap-3 text-xs text-gray-400 justify-center">
                                 Otros métodos próximamente: Apple • Microsoft
                              </div>
@@ -444,6 +447,24 @@ function getAuthJS()
             console.warn('[Auth] SupabaseCore not loaded, falling back to legacy Google SDK');
             // Fallback to legacy Google SDK
             handleLegacyGoogleLogin();
+        }
+    }
+
+    // --- Facebook Login Handler (Supabase) ---
+    window.handleFacebookLogin = async function() {
+        console.log('[Auth] Facebook login button clicked');
+        
+        if (typeof SupabaseCore !== 'undefined') {
+            try {
+                showToast('Redirigiendo a Facebook...', 'info');
+                await SupabaseCore.signInWithFacebook();
+                return;
+            } catch (e) {
+                console.error('[Auth] Supabase Facebook login error:', e);
+                showToast('Error al conectar con Facebook. Intenta de nuevo.', 'error');
+            }
+        } else {
+             showToast('Error: Sistema de autenticación no cargado. Recarga la página.', 'error');
         }
     }
     

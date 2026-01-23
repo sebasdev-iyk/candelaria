@@ -118,6 +118,24 @@
     /**
      * Sign out current user
      */
+    /**
+     * Sign in with Facebook OAuth
+     * @param {string} redirectTo - URL to redirect after auth (defaults to current page)
+     */
+    async function signInWithFacebook(redirectTo = null) {
+        const client = initSupabase();
+        if (!client) return { error: new Error('Supabase not initialized') };
+
+        const { data, error } = await client.auth.signInWithOAuth({
+            provider: 'facebook',
+            options: {
+                redirectTo: redirectTo || window.location.href.split('?')[0]
+            }
+        });
+
+        return { data, error };
+    }
+
     async function signOut() {
         const client = initSupabase();
         if (!client) return { error: new Error('Supabase not initialized') };
@@ -311,6 +329,8 @@
 
         // Auth
         signInWithGoogle,
+        signInWithFacebook,
+        signInWithFacebook,
         signOut,
         getCurrentUser,
         getSession,
