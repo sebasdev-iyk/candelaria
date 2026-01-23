@@ -36,3 +36,41 @@
 
 
 
+[2026-01-23 19:40:56] TO: antonyzapana1024@gmail.com | SUBJECT: Recupera tu contraseña - Candelaria 2026
+--------------------------------------------------------------------------------
+
+
+
+    
+    
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #4c1d95, #7c3aed); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; }
+        .button { display: inline-block; background: #7c3aed; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 20px 0; }
+        .footer { text-align: center; margin-top: 30px; color: #6b7280; font-size: 12px; }
+    
+
+
+    
+        
+            🔐 Recuperación de Contraseña
+        
+        
+            Hola Samuelito,
+            Recibimos una solicitud para restablecer la contraseña de tu cuenta en Candelaria 2026.
+            Haz clic en el siguiente botón para crear una nueva contraseña:
+            
+                Restablecer Contraseña
+            
+            O copia y pega este enlace en tu navegador:http://localhost/candelaria/reset_password.php?token=4e6bbb1ac315d8995b103a32458897cf6126c8247fe6066ff99dca868cd9e5d2
+            ⚠️ Este enlace expira en 1 hora.
+            Si no solicitaste este cambio, puedes ignorar este correo de forma segura.
+        
+        
+            © 2026 Candelaria - Todos los derechos reservados
+        
+    
+
+
+
