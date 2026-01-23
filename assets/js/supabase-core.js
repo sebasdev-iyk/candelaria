@@ -136,6 +136,54 @@
         return { data, error };
     }
 
+
+    /**
+     * Sign up with Email and Password
+     */
+    async function signUpWithEmail(email, password, userData = {}) {
+        const client = initSupabase();
+        if (!client) return { error: new Error('Supabase not initialized') };
+
+        const { data, error } = await client.auth.signUp({
+            email,
+            password,
+            options: {
+                data: userData // e.g. { full_name: 'John Doe' }
+            }
+        });
+
+        return { data, error };
+    }
+
+    /**
+     * Sign in with Email and Password
+     */
+    async function signInWithEmail(email, password) {
+        const client = initSupabase();
+        if (!client) return { error: new Error('Supabase not initialized') };
+
+        const { data, error } = await client.auth.signInWithPassword({
+            email,
+            password
+        });
+
+        return { data, error };
+    }
+
+    /**
+     * Send password reset email
+     */
+    async function resetPasswordForEmail(email, redirectTo = null) {
+        const client = initSupabase();
+        if (!client) return { error: new Error('Supabase not initialized') };
+
+        const { data, error } = await client.auth.resetPasswordForEmail(email, {
+            redirectTo: redirectTo || window.location.href.split('?')[0]
+        });
+
+        return { data, error };
+    }
+
     async function signOut() {
         const client = initSupabase();
         if (!client) return { error: new Error('Supabase not initialized') };
@@ -330,6 +378,9 @@
         // Auth
         signInWithGoogle,
         signInWithFacebook,
+        signUpWithEmail,
+        signInWithEmail,
+        resetPasswordForEmail,
         signOut,
         getCurrentUser,
         getSession,

@@ -573,24 +573,34 @@ function getAuthJS()
                     return;
                 }
 
+                if (typeof SupabaseCore === 'undefined') {
+                    showToast('Error: Sistema de autenticación no cargado', 'error');
+                    return;
+                }
+
                 try {
-                    const apiBase = window.location.origin + '/candelaria/api/';
-                    const response = await fetch(apiBase + 'auth_email.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ action: 'login', email, password })
-                    });
+                    // showToast('Iniciando sesión...', 'info');
+                    const { data, error } = await SupabaseCore.signInWithEmail(email, password);
 
-                    const data = await response.json();
+                    if (error) throw error;
 
-                    if (data.success && data.user) {
-                        loginUser(data.user);
-                    } else {
-                        showToast(data.message || 'Error al iniciar sesión', 'error');
+                    if (data.user) {
+                        const user = {
+                            id: data.user.id,
+                            name: data.user.user_metadata?.full_name || data.user.user_metadata?.name || email.split('@')[0],
+                            email: data.user.email,
+                            picture: data.user.user_metadata?.avatar_url || null,
+                            provider: 'email'
+                        };
+                        loginUser(user);
+                        showToast('¡Bienvenido de nuevo!', 'success');
                     }
                 } catch (error) {
                     console.error('Login error:', error);
-                    showToast('Error de conexión. Intenta de nuevo.', 'error');
+                    let msg = error.message || 'Error al iniciar sesión.';
+                    if (msg.includes('Invalid login')) msg = 'Credenciales incorrectas.';
+                    if (msg.includes('Email not confirmed')) msg = 'Por favor verifica tu correo electrónico.';
+                    showToast(msg, 'error');
                 }
             });
         }
@@ -613,24 +623,37 @@ function getAuthJS()
                     return;
                 }
 
+                if (typeof SupabaseCore === 'undefined') {
+                    showToast('Error: Sistema de autenticación no cargado', 'error');
+                    return;
+                }
+
                 try {
-                    const apiBase = window.location.origin + '/candelaria/api/';
-                    const response = await fetch(apiBase + 'auth_email.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ action: 'register', name, email, password })
-                    });
+                    showToast('Creando cuenta...', 'info');
+                    const { data, error } = await SupabaseCore.signUpWithEmail(email, password, { full_name: name });
 
-                    const data = await response.json();
+                    if (error) throw error;
 
-                    if (data.success && data.user) {
-                        loginUser(data.user);
-                    } else {
-                        showToast(data.message || 'Error al crear cuenta', 'error');
+                    // If email confirmation is enabled, session might be null
+                    if (data.user && !data.session) {
+                        showToast('Cuenta creada. ¡Revisa tu email para confirmar!', 'success');
+                        closeAuthModal();
+                    } else if (data.user && data.session) {
+                        const user = {
+                            id: data.user.id,
+                            name: name,
+                            email: email,
+                            picture: null,
+                            provider: 'email'
+                        };
+                        loginUser(user);
+                        showToast('¡Cuenta creada exitosamente!', 'success');
                     }
                 } catch (error) {
                     console.error('Register error:', error);
-                    showToast('Error de conexión. Intenta de nuevo.', 'error');
+                    let msg = error.message || 'Error al crear cuenta.';
+                    if (msg.includes('already registered')) msg = 'Este correo ya está registrado.';
+                    showToast(msg, 'error');
                 }
             });
         }

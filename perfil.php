@@ -217,7 +217,7 @@
 
         <!-- Logout Button -->
         <div class="mt-8 text-center">
-            <button onclick="confirmLogout()"
+            <button onclick="handleLogout()"
                 class="px-8 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl">
                 <i data-lucide="log-out" class="w-5 h-5 inline-block mr-2"></i>
                 Cerrar Sesión
@@ -257,9 +257,17 @@
                             picture: sbUser.user_metadata?.avatar_url || sbUser.user_metadata?.picture,
                             provider: 'supabase' // Generic for now, or derive from metadata
                         };
-                        // Derive provider more accurately if needed
+                        // Derive provider more accurately
+                        // Check identities array to see connected providers
+                        const identities = sbUser.identities || [];
+                        const providers = identities.map(i => i.provider);
+
+                        if (providers.includes('facebook')) user.provider = 'facebook';
+                        // If logged in via Google recently or usually
                         if (sbUser.app_metadata?.provider === 'google') user.provider = 'google';
-                        if (sbUser.app_metadata?.provider === 'facebook') user.provider = 'facebook';
+
+                        // If multiple, maybe show primary or last
+                        console.log('[Profile] Providers:', providers);
 
                         // Sync to LS just in case
                         localStorage.setItem('candelaria_user', JSON.stringify(user));
@@ -397,22 +405,7 @@
             return colors[status] || 'bg-gray-100 text-gray-800';
         }
 
-        function confirmLogout() {
-            if (confirm('¿Estás seguro de cerrar sesión?')) {
-                localStorage.removeItem('candelaria_user');
-
-                // Logout from Google if possible
-                if (typeof google !== 'undefined' && google.accounts) {
-                    google.accounts.id.disableAutoSelect();
-                }
-                // Logout Facebook
-                if (typeof FB !== 'undefined') {
-                    FB.logout();
-                }
-
-                window.location.href = 'index.php';
-            }
-        }
+        // confirmLogout removed - using global handleLogout from auth-header.php
 
         // Initialize on load
         document.addEventListener('DOMContentLoaded', function () {
