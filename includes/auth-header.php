@@ -59,9 +59,6 @@ function getAuthModalHTML()
                                 </svg>
                                 <span>Continuar con Facebook</span>
                             </button>
-                             <div class="flex gap-3 text-xs text-gray-400 justify-center">
-                                Otros métodos próximamente: Apple • Microsoft
-                             </div>
                         </div>
 
                         <!-- Divider -->
