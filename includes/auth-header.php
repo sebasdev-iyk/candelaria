@@ -138,7 +138,7 @@ function getAuthModalHTML()
 
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="/candelaria/assets/js/supabase-core.js"></script>
+    <script src="/candelaria/assets/js/supabase-core.js?v=<?= time() ?>"></script>
 
     <!-- Legacy Google SDK (fallback) -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -598,8 +598,12 @@ function getAuthJS()
                 } catch (error) {
                     console.error('Login error:', error);
                     let msg = error.message || 'Error al iniciar sesión.';
-                    if (msg.includes('Invalid login')) msg = 'Credenciales incorrectas.';
-                    if (msg.includes('Email not confirmed')) msg = 'Por favor verifica tu correo electrónico.';
+                    
+                    // Supabase Error Translations
+                    if (msg.includes('Invalid login')) msg = 'Correo o contraseña incorrectos.';
+                    if (msg.includes('Email not confirmed')) msg = 'Debes confirmar tu correo electrónico primero.';
+                    if (msg.includes('rate limit')) msg = 'Demasiados intentos. Espera unos minutos.';
+
                     showToast(msg, 'error');
                 }
             });
@@ -652,7 +656,13 @@ function getAuthJS()
                 } catch (error) {
                     console.error('Register error:', error);
                     let msg = error.message || 'Error al crear cuenta.';
+                    
+                    // Supabase Error Translations
                     if (msg.includes('already registered')) msg = 'Este correo ya está registrado.';
+                    if (msg.includes('is invalid')) msg = 'El formato del correo no es válido.';
+                    if (msg.includes('password should be')) msg = 'La contraseña es muy débil.';
+                    if (msg.includes('rate limit')) msg = 'Demasiados intentos. Espera unos minutos.';
+                    
                     showToast(msg, 'error');
                 }
             });
