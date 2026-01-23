@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candelaria 2026 - Supabase Auth Test</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #4c1d95;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Estados */
+        #login-section,
+        #user-section,
+        #loading-section {
+            display: none;
+        }
+
+        #login-section.active,
+        #user-section.active,
+        #loading-section.active {
+            display: block;
+        }
+
+        /* Botones OAuth */
+        .oauth-btn {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .oauth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .oauth-btn:active {
+            transform: translateY(0);
+        }
+
+        .google-btn {
+            background: #fff;
+            border: 2px solid #e5e7eb;
+            color: #374151;
+        }
+
+        .google-btn:hover {
+            border-color: #4285F4;
+        }
+
+        .facebook-btn {
+            background: #1877F2;
+            color: white;
+        }
+
+        .facebook-btn:hover {
+            background: #166fe5;
+        }
+
+        /* Iconos SVG */
+        .oauth-btn svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        /* User Section */
+        .user-card {
+            text-align: center;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #4c1d95;
+            margin: 0 auto 15px;
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .user-email {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .user-id {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: #e5e7eb;
+            border-radius: 8px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 14px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Loading */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e5e7eb;
+            border-top-color: #4c1d95;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loading-section p {
+            text-align: center;
+            color: #6b7280;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .status-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Debug Console */
+        #debug-console {
+            margin-top: 20px;
+            padding: 15px;
+            background: #1f2937;
+            border-radius: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        #debug-console .log {
+            margin-bottom: 4px;
+        }
+
+        #debug-console .log-info {
+            color: #60a5fa;
+        }
+
+        #debug-console .log-success {
+            color: #34d399;
+        }
+
+        #debug-console .log-error {
+            color: #f87171;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="logo">
+            <h1>🎭 Candelaria 2026</h1>
+            <p>Prueba de Autenticación Supabase</p>
+        </div>
+
+        <!-- Estado: Cargando -->
+        <section id="loading-section">
+            <div class="spinner"></div>
+            <p>Verificando sesión...</p>
+        </section>
+
+        <!-- Estado: No Logueado -->
+        <section id="login-section">
+            <button class="oauth-btn google-btn" onclick="signInWithGoogle()">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                        fill="#4285F4" />
+                    <path
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                        fill="#34A853" />
+                    <path
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                        fill="#FBBC05" />
+                    <path
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                        fill="#EA4335" />
+                </svg>
+                Continuar con Google
+            </button>
+
+            <button class="oauth-btn facebook-btn" onclick="signInWithFacebook()">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+                Continuar con Facebook
+            </button>
+        </section>
+
+        <!-- Estado: Logueado -->
+        <section id="user-section">
+            <div class="status-badge status-success">✓ Autenticación Exitosa</div>
+            <div class="user-card">
+                <img id="user-avatar" class="avatar" src="" alt="Avatar">
+                <p class="user-name" id="user-name">Nombre</p>
+                <p class="user-email" id="user-email">email@example.com</p>
+                <p class="user-id" id="user-id">UUID</p>
+            </div>
+            <button class="logout-btn" onclick="signOut()">Cerrar Sesión</button>
+        </section>
+
+        <!-- Consola de Debug -->
+        <div id="debug-console"></div>
+    </div>
+
+    <!-- Supabase CDN (2026 Version) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+    <script>
+        // ==========================================
+        // CONFIGURACIÓN DE SUPABASE
+        // ==========================================
+        const SUPABASE_URL = 'https://lwreqclamvezlpfryjaz.supabase.co';
+
+        // IMPORTANTE: Supabase 2026 usa la Publishable Key
+        // Si tienes la nueva `sb_publishable_...` usa esa, si no, usa la anon key tradicional
+        // Por compatibilidad, la anon key sigue funcionando
+        const SUPABASE_ANON_KEY = 'sb_publishable_kfUeXOlkfU8kHP8AHBkATw_LoWC3cwZ';
+
+        // Inicializar Supabase Client
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ==========================================
+        // DEBUG LOGGER
+        // ==========================================
+        function log(message, type = 'info') {
+            const debugPanel = document.getElementById('debug-console');
+            const timestamp = new Date().toLocaleTimeString();
+            const div = document.createElement('div');
+            div.className = `log log-${type}`;
+            div.textContent = `[${timestamp}] ${message}`;
+            debugPanel.appendChild(div);
+            debugPanel.scrollTop = debugPanel.scrollHeight;
+
+            // También a la consola real del navegador
+            if (type === 'error') window.console.error(message);
+            else window.console.log(message);
+        }
+
+        // ==========================================
+        // UI HELPERS
+        // ==========================================
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function displayUser(user) {
+            log(`Usuario detectado: ${user.email}`, 'success');
+
+            const metadata = user.user_metadata || {};
+
+            document.getElementById('user-avatar').src =
+                metadata.avatar_url ||
+                metadata.picture ||
+                `https://ui-avatars.com/api/?name=${encodeURIComponent(metadata.full_name || user.email)}&background=4c1d95&color=fff`;
+
+            document.getElementById('user-name').textContent =
+                metadata.full_name || metadata.name || 'Usuario';
+
+            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('user-id').textContent = `ID: ${user.id}`;
+
+            showSection('user-section');
+        }
+
+        // ==========================================
+        // AUTH FUNCTIONS
+        // ==========================================
+        async function signInWithGoogle() {
+            log('Iniciando login con Google...');
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: window.location.href.split('?')[0] // Regresar a esta misma página
+                    }
+                });
+
+                if (error) throw error;
+                log('Redirigiendo a Google...', 'info');
+            } catch (err) {
+                log(`Error Google: ${err.message}`, 'error');
+            }
+        }
+
+        async function signInWithFacebook() {
+            log('Iniciando login con Facebook...');
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                    provider: 'facebook',
+                    options: {
+                        redirectTo: window.location.href.split('?')[0]
+                    }
+                });
+
+                if (error) throw error;
+                log('Redirigiendo a Facebook...', 'info');
+            } catch (err) {
+                log(`Error Facebook: ${err.message}`, 'error');
+            }
+        }
+
+        async function signOut() {
+            log('Cerrando sesión...');
+            try {
+                const { error } = await supabaseClient.auth.signOut();
+                if (error) throw error;
+
+                log('Sesión cerrada correctamente', 'success');
+                showSection('login-section');
+            } catch (err) {
+                log(`Error logout: ${err.message}`, 'error');
+            }
+        }
+
+        // ==========================================
+        // INIT: Verificar sesión al cargar
+        // ==========================================
+        async function init() {
+            showSection('loading-section');
+            log('Verificando sesión existente...');
+
+            try {
+                // 1. Verificar si hay sesión activa
+                const { data: { session }, error } = await supabaseClient.auth.getSession();
+
+                if (error) {
+                    log(`Error obteniendo sesión: ${error.message}`, 'error');
+                    showSection('login-section');
+                    return;
+                }
+
+                if (session && session.user) {
+                    log('Sesión encontrada', 'success');
+                    displayUser(session.user);
+                } else {
+                    log('No hay sesión activa');
+                    showSection('login-section');
+                }
+
+                // 2. Escuchar cambios de autenticación (para el callback de OAuth)
+                supabaseClient.auth.onAuthStateChange((event, session) => {
+                    log(`Auth event: ${event}`);
+
+                    if (event === 'SIGNED_IN' && session) {
+                        displayUser(session.user);
+                    } else if (event === 'SIGNED_OUT') {
+                        showSection('login-section');
+                    }
+                });
+
+            } catch (err) {
+                log(`Error init: ${err.message}`, 'error');
+                showSection('login-section');
+            }
+        }
+
+        // Ejecutar al cargar la página
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+
+</html>
