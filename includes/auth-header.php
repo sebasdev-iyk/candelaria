@@ -248,9 +248,13 @@ function getAuthJS()
                         picture: supabaseUser.user_metadata?.avatar_url || supabaseUser.user_metadata?.picture || null,
                         provider: 'supabase'
                     };
+                    
+                    // CRITICAL FIX: Sync to localStorage so legacy pages (like perfil.php) work
+                    localStorage.setItem('candelaria_user', JSON.stringify(userData));
+                    
                     window.currentUser = userData;
                     showLoggedInState(userData);
-                    console.log('[Auth] Supabase session active:', userData.email);
+                    console.log('[Auth] Supabase session active & synced to LS:', userData.email);
                     if (typeof lucide !== 'undefined') lucide.createIcons();
                     setupEmailAuthForms();
                     return;

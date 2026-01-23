@@ -13,7 +13,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&family=Manrope:wght@200..800&display=swap"
+        rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -45,7 +47,12 @@
             font-family: 'Open Sans', sans-serif;
         }
 
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             font-family: 'Montserrat', sans-serif;
         }
 
@@ -90,7 +97,8 @@
         <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center">
             <div class="flex justify-between items-center w-full h-full">
                 <a href="index.php" class="flex items-center cursor-pointer group h-full relative spark-container">
-                    <img src="principal/logoc.png" alt="Candelaria" class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
+                    <img src="principal/logoc.png" alt="Candelaria"
+                        class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
                 </a>
                 <div class="flex items-center gap-6">
                     <nav class="hidden md:flex items-center gap-2">
@@ -116,15 +124,18 @@
             <div class="bg-gradient-to-r from-candelaria-purple to-purple-800 h-32"></div>
             <div class="px-8 pb-8">
                 <div class="flex flex-col sm:flex-row items-center sm:items-end -mt-16 sm:-mt-12">
-                    <img id="profile-avatar" src="" alt="Avatar" class="w-32 h-32 rounded-full border-4 border-white shadow-xl object-cover">
+                    <img id="profile-avatar" src="" alt="Avatar"
+                        class="w-32 h-32 rounded-full border-4 border-white shadow-xl object-cover">
                     <div class="mt-4 sm:mt-0 sm:ml-6 text-center sm:text-left">
                         <h1 id="profile-name" class="text-3xl font-bold text-gray-900">Cargando...</h1>
                         <p id="profile-email" class="text-gray-600 mt-1">email@ejemplo.com</p>
                         <div class="flex items-center justify-center sm:justify-start gap-2 mt-2">
-                            <span id="profile-provider-badge" class="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full uppercase">
+                            <span id="profile-provider-badge"
+                                class="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full uppercase">
                                 Email
                             </span>
-                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full uppercase">
+                            <span
+                                class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full uppercase">
                                 Miembro
                             </span>
                         </div>
@@ -166,7 +177,8 @@
                 Acciones Rápidas
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <a href="horarios_y_danzas/index.php" class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all group">
+                <a href="horarios_y_danzas/index.php"
+                    class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all group">
                     <div class="p-3 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors">
                         <i data-lucide="calendar" class="w-6 h-6 text-candelaria-purple"></i>
                     </div>
@@ -175,7 +187,8 @@
                         <p class="text-sm text-gray-600">Programación completa</p>
                     </div>
                 </a>
-                <a href="live-platform/index.php" class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-red-300 hover:bg-red-50 transition-all group">
+                <a href="live-platform/index.php"
+                    class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-red-300 hover:bg-red-50 transition-all group">
                     <div class="p-3 bg-red-100 rounded-lg group-hover:bg-red-200 transition-colors">
                         <i data-lucide="video" class="w-6 h-6 text-red-600"></i>
                     </div>
@@ -189,7 +202,8 @@
 
         <!-- Logout Button -->
         <div class="mt-8 text-center">
-            <button onclick="confirmLogout()" class="px-8 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl">
+            <button onclick="confirmLogout()"
+                class="px-8 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl">
                 <i data-lucide="log-out" class="w-5 h-5 inline-block mr-2"></i>
                 Cerrar Sesión
             </button>
@@ -197,9 +211,9 @@
     </main>
 
     <!-- Footer -->
-    <?php 
+    <?php
     $footerDepth = 0;
-    include 'includes/standard-footer.php'; 
+    include 'includes/standard-footer.php';
     ?>
 
     <!-- Auth Modal -->
@@ -214,30 +228,67 @@
     <!-- Profile Page Logic -->
     <script>
         // Load user data
-        function loadUserProfile() {
-            const userDataStr = localStorage.getItem('candelaria_user');
-            
-            if (!userDataStr) {
+        async function loadUserProfile() {
+            let user = null;
+
+            // 1. Try Supabase Core first (Async)
+            if (typeof SupabaseCore !== 'undefined') {
+                try {
+                    const { user: sbUser } = await SupabaseCore.getCurrentUser();
+                    if (sbUser) {
+                        user = {
+                            name: sbUser.user_metadata?.full_name || sbUser.user_metadata?.name || sbUser.email?.split('@')[0] || 'Usuario',
+                            email: sbUser.email,
+                            picture: sbUser.user_metadata?.avatar_url || sbUser.user_metadata?.picture,
+                            provider: 'supabase' // Generic for now, or derive from metadata
+                        };
+                        // Derive provider more accurately if needed
+                        if (sbUser.app_metadata?.provider === 'google') user.provider = 'google';
+                        if (sbUser.app_metadata?.provider === 'facebook') user.provider = 'facebook';
+
+                        // Sync to LS just in case
+                        localStorage.setItem('candelaria_user', JSON.stringify(user));
+                    }
+                } catch (e) {
+                    console.log('Supabase check failed in profile:', e);
+                }
+            }
+
+            // 2. Fallback to LocalStorage
+            if (!user) {
+                const userDataStr = localStorage.getItem('candelaria_user');
+                if (userDataStr) {
+                    try {
+                        user = JSON.parse(userDataStr);
+                    } catch (e) {
+                        console.error('Error parsing local user data:', e);
+                    }
+                }
+            }
+
+            // 3. Final Decision
+            if (!user) {
+                console.warn('No user found. Redirecting...');
                 // Not logged in, redirect to home
                 window.location.href = 'index.php';
                 return;
             }
 
             try {
-                const user = JSON.parse(userDataStr);
-                
                 // Update profile UI
-                document.getElementById('profile-avatar').src = user.picture || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name);
+                const avatarEl = document.getElementById('profile-avatar');
+                if (avatarEl) avatarEl.src = user.picture || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name);
+
                 document.getElementById('profile-name').textContent = user.name;
                 document.getElementById('profile-email').textContent = user.email || 'Email no disponible';
-                
+
                 document.getElementById('detail-name').textContent = user.name;
                 document.getElementById('detail-email').textContent = user.email || 'No disponible';
-                
+
                 // Provider badge
                 const providerBadge = document.getElementById('profile-provider-badge');
                 const providerDetail = document.getElementById('detail-provider');
-                
+
                 if (user.provider === 'google') {
                     providerBadge.textContent = 'Google';
                     providerBadge.className = 'px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full uppercase';
@@ -253,15 +304,15 @@
                 }
 
             } catch (e) {
-                console.error('Error loading profile:', e);
-                window.location.href = 'index.php';
+                console.error('Error updating profile UI:', e);
+                // Don't redirect here, just log error so user can see partial data
             }
         }
 
         function confirmLogout() {
             if (confirm('¿Estás seguro de cerrar sesión?')) {
                 localStorage.removeItem('candelaria_user');
-                
+
                 // Logout from Google if possible
                 if (typeof google !== 'undefined' && google.accounts) {
                     google.accounts.id.disableAutoSelect();
@@ -270,13 +321,13 @@
                 if (typeof FB !== 'undefined') {
                     FB.logout();
                 }
-                
+
                 window.location.href = 'index.php';
             }
         }
 
         // Initialize on load
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             loadUserProfile();
             lucide.createIcons();
         });
@@ -311,13 +362,27 @@
         }
 
         @keyframes blinkDot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
         }
 
         @keyframes pulseLive {
-            0%, 100% { box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); }
-            50% { box-shadow: 0 4px 25px rgba(220, 38, 38, 0.7), 0 0 30px rgba(220, 38, 38, 0.4); }
+
+            0%,
+            100% {
+                box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 4px 25px rgba(220, 38, 38, 0.7), 0 0 30px rgba(220, 38, 38, 0.4);
+            }
         }
 
         .nav-link-custom {
