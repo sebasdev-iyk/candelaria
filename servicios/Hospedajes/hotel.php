@@ -844,12 +844,18 @@
                 // Render everything
                 renderHotel();
                 renderRooms();
-                initMap();
+
                 loadReviews(); // Load real ratings
 
                 // Show content
                 document.getElementById('loading-state').classList.add('hidden');
                 document.getElementById('main-content').classList.remove('hidden');
+
+                // Init map after showing content so Leaflet can calculate dimensions
+                setTimeout(() => {
+                    initMap();
+                    if (mapInstance) mapInstance.invalidateSize();
+                }, 100);
 
             } catch (error) {
                 console.error('CRITICAL Error loading hotel:', error);
@@ -1556,7 +1562,7 @@
     <!-- Global Auth Modal (from auth-header.php) -->
     <?= getAuthModalHTML() ?>
     <!-- Global Auth JS (from auth-header.php) -->
-    <?= getAuthJS('../../') ?>
+    <?= getAuthJS() ?>
 
     <?php
     $footerDepth = 2;
