@@ -164,7 +164,7 @@ function getAuthButtonHTML()
         </button>
 
         <!-- Mobile Icon (Only Icon) -->
-        <button id="auth-btn-login-mobile" onclick="openAuthModal()" class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-900 border border-gray-200 shadow-sm">
+        <button id="auth-btn-login-mobile" onclick="openAuthModal()" class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-900 border border-gray-200 shadow-md hover:scale-105 transition-transform">
             <i data-lucide="user" class="w-5 h-5"></i>
         </button>
 

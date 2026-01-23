@@ -11,7 +11,7 @@ $basePath = str_repeat('../', $depth);
 
 <!-- Header Section - Standardized -->
 <header class="header-manta-premium text-white shadow-lg sticky top-0 z-40">
-    <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center relative z-50">
+    <div class="w-full px-3 md:px-12 h-20 md:h-22 flex items-center relative z-50">
         <div class="w-full flex justify-between items-center h-full">
             <!-- Left: Candelaria Branding -->
             <a href="<?= $basePath ?>index.php" id="logo-container"
@@ -21,7 +21,7 @@ $basePath = str_repeat('../', $depth);
             </a>
 
             <!-- Right: Navigation + EN TIEMPO REAL -->
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2 md:gap-6">
                 <nav class="hidden md:flex items-center gap-2">
                     <a href="<?= $basePath ?>servicios/index.php" class="nav-link-custom">Servicios</a>
                     <a href="<?= $basePath ?>cultura/cultura.php" class="nav-link-custom">Cultura</a>
@@ -29,7 +29,7 @@ $basePath = str_repeat('../', $depth);
                     <a href="<?= $basePath ?>noticias/index.php" class="nav-link-custom">Noticias</a>
                 </nav>
 
-                <?php 
+                <?php
                 // Include auth header if not already included
                 $authHeaderPath = $basePath . 'includes/auth-header.php';
                 if (file_exists($authHeaderPath) && !function_exists('getAuthButtonHTML')) {
@@ -71,80 +71,94 @@ $basePath = str_repeat('../', $depth);
 </header>
 
 <style>
-/* Header Styles - Anti-Shake Fix */
-.header-manta-premium {
-    position: sticky;
-    top: 0;
-    background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-font-smoothing: subpixel-antialiased;
-}
+    /* Header Styles - Anti-Shake Fix */
+    .header-manta-premium {
+        position: sticky;
+        top: 0;
+        background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
+        will-change: transform;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-font-smoothing: subpixel-antialiased;
+    }
 
-.nav-link-custom {
-    color: #e9d5ff;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    padding: 8px 16px;
-    transition: color 0.3s ease;
-}
+    .nav-link-custom {
+        color: #e9d5ff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 8px 16px;
+        transition: color 0.3s ease;
+    }
 
-.nav-link-custom:hover {
-    color: #fbbf24;
-}
+    .nav-link-custom:hover {
+        color: #fbbf24;
+    }
 
-.btn-live {
-    position: relative;
-    background: linear-gradient(135deg, #dc2626, #b91c1c);
-    color: white;
-    padding: 10px 24px;
-    border-radius: 30px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-    animation: pulseLive 2s infinite;
-}
+    .btn-live {
+        position: relative;
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+        color: white;
+        padding: 10px 24px;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+        animation: pulseLive 2s infinite;
+    }
 
-.live-dot {
-    width: 10px;
-    height: 10px;
-    background: white;
-    border-radius: 50%;
-    animation: blink 1s infinite;
-}
+    .live-dot {
+        width: 10px;
+        height: 10px;
+        background: white;
+        border-radius: 50%;
+        animation: blink 1s infinite;
+    }
 
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-}
+    @keyframes blink {
 
-@keyframes pulseLive {
-    0%, 100% { box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); }
-    50% { box-shadow: 0 4px 25px rgba(220, 38, 38, 0.7), 0 0 30px rgba(220, 38, 38, 0.4); }
-}
+        0%,
+        100% {
+            opacity: 1;
+        }
 
-/* Mobile Menu Toggle */
-#mobile-menu-btn {
-    z-index: 60;
-}
+        50% {
+            opacity: 0.3;
+        }
+    }
+
+    @keyframes pulseLive {
+
+        0%,
+        100% {
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+        }
+
+        50% {
+            box-shadow: 0 4px 25px rgba(220, 38, 38, 0.7), 0 0 30px rgba(220, 38, 38, 0.4);
+        }
+    }
+
+    /* Mobile Menu Toggle */
+    #mobile-menu-btn {
+        z-index: 60;
+    }
 </style>
 
 <script>
-// Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', () => {
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
-    if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-    }
-});
+    // Mobile Menu Toggle
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    });
 </script>
