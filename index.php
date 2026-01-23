@@ -1103,7 +1103,7 @@
     <!-- Indicador de Scroll Animado (hijo directo de hero para layout space-between) -->
     <div class="scroll-indicator"
       onclick="document.getElementById('danzas-section').scrollIntoView({behavior: 'smooth'})">
-      <span class="scroll-text">Desliza para conocer el cronograma y las danzas</span>
+      <span class="scroll-text">Desliza para conocer las danzas</span>
       <div class="scroll-arrow">
         <i class="fas fa-chevron-down"></i>
       </div>
@@ -2371,12 +2371,12 @@
       }
     });
   </script>
-  <!-- Chatbot Widget -->
+
   <link rel="stylesheet" href="assets/css/chatbot-widget.css">
   <div id="chatbot-widget"></div>
   <script src="assets/js/chatbot-widget.js"></script>
 
-  <!-- Dance Details Modal -->
+
   <div class="modal" id="dance-modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -2386,11 +2386,8 @@
       <div class="modal-body" id="dance-modal-body"></div>
     </div>
   </div>
-
-  <!-- Auth Modal and Dropdown -->
   <?= getAuthModalHTML() ?>
   <?= getAuthJS('') ?>
-  <!-- Spark Effect Script -->
   <script src="./assets/js/spark-effect.js"></script>
 </body>
 

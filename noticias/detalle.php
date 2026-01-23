@@ -68,9 +68,13 @@ function getImg($path)
         return 'https://picsum.photos/800/400';
     if (strpos($path, 'http') === 0 || strpos($path, 'data:') === 0)
         return $path;
+    if (strpos($path, 'uploads/') === 0)
+        return '../assets/' . $path; // If stored as uploads/img.jpg -> ../assets/uploads/img.jpg
     if (strpos($path, '/') === 0)
-        return $path; // Trust absolute paths
-    return '../../' . $path; // Fallback for relative paths
+        return $path;
+
+    // Fallback for bare filenames (e.g. img_67bfc.jpg) -> ../assets/uploads/img_67bfc.jpg
+    return '../assets/uploads/' . $path;
 }
 
 function timeAgo($datetime)
@@ -210,16 +214,22 @@ function timeAgo($datetime)
                         // Assets: candelaria/assets/
                         // Path needed: ../assets/
                     
-                        // 1. Convert any double-up to single-up if it was wrongly fixed
-                        $content = str_replace('../../assets', '../assets', $content);
+                        // FIX: Ensure all images point to the correct php-admin/uploads directory
+                        // The public site is in candelaria/noticias/, admin uploads are in php-admin/uploads/
+                        // Relative path needed: ../../php-admin/uploads/
+                    
+                        // 1. Reset any existing relative prefixes to a clean state if possible, or just catch them in regex
+                    
+                        // 2. Catch src="uploads/..." and turn into src="../../php-admin/uploads/..."
+                        $content = preg_replace('/src="uploads\/([^"]+)"/', 'src="../../php-admin/uploads/$1"', $content);
 
-                        // 2. Fix the "Aggressive" regex to use ../
-                        // Catches src="...assets/uploads/img.png" -> src="../assets/uploads/img.png"
-                        $content = preg_replace('/src=".*?assets\/uploads\/([^"]+)"/', 'src="../assets/uploads/$1"', $content);
+                        // 3. Catch src="../uploads/..." (if stored that way) and turn into src="../../php-admin/uploads/..."
+                        $content = preg_replace('/src="\.\.\/uploads\/([^"]+)"/', 'src="../../php-admin/uploads/$1"', $content);
 
-                        // 3. Just in case regex missed something or it's a bare filename
-                        // src="img.png" -> src="../assets/uploads/img.png"
-                        $content = preg_replace('/src="([^"\/]+?\.(png|jpg|jpeg|webp))"/', 'src="../assets/uploads/$1"', $content);
+                        // 4. Catch bare filenames if they look like uploads (optional, but risky if not careful)
+                        // Limiting to common image extensions to be safe
+                        // This handles cases where src="image.jpg" might be stored
+                        $content = preg_replace('/src="([^"\/]+?\.(png|jpg|jpeg|webp))"/', 'src="../../php-admin/uploads/$1"', $content);
 
                         echo $content;
                         ?>
