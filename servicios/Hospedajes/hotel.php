@@ -1671,7 +1671,7 @@
 
         function updateGalleryDisplay() {
             const mainImg = document.getElementById('gallery-main');
-            mainImg.src = galleryImages[currentGalleryIndex];
+            mainImg.src = fixImagePath(galleryImages[currentGalleryIndex]);
 
             const counter = document.getElementById('gallery-counter');
             if (counter) counter.textContent = currentGalleryIndex + 1;
