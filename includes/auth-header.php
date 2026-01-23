@@ -229,16 +229,23 @@ function getAuthJS()
     // --- Auth State Management ---
     
     async function initAuth() {
+        console.log('[Auth] initAuth called');
+        
         // First, check for Supabase session (priority)
         if (typeof SupabaseCore !== 'undefined') {
             try {
-                const supabaseUser = await SupabaseCore.getCurrentUser();
-                if (supabaseUser) {
+                // getCurrentUser returns { user, error }, not just user
+                const result = await SupabaseCore.getCurrentUser();
+                const supabaseUser = result.user || result; // Handle both formats
+                
+                console.log('[Auth] Supabase user result:', supabaseUser);
+                
+                if (supabaseUser && supabaseUser.id) {
                     const userData = {
                         id: supabaseUser.id,
-                        name: supabaseUser.user_metadata?.full_name || supabaseUser.email?.split('@')[0] || 'Usuario',
-                        email: supabaseUser.email,
-                        picture: supabaseUser.user_metadata?.avatar_url || supabaseUser.user_metadata?.picture,
+                        name: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || 'Usuario',
+                        email: supabaseUser.email || 'Email no disponible',
+                        picture: supabaseUser.user_metadata?.avatar_url || supabaseUser.user_metadata?.picture || null,
                         provider: 'supabase'
                     };
                     window.currentUser = userData;
@@ -249,8 +256,10 @@ function getAuthJS()
                     return;
                 }
             } catch (e) {
-                console.log('[Auth] No Supabase session found');
+                console.log('[Auth] Error checking Supabase session:', e);
             }
+        } else {
+            console.log('[Auth] SupabaseCore not available');
         }
         
         // Fallback to legacy localStorage
@@ -321,16 +330,31 @@ function getAuthJS()
     }
 
     function showLoggedOutState() {
+        console.log('[Auth] showLoggedOutState called');
         window.currentUser = null; // Ensure global sync
+        
         const btnLogin = document.getElementById('auth-btn-login');
         const btnLoginMobile = document.getElementById('auth-btn-login-mobile');
         const profileDiv = document.getElementById('auth-user-profile');
 
-        if(btnLogin) btnLogin.classList.remove('hidden');
-        if(btnLoginMobile) btnLoginMobile.classList.remove('hidden'); 
-        if(profileDiv) profileDiv.classList.add('hidden');
+        // Show login buttons with explicit style reset
+        if(btnLogin) {
+            btnLogin.classList.remove('hidden');
+            btnLogin.style.display = ''; // Reset to default (flex)
+        }
+        if(btnLoginMobile) {
+            btnLoginMobile.classList.remove('hidden');
+            btnLoginMobile.style.display = ''; // Reset to default (flex)
+        }
+        
+        // Hide profile dropdown with explicit style
+        if(profileDiv) {
+            profileDiv.classList.add('hidden');
+            profileDiv.style.display = 'none';
+        }
         
         window.dispatchEvent(new CustomEvent('auth-changed', { detail: null }));
+        console.log('[Auth] Logged out state applied');
     }
 
     // --- Modal Control (ID based for robustness) ---
@@ -372,6 +396,8 @@ function getAuthJS()
     // --- Logout ---
     window.handleLogout = async function() {
         if(confirm('¿Estás seguro de cerrar sesión?')) {
+            console.log('[Auth] Starting logout...');
+            
             // Clear Supabase session first (priority)
             if (typeof SupabaseCore !== 'undefined') {
                 try {
@@ -382,10 +408,14 @@ function getAuthJS()
                 }
             }
             
-            // Clear legacy localStorage
+            // Clear ALL localStorage items related to auth
             localStorage.removeItem('candelaria_user');
             localStorage.removeItem('clientToken');
             localStorage.removeItem('clientUser');
+            
+            // Clear Supabase cookies manually as backup
+            document.cookie = 'sb-access-token=; path=/; max-age=0';
+            document.cookie = 'sb-refresh-token=; path=/; max-age=0';
             
             // Also logout from Google if possible
             if (typeof google !== 'undefined' && google.accounts) {
@@ -393,11 +423,16 @@ function getAuthJS()
             }
             // Logout Facebook
             if (typeof FB !== 'undefined') {
-                FB.logout();
+                try { FB.logout(); } catch(e) {}
             }
             
+            // Force UI update BEFORE reload
+            showLoggedOutState();
+            
             showToast('Has cerrado sesión correctamente', 'info');
-            setTimeout(() => location.reload(), 1000);
+            
+            // Reload page to fully clear state
+            setTimeout(() => location.reload(), 800);
         }
     }
 

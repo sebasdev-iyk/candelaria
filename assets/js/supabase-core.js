@@ -284,6 +284,20 @@
         return { data, error };
     }
 
+    /**
+     * Register a callback for auth state changes
+     * @param {function} callback - Callback function(event, session)
+     * @returns {object} - Subscription object
+     */
+    function onAuthStateChange(callback) {
+        const client = initSupabase();
+        if (!client) return null;
+
+        return client.auth.onAuthStateChange((event, session) => {
+            callback(event, session);
+        });
+    }
+
     // ==========================================
     // EXPORT TO GLOBAL SCOPE
     // ==========================================
@@ -302,6 +316,7 @@
         getSession,
         getAccessToken,
         isAuthenticated,
+        onAuthStateChange,
 
         // Realtime
         subscribeToTable,
