@@ -537,6 +537,10 @@
                 class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-candelaria-purple text-candelaria-purple text-gray-900">
                 <i data-lucide="calendar" class="w-4 h-4"></i> Programación
             </button>
+            <button onclick="setActiveTab('danzas')" id="tab-danzas"
+                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-transparent text-gray-500 hover:border-candelaria-purple hover:text-candelaria-purple transition-colors">
+                <i data-lucide="users" class="w-4 h-4"></i> Danzas
+            </button>
             <button onclick="setActiveTab('simulador')" id="tab-simulador"
                 class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-transparent text-gray-500 hover:border-candelaria-purple hover:text-candelaria-purple transition-colors">
                 <i data-lucide="play-circle" class="w-4 h-4"></i> Simulador
@@ -544,10 +548,6 @@
             <button onclick="setActiveTab('consultas')" id="tab-consultas"
                 class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-transparent text-gray-500 hover:border-candelaria-purple hover:text-candelaria-purple transition-colors">
                 <i data-lucide="help-circle" class="w-4 h-4"></i> Consultas
-            </button>
-            <button onclick="setActiveTab('danzas')" id="tab-danzas"
-                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-transparent text-gray-500 hover:border-candelaria-purple hover:text-candelaria-purple transition-colors">
-                <i data-lucide="users" class="w-4 h-4"></i> Danzas
             </button>
 
         </div>
