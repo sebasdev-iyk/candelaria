@@ -161,14 +161,14 @@
         }
 
         .timeline-content {
-            opacity: 0;
-            transform: translateY(20px);
+            opacity: 1;
+            transform: translateY(0);
             transition: all 0.5s ease;
         }
 
-        .timeline-content.active {
-            opacity: 1;
-            transform: translateY(0);
+        .timeline-content.hidden {
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         /* ========== EN TIEMPO REAL Button Styles ========== */
@@ -960,7 +960,7 @@
                             <!-- LAYKAKOTA -->
                             <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
                                 <div class="w-full md:w-1/3 h-40 shrink-0">
-                                    <img src="https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/476632019_1170733227970041_2953058933484479784_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEpuwh3xJc20s5XNni6ulcDYDNZPaGwWQZgM1k9obBZBodqc5ms3v8EzQdmNDVyhHxWRFCqN2CtEfHHQEUGMMOl&_nc_ohc=7qtT2TwvB0kQ7kNvwFocCvJ&_nc_oc=AdkgY6GQDg31cWMSI1yw4knu8OQQ0IWW4vvePKdcJLKfGjiVHxbYy9UHh35AMxyUhcA&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=NtVGG1ZqasrKnC9Eu5a4vQ&oh=00_AfruFSNh7CHdaUZWxjpDMLr4_xK2DvcRJRS_MKU1Bi4ZHw&oe=6979981B" onerror="this.src='https://placehold.co/400x400/4c1d95/fbbf24?text=LAYKAKOTA'" class="w-full h-full object-cover rounded-lg shadow-sm">
+                                    <img src="https://www.punomagico.com/image/negritos%203.jpg" onerror="this.src='https://www.punomagico.com/image/negritos%203.jpg'" class="w-full h-full object-cover rounded-lg shadow-sm">
                                 </div>
                                 <div>
                                     <div class="flex justify-between items-center mb-2">
@@ -977,39 +977,226 @@
 
                         <!-- TABLE: FUNDACIONES -->
                         <div class="bg-slate-900 rounded-xl p-6 text-white overflow-hidden">
-                            <h4 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="list" class="w-5 h-5 text-yellow-400"></i> Cronología de Fundaciones</h4>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-sm text-left text-slate-300">
-                                    <thead class="text-yellow-400 border-b border-slate-700 uppercase text-xs">
-                                        <tr>
-                                            <th class="px-4 py-3">Conjunto</th>
-                                            <th class="px-4 py-3">Año</th>
-                                            <th class="px-4 py-3">Importancia Histórica</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-slate-700">
-                                        <tr>
-                                            <td class="px-4 py-3 font-medium text-white">Morenada Orkapata</td>
-                                            <td class="px-4 py-3">1955</td>
-                                            <td class="px-4 py-3">Primera morenada institucionalizada.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-4 py-3 font-medium text-white">Diablada Porteño</td>
-                                            <td class="px-4 py-3">1962</td>
-                                            <td class="px-4 py-3">Iniciadora de la era moderna.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-4 py-3 font-medium text-white">Diablada Bellavista</td>
-                                            <td class="px-4 py-3">1963</td>
-                                            <td class="px-4 py-3">Prestigio competitivo y organización.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-4 py-3 font-medium text-white">Confraternidad Victoria</td>
-                                            <td class="px-4 py-3">1965</td>
-                                            <td class="px-4 py-3">Expansión nacional del folklore.</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <h4 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="list" class="w-5 h-5 text-yellow-400"></i> Cronología Histórica de la Festividad</h4>
+                            
+                            <!-- PERIODO: ORÍGENES -->
+                            <div class="mb-6">
+                                <h5 class="text-yellow-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+                                    Período Colonial y Fundacional (1583 - 1900)
+                                </h5>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-slate-300">
+                                        <thead class="text-yellow-400 border-b border-slate-700 uppercase text-xs">
+                                            <tr>
+                                                <th class="px-4 py-2">Año</th>
+                                                <th class="px-4 py-2">Evento / Conjunto</th>
+                                                <th class="px-4 py-2">Importancia Histórica</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-700">
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1583</td>
+                                                <td class="px-4 py-2">Fundación del pueblo de Puno</td>
+                                                <td class="px-4 py-2">Llegada de la imagen de la Virgen de la Candelaria de España, traída por los mineros de Laykakota.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1668</td>
+                                                <td class="px-4 py-2">Milagro del Cerro Huajsapata</td>
+                                                <td class="px-4 py-2">Leyenda fundacional: la Virgen defiende a los indígenas durante la rebelión de Laykakota contra los españoles.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1871</td>
+                                                <td class="px-4 py-2">Cabildo de Naturales</td>
+                                                <td class="px-4 py-2">Primera procesión documentada con danzas autóctonas (Sicuris, Wifala). Origen del calendario festivo actual.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1884</td>
+                                                <td class="px-4 py-2">Sikuris Juventud Obrera</td>
+                                                <td class="px-4 py-2">Uno de los primeros conjuntos de sikuris institucionalizado en Puno. Símbolo del gremio obrero.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1892</td>
+                                                <td class="px-4 py-2">Sikuris Mañazo</td>
+                                                <td class="px-4 py-2">Fundado por el gremio de matarifes. Origen del estilo de \"un solo bombo\". Raíz de la Diablada puneña.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- PERIODO: ERA DE LOS SIKURIS -->
+                            <div class="mb-6">
+                                <h5 class="text-green-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span class="w-3 h-3 bg-green-400 rounded-full"></span>
+                                    Era de los Sikuris y Primeras Danzas de Luces (1900 - 1960)
+                                </h5>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-slate-300">
+                                        <thead class="text-green-400 border-b border-slate-700 uppercase text-xs">
+                                            <tr>
+                                                <th class="px-4 py-2">Año</th>
+                                                <th class="px-4 py-2">Evento / Conjunto</th>
+                                                <th class="px-4 py-2">Importancia Histórica</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-700">
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1913</td>
+                                                <td class="px-4 py-2">Qhantati Ururi (Conima)</td>
+                                                <td class="px-4 py-2">Conjunto mítico de sikuris de Moho. Creadores del \"estilo suave\". Conecta las provincias con la capital.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1918</td>
+                                                <td class="px-4 py-2">Sikuris 27 de Junio</td>
+                                                <td class="px-4 py-2">Fundado en Juli (Chucuito). Representantes del estilo Lupaka, con zampoñas de mayor tamaño.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1943</td>
+                                                <td class="px-4 py-2">Primera Diablada en Puno</td>
+                                                <td class="px-4 py-2">Aparecen los primeros \"diablos\" con máscaras de yeso, inspirados en autos sacramentales y la Morenada.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1955</td>
+                                                <td class="px-4 py-2">Morenada Orkapata</td>
+                                                <td class="px-4 py-2">Primera morenada institucionalizada. Transición de lo autóctono a lo mestizo. Pionera del género.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1956</td>
+                                                <td class="px-4 py-2">Hermanos Velásquez (Taller)</td>
+                                                <td class="px-4 py-2">Revolucionan la mascarería puneña: ojos de vidrio soplado e iconografía local propia.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- PERIODO: ERA DORADA -->
+                            <div class="mb-6">
+                                <h5 class="text-purple-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span class="w-3 h-3 bg-purple-400 rounded-full"></span>
+                                    Era Dorada de los Trajes de Luces (1960 - 1985)
+                                </h5>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-slate-300">
+                                        <thead class="text-purple-400 border-b border-slate-700 uppercase text-xs">
+                                            <tr>
+                                                <th class="px-4 py-2">Año</th>
+                                                <th class="px-4 py-2">Evento / Conjunto</th>
+                                                <th class="px-4 py-2">Importancia Histórica</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-700">
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1962</td>
+                                                <td class="px-4 py-2">Tradicional Diablada Porteño</td>
+                                                <td class="px-4 py-2">Iniciadora de la era moderna. Profesionaliza la danza con estándares artísticos y organizativos.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1962</td>
+                                                <td class="px-4 py-2">Morenada Laykakota (Rey Moreno)</td>
+                                                <td class="px-4 py-2">Nace como \"Rey Moreno\". Evoluciona a Morenada masiva. Representa la masificación moderna.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1963</td>
+                                                <td class="px-4 py-2">Diablada Bellavista</td>
+                                                <td class="px-4 py-2">Fundada por Simón Rodríguez y Paulina Gómez. Influencia de maestros bolivianos. Once veces campeona.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1965</td>
+                                                <td class="px-4 py-2">Confraternidad Diablada Victoria</td>
+                                                <td class="px-4 py-2">Expansión del folklore puneño a nivel nacional. Rivalidad con Porteño y Bellavista.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1967</td>
+                                                <td class="px-4 py-2">Visita de José María Arguedas</td>
+                                                <td class="px-4 py-2">El escritor declara a Puno \"Capital del Folklore Peruano\". Punto de inflexión para el reconocimiento nacional.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1970</td>
+                                                <td class="px-4 py-2">Creación de la Fed. Regional de Folklore</td>
+                                                <td class="px-4 py-2">Institucionaliza el concurso anual de danzas. Se establecen categorías (Luces vs. Autóctonos).</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1975</td>
+                                                <td class="px-4 py-2">Diablada Amigos de la PNP</td>
+                                                <td class="px-4 py-2">Fundada por suboficiales de la policía. Disciplina militar aplicada a la danza. Múltiples campeonatos.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1982</td>
+                                                <td class="px-4 py-2">Caporales Huáscar</td>
+                                                <td class="px-4 py-2">Primera agrupación de Caporales en Puno. Danza recreada en Bolivia llega al Altiplano peruano.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- PERIODO: GLOBALIZACION -->
+                            <div class="mb-6">
+                                <h5 class="text-blue-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span class="w-3 h-3 bg-blue-400 rounded-full"></span>
+                                    Globalización y Reconocimiento Mundial (1985 - Presente)
+                                </h5>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-slate-300">
+                                        <thead class="text-blue-400 border-b border-slate-700 uppercase text-xs">
+                                            <tr>
+                                                <th class="px-4 py-2">Año</th>
+                                                <th class="px-4 py-2">Evento / Conjunto</th>
+                                                <th class="px-4 py-2">Importancia Histórica</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-700">
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1985</td>
+                                                <td class="px-4 py-2">Ley N° 24325 del Congreso</td>
+                                                <td class="px-4 py-2">La ley reconoce oficialmente a Puno como \"Capital del Folklore Peruano\".</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1996</td>
+                                                <td class="px-4 py-2">Caporales Centralistas Puno</td>
+                                                <td class="px-4 py-2">Internacionalización del Caporal puneño. Presentaciones en Miami y Nueva York.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">2003</td>
+                                                <td class="px-4 py-2">Patrimonio Cultural de la Nación</td>
+                                                <td class="px-4 py-2">El Instituto Nacional de Cultura (INC) declara la festividad como Patrimonio Cultural.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">2014</td>
+                                                <td class="px-4 py-2">Patrimonio UNESCO</td>
+                                                <td class="px-4 py-2">La festividad es inscrita en la Lista Representativa del Patrimonio Cultural Inmaterial de la Humanidad.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">2020</td>
+                                                <td class="px-4 py-2">Última edición pre-pandemia</td>
+                                                <td class="px-4 py-2">Diablada Bellavista gana con 94.26 pts. Más de 150 conjuntos participan antes del cierre mundial.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">2024</td>
+                                                <td class="px-4 py-2">Retorno Post-Pandemia</td>
+                                                <td class="px-4 py-2">Morenada Laykakota gana el concurso. La festividad vuelve con más de 130,000 danzantes.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">2025</td>
+                                                <td class="px-4 py-2">Morenada Santa Rosa / Wifalas Muñani</td>
+                                                <td class="px-4 py-2">Campeones actuales. Santa Rosa (87.71 pts) y Muñani (63.10 pts) lideran sus categorías respectivas.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- REFERENCIAS -->
+                            <div class="mt-6 pt-4 border-t border-slate-700">
+                                <h5 class="text-slate-400 text-xs uppercase tracking-wider mb-2">Referencias Bibliográficas</h5>
+                                <ul class="text-xs text-slate-500 space-y-1">
+                                    <li>• Cánepa Koch, G. (1998). <em>Máscara, transformación e identidad en los Andes</em>. PUCP.</li>
+                                    <li>• UNESCO (2014). Expediente de inscripción de la Festividad Virgen de la Candelaria.</li>
+                                    <li>• Núñez Butrón, M. (1959). <em>Estampas puneñas</em>. Ed. Los Andes.</li>
+                                    <li>• Federación Regional de Folklore de Puno. Archivos históricos (1970-2025).</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -1219,15 +1406,15 @@
                         <!-- 2025 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://vivecandelaria.com/wp-content/uploads/2024/12/festividad-virgen-candelaria-2025-una-puno.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Morenada Santa Rosa">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2025</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Morenada Santa Rosa</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Confraternidad Morenada Santa Rosa</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2025. Destacó por la armonía de sus pasos y la espectacularidad de su banda.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2025 con 87.71 puntos. Destacó por la armonía de sus pasos y la espectacularidad de su banda.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('morenada-santa-rosa-2025')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1242,7 +1429,7 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Wifalas Muñani">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2025</div>
                             </div>
                             <div class="p-6">
@@ -1250,7 +1437,7 @@
                                     <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas de Muñani</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Ganador absoluto tras un empate histórico de 63.10 puntos, prioritario por su coreografía impecable.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Ganador oficial 2025 con 63.10 puntos. Prioridad ganada sobre criterios técnicos por su coreografía impecable.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('wifalas-munani-2025')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1266,15 +1453,15 @@
                         <!-- 2024 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2020/02/MORENADA-LAYKACOTA-.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Rey Moreno Laykakota">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2024</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Rey Moreno Laykakota</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Morenada Laykakota</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2024. Su victoria marcó un hito en la evolución del diseño de trajes de cholas puneñas.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2024 con un puntaje final de 86.32 puntos, liderando la categoría de Traje de Luces.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('rey-moreno-2024')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1289,15 +1476,15 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2024/02/Conjunto-Unucajas-de-Azangaro.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Unucajas de Azángaro">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2024</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Unucajas de Azángaro</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Unucajas de Azángaro</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Primer lugar 2024, reafirmando que la zona quechua continúa siendo la reserva técnica de las danzas.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Primer lugar 2024 con 88.68 puntos, reafirmando que la zona quechua continúa siendo la reserva técnica de las danzas.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('unucajas-2024')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1313,12 +1500,12 @@
                         <!-- 2020 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhE6LPtSpDH5jaLU0pg8jsFTPzL5Kg4e0YBV-QgmSDdtP0QKj7T3l7tYYJJJXPQ8VoCm9ArqO5fbnA6az1-o_G2UrFHo2umlKrsavvCWkDqGyGNtrkvHSkljM709uAyz5kwMFuU9troCBPF/s280/Diablos_Puno.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Diablada Bellavista">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2020</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Diablada Bellavista</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Folklórica Espectacular Diablada Bellavista</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Último gran ganador antes de la pandemia (94.26 puntos). Sofisticación técnica en su bloque de arcángeles.</p>
@@ -1336,15 +1523,15 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0109-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Carnaval de Patambuco">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2020</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Carnaval de Patambuco</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Musuq Illariy "Carnaval de Patambuco"</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Triunfo indiscutible con la mayor puntuación del concurso antes del cierre por emergencia sanitaria.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Triunfo indiscutible con una puntuación de 88.84 en el último concurso antes de la emergencia sanitaria.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('patambuco-2020')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1360,12 +1547,12 @@
                         <!-- 2019 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://www.punomagico.com/image/pnp%202021.png" onerror="this.src='https://placehold.co/600x400/b91c1c/ffffff?text=DIABLADA+PNP'" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Diablada PNP">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2019</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Diablada Amigos de la PNP</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Incomparable Gran Diablada Amigos de la PNP</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Recuperaron el título con 88.66 puntos, destacando por su disciplina y consistencia en ambos escenarios.</p>
@@ -1383,12 +1570,12 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0338-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Chunchos de Esquilaya">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2019</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Chunchos de Esquilaya</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Chunchos de Esquilaya (Ayapata)</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Récord Histórico de 97.69 puntos. Emocionaron al jurado con su danza ancestral para evitar su extinción.</p>
@@ -1407,12 +1594,12 @@
                         <!-- 2018 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Morenada Orkapata">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2018</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Morenada Orkapata</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Confraternidad Morenada Orkapata</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Retornaron al título máximo después de décadas (89.47 puntos), marcando el resurgimiento de la Morenada.</p>
@@ -1436,7 +1623,7 @@
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Diablada Amigos de la PNP</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Incomparable Gran Diablada Amigos de la PNP</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Sexto campeonato histórico con 90.53 puntos, definiendo la estética moderna con bloques masivos.</p>
@@ -1454,12 +1641,12 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://muniazangaro.gob.pe/web/wp-content/uploads/2019/08/santiago-de-pupuja.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Carnaval Chaku">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2017</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Carnaval Chaku de Chupa</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Carnaval Chaku de Chucahuacas</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Campeón con 93.10 puntos. Danza ritual enérgica y vestimenta colorida que cautivó al jurado.</p>
@@ -1478,15 +1665,15 @@
                         <!-- 2016 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2020/02/11/000654060W.jpg" onerror="this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=CENTINELAS'" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Centinelas del Altiplano">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2016</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Centinelas del Altiplano</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Folklórica Diablada Centinelas del Altiplano</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Primer campeonato absoluto (84.81). Elogiado por su disciplina y simetría militar en la danza.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Primer campeonato absoluto con 91.54 puntos. Elogiado por su disciplina y simetría militar en la danza.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('centinelas-2016')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1501,15 +1688,15 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://i.ytimg.com/vi/EoJO-bFrSaw/maxresdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Wifalas de Putina">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2016</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas de San Antonio</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Conjunto de Wifalas San Antonio de Putina</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Triunfo en una reñida competencia. Con cintas de colores y pinkillos evocan sonidos de la naturaleza.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Triunfo con 94.00 puntos. Con cintas de colores y pinkillos evocan sonidos de la naturaleza.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('wifalas-putina-2016')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1525,12 +1712,12 @@
                         <!-- 2015 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://www.punomagico.com/image/centralistas%202021.jpg" onerror="this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=CENTRALISTAS'" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Caporales Centralistas">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2015</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Caporales Centralistas</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Caporales Centralistas Puno</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones con 90.37 puntos. Hito histórico en la categoría frente a su gran rival.</p>
@@ -1548,15 +1735,15 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Wifalas de Muñani">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2015</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas de Muñani</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas San Francisco Javier de Muñani (Azángaro)</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Primera victoria en la era de dominio de Azángaro. Patrimonio de la Nación de gran elegancia y pureza.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Ganador oficial 2015. Patrimonio de la Nación de gran elegancia y pureza en la zona quechua.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('wifalas-munani-2015')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1634,28 +1821,67 @@
 
                         <!-- Elementos de la línea de tiempo -->
                         <div class="space-y-20">
-                            <!-- Era 1: 1950-1970 -->
+                            
+                            <!-- Era 0: ORÍGENES COLONIALES (1583-1800) -->
                             <div class="relative flex flex-col md:flex-row items-center">
                                 <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Décadas
-                                            de Oro (1950-1970)</h3>
-                                        <p class="text-gray-700 mb-4">La época de las cofradías originales y el inicio
-                                            de la formalización del concurso. Las máscaras de yeso y los trajes de lana
-                                            definen esta era. Pura esencia ritual.</p>
-                                        <div class="flex flex-wrap gap-2">
-                                            <span
-                                                class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Cofradías</span>
-                                            <span
-                                                class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Máscaras
-                                                de Yeso</span>
-                                            <span
-                                                class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Tradición
-                                                Oral</span>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Orígenes Coloniales (1583-1800)</h3>
+                                        <p class="text-gray-700 mb-4">La imagen de la Virgen llega con los mineros españoles de Laykakota. En 1668, según la leyenda, la Virgen protege a los indígenas durante la rebelión. Nace el sincretismo entre la fe católica y la Pachamama andina.</p>
+                                        <div class="flex flex-wrap gap-2 justify-end">
+                                            <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Evangelización</span>
+                                            <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Sincretismo</span>
+                                            <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Minería</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="timeline-dot" onclick="toggleTimelineContent(0)"></div>
+                                <div class="md:w-1/2 md:pl-12">
+                                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Cerro_Rico_Potosi.jpg/1200px-Cerro_Rico_Potosi.jpg"
+                                            class="w-full h-48 object-cover vintage-photo" alt="Minas coloniales"
+                                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/92400e/fbbf24?text=COLONIA+1583';">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Era 1: SIKURIS Y PRIMERAS COFRADÍAS (1870-1940) -->
+                            <div class="relative flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+                                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                        <img src="https://imgmedia.larepublica.pe/640x384/larepublica/migration/images/AUYVEJ2FDJGGXBBFODIK7OQQKY.webp"
+                                            class="w-full h-48 object-cover vintage-photo" alt="Sikuris históricos"
+                                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=SIKURIS+1892';">
+                                    </div>
+                                </div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(1)"></div>
+                                <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
+                                    <div class="timeline-content">
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Era de los Sikuris (1870-1940)</h3>
+                                        <p class="text-gray-700 mb-4">Surgen las primeras cofradías formales: Sikuris Mañazo (1892) del gremio de matarifes y Juventud Obrera (1884). El siku (zampoña) domina el paisaje sonoro. Aparecen las primeras procesiones documentadas con danzas autóctonas.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Sikuris</span>
+                                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Gremios</span>
+                                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Cofradías</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Era 2: DÉCADAS DE ORO (1950-1970) -->
+                            <div class="relative flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
+                                    <div class="timeline-content">
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Décadas de Oro (1950-1970)</h3>
+                                        <p class="text-gray-700 mb-4">La época de las cofradías originales y el inicio de la formalización del concurso. Nace Morenada Orkapata (1955), Diablada Porteño (1962) y Bellavista (1963). Las máscaras de yeso y los trajes de lana definen esta era.</p>
+                                        <div class="flex flex-wrap gap-2 justify-end">
+                                            <span class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Cofradías</span>
+                                            <span class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Máscaras de Yeso</span>
+                                            <span class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Tradición Oral</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(2)"></div>
                                 <div class="md:w-1/2 md:pl-12">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiijAyeVlb8shbRm-HMeE-XNwfbG4uRXlBUImio62n416pNahZ-iij-ug09YMBTqK4GwnEN2OXQh-iO8tNKai-pH7y8_PgSp3EXvIBSAg4TPiEMpxqI0phlGdujmt17EpqCXNL1icP7Q1Q/s1600/Edwin+Losa.jpg"
@@ -1665,64 +1891,121 @@
                                 </div>
                             </div>
 
-                            <!-- Era 2: 1980-1990 -->
+                            <!-- Era 3: INSTITUCIONALIZACIÓN (1967-1985) -->
                             <div class="relative flex flex-col md:flex-row items-center">
                                 <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+                                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                        <img src="https://www.punomagico.com/image/arguedas.jpg"
+                                            class="w-full h-48 object-cover vintage-photo" alt="José María Arguedas"
+                                            onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Jos%C3%A9_Mar%C3%ADa_Arguedas.jpg/220px-Jos%C3%A9_Mar%C3%ADa_Arguedas.jpg';">
+                                    </div>
+                                </div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(3)"></div>
+                                <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
+                                    <div class="timeline-content">
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Institucionalización (1967-1985)</h3>
+                                        <p class="text-gray-700 mb-4">José María Arguedas visita Puno (1967) y declara la ciudad "Capital del Folklore". Se crea la Federación Regional de Folklore (1970). El Congreso promulga la Ley N° 24325 (1985) oficializando el título.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Arguedas</span>
+                                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Federación</span>
+                                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Ley N° 24325</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Era 4: BOOM DEL BORDADO (1980-2000) -->
+                            <div class="relative flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
+                                    <div class="timeline-content">
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">El Boom del Bordado (1980-2000)</h3>
+                                        <p class="text-gray-700 mb-4">Ingresa la alta costura andina. Los trajes se vuelven más elaborados con lentejuelas y bordados de hilos de oro. Llegan los Caporales (1982). La rivalidad entre conjuntos se intensifica y la competencia alcanza estándares internacionales.</p>
+                                        <div class="flex flex-wrap gap-2 justify-end">
+                                            <span class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Alta Costura</span>
+                                            <span class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Lentejuelas</span>
+                                            <span class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Caporales</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(4)"></div>
+                                <div class="md:w-1/2 md:pl-12">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://static.wixstatic.com/media/27f42d_c1c0a0c4f82643a290333250b73e52f0~mv2.jpg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/27f42d_c1c0a0c4f82643a290333250b73e52f0~mv2.jpg"
                                             class="w-full h-48 object-cover vintage-photo" alt="Candelaria años 80"
                                             onerror="this.onerror=null;this.src='https://vivecandelaria.com/wp-content/uploads/2017/02/candelaria-puno-1950.jpg';">
                                     </div>
                                 </div>
-                                <div class="timeline-dot" onclick="toggleTimelineContent(1)"></div>
+                            </div>
+
+                            <!-- Era 5: PATRIMONIO UNESCO (2003-2020) -->
+                            <div class="relative flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+                                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/UNESCO_logo.svg/1200px-UNESCO_logo.svg.png"
+                                            class="w-full h-48 object-contain bg-white p-4" alt="UNESCO"
+                                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/0ea5e9/ffffff?text=UNESCO+2014';">
+                                    </div>
+                                </div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(5)"></div>
                                 <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">El Boom
-                                            del Bordado (1980-1990)</h3>
-                                        <p class="text-gray-700 mb-4">Ingresa la alta costura andina. Los trajes se
-                                            vuelven más elaborados y pesados, con lentejuelas y bordados de hilos de
-                                            oro. El concurso crece en número de participantes y la rivalidad se
-                                            intensifica.</p>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Patrimonio Mundial (2003-2020)</h3>
+                                        <p class="text-gray-700 mb-4">En 2003, el INC declara la festividad Patrimonio Cultural de la Nación. En 2014, la UNESCO la inscribe como Patrimonio Inmaterial de la Humanidad. El concurso supera los 150 conjuntos y 130,000 danzantes.</p>
                                         <div class="flex flex-wrap gap-2">
-                                            <span
-                                                class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Alta
-                                                Costura</span>
-                                            <span
-                                                class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Lentejuelas</span>
-                                            <span
-                                                class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Crecimiento</span>
+                                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">UNESCO 2014</span>
+                                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">INC 2003</span>
+                                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">130K Danzantes</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Era 3: 2000-Presente -->
+                            <!-- Era 6: ERA DIGITAL Y PRESENTE (2020-2025) -->
                             <div class="relative flex flex-col md:flex-row items-center">
                                 <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">
-                                            Patrimonio Global (2000 - Hoy)</h3>
-                                        <p class="text-gray-700 mb-4">Declaración UNESCO (2014) y la globalización de la
-                                            danza. Se prioriza la agilidad y la sincronía masiva. El uso de la
-                                            tecnología en la difusión la convierte en un fenómeno mundial.</p>
-                                        <div class="flex flex-wrap gap-2">
-                                            <span
-                                                class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">UNESCO</span>
-                                            <span
-                                                class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Globalización</span>
-                                            <span
-                                                class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Tecnología</span>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Era Digital (2020 - Hoy)</h3>
+                                        <p class="text-gray-700 mb-4">Tras la pausa pandémica (2021-2023), la festividad vuelve con fuerza en 2024. Morenada Laykakota y Wifalas Muñani lideran. En 2025, Santa Rosa (87.71 pts) y Muñani (63.10 pts) son los nuevos campeones. La transmisión digital lleva la fiesta al mundo.</p>
+                                        <div class="flex flex-wrap gap-2 justify-end">
+                                            <span class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Streaming</span>
+                                            <span class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Retorno 2024</span>
+                                            <span class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Santa Rosa 2025</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="timeline-dot" onclick="toggleTimelineContent(2)"></div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(6)"></div>
                                 <div class="md:w-1/2 md:pl-12">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://vivecandelaria.com/wp-content/uploads/2024/12/festividad-virgen-candelaria-2025-una-puno.jpg"
                                             class="w-full h-48 object-cover vintage-photo" alt="Candelaria actual"
-                                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=CANDELARIA+ACTUAL';">
+                                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=CANDELARIA+2025';">
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Referencias académicas -->
+                    <div class="mt-12 bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                        <h4 class="font-heading text-lg font-bold text-candelaria-purple mb-4 flex items-center gap-2">
+                            <i data-lucide="book-open" class="w-5 h-5"></i> Referencias Bibliográficas
+                        </h4>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
+                            <div class="flex items-start gap-2">
+                                <span class="text-candelaria-gold font-bold">[1]</span>
+                                <p>Cánepa Koch, G. (1998). <em>Máscara, transformación e identidad en los Andes</em>. Fondo Editorial PUCP.</p>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-candelaria-gold font-bold">[2]</span>
+                                <p>UNESCO (2014). <em>Expediente de inscripción: Festividad Virgen de la Candelaria de Puno</em>.</p>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-candelaria-gold font-bold">[3]</span>
+                                <p>Núñez Butrón, M. (1959). <em>Estampas puneñas</em>. Editorial Los Andes, Puno.</p>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-candelaria-gold font-bold">[4]</span>
+                                <p>Federación Regional de Folklore de Puno. <em>Archivos históricos del concurso</em> (1970-2025).</p>
                             </div>
                         </div>
                     </div>
@@ -1967,9 +2250,38 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
         }
 
         // 9. Lógica para modal de conjuntos
+        // Función para convertir links de YouTube a formato Embed compatible
+        function formatYoutubeEmbed(url) {
+            if (!url) return '';
+            let videoId = '';
+            
+            // Caso 1: youtu.be/ID
+            if (url.includes('youtu.be/')) {
+                videoId = url.split('youtu.be/')[1].split('?')[0];
+            } 
+            // Caso 2: youtube.com/watch?v=ID
+            else if (url.includes('v=')) {
+                videoId = url.split('v=')[1].split('&')[0];
+            }
+            // Caso 3: youtube.com/embed/ID
+            else if (url.includes('embed/')) {
+                videoId = url.split('embed/')[1].split('?')[0];
+            }
+            // Caso 4: short URL con ?v=
+            else if (url.includes('youtube.com/')) {
+                const parts = url.split('/');
+                videoId = parts[parts.length - 1].split('?')[0];
+            }
+
+            if (!videoId) return url; // Retornar original si no se reconoce
+            
+            // Retornar formato embed con parámetros de autoplay y limpieza
+            return `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`;
+        }
+
         const ganadoresData = {
             'morenada-santa-rosa-2025': {
-                title: 'Morenada Santa Rosa de Puno',
+                title: 'Confraternidad Morenada Santa Rosa',
                 year: '2025',
                 category: 'Trajes de Luces',
                 score: '87.71',
@@ -1980,29 +2292,39 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Innovación en el diseño de las polleras y mantas',
                     'Sincronización perfecta entre bloques masivos'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://vivecandelaria.com/wp-content/uploads/2024/12/festividad-virgen-candelaria-2025-una-puno.jpg'
+                video: 'https://youtu.be/zHyI2YsZOHM?si=oeJX9ukfku4pRYfg',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_6843-scaled.jpg',
+                gallery: [
+                    'https://i.ytimg.com/vi/offdD_fD7ec/sddefault.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_6845-scaled.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_6849-scaled.jpg'
+                ]
             },
             'wifalas-munani-2025': {
                 title: 'Wifalas San Francisco Javier de Muñani',
                 year: '2025',
                 category: 'Autóctonos',
                 score: '63.10',
-                badges: ['Ganador Absoluto', 'Danza Originaria'],
+                badges: ['Ganador Oficial*', 'Azángaro'],
                 reasons: [
                     'Ejecución técnica impecable de la danza Wifala',
-                    'Uso de vestimentas blancas de lana de oveja',
+                    'Uso de vestimentas de lana de oveja',
                     'Simbolismo puro de la alegría del carnaval',
                     'Prioridad ganada por criterios de desempate técnicos'
                 ],
-                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg'
+                video: 'https://youtu.be/Hdz7oQ2L56U?si=Hzxic8d8Xp8102s5',
+                image: 'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/481667780_607308822167738_924106991794853925_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFLAVA3lxGs8Ej9UFiB-DvBjyA_PgfEAxmPID8-B8QDGXEDsOLsEQT7VLCe4feW1VjNhdvvKc0FSItBw_Z9QOUr&_nc_ohc=Oztc0rf6B34Q7kNvwGwrOsK&_nc_oc=AdnoitbuUW-MHhasf-XJ_-NFbgX44SDHHhxVcoHL7HnUq7nmU19PtqZLVTyoV3o6Ei4&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=wxajznF_QQs_lW64Q5LDUw&oh=00_AfpXPUFgdW7nJWbPzL22HSrSYsN79wfHjN8sObr8sZyrfw&oe=6979ED0C',
+                gallery: [
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/481829898_607309548834332_6895553575553519726_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHMkCrtV6xli4KPIUvlqPRoUCluByf5JGZQKW4HJ_kkZl_vm3r4usKC6XFX9eWbV7eIBNnBQloBBFVB5T8Zwv1q&_nc_ohc=yMe6mzyhzroQ7kNvwEo_JXk&_nc_oc=AdmpFsoaVivsvQ7Bi5qUuXHfKmtdHZvlpx8RiL73fAkcAM6Wz42XxgTSu5SmM_3iu8k&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=LavnZ_LUGxPUYznva1qCCw&oh=00_AfqJ-uBCfF49nl3he8N7ZFLHKd_rRqgGG1lf9VJIBKtr2A&oe=697A056C',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t39.30808-6/481697180_607309715500982_2190773412209976210_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFaYx47ZUaUqv3aayKdG6p46jQ2TN_knnjqNDZM3-SeeNsYQkj5vd59lhF_NaCbZMm3fhOyifnmQNrN9zvBCoVt&_nc_ohc=3OxPtdh718QQ7kNvwFTVOvm&_nc_oc=AdkAiSQuqRto4lg44s_B_KLAjXLbAdU95WkydgMfxx3hYUtaTyEe-fZwiwnQpwaVTAQ&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=f_1YtMJmOGWWxuAuAJPKrg&oh=00_AfoYcQ6qB1l5ZVRAwHT42yWP-pWMLQUzup6TGteNtEDgJg&oe=6979F699',
+                    'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg'
+                ]
             },
             'rey-moreno-2024': {
-                title: 'Rey Moreno Laykakota',
+                title: 'Morenada Laykakota',
                 year: '2024',
                 category: 'Trajes de Luces',
-                score: '98.5',
+                score: '86.32',
                 badges: ['Gran Campeón', 'Morenada'],
                 reasons: [
                     'Coreografía impecable con transiciones fluidas entre formaciones',
@@ -2010,14 +2332,19 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Interpretación musical precisa y potente',
                     'Excelente sincronización entre más de 200 danzantes'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://radioondaazul.com/wp-content/uploads/2020/02/MORENADA-LAYKACOTA-.jpg'
+                video: 'https://youtu.be/mWjsPu_scqs?si=jwqM5lQK8AHy_IYH',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_7154-scaled.jpg',
+                gallery: [
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_4226-scaled.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-14-at-6.12.36-PM.jpeg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/Morenada-Laykakota.jpg'
+                ]
             },
             'unucajas-2024': {
-                title: 'Unucajas de Azángaro',
+                title: 'Asociación Cultural Unucajas de Azángaro',
                 year: '2024',
                 category: 'Autóctonos',
-                score: '94.20',
+                score: '88.68',
                 badges: ['Reserva Moral', 'Azángaro'],
                 reasons: [
                     'Mantenimiento fiel de la herencia dancística quechua',
@@ -2025,11 +2352,16 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Resiliencia regional en el retorno de la festividad',
                     'Vestimenta auténtica elaborada por comuneros'
                 ],
-                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/Conjunto-Unucajas-de-Azangaro.jpg'
+                video: 'https://youtu.be/zB-ZGsfYdaE?si=_Q91WqYb2HLpmGQy',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0049-4-scaled.jpg',
+                gallery: [
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/Conjunto-Unucajas-de-Azangaro.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0056-5-scaled.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0002-1-scaled.jpg'
+                ]
             },
             'diablada-bellavista-2020': {
-                title: 'Diablada Bellavista',
+                title: 'Asociación Folklórica Espectacular Diablada Bellavista',
                 year: '2020',
                 category: 'Trajes de Luces',
                 score: '94.26',
@@ -2040,14 +2372,19 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Impacto visual de sus máscaras de fibra de vidrio',
                     'Tradición mantenida por 11 campeonatos previos'
                 ],
-                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhE6LPtSpDH5jaLU0pg8jsFTPzL5Kg4e0YBV-QgmSDdtP0QKj7T3l7tYYJJJXPQ8VoCm9ArqO5fbnA6az1-o_G2UrFHo2umlKrsavvCWkDqGyGNtrkvHSkljM709uAyz5kwMFuU9troCBPF/s280/Diablos_Puno.jpg'
+                video: 'https://youtu.be/EIoshYmAf2w?si=r4fdlUGZlF1ojnuW',
+                image: 'https://scontent.flim6-2.fna.fbcdn.net/v/t1.6435-9/80399177_2710595505686820_4286447519698780160_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFtSYqMXS4zwcx_4az4bgPCCG32abCN2WYIbfZpsI3ZZt4SwC9pRF0ASA4mH55uBXKua72AakaBG_2i51-FiXKF&_nc_ohc=zqhTW2tXYiMQ7kNvwHtc3ts&_nc_oc=AdmH5i0H_2STGAR5jUhjXrqcsTgY6i_OOkcZdXx7rzU1mx75KtLAaqsNUQYBnE1wnxM&_nc_zt=23&_nc_ht=scontent.flim6-2.fna&_nc_gid=juzpviTW765zV-dWgJaL5A&oh=00_AfpABzjILw1xZj2tibAFOkW8HwysL9c9jovpr7XfyB-PZA&oe=699B9564',
+                gallery: [
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0032-7-scaled.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0033-4-scaled.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0008-10-scaled.jpg'
+                ]
             },
             'patambuco-2020': {
-                title: 'Carnaval de Patambuco',
+                title: 'Asociación Cultural Musuq Illariy "Carnaval de Patambuco"',
                 year: '2020',
                 category: 'Autóctonos',
-                score: '95.10',
+                score: '88.84',
                 badges: ['Fuerza Sandia', 'Autóctono'],
                 reasons: [
                     'Consolidación como ganadora absoluta el primer día',
@@ -2055,11 +2392,16 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Trajes coloridos representativos de la selva puneña',
                     'Acompañamiento musical de gran calidad rítmica'
                 ],
-                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0109-scaled.jpg'
+                video: 'https://youtu.be/EyUKR8_sGs0?si=PTq2if1ldVZalaUG',
+                image: 'https://radioondaazul.com/wp-content/uploads/2020/02/carnaval-de-patambuco-ok.jpg',
+                gallery: [
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/83042737_2677440029007463_1278512382770937856_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFjYgOjWfUPYRE8UQ-jhadKqcjNpt9kJDupyM2m32QkO5SZ6FgEEMSC20PD-P588rMVDXYOkic07woXWqVoGegB&_nc_ohc=30qjoD5hKoMQ7kNvwFHeMnv&_nc_oc=Adk_P4vWRr8fCgPdbffARb0tGRL_2YNuXaaBdo4aF2R7zeAxsOc3JoeMgJjhyWmzL2c&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=_yY6JehqGp6y5pJbgiBImg&oh=00_AfriOCfISbhpqZIsJr2BEyX3PPpDJySnnJRg_nHnCluTHg&oe=699BA72C',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t1.6435-9/83171421_2677439985674134_1094952567235936256_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHu1ijhOiE_yQJm_PNP8LB206I0z_JN7n7TojTP8k3ufgY9hzq00ZP0yw_SxZUb_FkSSiN3xMHQzWVlaxJ3SGUy&_nc_ohc=gKiMBG_5xiYQ7kNvwGe4q1s&_nc_oc=Adl2kb7wTran8PPf5jc2wGaF21faHEYJNy5rGPLBc36wHaed9HfO-946zv1XJJAbixg&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=VZ-w3aUiUXQCVUdOvOLkOg&oh=00_Afq8vhAlscfQWo17CaRFWmp1sXbSNa_M-5ZBjn9JYDfmMw&oe=699B7F4D',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t1.6435-9/82817043_2677439975674135_1684939000483151872_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFI4HoZvSmu3GhaNzsM5uslSLZ-wJJFYMVItn7AkkVgxUmD36ps115H2zOFbZux1gx28RaUbw7lVtp6FMGNKulP&_nc_ohc=7s4hwIP0ZbgQ7kNvwEF_AeQ&_nc_oc=Adl0IYz0iOAePrZcwlCsu2fX8SRzzKrDv73tJ7CaxiQXexd6kmM_d4XjT7PLSeO8YLQ&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=5dBPKkLtFXVe4XgOs50z4Q&oh=00_Afq0PFE60Mn8t1FsiBNng-ARlu3MdXWtGUTknTbqhIdTYQ&oe=699B83E8'
+                ]
             },
             'pnp-2019': {
-                title: 'Diablada Amigos de la PNP',
+                title: 'Incomparable Gran Diablada Amigos de la PNP',
                 year: '2019',
                 category: 'Trajes de Luces',
                 score: '88.66',
@@ -2070,11 +2412,16 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Disciplina férrea en el desplazamiento escénico',
                     'Recuperación del título con alto nivel artístico'
                 ],
-                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://www.punomagico.com/image/pnp%202021.png'
+                video: 'https://youtu.be/SJobNvlbgmQ?si=9lEgQW0DvTFlPOgl',
+                image: 'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/51704637_2036874863047509_6958451368663187456_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeGUUPSlOpJZ6eorRJiCo1eoaiklL8M5l1tqKSUvwzmXW12xTUKvEGv5EI27GaXaeZRGkUF2XD9XADzdAHjeJXSG&_nc_ohc=NFjwaFV28QkQ7kNvwF9Q9n_&_nc_oc=Adlwpv3-bFlcIiXwFkIFFSDgdFnajrSNArnGAqXMq1WtR4gsbfAeRdG25QklzqbQyCs&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=4eHI2HuNtLGBzChxVoNNBg&oh=00_AfqW-FDJ6T17fQvXLJsdP_vEeZDM3EFzSEJNjw6IAB85iA&oe=699B9070',
+                gallery: [
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/51924523_2036874833047512_231155135575752704_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeHqJv5DAbPV391Mvux6YsWONdZQKFWz4dE11lAoVbPh0TMP_Ch2rRNcokUeTrXLXEyhG7Y3n9kYi9xsittr6949&_nc_ohc=5XAbKxKg7a4Q7kNvwFTZttQ&_nc_oc=Adm7kVk2COv6SmDMxUzqeK9WruzeNWu4U4wLO_r3Z44HylLkx8uTz6XPaUZ1IhdqRKQ&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=C1QiLuBosWrMlQG9PfubCg&oh=00_AfqloxB22QMf3kW95abTSVs35-4X2WBOoD1Pjh5J2578jg&oe=699BA8D9',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/52358921_2036874876380841_5246194009650495488_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeGvq49pa1psioeE4lX9VoA9M3Tv-Kbdeb4zdO_4pt15vgk2V-YyqOjxHkPTPRYW25_Ie11rtS2onWfZqZvWqDtO&_nc_ohc=UaaRlJB7iTkQ7kNvwGXLcEj&_nc_oc=Adnov-E7uNGWoy-MlcGTbMP99voY95By3_lINNudHHQjI8VjND20pBqZkTtc3Te1MGs&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=qcOGJbxgL8Cy_KTi5XFvww&oh=00_AfpldiEzC3NBFAWMiu2quUfi8HVJj3Vjq91Q3OOhti1Qhg&oe=699B9B43',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/52365658_2036874936380835_671748493005553664_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeH5FUVVLOStOVr7eaAWEYqMulJNkdhmDrC6Uk2R2GYOsJ0l2oGAAzf_X5z1u1LKsXTx8B-PSPtmyX9sZuHV-Q6Q&_nc_ohc=AI_9OC3fqJIQ7kNvwHQed-b&_nc_oc=AdkxG6rmOcq9i6-eKQs8OOLp37fSMCuymWWbPKdE1cvF3DaWcqVyuRMrLerH7qX2xIM&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=lxdUt8lRxOFprhLo_TIvVA&oh=00_AfrgloNa1ply4MmSW5pHSzFo04ivP7G6xeENCDzY7y7aZw&oe=699B8DE6'
+                ]
             },
             'chunchos-esquilaya-2019': {
-                title: 'Chunchos de Esquilaya',
+                title: 'Asociación Cultural Chunchos de Esquilaya (Ayapata)',
                 year: '2019',
                 category: 'Autóctonos',
                 score: '97.69',
@@ -2085,11 +2432,16 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Uso de plumas y trajes rústicos de gran autenticidad',
                     'Viaje de siete horas sumado a un esfuerzo físico total'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0338-scaled.jpg'
+                video: 'https://youtu.be/Op6T-_Key48?si=eZfZmg4hDJ8X3pbm',
+                image: 'https://portal.andina.pe/EDPfotografia3/Thumbnail/2019/07/11/000599669W.webp',
+                gallery: [
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/51140314_2027678007300528_9669362952699904_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHRSkaG1Q6ofF4vo6fRh-yHE44_UR1hhRkTjj9RHWGFGQV8lK8f9nRHxyNADZq9hKZM8CCGC0u0WcwPMwc65Boy&_nc_ohc=BGUyZ1H7zbIQ7kNvwHA1LFC&_nc_oc=Adk4ZQf2gzt0VE7rKVLjQ7gX4KJNuzQxuAjHsZ7_nOWdj12JADtbeGDYzKOWoUiqN_E&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=AmSbpeSddN83JQeKdbQtRw&oh=00_AfqqEK4rKyOCO0dCFmtRTOkG2fcpoVc-xJnweUFaW4u3Iw&oe=699BABD6',
+                    'https://radioondaazul.com/wp-content/uploads/2020/02/chunchos-de-esquilaya-.jpg',
+                    'https://imgmedia.larepublica.pe/1000x590/larepublica/migration/images/CMFLXUFB5REINGYEEARFDHRUN4.webp'
+                ]
             },
             'morenada-orkapata-2018': {
-                title: 'Morenada Orkapata',
+                title: 'Confraternidad Morenada Orkapata',
                 year: '2018',
                 category: 'Trajes de Luces',
                 score: '89.47',
@@ -2100,11 +2452,16 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Gran capacidad de logística y despliegue artístico',
                     'Elegancia suprema en el paso de las cholas puneñas'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg'
+                video: 'https://youtu.be/HLyyJjshT68?si=0U4OFynpbfw_MtWP',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0020-5-1024x681.jpg',
+                gallery: [
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/Conjunto-Folklorico-Confraternidad-Morenada-Orkapata.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0028-1-1024x681.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_4064-1024x683.jpg'
+                ]
             },
             'wifalas-munani-2018': {
-                title: 'Wifalas de Muñani',
+                title: 'Wifalas San Francisco Javier de Muñani',
                 year: '2018',
                 category: 'Autóctonos',
                 score: '94.78',
@@ -2115,11 +2472,16 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Elegancia y porte en la ejecución de la Wifala',
                     'Dominio absoluto en el ámbito de las danzas originarias'
                 ],
-                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg'
+                video: 'https://youtu.be/hqyYKx_Co94?si=egfYk24YlpPzu9g5',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/01/Conjunto-Wifalas-San-Francisco-Javier-de-Munani.jpg',
+                gallery: [
+                    'https://radioondaazul.com/wp-content/uploads/2025/01/Conjunto-Wifalas-San-Francisco-Javier-de-Munani-.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/01/Wifalas-San-Francisco-Javier-de-Munani.jpg',
+                    'https://scontent.cdninstagram.com/v/t51.75761-15/4…7vAqL1WJRisBs_TkWA-WLbyE3cZepLz9m3KQQ&oe=697A09BF'
+                ]
             },
             'pnp-2017': {
-                title: 'Diablada Amigos de la PNP',
+                title: 'Incomparable Gran Diablada Amigos de la PNP',
                 year: '2017',
                 category: 'Trajes de Luces',
                 score: '90.53',
@@ -2130,11 +2492,16 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Mantenimiento de la alta competencia institucional',
                     'Puntaje de 90.53 para consolidar supremacía'
                 ],
-                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://www.punomagico.com/image/pnp%202021.png'
+                video: 'https://youtu.be/q10SZNt4Xb0?si=mS1ASfF2MZLbqb1E',
+                image: 'https://larepublica.cronosmedia.glr.pe/original/2024/02/08/65c524794905c27f267fedc4.jpg',
+                gallery: [
+                    'https://f.rpp-noticias.io/2017/02/02/339023candejpg.jpg?imgdimension=look',
+                    'https://f.rpp-noticias.io/2017/02/06/442844_341058.png?width=1020&quality=80',
+                    'https://radioondaazul.com/wp-content/uploads/2023/01/Festividad-Virgen-Maria-de-la-Candelaria-2023.jpg'
+                ]
             },
             'chaku-2017': {
-                title: 'Carnaval Chaku de Chucahuacas',
+                title: 'Asociación Cultural Carnaval Chaku de Chucahuacas',
                 year: '2017',
                 category: 'Autóctonos',
                 score: '93.10',
@@ -2145,41 +2512,56 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Vestimenta colorida que cautivó al jurado calificador',
                     'Representación auténtica del distrito de Chupa'
                 ],
-                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://muniazangaro.gob.pe/web/wp-content/uploads/2019/08/santiago-de-pupuja.jpg'
+                video: 'https://youtu.be/2seCpG4thpU?si=o8aQ-NaTYXt_kVzZ',
+                image: 'https://scontent.flim6-3.fna.fbcdn.net/v/t39.30808-6/557698167_24613088208332853_952894828109069196_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeEdVfqP5LudyrT2kXA3mJsm46leD2skd2jjqV4PayR3aKKFdDm6ExM2dP0Ml1IPD5kn7r74aojbDnjeQSnPNV_1&_nc_ohc=DEsasFK3Kt8Q7kNvwEW8cEW&_nc_oc=Admy8L12jJKioIBC4R6nBeBVIBxT2hWNVfDIxEWbo7k2uCQ06Cv00qtKvkK41PBtUAs&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=5s8q2MxSoacg9BwvKAZLww&oh=00_Afr6Ia5phqGToen752OPUuhJBDAsZonzhELF17LnpXVfhQ&oe=697A0C09',
+                gallery: [
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t39.30808-6/557727800_24613088288332845_7778604945470394468_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeEsEngW6T2P1EA5VesceJtO9szYS8s0FxT2zNhLyzQXFCxa4itjOnpzQhXWJD53QYQazzy0ryPsmNRr55FKeKOx&_nc_ohc=-8__bPCke9MQ7kNvwHEPJRV&_nc_oc=AdmkiP_oCB0qlM6wg1hlWEsQMfqu6VQGi1TeoIX6AFXBkKBlFdcx_WLI3YUa5iwR8wQ&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=bnl2v-oa0rjQuDKqgALihA&oh=00_AfrjZXqi_Qc77troerE8xG_RV92KecAZb3FH-4ywGMcdHA&oe=697A1D3F',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/558169878_24613088271666180_9098631694424042657_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeE-hyhwdoY87cRn0BVgC6FTHwG7-Thg2K8fAbv5OGDYrzC7dIvHYKGhKhoZxFlpWgcYrLQcB0gHT-EJcZyu3dtE&_nc_ohc=-2K6nTo2dIcQ7kNvwE7JEgb&_nc_oc=AdmK1UsK8KYeogr47S1Nm2-tv_SvTFlnPB-uctKtupXWotofWdVVPva22TVYW0j1BlE&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=n5aK66LFHxI28NLmt5H-vg&oh=00_AfrhFzW4rALHiQY1UYfJ57F0bxWPCA3RUDYDkH4LP0BrNw&oe=697A1A11',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t39.30808-6/557716016_24613088134999527_6676370662114461425_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeFPtA4Q4BE3iPepv2QsCoRoc2PPEiGPXlNzY88SIY9eUzTMHVljzibVHAie9h8GibIb1jftaQuCOTovszob-pKw&_nc_ohc=KuxCw8HCemwQ7kNvwFNoBsa&_nc_oc=AdnW9Bq87xtfloZ5vELcQxGJ3hGNBIDC4M9XcVCfY-g8W_-vQFigG24N5r9s-cdAycU&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=uoIYNXZAJpRLChc1_uRsdQ&oh=00_Afo0P0vJP5iH42qQrWqT7NGTcSyaHmeQoOwuFki50taJbA&oe=697A0FF1'
+                ]
             },
             'centinelas-2016': {
-                title: 'Centinelas del Altiplano',
+                title: 'Asociación Folklórica Diablada Centinelas del Altiplano',
                 year: '2016',
                 category: 'Trajes de Luces',
-                score: '84.81',
+                score: '91.54',
                 badges: ['Primer Título', 'Diablada'],
                 reasons: [
                     'Despliegue coreográfico de gran disciplina y simetría',
                     'Ejecución militarizada de los pasos de la Diablada',
                     'Simetría perfecta en todas las fases del escenario',
-                    'Campeonato absoluto con promedio ajustado'
+                    'Campeonato absoluto ganado con excelencia técnica'
                 ],
-                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://portal.andina.pe/EDPfotografia3/Thumbnail/2020/02/11/000654060W.jpg'
+                video: 'https://youtu.be/00c7dFVkGbg?si=_VN6imtQX-QiAf3V',
+                image: 'https://scontent.flim6-2.fna.fbcdn.net/v/t39.30808-6/487304193_1076542121177299_1524602493217469796_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFhVHOkChDcxTE_WoMGysHKKfO8718YO2kp87zvXxg7adRPM_YYU59A8soWg3li3paEKMcWbVjgBuPASOjJrqkQ&_nc_ohc=YC7pMA8wnH8Q7kNvwFvlqs9&_nc_oc=AdlsFoymW13yd61B1yrFY7N-ks3exOt1oEOCCA72CeyJg_z5KS3fdJedd3EKIhFz2s0&_nc_zt=23&_nc_ht=scontent.flim6-2.fna&_nc_gid=THkScNeOCuaq4UtjMZ1vRg&oh=00_Afq0pGzq0DTnZuDeBZhLKxBcihjCryZYhv4wKSEuUA6j6w&oe=697A0A48',
+                gallery: [
+                    'https://scontent.flim6-2.fna.fbcdn.net/v/t39.30808-6/486536833_1076542611177250_1768197648850752335_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGMueIB1gwXKuOLqjD_O3ickVGQrf_swNORUZCt_-zA00X7UQ2OlQTHHhDBWE0KfGJqjceKdMG6UIEGiLV45JsX&_nc_ohc=9GZa242YT7gQ7kNvwH3o1P3&_nc_oc=AdkkQ3-iRQWMMJXNrM1oFDlcZ_Vm6HMoxf0CoEZv8CqjMGexlx9AKBecbN3INhVLSGg&_nc_zt=23&_nc_ht=scontent.flim6-2.fna&_nc_gid=aWeQdkQQUw1C_z_pYbmJ3g&oh=00_AfocPYO_pRQEkg1f2R5kpSgHOcaE0MSaeJebRdjCiJPFpA&oe=6979F81E',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t39.30808-6/486531276_1076542257843952_4621486364285369854_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeH0PtMzJT8Nh9VwWQPRBVSDKZXXatmj5Y4plddq2aPljlQ-VQyOHXeWCty31gky1cZES1uckakJFK6-TDkys62J&_nc_ohc=D37hVUZNipYQ7kNvwFjE1Th&_nc_oc=AdldAGyrB7-JSG1rG5Fydm3ftq7iSbXOkodrQJTJsAmdBUJ505Af838gob3ElnqZq8s&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=k1ISzdLob5StuahRLU08uA&oh=00_AfrvMNCfdss15E8i-4OBZ3ERRX6G3TTtn1a1O6PSmmWG7Q&oe=697A1719',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/487240511_1076542531177258_2817840117068575207_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGEkd_vycdVNQpYUDx4USXbSzmQXj7VuJFLOZBePtW4kbMn0P5uv2bzIhvg6qELLkszQP7rEDMT8tdHDjXtFTVu&_nc_ohc=a0m8OoMG5NsQ7kNvwFMP_Ds&_nc_oc=Adl1xmjGPRhsaHjia83xl4lLeLMBXhsD3dOOnEXVjS3jM4Ote_Ffg3KwVh6egGPpt3Y&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=qEjqFDS867AjTC7JPgPACw&oh=00_Afr-Frgxlf-DkNs12k6RTelMyEftTEim_EG8vgBAUNmXQg&oe=6979F50E'
+                ]
             },
             'wifalas-putina-2016': {
-                title: 'Wifalas de San Antonio de Putina',
+                title: 'Conjunto de Wifalas San Antonio de Putina',
                 year: '2016',
                 category: 'Autóctonos',
-                score: '89.50',
+                score: '94.00',
                 badges: ['Cintas Color', 'Putina'],
                 reasons: [
                     'Uso de cintas de colores y sonidos de la naturaleza',
                     'Interpretación magistral de pinkillos tradicionales',
                     'Evocación del cortejo amoroso en comunidades altoandinas',
-                    'Victoria en una competencia reñida contra Azángaro'
+                    'Victoria contundente con alto puntaje técnico'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://i.ytimg.com/vi/EoJO-bFrSaw/maxresdefault.jpg'
+                video: 'https://youtu.be/xvF-TTyBfFU?si=MHO8exlJhlyy9dpc',
+                image: 'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/486092405_1072751258205977_7356115628292395866_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFQGegPgDXDjpUU-0x8J4qFVr8WxeXZwA5WvxbF5dnADpYVNXzNzBp6kPEorMCgEf0UswgQhz0UdhoJnld1KEGm&_nc_ohc=ikuXJfWQj5gQ7kNvwEt_UGw&_nc_oc=AdkhmoeaCBlceIzFWtOkdHSdg3B_Fponhaj2ct_SVU1LSQjnkiMNo5mZAl4-zz23I0Q&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=1e7FYdRwhiXDxs7NHfq00w&oh=00_AfoKba6BHHkhA9k1I_eeSb3b9WB8KnpzOnJKOJ1k4_20MA&oe=697A1863',
+                gallery: [
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/486547378_1072751491539287_1690859207326763275_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFAoTsFawf7DPA62MHf647UCjGDR7CX2vEKMYNHsJfa8Uat-uQzFDR_teOxecUJX07o-pdGDjl0bUg-5YeW3oj0&_nc_ohc=0TxXwVuDrwoQ7kNvwEXd-Uz&_nc_oc=Adl_xs0xwqW5eh_Q-uVV6TPUcWHrcx2rka7pO1qDoypRHqTt1WIV8gQxTNU0MYpCtdo&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=55ZL2jJObZy5ArMQPR3J0Q&oh=00_AfrcpunUeS7Es9oz2K3V3Fd7AuLs8x2pSzLu1vgTQcvyhA&oe=6979F013',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/485634477_977662561185420_9180665816111890085_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFj8OrTOMYqoUOqhPYKNJ4IwP4lgyQcPIjA_iWDJBw8iB2QZ3lTVeTVNsL94dGNSQHIA5APwPrlmLy-i6WX4L1n&_nc_ohc=aS6OAu6j3oAQ7kNvwGv9k7z&_nc_oc=AdkcNzTANYNIVNVglEhQgOt3U00RnC3YXEXCZWxdQkekEhTvPlWD6aQtTHrFQmBSyiA&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=Klfz5Y_2FAjjhWJw7AOVYw&oh=00_Afo9Tc40xguM21p4iTT-ONySfoQWsm0hKyao0aqjrRlXsA&oe=6979EB47',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/485884948_977662477852095_543861617827511592_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeH1MEpwZyaMj8_dk0fiTX3EHGI37L8yyqEcYjfsvzLKoXZyD6ShM_QVLQUYENBBDZX4FQ4WGbrBkQzAvALn_6eR&_nc_ohc=pypaxlSTCVsQ7kNvwEra9zQ&_nc_oc=Admz7x-KNXsDt8dCxsrx1uDGvRQOcyKPYfRGdxVE1htmlXreR4OzCgUIT_11FeEV4cs&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=nepUmHQRXw1wo48MbueYpw&oh=00_Afq7q-J2j8KQz3xV8K7_gUW8Wo-MBFcA_3M3luUXnJgg_g&oe=6979FE19'
+                ]
             },
             'caporales-centralistas-2015': {
-                title: 'Caporales Centralistas Puno',
+                title: 'Asociación Cultural Caporales Centralistas Puno',
                 year: '2015',
                 category: 'Trajes de Luces',
                 score: '90.37',
@@ -2190,14 +2572,19 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Hito en la categoría de Traje de Luces Puneño',
                     'Título de Campeón de Campeones con alto puntaje'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://www.punomagico.com/image/centralistas%202021.jpg'
+                video: 'https://youtu.be/eFmZbckl2Bo?si=Z6XOL81n1rca_4gB',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/Asociacion-Cultural-Caporales-Centralistas-Puno.jpg',
+                gallery: [
+                    'https://i.ytimg.com/vi/jPJI9PSSDIk/maxresdefault.jpg',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t1.6435-9/56848010_2451569634854220_5183031039479513088_n.jpg?stp=dst-jpg_p180x540_tt6&_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEkcObNid0_elUNwykwIPrxxqCA59DlV4PGoIDn0OVXgz4l9HX9VN2ju5Olo9jeJgNZKDkCdVDnfB5e5TcgtO7f&_nc_ohc=DIhC9Jc6WxEQ7kNvwGawc1f&_nc_oc=AdmcCfhmivtZZtM0h2yBrxqBouUyIpUXYFCPu6HtBMNrfdEM5Hu3FkLMCmJRa-2eCFo&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=r0EERZ0xs9_XGQz1zWVUCw&oh=00_Afo0ETSpdRMKVb2Z8AQapMIW7MB6qMhTjoJFMEsgmUY8pw&oe=699BA785',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_6386-scaled.jpg'
+                ]
             },
             'wifalas-munani-2015': {
-                title: 'Wifalas de Muñani',
+                title: 'Wifalas San Francisco Javier de Muñani (Azángaro)',
                 year: '2015',
                 category: 'Autóctonos',
-                score: '88.70',
+                score: 'Ganador Oficial',
                 badges: ['Elegancia Pura', 'Muñani'],
                 reasons: [
                     'Vistosas vestimentas blancas de lana de oveja',
@@ -2205,8 +2592,13 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Simbolismo de pureza y alegría en la zona quechua',
                     'Inicio de una era de dominio para Azángaro'
                 ],
-                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg'
+                video: 'https://youtu.be/UZoxKITGGEQ?si=kedTCijbOOEjT7vW',
+                image: 'https://diariocorreo.pe/resizer/cHMuGbYrd1C42a1aS-6-Ma2FfF0=/980x528/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/D6NM2YKZ4BHZXHGAMVH5BRZ7EA.jpg',
+                gallery: [
+                    'https://www.punomagico.com/image/wifala%20munani1.jpg',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/137341712_1086650671747417_6859518839903103862_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFNxhsm7rLtwZxuRDwiR2syxcLAS4VEfN_FwsBLhUR832GN0ZClaTD5cnnibG0WzsfO6YhQS1kk7cyaWh6kRIrL&_nc_ohc=o0cEHVF6gMYQ7kNvwFVZ_VQ&_nc_oc=AdkiDQUoGiK9OkHG5D_Z2wAidcuMwtf6-HhvgqBjAebIEYEKauBhivszQFIhyeD8jgY&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=LtPmK0buMeanDsHvpIUkCQ&oh=00_AfpSX4r0-JO3YDmglnK1r8iPwsYgkkZPjiId2b_1cNceyw&oe=699B93AD',
+                    'https://vivecandelaria.com/wp-content/uploads/2024/02/wifalas_san_francisco.jpg'
+                ]
             }
         };
 
@@ -2282,7 +2674,7 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                             <!-- Right Column: Video & Score -->
                             <div class="lg:w-2/5 flex flex-col gap-8">
                                 <div class="bg-gray-100 rounded-2xl overflow-hidden group relative aspect-[16/10] shadow-2xl border border-gray-200">
-                                    <iframe class="w-full h-full" src="${data.video}?autoplay=1&enablejsapi=1" 
+                                    <iframe class="w-full h-full" src="${formatYoutubeEmbed(data.video)}" 
                                         frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                         allowfullscreen></iframe>
                                     <div class="absolute bottom-3 left-0 right-0 text-center pointer-events-none">
@@ -2309,22 +2701,22 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
 
                         <div class="h-px bg-gray-100 my-10"></div>
 
-                        <!-- Gallery & Action Buttons -->
+                        <!-- Gallery -->
                         <div class="flex flex-col md:flex-row gap-10 items-end">
                             <div class="flex-1 w-full">
                                 <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
                                     <i data-lucide="images" class="w-4 h-4"></i> Galería del Conjunto
                                 </h4>
                                 <div class="flex gap-3">
-                                    <div class="group/img w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-candelaria-purple transition-all cursor-pointer shadow-lg">
-                                        <img src="https://images.unsplash.com/photo-1518173946687-a4c899c3362e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform">
-                                    </div>
-                                    <div class="group/img w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-candelaria-purple transition-all cursor-pointer shadow-lg">
-                                        <img src="https://images.unsplash.com/photo-1544919982-b61976f0ba43?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform">
-                                    </div>
-                                    <div class="group/img w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-candelaria-purple transition-all cursor-pointer shadow-lg">
-                                        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform">
-                                    </div>
+                                    ${data.gallery ? data.gallery.map(imgUrl => `
+                                        <div class="group/img w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-candelaria-purple transition-all cursor-pointer shadow-lg">
+                                            <img src="${imgUrl}" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform">
+                                        </div>
+                                    `).join('') : `
+                                        <div class="w-24 h-24 rounded-xl bg-gray-50 flex items-center justify-center border-2 border-dashed border-gray-200">
+                                            <i data-lucide="image" class="w-8 h-8 text-gray-200"></i>
+                                        </div>
+                                    `}
                                 </div>
                             </div>
                         </div>
@@ -2654,10 +3046,44 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
         document.getElementById('filter-trajes-luces').addEventListener('click', () => filterGanadores('trajes-luces'));
         document.getElementById('filter-autoctonos').addEventListener('click', () => filterGanadores('autoctonos'));
 
+        // 12. Sincronizar imágenes de cards con los datos de ganadoresData
+        function syncCardImages() {
+            for (const id in ganadoresData) {
+                const button = document.querySelector(`button[onclick*="'${id}'"]`);
+                if (button) {
+                    const card = button.closest('.reveal-up');
+                    if (card) {
+                        const img = card.querySelector('img');
+                        if (img && ganadoresData[id].image) {
+                            img.src = ganadoresData[id].image;
+                            img.alt = ganadoresData[id].title;
+                            // Pre-cargar las imágenes de la galería para que abran instantáneamente
+                            if (ganadoresData[id].gallery) {
+                                ganadoresData[id].gallery.forEach(url => {
+                                    const preloader = new Image();
+                                    preloader.src = url;
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Ejecución inmediata para evitar flicker
+        (function() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', syncCardImages);
+            } else {
+                syncCardImages();
+            }
+        })();
+
         // Inicializar íconos de Lucide y contenido
         // Inicializar íconos de Lucide y contenido
         window.onload = () => {
             lucide.createIcons();
+            syncCardImages(); // Sincronizar imágenes de portada
             
             // Animaciones iniciales solo en el contenido activo
             const activeTab = localStorage.getItem('activeCulturaTab') || 'historia';
