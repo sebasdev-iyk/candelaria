@@ -2305,6 +2305,16 @@
       if (modal) modal.classList.remove('active');
     }
 
+    // ========== Debounce Function ==========
+    function debounce(func, wait) {
+      let timeout;
+      return function (...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+      };
+    }
+
     // ========== Initialize ==========
     document.addEventListener('DOMContentLoaded', function () {
       // Load danzas
@@ -2320,6 +2330,14 @@
           const query = searchInput ? searchInput.value : '';
           searchDanzas(query);
         });
+      }
+
+      // Instant search with debounce
+      if (searchInput) {
+        searchInput.addEventListener('input', debounce(function (e) {
+          const query = e.target.value;
+          searchDanzas(query);
+        }, 300));
       }
 
       // Set up modal close
