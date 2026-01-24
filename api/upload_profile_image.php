@@ -93,9 +93,8 @@ try {
     // 9. Move File
     if (move_uploaded_file($fileTmpName, $destination)) {
         // Success!
-        // Return relative path from project root (candelaria/)
-        // Frontend expects: assets/uploads/profiles/filename.jpg
-        $publicPath = 'assets/uploads/profiles/' . $newFileName;
+        // Return absolute path from domain root for frontend use in any directory
+        $publicPath = '/candelaria/assets/uploads/profiles/' . $newFileName;
 
         echo json_encode([
             'success' => true,

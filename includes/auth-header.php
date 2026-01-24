@@ -302,7 +302,12 @@ function getAuthJS()
             const userEmail = document.getElementById('dropdown-email');
             
             if(avatar) {
-                avatar.src = user.picture || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name);
+                let picUrl = user.picture;
+                // Fix relative paths for local uploads
+                if (picUrl && !picUrl.startsWith('http') && !picUrl.startsWith('/')) {
+                     picUrl = '/candelaria/' + picUrl; // Prepend base path
+                }
+                avatar.src = picUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name);
             }
             if(userName) {
                 userName.innerText = user.name.split(' ')[0]; // First name only
