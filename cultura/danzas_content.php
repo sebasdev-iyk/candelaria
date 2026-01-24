@@ -257,12 +257,13 @@
     </div>
     
     <!-- Curiosidades (Manteniendo sección existente) -->
-    <div class="mt-20 bg-candelaria-dark text-white rounded-3xl p-8 md:p-12 relative overflow-hidden reveal-up">
-        <!-- Background Pattern -->
-        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    <!-- Curiosidades (Card Style) -->
+    <div class="mt-20 bg-white rounded-3xl p-8 md:p-12 relative overflow-hidden reveal-up shadow-xl border border-gray-200">
+        <!-- Decoration Pattern (Gold) -->
+        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23d4af37\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
         
         <div class="relative z-10">
-            <h2 class="font-heading text-3xl md:text-4xl font-bold mb-12 text-center text-candelaria-gold">¿Sabías que...?</h2>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold mb-12 text-center text-candelaria-purple">¿Sabías que...?</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <!-- Fact 01 -->
@@ -270,9 +271,9 @@
                     <div class="w-20 h-20 mx-auto bg-candelaria-purple rounded-full flex items-center justify-center mb-6 shadow-lg transform group-hover:scale-110 transition-transform border-4 border-white/20">
                         <span class="font-heading text-3xl font-bold text-white">01</span>
                     </div>
-                    <h4 class="text-2xl font-bold mb-3 text-candelaria-light">El Sonido del Agua</h4>
-                    <p class="text-white text-lg leading-relaxed font-medium">
-                        En los <span class="text-candelaria-gold font-bold">Unucajas de Azángaro</span>, se introduce agua en los tambores para que el sonido sea más pesado y grave, imitando la lluvia que fertiliza los campos.
+                    <h4 class="text-xl font-bold mb-3 text-candelaria-purple">El Sonido del Agua</h4>
+                    <p class="text-gray-600 text-base leading-relaxed">
+                        En los <span class="text-candelaria-purple font-semibold">Unucajas de Azángaro</span>, se introduce agua en los tambores para que el sonido sea más pesado y grave, imitando la lluvia que fertiliza los campos.
                     </p>
                 </div>
 
@@ -281,9 +282,9 @@
                     <div class="w-20 h-20 mx-auto bg-candelaria-red rounded-full flex items-center justify-center mb-6 shadow-lg transform group-hover:scale-110 transition-transform border-4 border-white/20">
                         <span class="font-heading text-3xl font-bold text-white">02</span>
                     </div>
-                    <h4 class="text-2xl font-bold mb-3 text-candelaria-light">Plumas Sagradas</h4>
-                    <p class="text-white text-lg leading-relaxed font-medium">
-                        Los penachos de los <span class="text-candelaria-gold font-bold">Ayarachis</span> pueden llegar a medir más de un metro y utilizan plumas de flamencos andinos (parihuanas), aves sagradas desde tiempos inmemoriales.
+                    <h4 class="text-xl font-bold mb-3 text-candelaria-purple">Plumas Sagradas</h4>
+                    <p class="text-gray-600 text-base leading-relaxed">
+                        Los penachos de los <span class="text-candelaria-purple font-semibold">Ayarachis</span> pueden llegar a medir más de un metro y utilizan plumas de flamencos andinos (parihuanas), aves sagradas desde tiempos inmemoriales.
                     </p>
                 </div>
 
@@ -293,9 +294,9 @@
                         <i data-lucide="users" class="w-10 h-10 text-candelaria-dark"></i>
                     </div>
                     <h4 class="text-4xl font-heading font-extrabold mb-3 text-white">+350</h4>
-                    <div class="text-lg font-bold text-candelaria-gold uppercase tracking-widest mb-2">Conjuntos</div>
-                    <p class="text-white text-base font-bold uppercase tracking-wider">Participantes</p>
-                    <p class="text-white/80 text-base mt-3 italic font-medium">Un despliegue de fe y cultura único en el planeta.</p>
+                    <div class="text-lg font-bold text-candelaria-purple uppercase tracking-widest mb-2">Conjuntos</div>
+                    <p class="text-gray-600 text-xs uppercase tracking-wider">Participantes</p>
+                    <p class="text-gray-500 text-xs mt-3 italic">Un despliegue de fe y cultura único en el planeta.</p>
                 </div>
             </div>
         </div>

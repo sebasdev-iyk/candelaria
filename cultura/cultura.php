@@ -1162,7 +1162,7 @@
             </div>
 
             <!-- 3. HISTORIA DE LAS DANZAS (CON SIGNIFICADO) -->
-            <div id="danzas" class="tab-content hidden w-full bg-candelaria-light py-16">
+            <div id="danzas" class="tab-content hidden w-full bg-gray-100 py-16 relative" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
                 <?php include 'danzas_content.php'; ?>
             </div>
 
@@ -1216,30 +1216,67 @@
 
                     <!-- Ganadores recientes -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- Ganador 2024 - Trajes de Luces -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
-                            data-category="trajes-luces">
+                        <!-- 2025 -->
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2020/02/MORENADA-LAYKACOTA-.jpg"
-                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                                    alt="Rey Moreno Laykakota">
-                                <div
-                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
-                                    2024
+                                <img src="https://vivecandelaria.com/wp-content/uploads/2024/12/festividad-virgen-candelaria-2025-una-puno.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Morenada Santa Rosa">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2025</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Morenada Santa Rosa</h3>
+                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2025. Destacó por la armonía de sus pasos y la espectacularidad de su banda.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('morenada-santa-rosa-2025')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Wifalas Muñani">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2025</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas de Muñani</h3>
+                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                </div>
+                                <p class="text-gray-600 mb-4 text-sm">Ganador absoluto tras un empate histórico de 63.10 puntos, prioritario por su coreografía impecable.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('wifalas-munani-2025')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2024 -->
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://radioondaazul.com/wp-content/uploads/2020/02/MORENADA-LAYKACOTA-.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Rey Moreno Laykakota">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2024</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
                                     <h3 class="font-heading text-xl font-bold text-gray-900">Rey Moreno Laykakota</h3>
-                                    <span
-                                        class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes
-                                        de Luces</span>
+                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Gran Ganador de la categoría Trajes de Luces con
-                                    una coreografía impecable y trajes de extraordinaria elaboración.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2024. Su victoria marcó un hito en la evolución del diseño de trajes de cholas puneñas.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('rey-moreno-2024')"
-                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('rey-moreno-2024')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1250,30 +1287,19 @@
                             </div>
                         </div>
 
-                        <!-- Ganador 2023 - Trajes de Luces -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
-                            data-category="trajes-luces">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2025/01/Conjunto-Folklorico-Caporales-Huascar.jpg"
-                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                                    alt="Caporales Huáscar">
-                                <div
-                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
-                                    2023
-                                </div>
+                                <img src="https://radioondaazul.com/wp-content/uploads/2024/02/Conjunto-Unucajas-de-Azangaro.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Unucajas de Azángaro">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2024</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Caporales Huáscar</h3>
-                                    <span
-                                        class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes
-                                        de Luces</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Unucajas de Azángaro</h3>
+                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Primer Lugar en la categoría Caporales con una
-                                    energía y sincronización excepcionales que cautivó al jurado.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Primer lugar 2024, reafirmando que la zona quechua continúa siendo la reserva técnica de las danzas.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('caporales-huascar-2023')"
-                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('unucajas-2024')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1284,34 +1310,298 @@
                             </div>
                         </div>
 
-                        <!-- Ganador 2020 - Autóctonos -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
-                            data-category="autoctonos">
+                        <!-- 2020 -->
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                                    alt="Waka Waka Puno">
-                                <div
-                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
-                                    2020
-                                </div>
+                                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhE6LPtSpDH5jaLU0pg8jsFTPzL5Kg4e0YBV-QgmSDdtP0QKj7T3l7tYYJJJXPQ8VoCm9ArqO5fbnA6az1-o_G2UrFHo2umlKrsavvCWkDqGyGNtrkvHSkljM709uAyz5kwMFuU9troCBPF/s280/Diablos_Puno.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Diablada Bellavista">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2020</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Waka Waka Puno</h3>
-                                    <span
-                                        class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Diablada Bellavista</h3>
+                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Ganador en la categoría Danzas Autóctonas,
-                                    destacando por la autenticidad de su representación y vestimenta tradicional.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Último gran ganador antes de la pandemia (94.26 puntos). Sofisticación técnica en su bloque de arcángeles.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('waka-waka-2020')"
-                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('diablada-bellavista-2020')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
                                         <i data-lucide="star" class="w-4 h-4 fill-current"></i>
                                         <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0109-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Carnaval de Patambuco">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2020</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Carnaval de Patambuco</h3>
+                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                </div>
+                                <p class="text-gray-600 mb-4 text-sm">Triunfo indiscutible con la mayor puntuación del concurso antes del cierre por emergencia sanitaria.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('patambuco-2020')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2019 -->
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://www.punomagico.com/image/pnp%202021.png" onerror="this.src='https://placehold.co/600x400/b91c1c/ffffff?text=DIABLADA+PNP'" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Diablada PNP">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2019</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Diablada Amigos de la PNP</h3>
+                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                </div>
+                                <p class="text-gray-600 mb-4 text-sm">Recuperaron el título con 88.66 puntos, destacando por su disciplina y consistencia en ambos escenarios.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('pnp-2019')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0338-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Chunchos de Esquilaya">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2019</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Chunchos de Esquilaya</h3>
+                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                </div>
+                                <p class="text-gray-600 mb-4 text-sm">Récord Histórico de 97.69 puntos. Emocionaron al jurado con su danza ancestral para evitar su extinción.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('chunchos-esquilaya-2019')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2018 -->
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Morenada Orkapata">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2018</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Morenada Orkapata</h3>
+                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                </div>
+                                <p class="text-gray-600 mb-4 text-sm">Retornaron al título máximo después de décadas (89.47 puntos), marcando el resurgimiento de la Morenada.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('morenada-orkapata-2018')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2017 -->
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://www.punomagico.com/image/pnp%202021.png" onerror="this.src='https://placehold.co/600x400/b91c1c/ffffff?text=DIABLADA+PNP'" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Diablada PNP">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2017</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Diablada Amigos de la PNP</h3>
+                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                </div>
+                                <p class="text-gray-600 mb-4 text-sm">Sexto campeonato histórico con 90.53 puntos, definiendo la estética moderna con bloques masivos.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('pnp-2017')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://muniazangaro.gob.pe/web/wp-content/uploads/2019/08/santiago-de-pupuja.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Carnaval Chaku">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2017</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Carnaval Chaku de Chupa</h3>
+                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                </div>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón con 93.10 puntos. Danza ritual enérgica y vestimenta colorida que cautivó al jurado.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('chaku-2017')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2016 -->
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2020/02/11/000654060W.jpg" onerror="this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=CENTINELAS'" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Centinelas del Altiplano">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2016</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Centinelas del Altiplano</h3>
+                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                </div>
+                                <p class="text-gray-600 mb-4 text-sm">Primer campeonato absoluto (84.81). Elogiado por su disciplina y simetría militar en la danza.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('centinelas-2016')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://i.ytimg.com/vi/EoJO-bFrSaw/maxresdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Wifalas de Putina">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2016</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas de San Antonio</h3>
+                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                </div>
+                                <p class="text-gray-600 mb-4 text-sm">Triunfo en una reñida competencia. Con cintas de colores y pinkillos evocan sonidos de la naturaleza.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('wifalas-putina-2016')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2015 -->
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://www.punomagico.com/image/centralistas%202021.jpg" onerror="this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=CENTRALISTAS'" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Caporales Centralistas">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2015</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Caporales Centralistas</h3>
+                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                </div>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones con 90.37 puntos. Hito histórico en la categoría frente a su gran rival.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('caporales-centralistas-2015')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Wifalas de Muñani">
+                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2015</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas de Muñani</h3>
+                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                </div>
+                                <p class="text-gray-600 mb-4 text-sm">Primera victoria en la era de dominio de Azángaro. Patrimonio de la Nación de gran elegancia y pureza.</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openGanadorModal('wifalas-munani-2015')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                        <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
+                                    </button>
+                                    <div class="flex items-center text-candelaria-gold">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <span class="ml-1 text-sm font-bold">1er Lugar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Los Años de Suspensión -->
+                    <div class="mt-16 bg-slate-900 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden text-white reveal-up">
+                        <div class="absolute top-0 right-0 p-32 bg-red-600 rounded-full blur-3xl opacity-20 -mr-16 -mt-16"></div>
+                        <div class="relative z-10">
+                            <h3 class="flex items-center gap-3 text-2xl font-bold mb-6 font-heading">
+                                <span class="bg-red-600 text-white w-10 h-10 flex items-center justify-center rounded-lg"><i data-lucide="alert-triangle" class="w-5 h-5"></i></span>
+                                El Silencio Progresivo (2021-2023)
+                            </h3>
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="space-y-4">
+                                    <p class="text-slate-300 leading-relaxed text-justify">
+                                        Por primera vez en la era moderna, la festividad enfrentó tres años de suspensión consecutiva. Un vacío cultural y económico que puso a prueba la resiliencia de la Capital del Folklore.
+                                    </p>
+                                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
+                                        <h4 class="font-bold text-red-400 mb-2">Impacto Económico</h4>
+                                        <p class="text-sm text-slate-400">Se estima que la región dejó de percibir más de <span class="text-white font-bold">230 millones de soles</span> durante la crisis social y sanitaria.</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-6">
+                                    <div class="flex gap-4">
+                                        <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 text-slate-300 font-bold shrink-0">1</div>
+                                        <div>
+                                            <h4 class="font-bold text-lg">Pandemia (2021-2022)</h4>
+                                            <p class="text-sm text-slate-400">Cancelación estricta por motivos de salud pública mundial (COVID-19).</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-4">
+                                        <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 text-slate-300 font-bold shrink-0">2</div>
+                                        <div>
+                                            <h4 class="font-bold text-lg">Crisis Social (2023)</h4>
+                                            <p class="text-sm text-slate-400">El luto por los sucesos de Juliaca llevó a los conjuntos a votar por la cancelación total en señal de duelo.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1677,6 +1967,392 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
         }
 
         // 9. Lógica para modal de conjuntos
+        const ganadoresData = {
+            'morenada-santa-rosa-2025': {
+                title: 'Morenada Santa Rosa de Puno',
+                year: '2025',
+                category: 'Trajes de Luces',
+                score: '87.71',
+                badges: ['Campeón de Campeones', 'Morenada'],
+                reasons: [
+                    'Armonía impecable en los pasos colectivos',
+                    'Espectacularidad sonora de su banda institucional',
+                    'Innovación en el diseño de las polleras y mantas',
+                    'Sincronización perfecta entre bloques masivos'
+                ],
+                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2024/12/festividad-virgen-candelaria-2025-una-puno.jpg'
+            },
+            'wifalas-munani-2025': {
+                title: 'Wifalas San Francisco Javier de Muñani',
+                year: '2025',
+                category: 'Autóctonos',
+                score: '63.10',
+                badges: ['Ganador Absoluto', 'Danza Originaria'],
+                reasons: [
+                    'Ejecución técnica impecable de la danza Wifala',
+                    'Uso de vestimentas blancas de lana de oveja',
+                    'Simbolismo puro de la alegría del carnaval',
+                    'Prioridad ganada por criterios de desempate técnicos'
+                ],
+                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg'
+            },
+            'rey-moreno-2024': {
+                title: 'Rey Moreno Laykakota',
+                year: '2024',
+                category: 'Trajes de Luces',
+                score: '98.5',
+                badges: ['Gran Campeón', 'Morenada'],
+                reasons: [
+                    'Coreografía impecable con transiciones fluidas entre formaciones',
+                    'Vestuario de extraordinaria elaboración con bordados en hilo de oro',
+                    'Interpretación musical precisa y potente',
+                    'Excelente sincronización entre más de 200 danzantes'
+                ],
+                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
+                image: 'https://radioondaazul.com/wp-content/uploads/2020/02/MORENADA-LAYKACOTA-.jpg'
+            },
+            'unucajas-2024': {
+                title: 'Unucajas de Azángaro',
+                year: '2024',
+                category: 'Autóctonos',
+                score: '94.20',
+                badges: ['Reserva Moral', 'Azángaro'],
+                reasons: [
+                    'Mantenimiento fiel de la herencia dancística quechua',
+                    'Potencia sonora de los pinkillos tradicionales',
+                    'Resiliencia regional en el retorno de la festividad',
+                    'Vestimenta auténtica elaborada por comuneros'
+                ],
+                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/Conjunto-Unucajas-de-Azangaro.jpg'
+            },
+            'diablada-bellavista-2020': {
+                title: 'Diablada Bellavista',
+                year: '2020',
+                category: 'Trajes de Luces',
+                score: '94.26',
+                badges: ['Elegancia Barrio', 'Diablada'],
+                reasons: [
+                    'Sofisticación técnica superior en el bloque de "arcángeles"',
+                    'Coordinación milimétrica en el salto de diablos',
+                    'Impacto visual de sus máscaras de fibra de vidrio',
+                    'Tradición mantenida por 11 campeonatos previos'
+                ],
+                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
+                image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhE6LPtSpDH5jaLU0pg8jsFTPzL5Kg4e0YBV-QgmSDdtP0QKj7T3l7tYYJJJXPQ8VoCm9ArqO5fbnA6az1-o_G2UrFHo2umlKrsavvCWkDqGyGNtrkvHSkljM709uAyz5kwMFuU9troCBPF/s280/Diablos_Puno.jpg'
+            },
+            'patambuco-2020': {
+                title: 'Carnaval de Patambuco',
+                year: '2020',
+                category: 'Autóctonos',
+                score: '95.10',
+                badges: ['Fuerza Sandia', 'Autóctono'],
+                reasons: [
+                    'Consolidación como ganadora absoluta el primer día',
+                    'Energía desbordante en la ejecución del carnaval',
+                    'Trajes coloridos representativos de la selva puneña',
+                    'Acompañamiento musical de gran calidad rítmica'
+                ],
+                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0109-scaled.jpg'
+            },
+            'pnp-2019': {
+                title: 'Diablada Amigos de la PNP',
+                year: '2019',
+                category: 'Trajes de Luces',
+                score: '88.66',
+                badges: ['Disciplina Militar', 'Diablada'],
+                reasons: [
+                    'Consistencia premiada en estadio y parada de veneración',
+                    'Bloques masivos con cambios coreográficos rápidos',
+                    'Disciplina férrea en el desplazamiento escénico',
+                    'Recuperación del título con alto nivel artístico'
+                ],
+                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
+                image: 'https://www.punomagico.com/image/pnp%202021.png'
+            },
+            'chunchos-esquilaya-2019': {
+                title: 'Chunchos de Esquilaya',
+                year: '2019',
+                category: 'Autóctonos',
+                score: '97.69',
+                badges: ['Récord Histórico', 'Carabaya'],
+                reasons: [
+                    'Respuesta emocional sin precedentes en público y jurado',
+                    'Misión de evitar la extinción de su danza ancestral',
+                    'Uso de plumas y trajes rústicos de gran autenticidad',
+                    'Viaje de siete horas sumado a un esfuerzo físico total'
+                ],
+                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0338-scaled.jpg'
+            },
+            'morenada-orkapata-2018': {
+                title: 'Morenada Orkapata',
+                year: '2018',
+                category: 'Trajes de Luces',
+                score: '89.47',
+                badges: ['Resurgimiento', 'Morenada'],
+                reasons: [
+                    'Victoria emotiva tras años sin títulos máximos',
+                    'Resurgimiento de la Morenada en las élites sociales',
+                    'Gran capacidad de logística y despliegue artístico',
+                    'Elegancia suprema en el paso de las cholas puneñas'
+                ],
+                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
+                image: 'https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg'
+            },
+            'wifalas-munani-2018': {
+                title: 'Wifalas de Muñani',
+                year: '2018',
+                category: 'Autóctonos',
+                score: '94.78',
+                badges: ['Hegemonía', 'Azángaro'],
+                reasons: [
+                    'Rigurosidad en la preparación de los danzarines',
+                    'Transmisión fiel de la herencia dancística quechua',
+                    'Elegancia y porte en la ejecución de la Wifala',
+                    'Dominio absoluto en el ámbito de las danzas originarias'
+                ],
+                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg'
+            },
+            'pnp-2017': {
+                title: 'Diablada Amigos de la PNP',
+                year: '2017',
+                category: 'Trajes de Luces',
+                score: '90.53',
+                badges: ['Sexto Título', 'Diablada'],
+                reasons: [
+                    'Introducción pionera de bloques masivos en la Diablada',
+                    'Cambios coreográficos rápidos y definidos',
+                    'Mantenimiento de la alta competencia institucional',
+                    'Puntaje de 90.53 para consolidar supremacía'
+                ],
+                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
+                image: 'https://www.punomagico.com/image/pnp%202021.png'
+            },
+            'chaku-2017': {
+                title: 'Carnaval Chaku de Chucahuacas',
+                year: '2017',
+                category: 'Autóctonos',
+                score: '93.10',
+                badges: ['Fertilidad', 'Azángaro'],
+                reasons: [
+                    'Ejecución enérgica vinculada al arreo de animales',
+                    'Celebración de la fertilidad de la tierra en la danza',
+                    'Vestimenta colorida que cautivó al jurado calificador',
+                    'Representación auténtica del distrito de Chupa'
+                ],
+                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
+                image: 'https://muniazangaro.gob.pe/web/wp-content/uploads/2019/08/santiago-de-pupuja.jpg'
+            },
+            'centinelas-2016': {
+                title: 'Centinelas del Altiplano',
+                year: '2016',
+                category: 'Trajes de Luces',
+                score: '84.81',
+                badges: ['Primer Título', 'Diablada'],
+                reasons: [
+                    'Despliegue coreográfico de gran disciplina y simetría',
+                    'Ejecución militarizada de los pasos de la Diablada',
+                    'Simetría perfecta en todas las fases del escenario',
+                    'Campeonato absoluto con promedio ajustado'
+                ],
+                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
+                image: 'https://portal.andina.pe/EDPfotografia3/Thumbnail/2020/02/11/000654060W.jpg'
+            },
+            'wifalas-putina-2016': {
+                title: 'Wifalas de San Antonio de Putina',
+                year: '2016',
+                category: 'Autóctonos',
+                score: '89.50',
+                badges: ['Cintas Color', 'Putina'],
+                reasons: [
+                    'Uso de cintas de colores y sonidos de la naturaleza',
+                    'Interpretación magistral de pinkillos tradicionales',
+                    'Evocación del cortejo amoroso en comunidades altoandinas',
+                    'Victoria en una competencia reñida contra Azángaro'
+                ],
+                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
+                image: 'https://i.ytimg.com/vi/EoJO-bFrSaw/maxresdefault.jpg'
+            },
+            'caporales-centralistas-2015': {
+                title: 'Caporales Centralistas Puno',
+                year: '2015',
+                category: 'Trajes de Luces',
+                score: '90.37',
+                badges: ['Hito Histórico', 'Caporales'],
+                reasons: [
+                    'Victoria significativa frente a la Diablada PNP',
+                    'Despliegue de fuerza y agilidad en cada bloque',
+                    'Hito en la categoría de Traje de Luces Puneño',
+                    'Título de Campeón de Campeones con alto puntaje'
+                ],
+                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
+                image: 'https://www.punomagico.com/image/centralistas%202021.jpg'
+            },
+            'wifalas-munani-2015': {
+                title: 'Wifalas de Muñani',
+                year: '2015',
+                category: 'Autóctonos',
+                score: '88.70',
+                badges: ['Elegancia Pura', 'Muñani'],
+                reasons: [
+                    'Vistosas vestimentas blancas de lana de oveja',
+                    'Elegancia suprema en la ejecución del carnaval',
+                    'Simbolismo de pureza y alegría en la zona quechua',
+                    'Inicio de una era de dominio para Azángaro'
+                ],
+                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg'
+            }
+        };
+
+        function openGanadorModal(winnerId) {
+            const modal = document.getElementById('ganador-modal');
+            const content = document.getElementById('ganador-modal-content');
+            const data = ganadoresData[winnerId];
+
+            if (!data) return;
+
+            const reasonsHTML = data.reasons.map(reason => `
+                <li class="flex items-start gap-2 text-sm text-gray-600">
+                    <div class="mt-1 bg-green-100 rounded-full p-0.5 shrink-0">
+                        <i data-lucide="check" class="w-3 h-3 text-green-600"></i>
+                    </div>
+                    <span>${reason}</span>
+                </li>
+            `).join('');
+
+            const badgesHTML = data.badges.map(badge => `
+                <span class="bg-purple-50 text-candelaria-purple px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border border-purple-100">
+                    ${badge}
+                </span>
+            `).join('');
+
+            const modalHTML = `
+                <div class="bg-white rounded-2xl overflow-hidden max-w-4xl mx-auto flex flex-col h-auto md:max-h-[90vh]">
+                    <!-- Header Section -->
+                    <div class="relative h-48 md:h-72 shrink-0">
+                        <img src="${data.image}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        
+                        <!-- Badges -->
+                        <div class="absolute bottom-6 left-8 flex gap-3">
+                            <div class="bg-yellow-400 text-purple-900 px-4 py-1.5 rounded-full text-sm font-black shadow-2xl flex items-center gap-2">
+                                <i data-lucide="calendar" class="w-4 h-4"></i>
+                                ${data.year}
+                            </div>
+                            <div class="bg-candelaria-purple text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-2xl flex items-center gap-2">
+                                <i data-lucide="award" class="w-4 h-4"></i>
+                                ${data.category.toUpperCase()}
+                            </div>
+                        </div>
+                        
+                        <!-- Close Button -->
+                        <button onclick="closeGanadorModal()" class="absolute top-6 right-6 bg-white/30 hover:bg-white/50 text-white rounded-full p-3 backdrop-blur-xl transition-all shadow-xl group">
+                            <i data-lucide="x" class="w-6 h-6 group-hover:rotate-90 transition-transform"></i>
+                        </button>
+                    </div>
+
+                    <!-- Body Content -->
+                    <div class="p-8 md:p-10 overflow-y-auto">
+                        <div class="flex flex-col lg:flex-row gap-12">
+                            <!-- Left Column: Info -->
+                            <div class="lg:w-3/5">
+                                <h2 class="text-4xl font-black text-gray-900 font-heading mb-3 leading-tight tracking-tight">${data.title}</h2>
+                                <div class="flex flex-wrap gap-2 mb-8">
+                                    ${badgesHTML}
+                                </div>
+
+                                <div class="space-y-6">
+                                    <div class="flex items-center gap-3">
+                                        <div class="h-px bg-gray-200 flex-1"></div>
+                                        <h3 class="text-xs font-black text-gray-400 uppercase tracking-[0.3em]">Razones del Triunfo</h3>
+                                        <div class="h-px bg-gray-200 flex-1"></div>
+                                    </div>
+                                    <ul class="space-y-4">
+                                        ${reasonsHTML}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Video & Score -->
+                            <div class="lg:w-2/5 flex flex-col gap-8">
+                                <div class="bg-gray-100 rounded-2xl overflow-hidden group relative aspect-[16/10] shadow-2xl border border-gray-200">
+                                    <iframe class="w-full h-full" src="${data.video}?autoplay=1&enablejsapi=1" 
+                                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                                    <div class="absolute bottom-3 left-0 right-0 text-center pointer-events-none">
+                                        <p class="text-[9px] text-white/90 font-black uppercase tracking-[0.2em] bg-black/40 backdrop-blur-sm inline-block px-3 py-1 rounded-full">Presentación ganadora</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-gradient-to-br from-purple-50 to-white p-6 rounded-2xl border border-purple-100 shadow-inner">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <i data-lucide="gavel" class="w-4 h-4 text-candelaria-purple"></i>
+                                        <h4 class="text-[10px] font-black text-candelaria-purple uppercase tracking-[0.2em]">Jurado Calificador</h4>
+                                    </div>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-sm font-bold text-gray-400">Puntuación:</span>
+                                        <span class="text-3xl font-black text-candelaria-purple">${data.score}</span>
+                                        <span class="text-sm font-bold text-gray-400">/ 100</span>
+                                    </div>
+                                    <div class="mt-3 h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-candelaria-purple rounded-full shadow-[0_0_10px_#4c1d9577]" style="width: ${data.score}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="h-px bg-gray-100 my-10"></div>
+
+                        <!-- Gallery & Action Buttons -->
+                        <div class="flex flex-col md:flex-row gap-10 items-end">
+                            <div class="flex-1 w-full">
+                                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                                    <i data-lucide="images" class="w-4 h-4"></i> Galería del Conjunto
+                                </h4>
+                                <div class="flex gap-3">
+                                    <div class="group/img w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-candelaria-purple transition-all cursor-pointer shadow-lg">
+                                        <img src="https://images.unsplash.com/photo-1518173946687-a4c899c3362e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform">
+                                    </div>
+                                    <div class="group/img w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-candelaria-purple transition-all cursor-pointer shadow-lg">
+                                        <img src="https://images.unsplash.com/photo-1544919982-b61976f0ba43?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform">
+                                    </div>
+                                    <div class="group/img w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-candelaria-purple transition-all cursor-pointer shadow-lg">
+                                        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="p-5 bg-gray-50 border-t border-gray-100 flex justify-end shrink-0">
+                        <button onclick="closeGanadorModal()" class="px-8 py-2.5 bg-gray-900 text-white font-black rounded-xl text-[10px] uppercase tracking-widest hover:bg-black transition-all shadow-lg active:scale-95">
+                            Cerrar ventana
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            content.innerHTML = modalHTML;
+            lucide.createIcons();
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGanadorModal() {
+            const modal = document.getElementById('ganador-modal');
+            const content = document.getElementById('ganador-modal-content');
+            content.innerHTML = ''; // Stop video
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
         const conjuntosData = {
             'sikuris-manazo': {
                 title: 'Sikuris del Barrio Mañazo',
