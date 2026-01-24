@@ -960,7 +960,7 @@
                             <!-- LAYKAKOTA -->
                             <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
                                 <div class="w-full md:w-1/3 h-40 shrink-0">
-                                    <img src="https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/476632019_1170733227970041_2953058933484479784_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEpuwh3xJc20s5XNni6ulcDYDNZPaGwWQZgM1k9obBZBodqc5ms3v8EzQdmNDVyhHxWRFCqN2CtEfHHQEUGMMOl&_nc_ohc=7qtT2TwvB0kQ7kNvwFocCvJ&_nc_oc=AdkgY6GQDg31cWMSI1yw4knu8OQQ0IWW4vvePKdcJLKfGjiVHxbYy9UHh35AMxyUhcA&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=NtVGG1ZqasrKnC9Eu5a4vQ&oh=00_AfruFSNh7CHdaUZWxjpDMLr4_xK2DvcRJRS_MKU1Bi4ZHw&oe=6979981B" onerror="this.src='https://placehold.co/400x400/4c1d95/fbbf24?text=LAYKAKOTA'" class="w-full h-full object-cover rounded-lg shadow-sm">
+                                    <img src="https://www.punomagico.com/image/negritos%203.jpg" onerror="this.src='https://www.punomagico.com/image/negritos%203.jpg'" class="w-full h-full object-cover rounded-lg shadow-sm">
                                 </div>
                                 <div>
                                     <div class="flex justify-between items-center mb-2">
@@ -977,39 +977,226 @@
 
                         <!-- TABLE: FUNDACIONES -->
                         <div class="bg-slate-900 rounded-xl p-6 text-white overflow-hidden">
-                            <h4 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="list" class="w-5 h-5 text-yellow-400"></i> Cronología de Fundaciones</h4>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-sm text-left text-slate-300">
-                                    <thead class="text-yellow-400 border-b border-slate-700 uppercase text-xs">
-                                        <tr>
-                                            <th class="px-4 py-3">Conjunto</th>
-                                            <th class="px-4 py-3">Año</th>
-                                            <th class="px-4 py-3">Importancia Histórica</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-slate-700">
-                                        <tr>
-                                            <td class="px-4 py-3 font-medium text-white">Morenada Orkapata</td>
-                                            <td class="px-4 py-3">1955</td>
-                                            <td class="px-4 py-3">Primera morenada institucionalizada.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-4 py-3 font-medium text-white">Diablada Porteño</td>
-                                            <td class="px-4 py-3">1962</td>
-                                            <td class="px-4 py-3">Iniciadora de la era moderna.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-4 py-3 font-medium text-white">Diablada Bellavista</td>
-                                            <td class="px-4 py-3">1963</td>
-                                            <td class="px-4 py-3">Prestigio competitivo y organización.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-4 py-3 font-medium text-white">Confraternidad Victoria</td>
-                                            <td class="px-4 py-3">1965</td>
-                                            <td class="px-4 py-3">Expansión nacional del folklore.</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <h4 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="list" class="w-5 h-5 text-yellow-400"></i> Cronología Histórica de la Festividad</h4>
+                            
+                            <!-- PERIODO: ORÍGENES -->
+                            <div class="mb-6">
+                                <h5 class="text-yellow-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+                                    Período Colonial y Fundacional (1583 - 1900)
+                                </h5>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-slate-300">
+                                        <thead class="text-yellow-400 border-b border-slate-700 uppercase text-xs">
+                                            <tr>
+                                                <th class="px-4 py-2">Año</th>
+                                                <th class="px-4 py-2">Evento / Conjunto</th>
+                                                <th class="px-4 py-2">Importancia Histórica</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-700">
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1583</td>
+                                                <td class="px-4 py-2">Fundación del pueblo de Puno</td>
+                                                <td class="px-4 py-2">Llegada de la imagen de la Virgen de la Candelaria de España, traída por los mineros de Laykakota.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1668</td>
+                                                <td class="px-4 py-2">Milagro del Cerro Huajsapata</td>
+                                                <td class="px-4 py-2">Leyenda fundacional: la Virgen defiende a los indígenas durante la rebelión de Laykakota contra los españoles.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1871</td>
+                                                <td class="px-4 py-2">Cabildo de Naturales</td>
+                                                <td class="px-4 py-2">Primera procesión documentada con danzas autóctonas (Sicuris, Wifala). Origen del calendario festivo actual.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1884</td>
+                                                <td class="px-4 py-2">Sikuris Juventud Obrera</td>
+                                                <td class="px-4 py-2">Uno de los primeros conjuntos de sikuris institucionalizado en Puno. Símbolo del gremio obrero.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1892</td>
+                                                <td class="px-4 py-2">Sikuris Mañazo</td>
+                                                <td class="px-4 py-2">Fundado por el gremio de matarifes. Origen del estilo de \"un solo bombo\". Raíz de la Diablada puneña.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- PERIODO: ERA DE LOS SIKURIS -->
+                            <div class="mb-6">
+                                <h5 class="text-green-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span class="w-3 h-3 bg-green-400 rounded-full"></span>
+                                    Era de los Sikuris y Primeras Danzas de Luces (1900 - 1960)
+                                </h5>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-slate-300">
+                                        <thead class="text-green-400 border-b border-slate-700 uppercase text-xs">
+                                            <tr>
+                                                <th class="px-4 py-2">Año</th>
+                                                <th class="px-4 py-2">Evento / Conjunto</th>
+                                                <th class="px-4 py-2">Importancia Histórica</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-700">
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1913</td>
+                                                <td class="px-4 py-2">Qhantati Ururi (Conima)</td>
+                                                <td class="px-4 py-2">Conjunto mítico de sikuris de Moho. Creadores del \"estilo suave\". Conecta las provincias con la capital.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1918</td>
+                                                <td class="px-4 py-2">Sikuris 27 de Junio</td>
+                                                <td class="px-4 py-2">Fundado en Juli (Chucuito). Representantes del estilo Lupaka, con zampoñas de mayor tamaño.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1943</td>
+                                                <td class="px-4 py-2">Primera Diablada en Puno</td>
+                                                <td class="px-4 py-2">Aparecen los primeros \"diablos\" con máscaras de yeso, inspirados en autos sacramentales y la Morenada.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1955</td>
+                                                <td class="px-4 py-2">Morenada Orkapata</td>
+                                                <td class="px-4 py-2">Primera morenada institucionalizada. Transición de lo autóctono a lo mestizo. Pionera del género.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1956</td>
+                                                <td class="px-4 py-2">Hermanos Velásquez (Taller)</td>
+                                                <td class="px-4 py-2">Revolucionan la mascarería puneña: ojos de vidrio soplado e iconografía local propia.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- PERIODO: ERA DORADA -->
+                            <div class="mb-6">
+                                <h5 class="text-purple-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span class="w-3 h-3 bg-purple-400 rounded-full"></span>
+                                    Era Dorada de los Trajes de Luces (1960 - 1985)
+                                </h5>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-slate-300">
+                                        <thead class="text-purple-400 border-b border-slate-700 uppercase text-xs">
+                                            <tr>
+                                                <th class="px-4 py-2">Año</th>
+                                                <th class="px-4 py-2">Evento / Conjunto</th>
+                                                <th class="px-4 py-2">Importancia Histórica</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-700">
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1962</td>
+                                                <td class="px-4 py-2">Tradicional Diablada Porteño</td>
+                                                <td class="px-4 py-2">Iniciadora de la era moderna. Profesionaliza la danza con estándares artísticos y organizativos.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1962</td>
+                                                <td class="px-4 py-2">Morenada Laykakota (Rey Moreno)</td>
+                                                <td class="px-4 py-2">Nace como \"Rey Moreno\". Evoluciona a Morenada masiva. Representa la masificación moderna.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1963</td>
+                                                <td class="px-4 py-2">Diablada Bellavista</td>
+                                                <td class="px-4 py-2">Fundada por Simón Rodríguez y Paulina Gómez. Influencia de maestros bolivianos. Once veces campeona.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1965</td>
+                                                <td class="px-4 py-2">Confraternidad Diablada Victoria</td>
+                                                <td class="px-4 py-2">Expansión del folklore puneño a nivel nacional. Rivalidad con Porteño y Bellavista.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1967</td>
+                                                <td class="px-4 py-2">Visita de José María Arguedas</td>
+                                                <td class="px-4 py-2">El escritor declara a Puno \"Capital del Folklore Peruano\". Punto de inflexión para el reconocimiento nacional.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1970</td>
+                                                <td class="px-4 py-2">Creación de la Fed. Regional de Folklore</td>
+                                                <td class="px-4 py-2">Institucionaliza el concurso anual de danzas. Se establecen categorías (Luces vs. Autóctonos).</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1975</td>
+                                                <td class="px-4 py-2">Diablada Amigos de la PNP</td>
+                                                <td class="px-4 py-2">Fundada por suboficiales de la policía. Disciplina militar aplicada a la danza. Múltiples campeonatos.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1982</td>
+                                                <td class="px-4 py-2">Caporales Huáscar</td>
+                                                <td class="px-4 py-2">Primera agrupación de Caporales en Puno. Danza recreada en Bolivia llega al Altiplano peruano.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- PERIODO: GLOBALIZACION -->
+                            <div class="mb-6">
+                                <h5 class="text-blue-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span class="w-3 h-3 bg-blue-400 rounded-full"></span>
+                                    Globalización y Reconocimiento Mundial (1985 - Presente)
+                                </h5>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-slate-300">
+                                        <thead class="text-blue-400 border-b border-slate-700 uppercase text-xs">
+                                            <tr>
+                                                <th class="px-4 py-2">Año</th>
+                                                <th class="px-4 py-2">Evento / Conjunto</th>
+                                                <th class="px-4 py-2">Importancia Histórica</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-700">
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1985</td>
+                                                <td class="px-4 py-2">Ley N° 24325 del Congreso</td>
+                                                <td class="px-4 py-2">La ley reconoce oficialmente a Puno como \"Capital del Folklore Peruano\".</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">1996</td>
+                                                <td class="px-4 py-2">Caporales Centralistas Puno</td>
+                                                <td class="px-4 py-2">Internacionalización del Caporal puneño. Presentaciones en Miami y Nueva York.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">2003</td>
+                                                <td class="px-4 py-2">Patrimonio Cultural de la Nación</td>
+                                                <td class="px-4 py-2">El Instituto Nacional de Cultura (INC) declara la festividad como Patrimonio Cultural.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">2014</td>
+                                                <td class="px-4 py-2">Patrimonio UNESCO</td>
+                                                <td class="px-4 py-2">La festividad es inscrita en la Lista Representativa del Patrimonio Cultural Inmaterial de la Humanidad.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">2020</td>
+                                                <td class="px-4 py-2">Última edición pre-pandemia</td>
+                                                <td class="px-4 py-2">Diablada Bellavista gana con 94.26 pts. Más de 150 conjuntos participan antes del cierre mundial.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">2024</td>
+                                                <td class="px-4 py-2">Retorno Post-Pandemia</td>
+                                                <td class="px-4 py-2">Morenada Laykakota gana el concurso. La festividad vuelve con más de 130,000 danzantes.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 font-medium text-white">2025</td>
+                                                <td class="px-4 py-2">Morenada Santa Rosa / Wifalas Muñani</td>
+                                                <td class="px-4 py-2">Campeones actuales. Santa Rosa (87.71 pts) y Muñani (63.10 pts) lideran sus categorías respectivas.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- REFERENCIAS -->
+                            <div class="mt-6 pt-4 border-t border-slate-700">
+                                <h5 class="text-slate-400 text-xs uppercase tracking-wider mb-2">Referencias Bibliográficas</h5>
+                                <ul class="text-xs text-slate-500 space-y-1">
+                                    <li>• Cánepa Koch, G. (1998). <em>Máscara, transformación e identidad en los Andes</em>. PUCP.</li>
+                                    <li>• UNESCO (2014). Expediente de inscripción de la Festividad Virgen de la Candelaria.</li>
+                                    <li>• Núñez Butrón, M. (1959). <em>Estampas puneñas</em>. Ed. Los Andes.</li>
+                                    <li>• Federación Regional de Folklore de Puno. Archivos históricos (1970-2025).</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -2129,12 +2316,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Disciplina férrea en el desplazamiento escénico',
                     'Recuperación del título con alto nivel artístico'
                 ],
-                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://www.punomagico.com/image/pnp%202021.png',
+                video: 'https://youtu.be/SJobNvlbgmQ?si=9lEgQW0DvTFlPOgl',
+                image: 'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/51704637_2036874863047509_6958451368663187456_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeGUUPSlOpJZ6eorRJiCo1eoaiklL8M5l1tqKSUvwzmXW12xTUKvEGv5EI27GaXaeZRGkUF2XD9XADzdAHjeJXSG&_nc_ohc=NFjwaFV28QkQ7kNvwF9Q9n_&_nc_oc=Adlwpv3-bFlcIiXwFkIFFSDgdFnajrSNArnGAqXMq1WtR4gsbfAeRdG25QklzqbQyCs&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=4eHI2HuNtLGBzChxVoNNBg&oh=00_AfqW-FDJ6T17fQvXLJsdP_vEeZDM3EFzSEJNjw6IAB85iA&oe=699B9070',
                 gallery: [
-                    'https://www.punomagico.com/image/pnp%202021.png',
-                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800',
-                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800'
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/51924523_2036874833047512_231155135575752704_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeHqJv5DAbPV391Mvux6YsWONdZQKFWz4dE11lAoVbPh0TMP_Ch2rRNcokUeTrXLXEyhG7Y3n9kYi9xsittr6949&_nc_ohc=5XAbKxKg7a4Q7kNvwFTZttQ&_nc_oc=Adm7kVk2COv6SmDMxUzqeK9WruzeNWu4U4wLO_r3Z44HylLkx8uTz6XPaUZ1IhdqRKQ&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=C1QiLuBosWrMlQG9PfubCg&oh=00_AfqloxB22QMf3kW95abTSVs35-4X2WBOoD1Pjh5J2578jg&oe=699BA8D9',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/52358921_2036874876380841_5246194009650495488_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeGvq49pa1psioeE4lX9VoA9M3Tv-Kbdeb4zdO_4pt15vgk2V-YyqOjxHkPTPRYW25_Ie11rtS2onWfZqZvWqDtO&_nc_ohc=UaaRlJB7iTkQ7kNvwGXLcEj&_nc_oc=Adnov-E7uNGWoy-MlcGTbMP99voY95By3_lINNudHHQjI8VjND20pBqZkTtc3Te1MGs&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=qcOGJbxgL8Cy_KTi5XFvww&oh=00_AfpldiEzC3NBFAWMiu2quUfi8HVJj3Vjq91Q3OOhti1Qhg&oe=699B9B43',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/52365658_2036874936380835_671748493005553664_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeH5FUVVLOStOVr7eaAWEYqMulJNkdhmDrC6Uk2R2GYOsJ0l2oGAAzf_X5z1u1LKsXTx8B-PSPtmyX9sZuHV-Q6Q&_nc_ohc=AI_9OC3fqJIQ7kNvwHQed-b&_nc_oc=AdkxG6rmOcq9i6-eKQs8OOLp37fSMCuymWWbPKdE1cvF3DaWcqVyuRMrLerH7qX2xIM&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=lxdUt8lRxOFprhLo_TIvVA&oh=00_AfrgloNa1ply4MmSW5pHSzFo04ivP7G6xeENCDzY7y7aZw&oe=699B8DE6'
                 ]
             },
             'chunchos-esquilaya-2019': {
@@ -2149,12 +2336,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Uso de plumas y trajes rústicos de gran autenticidad',
                     'Viaje de siete horas sumado a un esfuerzo físico total'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0338-scaled.jpg',
+                video: 'https://youtu.be/Op6T-_Key48?si=eZfZmg4hDJ8X3pbm',
+                image: 'https://portal.andina.pe/EDPfotografia3/Thumbnail/2019/07/11/000599669W.webp',
                 gallery: [
-                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0338-scaled.jpg',
-                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800',
-                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800'
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/51140314_2027678007300528_9669362952699904_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHRSkaG1Q6ofF4vo6fRh-yHE44_UR1hhRkTjj9RHWGFGQV8lK8f9nRHxyNADZq9hKZM8CCGC0u0WcwPMwc65Boy&_nc_ohc=BGUyZ1H7zbIQ7kNvwHA1LFC&_nc_oc=Adk4ZQf2gzt0VE7rKVLjQ7gX4KJNuzQxuAjHsZ7_nOWdj12JADtbeGDYzKOWoUiqN_E&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=AmSbpeSddN83JQeKdbQtRw&oh=00_AfqqEK4rKyOCO0dCFmtRTOkG2fcpoVc-xJnweUFaW4u3Iw&oe=699BABD6',
+                    'https://radioondaazul.com/wp-content/uploads/2020/02/chunchos-de-esquilaya-.jpg',
+                    'https://imgmedia.larepublica.pe/1000x590/larepublica/migration/images/CMFLXUFB5REINGYEEARFDHRUN4.webp'
                 ]
             },
             'morenada-orkapata-2018': {
@@ -2169,12 +2356,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Gran capacidad de logística y despliegue artístico',
                     'Elegancia suprema en el paso de las cholas puneñas'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg',
+                video: 'https://youtu.be/HLyyJjshT68?si=0U4OFynpbfw_MtWP',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0020-5-1024x681.jpg',
                 gallery: [
-                    'https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg',
-                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800',
-                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800'
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/Conjunto-Folklorico-Confraternidad-Morenada-Orkapata.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0028-1-1024x681.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_4064-1024x683.jpg'
                 ]
             },
             'wifalas-munani-2018': {
@@ -2189,12 +2376,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Elegancia y porte en la ejecución de la Wifala',
                     'Dominio absoluto en el ámbito de las danzas originarias'
                 ],
-                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg',
+                video: 'https://youtu.be/hqyYKx_Co94?si=egfYk24YlpPzu9g5',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/01/Conjunto-Wifalas-San-Francisco-Javier-de-Munani.jpg',
                 gallery: [
-                    'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg',
-                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800',
-                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800'
+                    'https://radioondaazul.com/wp-content/uploads/2025/01/Conjunto-Wifalas-San-Francisco-Javier-de-Munani-.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/01/Wifalas-San-Francisco-Javier-de-Munani.jpg',
+                    'https://scontent.cdninstagram.com/v/t51.75761-15/4…7vAqL1WJRisBs_TkWA-WLbyE3cZepLz9m3KQQ&oe=697A09BF'
                 ]
             },
             'pnp-2017': {
@@ -2209,12 +2396,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Mantenimiento de la alta competencia institucional',
                     'Puntaje de 90.53 para consolidar supremacía'
                 ],
-                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://www.punomagico.com/image/pnp%202021.png',
+                video: 'https://youtu.be/q10SZNt4Xb0?si=mS1ASfF2MZLbqb1E',
+                image: 'https://larepublica.cronosmedia.glr.pe/original/2024/02/08/65c524794905c27f267fedc4.jpg',
                 gallery: [
-                    'https://www.punomagico.com/image/pnp%202021.png',
-                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800',
-                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800'
+                    'https://f.rpp-noticias.io/2017/02/02/339023candejpg.jpg?imgdimension=look',
+                    'https://f.rpp-noticias.io/2017/02/06/442844_341058.png?width=1020&quality=80',
+                    'https://radioondaazul.com/wp-content/uploads/2023/01/Festividad-Virgen-Maria-de-la-Candelaria-2023.jpg'
                 ]
             },
             'chaku-2017': {
@@ -2229,12 +2416,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Vestimenta colorida que cautivó al jurado calificador',
                     'Representación auténtica del distrito de Chupa'
                 ],
-                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://muniazangaro.gob.pe/web/wp-content/uploads/2019/08/santiago-de-pupuja.jpg',
+                video: 'https://youtu.be/2seCpG4thpU?si=o8aQ-NaTYXt_kVzZ',
+                image: 'https://scontent.flim6-3.fna.fbcdn.net/v/t39.30808-6/557698167_24613088208332853_952894828109069196_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeEdVfqP5LudyrT2kXA3mJsm46leD2skd2jjqV4PayR3aKKFdDm6ExM2dP0Ml1IPD5kn7r74aojbDnjeQSnPNV_1&_nc_ohc=DEsasFK3Kt8Q7kNvwEW8cEW&_nc_oc=Admy8L12jJKioIBC4R6nBeBVIBxT2hWNVfDIxEWbo7k2uCQ06Cv00qtKvkK41PBtUAs&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=5s8q2MxSoacg9BwvKAZLww&oh=00_Afr6Ia5phqGToen752OPUuhJBDAsZonzhELF17LnpXVfhQ&oe=697A0C09',
                 gallery: [
-                    'https://muniazangaro.gob.pe/web/wp-content/uploads/2019/08/santiago-de-pupuja.jpg',
-                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800',
-                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800'
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t39.30808-6/557727800_24613088288332845_7778604945470394468_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeEsEngW6T2P1EA5VesceJtO9szYS8s0FxT2zNhLyzQXFCxa4itjOnpzQhXWJD53QYQazzy0ryPsmNRr55FKeKOx&_nc_ohc=-8__bPCke9MQ7kNvwHEPJRV&_nc_oc=AdmkiP_oCB0qlM6wg1hlWEsQMfqu6VQGi1TeoIX6AFXBkKBlFdcx_WLI3YUa5iwR8wQ&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=bnl2v-oa0rjQuDKqgALihA&oh=00_AfrjZXqi_Qc77troerE8xG_RV92KecAZb3FH-4ywGMcdHA&oe=697A1D3F',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/558169878_24613088271666180_9098631694424042657_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeE-hyhwdoY87cRn0BVgC6FTHwG7-Thg2K8fAbv5OGDYrzC7dIvHYKGhKhoZxFlpWgcYrLQcB0gHT-EJcZyu3dtE&_nc_ohc=-2K6nTo2dIcQ7kNvwE7JEgb&_nc_oc=AdmK1UsK8KYeogr47S1Nm2-tv_SvTFlnPB-uctKtupXWotofWdVVPva22TVYW0j1BlE&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=n5aK66LFHxI28NLmt5H-vg&oh=00_AfrhFzW4rALHiQY1UYfJ57F0bxWPCA3RUDYDkH4LP0BrNw&oe=697A1A11',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t39.30808-6/557716016_24613088134999527_6676370662114461425_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeFPtA4Q4BE3iPepv2QsCoRoc2PPEiGPXlNzY88SIY9eUzTMHVljzibVHAie9h8GibIb1jftaQuCOTovszob-pKw&_nc_ohc=KuxCw8HCemwQ7kNvwFNoBsa&_nc_oc=AdnW9Bq87xtfloZ5vELcQxGJ3hGNBIDC4M9XcVCfY-g8W_-vQFigG24N5r9s-cdAycU&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=uoIYNXZAJpRLChc1_uRsdQ&oh=00_Afo0P0vJP5iH42qQrWqT7NGTcSyaHmeQoOwuFki50taJbA&oe=697A0FF1'
                 ]
             },
             'centinelas-2016': {
@@ -2249,12 +2436,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Simetría perfecta en todas las fases del escenario',
                     'Campeonato absoluto ganado con excelencia técnica'
                 ],
-                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://portal.andina.pe/EDPfotografia3/Thumbnail/2020/02/11/000654060W.jpg',
+                video: 'https://youtu.be/00c7dFVkGbg?si=_VN6imtQX-QiAf3V',
+                image: 'https://scontent.flim6-2.fna.fbcdn.net/v/t39.30808-6/487304193_1076542121177299_1524602493217469796_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFhVHOkChDcxTE_WoMGysHKKfO8718YO2kp87zvXxg7adRPM_YYU59A8soWg3li3paEKMcWbVjgBuPASOjJrqkQ&_nc_ohc=YC7pMA8wnH8Q7kNvwFvlqs9&_nc_oc=AdlsFoymW13yd61B1yrFY7N-ks3exOt1oEOCCA72CeyJg_z5KS3fdJedd3EKIhFz2s0&_nc_zt=23&_nc_ht=scontent.flim6-2.fna&_nc_gid=THkScNeOCuaq4UtjMZ1vRg&oh=00_Afq0pGzq0DTnZuDeBZhLKxBcihjCryZYhv4wKSEuUA6j6w&oe=697A0A48',
                 gallery: [
-                    'https://portal.andina.pe/EDPfotografia3/Thumbnail/2020/02/11/000654060W.jpg',
-                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800',
-                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800'
+                    'https://scontent.flim6-2.fna.fbcdn.net/v/t39.30808-6/486536833_1076542611177250_1768197648850752335_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGMueIB1gwXKuOLqjD_O3ickVGQrf_swNORUZCt_-zA00X7UQ2OlQTHHhDBWE0KfGJqjceKdMG6UIEGiLV45JsX&_nc_ohc=9GZa242YT7gQ7kNvwH3o1P3&_nc_oc=AdkkQ3-iRQWMMJXNrM1oFDlcZ_Vm6HMoxf0CoEZv8CqjMGexlx9AKBecbN3INhVLSGg&_nc_zt=23&_nc_ht=scontent.flim6-2.fna&_nc_gid=aWeQdkQQUw1C_z_pYbmJ3g&oh=00_AfocPYO_pRQEkg1f2R5kpSgHOcaE0MSaeJebRdjCiJPFpA&oe=6979F81E',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t39.30808-6/486531276_1076542257843952_4621486364285369854_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeH0PtMzJT8Nh9VwWQPRBVSDKZXXatmj5Y4plddq2aPljlQ-VQyOHXeWCty31gky1cZES1uckakJFK6-TDkys62J&_nc_ohc=D37hVUZNipYQ7kNvwFjE1Th&_nc_oc=AdldAGyrB7-JSG1rG5Fydm3ftq7iSbXOkodrQJTJsAmdBUJ505Af838gob3ElnqZq8s&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=k1ISzdLob5StuahRLU08uA&oh=00_AfrvMNCfdss15E8i-4OBZ3ERRX6G3TTtn1a1O6PSmmWG7Q&oe=697A1719',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/487240511_1076542531177258_2817840117068575207_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGEkd_vycdVNQpYUDx4USXbSzmQXj7VuJFLOZBePtW4kbMn0P5uv2bzIhvg6qELLkszQP7rEDMT8tdHDjXtFTVu&_nc_ohc=a0m8OoMG5NsQ7kNvwFMP_Ds&_nc_oc=Adl1xmjGPRhsaHjia83xl4lLeLMBXhsD3dOOnEXVjS3jM4Ote_Ffg3KwVh6egGPpt3Y&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=qEjqFDS867AjTC7JPgPACw&oh=00_Afr-Frgxlf-DkNs12k6RTelMyEftTEim_EG8vgBAUNmXQg&oe=6979F50E'
                 ]
             },
             'wifalas-putina-2016': {
@@ -2269,12 +2456,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Evocación del cortejo amoroso en comunidades altoandinas',
                     'Victoria contundente con alto puntaje técnico'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://i.ytimg.com/vi/EoJO-bFrSaw/maxresdefault.jpg',
+                video: 'https://youtu.be/xvF-TTyBfFU?si=MHO8exlJhlyy9dpc',
+                image: 'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/486092405_1072751258205977_7356115628292395866_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFQGegPgDXDjpUU-0x8J4qFVr8WxeXZwA5WvxbF5dnADpYVNXzNzBp6kPEorMCgEf0UswgQhz0UdhoJnld1KEGm&_nc_ohc=ikuXJfWQj5gQ7kNvwEt_UGw&_nc_oc=AdkhmoeaCBlceIzFWtOkdHSdg3B_Fponhaj2ct_SVU1LSQjnkiMNo5mZAl4-zz23I0Q&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=1e7FYdRwhiXDxs7NHfq00w&oh=00_AfoKba6BHHkhA9k1I_eeSb3b9WB8KnpzOnJKOJ1k4_20MA&oe=697A1863',
                 gallery: [
-                    'https://i.ytimg.com/vi/EoJO-bFrSaw/maxresdefault.jpg',
-                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800',
-                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800'
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/486547378_1072751491539287_1690859207326763275_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFAoTsFawf7DPA62MHf647UCjGDR7CX2vEKMYNHsJfa8Uat-uQzFDR_teOxecUJX07o-pdGDjl0bUg-5YeW3oj0&_nc_ohc=0TxXwVuDrwoQ7kNvwEXd-Uz&_nc_oc=Adl_xs0xwqW5eh_Q-uVV6TPUcWHrcx2rka7pO1qDoypRHqTt1WIV8gQxTNU0MYpCtdo&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=55ZL2jJObZy5ArMQPR3J0Q&oh=00_AfrcpunUeS7Es9oz2K3V3Fd7AuLs8x2pSzLu1vgTQcvyhA&oe=6979F013',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/485634477_977662561185420_9180665816111890085_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFj8OrTOMYqoUOqhPYKNJ4IwP4lgyQcPIjA_iWDJBw8iB2QZ3lTVeTVNsL94dGNSQHIA5APwPrlmLy-i6WX4L1n&_nc_ohc=aS6OAu6j3oAQ7kNvwGv9k7z&_nc_oc=AdkcNzTANYNIVNVglEhQgOt3U00RnC3YXEXCZWxdQkekEhTvPlWD6aQtTHrFQmBSyiA&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=Klfz5Y_2FAjjhWJw7AOVYw&oh=00_Afo9Tc40xguM21p4iTT-ONySfoQWsm0hKyao0aqjrRlXsA&oe=6979EB47',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/485884948_977662477852095_543861617827511592_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeH1MEpwZyaMj8_dk0fiTX3EHGI37L8yyqEcYjfsvzLKoXZyD6ShM_QVLQUYENBBDZX4FQ4WGbrBkQzAvALn_6eR&_nc_ohc=pypaxlSTCVsQ7kNvwEra9zQ&_nc_oc=Admz7x-KNXsDt8dCxsrx1uDGvRQOcyKPYfRGdxVE1htmlXreR4OzCgUIT_11FeEV4cs&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=nepUmHQRXw1wo48MbueYpw&oh=00_Afq7q-J2j8KQz3xV8K7_gUW8Wo-MBFcA_3M3luUXnJgg_g&oe=6979FE19'
                 ]
             },
             'caporales-centralistas-2015': {
@@ -2289,12 +2476,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Hito en la categoría de Traje de Luces Puneño',
                     'Título de Campeón de Campeones con alto puntaje'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://www.punomagico.com/image/centralistas%202021.jpg',
+                video: 'https://youtu.be/eFmZbckl2Bo?si=Z6XOL81n1rca_4gB',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/Asociacion-Cultural-Caporales-Centralistas-Puno.jpg',
                 gallery: [
-                    'https://www.punomagico.com/image/centralistas%202021.jpg',
-                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800',
-                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800'
+                    'https://i.ytimg.com/vi/jPJI9PSSDIk/maxresdefault.jpg',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t1.6435-9/56848010_2451569634854220_5183031039479513088_n.jpg?stp=dst-jpg_p180x540_tt6&_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEkcObNid0_elUNwykwIPrxxqCA59DlV4PGoIDn0OVXgz4l9HX9VN2ju5Olo9jeJgNZKDkCdVDnfB5e5TcgtO7f&_nc_ohc=DIhC9Jc6WxEQ7kNvwGawc1f&_nc_oc=AdmcCfhmivtZZtM0h2yBrxqBouUyIpUXYFCPu6HtBMNrfdEM5Hu3FkLMCmJRa-2eCFo&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=r0EERZ0xs9_XGQz1zWVUCw&oh=00_Afo0ETSpdRMKVb2Z8AQapMIW7MB6qMhTjoJFMEsgmUY8pw&oe=699BA785',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_6386-scaled.jpg'
                 ]
             },
             'wifalas-munani-2015': {
@@ -2309,12 +2496,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Simbolismo de pureza y alegría en la zona quechua',
                     'Inicio de una era de dominio para Azángaro'
                 ],
-                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg',
+                video: 'https://youtu.be/UZoxKITGGEQ?si=kedTCijbOOEjT7vW',
+                image: 'https://diariocorreo.pe/resizer/cHMuGbYrd1C42a1aS-6-Ma2FfF0=/980x528/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/D6NM2YKZ4BHZXHGAMVH5BRZ7EA.jpg',
                 gallery: [
-                    'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg',
-                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800',
-                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800'
+                    'https://www.punomagico.com/image/wifala%20munani1.jpg',
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/137341712_1086650671747417_6859518839903103862_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFNxhsm7rLtwZxuRDwiR2syxcLAS4VEfN_FwsBLhUR832GN0ZClaTD5cnnibG0WzsfO6YhQS1kk7cyaWh6kRIrL&_nc_ohc=o0cEHVF6gMYQ7kNvwFVZ_VQ&_nc_oc=AdkiDQUoGiK9OkHG5D_Z2wAidcuMwtf6-HhvgqBjAebIEYEKauBhivszQFIhyeD8jgY&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=LtPmK0buMeanDsHvpIUkCQ&oh=00_AfpSX4r0-JO3YDmglnK1r8iPwsYgkkZPjiId2b_1cNceyw&oe=699B93AD',
+                    'https://vivecandelaria.com/wp-content/uploads/2024/02/wifalas_san_francisco.jpg'
                 ]
             }
         };
