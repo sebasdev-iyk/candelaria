@@ -17,7 +17,7 @@ const CHAT_API_BASE = '../api/chat.php';
 // Import Supabase functions if available (loaded from supabase-core.js)
 // Functions: SupabaseCore.getAccessToken(), SupabaseCore.getCurrentUser(), etc.
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // Inicializar elementos del DOM
     chatMessages = document.getElementById('chat-messages');
     chatInput = document.getElementById('chat-input');
@@ -29,6 +29,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initChat();
     initVideoControls();
+
+    /* --- PUNTUAJES INIT --- */
+    // Check URL hash for initial view
+    const hash = window.location.hash.substring(1);
+    if (hash === 'map') {
+        switchView('map');
+    } else if (hash === 'scores') {
+        switchView('scores');
+    } else {
+        // Default to live view if no hash or 'live'
+        switchView('live');
+    }
+
+    // Load Real Scores on Init
+    await fetchRealScores();
+    renderScores('autoctonos');
 });
 
 // Check auth status from Supabase (via cookies)
@@ -372,45 +388,48 @@ function toggleFollow(btn) {
 }
 
 /* --- Tabs & Rankings Logic --- */
-const MOCK_SCORES = {
-    autoctonos: [
-        { name: "Asoc. Cultural Sikuris Claveles Rojos", parada: 85.50, estadio: 88.00, final: 86.75 },
-        { name: "Conjunto de Zampoñas de Yunguyo", parada: 84.00, estadio: 86.50, final: 85.25 },
-        { name: "Agrupación Zampoñistas del Altiplano", parada: 88.00, estadio: 89.50, final: 88.75 },
-        { name: "Unión de Sikuris de Puno", parada: 82.50, estadio: 83.00, final: 82.75 },
-        { name: "Asociación Juvenil Puno", parada: 87.00, estadio: 85.50, final: 86.25 },
-        { name: "Sikuris Mañazo", parada: 89.50, estadio: 88.00, final: 88.75 },
-        { name: "Juventud Obrera", parada: 83.50, estadio: 84.00, final: 83.75 },
-        { name: "Sikuris 27 de Junio", parada: 86.00, estadio: 87.50, final: 86.75 }
-    ],
-    luces: [
-        { name: "Morenada Laykakota", parada: 92.00, estadio: 94.50, final: 93.25 },
-        { name: "Diablada Bellavista", parada: 95.00, estadio: 96.00, final: 95.50 },
-        { name: "Caporales Centralistas", parada: 91.50, estadio: 92.00, final: 91.75 },
-        { name: "Tinkus del Valle", parada: 89.00, estadio: 90.50, final: 89.75 },
-        { name: "Waca Waca San Román", parada: 88.50, estadio: 87.00, final: 87.75 },
-        { name: "Morenada Orkapata", parada: 90.00, estadio: 91.50, final: 90.75 },
-        { name: "Diablada Azoguini", parada: 93.50, estadio: 92.00, final: 92.75 },
-        { name: "Rey Caporal", parada: 88.00, estadio: 89.50, final: 88.75 }
-    ]
-};
+let REAL_SCORES = [];
 
-// Start with a default render
-document.addEventListener('DOMContentLoaded', () => {
-    // Render scores initially regardless of view
-    renderScores('autoctonos');
-
-    // Check URL hash for initial view
-    const hash = window.location.hash.substring(1);
-    if (hash === 'map') {
-        switchView('map');
-    } else if (hash === 'scores') {
-        switchView('scores');
+// DEPURACIÓN PROFUNDA
+function debugScores(msg, data = null) {
+    if (data) {
+        console.log(`%c[SCORES DEBUG] ${msg}`, 'background: #0ea5e9; color: black; font-weight: bold;', data);
     } else {
-        // Default to live view if no hash or 'live'
-        switchView('live');
+        console.log(`%c[SCORES DEBUG] ${msg}`, 'background: #0ea5e9; color: black; font-weight: bold;');
     }
-});
+}
+
+async function fetchRealScores() {
+    debugScores('Fetching real scores from API...');
+    try {
+        // Try requesting the public API (which should return all dances with scores)
+        const response = await fetch('../api/danzas.php?pageSize=1000');
+
+        debugScores('API Response Status', response.status);
+
+        if (!response.ok) throw new Error("Network response was not ok");
+
+        const json = await response.json();
+        const data = Array.isArray(json) ? json : (json.data || []);
+
+        debugScores('Raw Data Loaded', data.length + ' items');
+
+        // Transform to our format
+        REAL_SCORES = data.map(d => ({
+            name: d.conjunto,
+            category: d.categoria,
+            estadio: parseFloat(d.puntaje_estadio || 0),
+            parada: parseFloat(d.puntaje_parada || 0),
+            final: (parseFloat(d.puntaje_estadio || 0) + parseFloat(d.puntaje_parada || 0))
+        }));
+
+        debugScores('Processed Scores', REAL_SCORES);
+
+    } catch (e) {
+        console.error("Error fetching scores", e);
+        debugScores('ERROR fetching scores', e.message);
+    }
+}
 
 function switchView(viewName) {
     const liveView = document.getElementById('view-live');
@@ -442,6 +461,9 @@ function switchView(viewName) {
         if (viewName === 'scores') {
             scoresView.classList.remove('hidden');
             tabScores.classList.add('active');
+            // Refresh scores
+            const type = document.getElementById('btn-autoctonos').classList.contains('bg-purple-600') ? 'autoctonos' : 'luces';
+            renderScores(type);
         } else if (viewName === 'map') {
             mapView.classList.remove('hidden');
             tabMap.classList.add('active');
@@ -662,10 +684,38 @@ function renderScores(type) {
     if (!listContainer) return;
 
     listContainer.innerHTML = '';
-    const scores = MOCK_SCORES[type] || [];
+
+    debugScores(`Rendering scores for type: ${type}`);
+
+    // Use REAL_SCORES
+    let scores = [];
+
+    // Filter by type
+    if (REAL_SCORES.length > 0) {
+        if (type === 'autoctonos') {
+            scores = REAL_SCORES.filter(s => (s.category || '').includes('Autoctonos'));
+        } else {
+            // Loose match for Luces
+            scores = REAL_SCORES.filter(s => (s.category || '').includes('Luces'));
+        }
+    } else {
+        debugScores('No Real Scores available');
+    }
 
     // Sort by final score desc
     scores.sort((a, b) => b.final - a.final);
+
+    debugScores(`Filtered items: ${scores.length}`);
+
+    if (scores.length === 0) {
+        listContainer.innerHTML = `
+            <div class="p-8 text-center text-gray-400">
+                <i class="fas fa-info-circle text-2xl mb-2"></i>
+                <p>No hay puntajes registrados para esta categoría.</p>
+            </div>
+         `;
+        return;
+    }
 
     scores.forEach((item, index) => {
         const rank = index + 1;
