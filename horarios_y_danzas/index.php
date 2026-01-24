@@ -1164,10 +1164,14 @@
             danzasGrid.innerHTML = '<div class="col-span-full animate-pulse flex flex-col space-y-4"><div class="h-4 bg-gray-200 rounded w-3/4"></div><div class="h-4 bg-gray-200 rounded"></div><div class="h-4 bg-gray-200 rounded w-5/6"></div></div>';
 
             try {
-                let url = '../api/danzas.php';
+                // Construct URL with proper pagination parameters
+                const pageSize = 12; // Set consistent page size
+                let url = `../api/danzas.php?page=${page}&pageSize=${pageSize}`;
+
                 if (query && query.trim() !== '') {
-                    url = `../api/danzas.php?q=${encodeURIComponent(query)}`;
+                    url += `&q=${encodeURIComponent(query)}`;
                 }
+
                 console.log('[DEBUG] Fetching URL:', url);
 
                 const response = await fetch(url);

@@ -2074,7 +2074,9 @@
       `;
 
       try {
-        let url = `./api/danzas.php?page=${page}&pageSize=8`;
+        const pageSize = 12; // Standardize page size to 12
+        let url = `./api/danzas.php?page=${page}&pageSize=${pageSize}`;
+
         if (query && query.trim() !== '') {
           url += `&q=${encodeURIComponent(query)}`;
         }
