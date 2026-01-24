@@ -102,147 +102,6 @@
             margin: 0;
             width: 260px !important;
         }
-
-        /* ========== EN VIVO Button Styles ========== */
-        .btn-live {
-            position: relative;
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            color: white;
-            padding: 10px 24px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            overflow: hidden;
-            animation: pulseLive 2s infinite;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-live::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-            transition: left 0.6s;
-        }
-
-        .btn-live:hover::before {
-            left: 100%;
-        }
-
-        .btn-live:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.6);
-        }
-
-        .live-dot {
-            width: 10px;
-            height: 10px;
-            background: white;
-            border-radius: 50%;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.3;
-            }
-        }
-
-        @keyframes pulseLive {
-
-            0%,
-            100% {
-                box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            }
-
-            50% {
-                box-shadow: 0 4px 25px rgba(220, 38, 38, 0.7), 0 0 30px rgba(220, 38, 38, 0.4);
-            }
-        }
-
-        /* ========== Navigation Link Styles ========== */
-        .nav-link-custom {
-            color: #e9d5ff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 8px 16px;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link-custom:hover {
-            color: #fbbf24;
-        }
-
-        .nav-link-custom::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: #fbbf24;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link-custom:hover::after {
-            width: 80%;
-        }
-
-        .nav-link-custom.active {
-            color: #fbbf24;
-        }
-
-        .nav-link-custom.active::after {
-            width: 80%;
-        }
-
-        /* Header Manta Premium Style - Lliclla Pattern */
-        .header-manta-premium {
-            height: 140px;
-            background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('../principal/headerfondo2.jpg');
-            background-size: auto 100%;
-            background-repeat: repeat-x;
-            background-position: center;
-            position: relative;
-            border-bottom: 3px solid #fbbf24;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .header-manta-premium::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
-            pointer-events: none;
-        }
-
-        .header-manta-premium>div {
-            position: relative;
-            z-index: 2;
-        }
     </style>
     <!-- Spark Effect CSS -->
     <link rel="stylesheet" href="../assets/css/sparks.css">
@@ -271,57 +130,15 @@
     </div>
 
     <!-- Header Section - Standardized with EN VIVO Style -->
-    <header class="header-manta-premium text-white shadow-lg sticky top-0 z-40">
-        <!-- Banner superior removed -->
-
-        <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center">
-            <div class="flex justify-between items-center w-full h-full">
-                <!-- Left: Candelaria Branding -->
-                <a href="../index.php" id="logo-container"
-                    class="flex items-center cursor-pointer group h-full relative spark-container">
-                    <img src="../principal/logoc.png" alt="Candelaria"
-                        class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
-                </a>
-                <!-- Right: Navigation + EN TIEMPO REAL -->
-                <div class="flex items-center gap-6">
-                    <nav class="hidden md:flex items-center gap-2">
-                        <a href="index.php" class="nav-link-custom active">Servicios</a>
-                        <a href="../cultura/cultura.php" class="nav-link-custom">Cultura</a>
-                        <a href="../horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
-                        <a href="../noticias/index.php" class="nav-link-custom">Noticias</a>
-                    </nav>
-
-                    <!-- User Auth Button -->
-                    <?= getAuthButtonHTML() ?>
-
-                    <a href="../live-platform/index.php" class="btn-live group !p-2.5 md:!px-6 md:!py-2.5">
-                        <div class="live-dot"></div>
-                        <span class="tracking-wider hidden md:inline">EN TIEMPO REAL</span>
-                    </a>
-                    <button class="md:hidden text-white" id="mobile-menu-btn">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu"
-            class="hidden md:hidden bg-candelaria-purple absolute top-full left-0 w-full shadow-lg border-t border-purple-800 z-30 transition-all duration-300">
-            <nav class="flex flex-col p-6 space-y-4">
-                <a href="index.php"
-                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Servicios</a>
-                <a href="../cultura/cultura.php"
-                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
-                <a href="../horarios_y_danzas/index.php"
-                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Horarios</a>
-                <a href="../noticias/index.php"
-                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Noticias</a>
-            </nav>
-        </div>
-    </header>
+    <!-- Header Section - Standardized with EN TIEMPO REAL Style -->
+    <?php
+    $headerDepth = 1;
+    $activePage = 'servicios';
+    include '../includes/standard-header.php';
+    ?>
 
     <!-- Search & Filters Bar -->
-    <div class="bg-white border-b border-gray-200 shadow-sm sticky top-[84px] z-30">
+    <div class="bg-white border-b border-gray-200 shadow-sm sticky top-[100px] z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <!-- Inputs Principales -->
             <div class="flex flex-col md:flex-row gap-3">

@@ -171,146 +171,11 @@
             transform: translateY(20px);
         }
 
-        /* ========== EN TIEMPO REAL Button Styles ========== */
-        .btn-live {
-            position: relative;
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            color: white;
-            padding: 10px 24px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            overflow: hidden;
-            animation: pulseLive 2s infinite;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
 
-        .btn-live::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-            transition: left 0.6s;
-        }
 
-        .btn-live:hover::before {
-            left: 100%;
-        }
 
-        .btn-live:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.6);
-        }
 
-        .live-dot {
-            width: 10px;
-            height: 10px;
-            background: white;
-            border-radius: 50%;
-            animation: blink 1s infinite;
-        }
 
-        @keyframes blink {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.3;
-            }
-        }
-
-        @keyframes pulseLive {
-
-            0%,
-            100% {
-                box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            }
-
-            50% {
-                box-shadow: 0 4px 25px rgba(220, 38, 38, 0.7), 0 0 30px rgba(220, 38, 38, 0.4);
-            }
-        }
-
-        /* ========== Navigation Link Styles ========== */
-        .nav-link-custom {
-            color: #e9d5ff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 8px 16px;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link-custom:hover {
-            color: #fbbf24;
-        }
-
-        .nav-link-custom::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: #fbbf24;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link-custom:hover::after {
-            width: 80%;
-        }
-
-        .nav-link-custom.active {
-            color: #fbbf24;
-        }
-
-        .nav-link-custom.active::after {
-            width: 80%;
-        }
-
-        /* Header Manta Premium Style - Lliclla Pattern */
-        .header-manta-premium {
-            height: 140px;
-            background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('../principal/headerfondo2.jpg');
-            background-size: auto 100%;
-            background-repeat: repeat-x;
-            background-position: center;
-            position: relative;
-            border-bottom: 3px solid #fbbf24;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .header-manta-premium::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
-            pointer-events: none;
-        }
-
-        .header-manta-premium>div {
-            position: relative;
-            z-index: 2;
-        }
 
         /* Fix for sticky header overlap on anchor links */
         .tab-content {
@@ -327,51 +192,12 @@
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
 
     <!-- Header Section - Standardized with EN TIEMPO REAL Style -->
-    <header class="header-manta-premium text-white shadow-lg sticky top-0 z-40">
-
-        <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center">
-            <div class="flex justify-between items-center w-full h-full">
-                <a href="../index.php" id="logo-container"
-                    class="flex items-center cursor-pointer group h-full relative spark-container">
-                    <img src="../principal/logoc.png" alt="Candelaria"
-                        class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
-                </a>
-                <div class="flex items-center gap-6">
-                    <nav class="hidden md:flex items-center gap-2">
-                        <a href="../servicios/index.php" class="nav-link-custom">Servicios</a>
-                        <a href="cultura.php" class="nav-link-custom active">Cultura</a>
-                        <a href="../horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
-                        <a href="../noticias/index.php" class="nav-link-custom">Noticias</a>
-                    </nav>
-                    <?= getAuthButtonHTML() ?>
-                    <a href="../live-platform/index.php" class="btn-live group !p-2.5 md:!px-6 md:!py-2.5">
-                        <div class="live-dot"></div>
-                        <span class="tracking-wider hidden md:inline">EN TIEMPO REAL</span>
-                    </a>
-                    <button class="md:hidden text-white" onclick="toggleMobileMenu()">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="md:hidden bg-candelaria-purple border-t border-purple-700 hidden">
-        <div class="py-4 px-4 space-y-4">
-            <a href="#historia" class="block text-purple-100 hover:text-white transition-colors">Historia</a>
-            <a href="#conjuntos" class="block text-purple-100 hover:text-white transition-colors">Conjuntos</a>
-            <a href="#danzas" class="block text-purple-100 hover:text-white transition-colors">Danzas</a>
-            <a href="#ganadores" class="block text-purple-100 hover:text-white transition-colors">Ganadores</a>
-            <a href="#cronologia" class="block text-purple-100 hover:text-white transition-colors">Cronología</a>
-            <a href="../noticias/index.php"
-                class="block text-purple-100 hover:text-white transition-colors font-bold text-candelaria-gold">Noticias</a>
-            <button onclick="downloadInfo()"
-                class="w-full bg-candelaria-gold text-purple-900 px-4 py-2 rounded-lg font-bold hover:bg-yellow-300 transition-colors shadow-lg">
-                Descargar Info
-            </button>
-        </div>
-    </div>
+    <!-- Header Section - Standardized with EN TIEMPO REAL Style -->
+    <?php
+    $headerDepth = 1;
+    $activePage = 'cultura';
+    include '../includes/standard-header.php';
+    ?>
 
     <!-- HERO: EL ORIGEN MÍSTICO -->
     <header class="relative h-screen flex items-center justify-center overflow-hidden">
@@ -442,14 +268,21 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <!-- Header Clásico (Restaurado) -->
                     <header class="text-center mb-12 reveal-up">
-                        <h2 class="font-heading text-4xl md:text-5xl font-extrabold text-candelaria-purple mb-4">El Origen Místico</h2>
-                        <p class="text-gray-600 text-xl max-w-3xl mx-auto">Donde la fe virreinal y la Pachamama andina se hicieron una.</p>
+                        <h2 class="font-heading text-4xl md:text-5xl font-extrabold text-candelaria-purple mb-4">El
+                            Origen Místico</h2>
+                        <p class="text-gray-600 text-xl max-w-3xl mx-auto">Donde la fe virreinal y la Pachamama andina
+                            se hicieron una.</p>
                     </header>
 
                     <!-- Introducción Humanizada -->
                     <div class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-gray-100 mb-12 reveal-up">
-                        <p class="text-gray-700 leading-relaxed text-lg text-justify mb-0 first-letter:text-5xl first-letter:font-bold first-letter:text-candelaria-gold first-letter:mr-3 first-letter:float-left">
-                            La ciudad de Puno, a más de 3,800 metros de altura, es el corazón de una de las celebraciones más intensas de América. La Festividad de la Virgen de la Candelaria es mucho más que baile; es el encuentro vivo de dos mundos. Aquí, la historia de resistencia andina se mezcla con la fe católica para dar vida a una identidad única, que hoy el mundo reconoce como Patrimonio de la Humanidad.
+                        <p
+                            class="text-gray-700 leading-relaxed text-lg text-justify mb-0 first-letter:text-5xl first-letter:font-bold first-letter:text-candelaria-gold first-letter:mr-3 first-letter:float-left">
+                            La ciudad de Puno, a más de 3,800 metros de altura, es el corazón de una de las
+                            celebraciones más intensas de América. La Festividad de la Virgen de la Candelaria es mucho
+                            más que baile; es el encuentro vivo de dos mundos. Aquí, la historia de resistencia andina
+                            se mezcla con la fe católica para dar vida a una identidad única, que hoy el mundo reconoce
+                            como Patrimonio de la Humanidad.
                         </p>
                     </div>
 
@@ -457,27 +290,38 @@
                     <div class="grid md:grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
                         <div class="lg:col-span-8 space-y-8">
                             <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 reveal-up">
-                                <h3 class="flex items-center gap-3 text-2xl font-bold text-gray-900 mb-6 font-heading border-b border-gray-100 pb-4">
-                                    <span class="bg-red-50 text-red-600 w-10 h-10 flex items-center justify-center rounded-lg"><i data-lucide="sword" class="w-5 h-5"></i></span>
+                                <h3
+                                    class="flex items-center gap-3 text-2xl font-bold text-gray-900 mb-6 font-heading border-b border-gray-100 pb-4">
+                                    <span
+                                        class="bg-red-50 text-red-600 w-10 h-10 flex items-center justify-center rounded-lg"><i
+                                            data-lucide="sword" class="w-5 h-5"></i></span>
                                     1781: Una Historia de Fe y Guerra
                                 </h3>
                                 <p class="text-gray-700 leading-relaxed mb-4 text-justify">
-                                    Para entender la devoción de Puno, debemos viajar al año 1781. El Altiplano vivía tiempos de guerra. La rebelión de Túpac Amaru II crecía y, junto a Túpac Katari, pusieron a la región en jaque.
+                                    Para entender la devoción de Puno, debemos viajar al año 1781. El Altiplano vivía
+                                    tiempos de guerra. La rebelión de Túpac Amaru II crecía y, junto a Túpac Katari,
+                                    pusieron a la región en jaque.
                                 </p>
                                 <p class="text-gray-700 leading-relaxed mb-4 text-justify">
-                                    <strong>El Asedio:</strong> Puno resistía, pero estaba rodeada por un ejército rebelde de más de 12,000 hombres. Aislados y superados, la esperanza parecía perdida.
+                                    <strong>El Asedio:</strong> Puno resistía, pero estaba rodeada por un ejército
+                                    rebelde de más de 12,000 hombres. Aislados y superados, la esperanza parecía
+                                    perdida.
                                 </p>
                                 <div class="bg-slate-50 p-6 rounded-xl border-l-4 border-candelaria-purple my-6">
                                     <h4 class="font-bold text-gray-900 mb-2">El Milagro que Salvó a la Ciudad</h4>
                                     <p class="text-gray-600 italic text-sm text-justify">
-                                        "Cuenta la historia que, en la oscuridad, los rebeldes vieron un ejército inmenso bajando de los cerros con antorchas. Se asustaron y huyeron. Pero no era un ejército: eran los pobladores de Puno en procesión con la Virgen, cuyas velas y rezos se multiplicaron ante los ojos del enemigo."
+                                        "Cuenta la historia que, en la oscuridad, los rebeldes vieron un ejército
+                                        inmenso bajando de los cerros con antorchas. Se asustaron y huyeron. Pero no era
+                                        un ejército: eran los pobladores de Puno en procesión con la Virgen, cuyas velas
+                                        y rezos se multiplicaron ante los ojos del enemigo."
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div class="lg:col-span-4 space-y-8">
-                             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                                <h4 class="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wider">Datos Clave (1781)</h4>
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                                <h4 class="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wider">Datos Clave
+                                    (1781)</h4>
                                 <table class="w-full text-sm text-left text-gray-600">
                                     <tbody class="divide-y divide-gray-100">
                                         <tr>
@@ -510,33 +354,46 @@
                         <div class="grid md:grid-cols-2 gap-12 items-center">
                             <div>
                                 <h3 class="flex items-center gap-3 text-2xl font-bold text-gray-900 mb-6 font-heading">
-                                    <span class="bg-green-100 text-green-600 w-10 h-10 flex items-center justify-center rounded-lg"><i data-lucide="sprout" class="w-5 h-5"></i></span>
+                                    <span
+                                        class="bg-green-100 text-green-600 w-10 h-10 flex items-center justify-center rounded-lg"><i
+                                            data-lucide="sprout" class="w-5 h-5"></i></span>
                                     El Rostro de la Pachamama
                                 </h3>
                                 <p class="text-gray-700 leading-relaxed mb-4 text-justify">
-                                    La evangelización en el Altiplano no fue una sustitución, sino una negociación. La Virgen de la Candelaria es la encarnación de la <strong>Pachamama</strong>.
+                                    La evangelización en el Altiplano no fue una sustitución, sino una negociación. La
+                                    Virgen de la Candelaria es la encarnación de la <strong>Pachamama</strong>.
                                 </p>
                                 <ul class="space-y-4">
                                     <li class="flex items-start gap-3">
-                                        <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-1 flex-shrink-0"></i>
+                                        <i data-lucide="check-circle"
+                                            class="w-5 h-5 text-green-500 mt-1 flex-shrink-0"></i>
                                         <div>
                                             <strong class="block text-gray-900">Coincidencia Agrícola</strong>
-                                            <p class="text-sm text-gray-600 text-justify">Febrero es el tiempo del <em>Juchuy Pucuy</em> (primeros frutos). La fiesta conmemora la purificación de María y agradece la fertilidad de la tierra.</p>
+                                            <p class="text-sm text-gray-600 text-justify">Febrero es el tiempo del
+                                                <em>Juchuy Pucuy</em> (primeros frutos). La fiesta conmemora la
+                                                purificación de María y agradece la fertilidad de la tierra.
+                                            </p>
                                         </div>
                                     </li>
                                     <li class="flex items-start gap-3">
-                                        <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-1 flex-shrink-0"></i>
+                                        <i data-lucide="check-circle"
+                                            class="w-5 h-5 text-green-500 mt-1 flex-shrink-0"></i>
                                         <div>
                                             <strong class="block text-gray-900">Guardianes del Titicaca</strong>
-                                            <p class="text-sm text-gray-600 text-justify">La Virgen heredó el papel de guardiana del Lago Titicaca. Su procesión renueva el vínculo con el agua sagrada, asegurando el equilibrio ecológico.</p>
+                                            <p class="text-sm text-gray-600 text-justify">La Virgen heredó el papel de
+                                                guardiana del Lago Titicaca. Su procesión renueva el vínculo con el agua
+                                                sagrada, asegurando el equilibrio ecológico.</p>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
                             <div class="relative">
                                 <img src="assets/VirgenCerro.png" class="rounded-xl shadow-lg w-full object-cover h-80">
-                                <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-xl border border-gray-100 max-w-xs hidden md:block">
-                                    <p class="text-xs text-gray-500 italic">"Los indígenas se apropiaron de las imágenes cristianas porque ofrecían recompensas similares a sus antiguas divinidades." — Manuel Marzal</p>
+                                <div
+                                    class="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-xl border border-gray-100 max-w-xs hidden md:block">
+                                    <p class="text-xs text-gray-500 italic">"Los indígenas se apropiaron de las imágenes
+                                        cristianas porque ofrecían recompensas similares a sus antiguas divinidades." —
+                                        Manuel Marzal</p>
                                 </div>
                             </div>
                         </div>
@@ -544,41 +401,60 @@
 
                     <!-- SECCIÓN: EL CICLO RITUAL -->
                     <div class="mb-16">
-                        <div class="bg-slate-900 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden text-white">
-                            <div class="absolute top-0 right-0 p-32 bg-candelaria-purple rounded-full blur-3xl opacity-20 -mr-16 -mt-16"></div>
+                        <div
+                            class="bg-slate-900 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden text-white">
+                            <div
+                                class="absolute top-0 right-0 p-32 bg-candelaria-purple rounded-full blur-3xl opacity-20 -mr-16 -mt-16">
+                            </div>
                             <div class="relative z-10">
                                 <h3 class="flex items-center gap-3 text-2xl font-bold mb-8 font-heading text-white">
-                                    <span class="bg-yellow-500 text-purple-900 w-10 h-10 flex items-center justify-center rounded-lg"><i data-lucide="clock" class="w-5 h-5"></i></span>
+                                    <span
+                                        class="bg-yellow-500 text-purple-900 w-10 h-10 flex items-center justify-center rounded-lg"><i
+                                            data-lucide="clock" class="w-5 h-5"></i></span>
                                     Un Ciclo Sagrado
                                 </h3>
                                 <p class="text-slate-300 leading-relaxed mb-8 max-w-3xl text-lg">
-                                    La Candelaria no es un evento aislado; es una respiración profunda que dura semanas. Es un tiempo litúrgico y festivo que transforma la vida cotidiana de Puno.
+                                    La Candelaria no es un evento aislado; es una respiración profunda que dura semanas.
+                                    Es un tiempo litúrgico y festivo que transforma la vida cotidiana de Puno.
                                 </p>
-                                
+
                                 <div class="grid md:grid-cols-4 gap-6">
                                     <!-- Fase 1 -->
-                                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-yellow-500/50 transition-colors">
-                                        <div class="text-yellow-400 font-bold text-sm mb-2 uppercase tracking-wider">24 Ene - 1 Feb</div>
+                                    <div
+                                        class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-yellow-500/50 transition-colors">
+                                        <div class="text-yellow-400 font-bold text-sm mb-2 uppercase tracking-wider">24
+                                            Ene - 1 Feb</div>
                                         <h4 class="font-bold text-lg mb-2">Las Novenas</h4>
-                                        <p class="text-sm text-slate-400">El tiempo del silencio y la oración. Los devotos acuden al Santuario para "preparar el alma" antes de la fiesta.</p>
+                                        <p class="text-sm text-slate-400">El tiempo del silencio y la oración. Los
+                                            devotos acuden al Santuario para "preparar el alma" antes de la fiesta.</p>
                                     </div>
                                     <!-- Fase 2 -->
-                                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-yellow-500/50 transition-colors">
-                                        <div class="text-yellow-400 font-bold text-sm mb-2 uppercase tracking-wider">2 de Febrero</div>
+                                    <div
+                                        class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-yellow-500/50 transition-colors">
+                                        <div class="text-yellow-400 font-bold text-sm mb-2 uppercase tracking-wider">2
+                                            de Febrero</div>
                                         <h4 class="font-bold text-lg mb-2">Día Central</h4>
-                                        <p class="text-sm text-slate-400">La Misa de Fiesta y la Procesión. La ciudad se detiene para ver pasar a la "Mamita" sobre alfombras de flores.</p>
+                                        <p class="text-sm text-slate-400">La Misa de Fiesta y la Procesión. La ciudad se
+                                            detiene para ver pasar a la "Mamita" sobre alfombras de flores.</p>
                                     </div>
                                     <!-- Fase 3 -->
-                                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-yellow-500/50 transition-colors">
-                                        <div class="text-yellow-400 font-bold text-sm mb-2 uppercase tracking-wider">La Octava</div>
+                                    <div
+                                        class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-yellow-500/50 transition-colors">
+                                        <div class="text-yellow-400 font-bold text-sm mb-2 uppercase tracking-wider">La
+                                            Octava</div>
                                         <h4 class="font-bold text-lg mb-2">El Esplendor</h4>
-                                        <p class="text-sm text-slate-400">El Concurso de Trajes de Luces. 50,000 danzantes toman el estadio y las calles en un estallido de color y música.</p>
+                                        <p class="text-sm text-slate-400">El Concurso de Trajes de Luces. 50,000
+                                            danzantes toman el estadio y las calles en un estallido de color y música.
+                                        </p>
                                     </div>
                                     <!-- Fase 4 -->
-                                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-yellow-500/50 transition-colors">
-                                        <div class="text-yellow-400 font-bold text-sm mb-2 uppercase tracking-wider">Cacharpari</div>
+                                    <div
+                                        class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-yellow-500/50 transition-colors">
+                                        <div class="text-yellow-400 font-bold text-sm mb-2 uppercase tracking-wider">
+                                            Cacharpari</div>
                                         <h4 class="font-bold text-lg mb-2">La Despedida</h4>
-                                        <p class="text-sm text-slate-400">La fiesta termina con la promesa de volver. Se realiza el "Cacharpari" o despedida hasta el próximo año.</p>
+                                        <p class="text-sm text-slate-400">La fiesta termina con la promesa de volver. Se
+                                            realiza el "Cacharpari" o despedida hasta el próximo año.</p>
                                     </div>
                                 </div>
                             </div>
@@ -588,18 +464,25 @@
                     <!-- SECCIÓN 3: MÁSCARAS -->
                     <div class="grid md:grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
                         <div class="lg:col-span-12">
-                             <h3 class="flex items-center gap-3 text-2xl font-bold text-gray-900 mb-6 font-heading">
-                                <span class="bg-purple-100 text-purple-600 w-10 h-10 flex items-center justify-center rounded-lg"><i data-lucide="venetian-mask" class="w-5 h-5"></i></span>
+                            <h3 class="flex items-center gap-3 text-2xl font-bold text-gray-900 mb-6 font-heading">
+                                <span
+                                    class="bg-purple-100 text-purple-600 w-10 h-10 flex items-center justify-center rounded-lg"><i
+                                        data-lucide="venetian-mask" class="w-5 h-5"></i></span>
                                 El Poder de la Máscara
                             </h3>
                         </div>
                         <div class="lg:col-span-7 space-y-6">
                             <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 h-full">
                                 <p class="text-gray-700 leading-relaxed mb-6 text-justify">
-                                    En la festividad puneña, la máscara no oculta, <strong>revela</strong>. Según la antropóloga Gisela Cánepa Koch, la máscara ritual funciona en una doble dimensión: permite al danzante entrar en un proceso de mímesis, apropiándose del poder del "otro" (el español, el diablo, el esclavo).
+                                    En la festividad puneña, la máscara no oculta, <strong>revela</strong>. Según la
+                                    antropóloga Gisela Cánepa Koch, la máscara ritual funciona en una doble dimensión:
+                                    permite al danzante entrar en un proceso de mímesis, apropiándose del poder del
+                                    "otro" (el español, el diablo, el esclavo).
                                 </p>
                                 <p class="text-gray-700 leading-relaxed mb-0 text-justify">
-                                    Al asumir roles foráneos —como el capataz en los Caporales—, el sujeto andino ejerce una forma de resistencia cultural, subvirtiendo el orden colonial a través de la sátira y la estética.
+                                    Al asumir roles foráneos —como el capataz en los Caporales—, el sujeto andino ejerce
+                                    una forma de resistencia cultural, subvirtiendo el orden colonial a través de la
+                                    sátira y la estética.
                                 </p>
                             </div>
                         </div>
@@ -638,21 +521,26 @@
                     <!-- SECCIÓN 4: DANZAS -->
                     <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 mb-16">
                         <h3 class="flex items-center gap-3 text-2xl font-bold text-gray-900 mb-8 font-heading">
-                            <span class="bg-yellow-100 text-yellow-600 w-10 h-10 flex items-center justify-center rounded-lg"><i data-lucide="music" class="w-5 h-5"></i></span>
+                            <span
+                                class="bg-yellow-100 text-yellow-600 w-10 h-10 flex items-center justify-center rounded-lg"><i
+                                    data-lucide="music" class="w-5 h-5"></i></span>
                             Mosaico de Resistencia: Las Danzas
                         </h3>
-                        
+
                         <div class="grid md:grid-cols-2 gap-10 mb-8">
                             <div>
-                                <h4 class="font-bold text-lg text-gray-900 mb-3 text-candelaria-purple">Diablada Puneña</h4>
+                                <h4 class="font-bold text-lg text-gray-900 mb-3 text-candelaria-purple">Diablada Puneña
+                                </h4>
                                 <p class="text-sm text-gray-600 text-justify mb-4">
-                                    Complejo entrelazamiento de catequización jesuita y mitología minera. El "Supay" no es el mal absoluto, sino el dueño del Uku Pacha (subsuelo).
+                                    Complejo entrelazamiento de catequización jesuita y mitología minera. El "Supay" no
+                                    es el mal absoluto, sino el dueño del Uku Pacha (subsuelo).
                                 </p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-lg text-gray-900 mb-3 text-candelaria-purple">Morenada</h4>
                                 <p class="text-sm text-gray-600 text-justify mb-4">
-                                    Homenaje doloroso y rítmico a la memoria de los esclavos africanos. El sonido de las matracas evoca el caminar encadenado.
+                                    Homenaje doloroso y rítmico a la memoria de los esclavos africanos. El sonido de las
+                                    matracas evoca el caminar encadenado.
                                 </p>
                             </div>
                         </div>
@@ -691,42 +579,54 @@
                     <div class="mb-16">
                         <div class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100">
                             <h3 class="flex items-center gap-3 text-2xl font-bold text-gray-900 mb-8 font-heading">
-                                <span class="bg-indigo-100 text-indigo-600 w-10 h-10 flex items-center justify-center rounded-lg"><i data-lucide="users" class="w-5 h-5"></i></span>
+                                <span
+                                    class="bg-indigo-100 text-indigo-600 w-10 h-10 flex items-center justify-center rounded-lg"><i
+                                        data-lucide="users" class="w-5 h-5"></i></span>
                                 La Trama Invisible: Fe y Reciprocidad
                             </h3>
-                            
+
                             <div class="grid md:grid-cols-2 gap-12">
                                 <div>
                                     <p class="text-gray-700 leading-relaxed mb-6 text-justify">
-                                        Detrás del espectáculo visual, la Candelaria se sostiene sobre una maquinaria social antigua y poderosa. No es solo devoción; es un pacto de solidaridad comunitaria conocido como <strong>Ayni</strong> (reciprocidad).
+                                        Detrás del espectáculo visual, la Candelaria se sostiene sobre una maquinaria
+                                        social antigua y poderosa. No es solo devoción; es un pacto de solidaridad
+                                        comunitaria conocido como <strong>Ayni</strong> (reciprocidad).
                                     </p>
                                     <div class="space-y-6">
                                         <div class="flex gap-4">
-                                            <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 text-candelaria-purple">
+                                            <div
+                                                class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 text-candelaria-purple">
                                                 <i data-lucide="crown" class="w-6 h-6"></i>
                                             </div>
                                             <div>
                                                 <h4 class="font-bold text-gray-900 text-lg">El Alferado</h4>
                                                 <p class="text-sm text-gray-600 text-justify mt-1">
-                                                    Es el mayordomo de la fiesta. Asumir este cargo implica un prestigio inmenso pero también una carga económica brutal. El Alferado costea bandas, comida y bebida, no por riqueza, sino por fe y servicio a su comunidad.
+                                                    Es el mayordomo de la fiesta. Asumir este cargo implica un prestigio
+                                                    inmenso pero también una carga económica brutal. El Alferado costea
+                                                    bandas, comida y bebida, no por riqueza, sino por fe y servicio a su
+                                                    comunidad.
                                                 </p>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="flex gap-4">
-                                            <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 text-candelaria-purple">
+                                            <div
+                                                class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 text-candelaria-purple">
                                                 <i data-lucide="shirt" class="w-6 h-6"></i>
                                             </div>
                                             <div>
                                                 <h4 class="font-bold text-gray-900 text-lg">Maestros Artesanos</h4>
                                                 <p class="text-sm text-gray-600 text-justify mt-1">
-                                                    Bordadores y mascareros son los arquitectos de la fantasía. Sus talleres trabajan todo el año creando obras de arte en hilo de oro y pedrería, manteniendo vivas técnicas coloniales que son Patrimonio Cultural de la Nación.
+                                                    Bordadores y mascareros son los arquitectos de la fantasía. Sus
+                                                    talleres trabajan todo el año creando obras de arte en hilo de oro y
+                                                    pedrería, manteniendo vivas técnicas coloniales que son Patrimonio
+                                                    Cultural de la Nación.
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
                                     <h4 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
                                         <i data-lucide="bar-chart-3" class="w-4 h-4 text-gray-400"></i>
@@ -735,15 +635,18 @@
                                     <div class="space-y-4">
                                         <div class="bg-white p-4 rounded-lg shadow-sm">
                                             <div class="text-3xl font-bold text-candelaria-gold mb-1">100,000+</div>
-                                            <div class="text-xs text-gray-500 uppercase tracking-widest">Visitantes Anuales</div>
+                                            <div class="text-xs text-gray-500 uppercase tracking-widest">Visitantes
+                                                Anuales</div>
                                         </div>
                                         <div class="bg-white p-4 rounded-lg shadow-sm">
                                             <div class="text-3xl font-bold text-green-600 mb-1">200+</div>
-                                            <div class="text-xs text-gray-500 uppercase tracking-widest">Conjuntos Folklóricos</div>
+                                            <div class="text-xs text-gray-500 uppercase tracking-widest">Conjuntos
+                                                Folklóricos</div>
                                         </div>
                                         <div class="border-t border-gray-200 pt-4 mt-2">
                                             <p class="text-xs text-gray-500 italic text-center">
-                                                "La fiesta redistribuye la riqueza y refuerza los lazos de parentesco. Nadie baila solo; se baila en y para la comunidad."
+                                                "La fiesta redistribuye la riqueza y refuerza los lazos de parentesco.
+                                                Nadie baila solo; se baila en y para la comunidad."
                                             </p>
                                         </div>
                                     </div>
@@ -752,36 +655,47 @@
                         </div>
                     </div>
 
-                     <!-- SECCIÓN 6: VIDEO ARCHIVO -->
+                    <!-- SECCIÓN 6: VIDEO ARCHIVO -->
                     <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-2xl mb-16">
                         <div class="flex flex-col md:flex-row">
                             <div class="md:w-1/3 p-8 flex flex-col justify-center bg-slate-800">
-                                <span class="text-yellow-500 font-bold tracking-widest text-xs mb-2 uppercase">Archivo Histórico</span>
+                                <span class="text-yellow-500 font-bold tracking-widest text-xs mb-2 uppercase">Archivo
+                                    Histórico</span>
                                 <h3 class="text-white font-heading text-2xl font-bold mb-4">Voces del Pasado</h3>
                                 <p class="text-slate-400 text-sm mb-6">
-                                    Documentos audiovisuales que registran la evolución de la festividad. Entrevistas y registros de la década de los 80s y 90s.
+                                    Documentos audiovisuales que registran la evolución de la festividad. Entrevistas y
+                                    registros de la década de los 80s y 90s.
                                 </p>
                             </div>
                             <div class="md:w-2/3 bg-black relative aspect-video">
-                                <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/E2lx_G8kxFc?autoplay=1&mute=1" title="Archivo Candelaria" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                <iframe class="absolute inset-0 w-full h-full"
+                                    src="https://www.youtube.com/embed/E2lx_G8kxFc?autoplay=1&mute=1"
+                                    title="Archivo Candelaria" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
 
                     <!-- REFERENCIAS -->
                     <div class="border-t border-gray-200 pt-8">
-                        <h5 class="font-bold text-gray-900 text-sm mb-4 uppercase tracking-wider">Referencias Bibliográficas</h5>
+                        <h5 class="font-bold text-gray-900 text-sm mb-4 uppercase tracking-wider">Referencias
+                            Bibliográficas</h5>
                         <div class="grid md:grid-cols-2 gap-4 text-xs text-gray-500">
-                            <a href="https://ich.unesco.org/es/RL/la-fiesta-de-la-virgin-de-la-candelaria-en-puno-00956" target="_blank" class="hover:text-candelaria-purple transition-colors truncate block">
+                            <a href="https://ich.unesco.org/es/RL/la-fiesta-de-la-virgin-de-la-candelaria-en-puno-00956"
+                                target="_blank" class="hover:text-candelaria-purple transition-colors truncate block">
                                 [1] UNESCO (2014). La fiesta de la Virgen de la Candelaria en Puno.
                             </a>
-                            <a href="https://doi.org/10.18800/anthropologica.199801.021" target="_blank" class="hover:text-candelaria-purple transition-colors truncate block">
+                            <a href="https://doi.org/10.18800/anthropologica.199801.021" target="_blank"
+                                class="hover:text-candelaria-purple transition-colors truncate block">
                                 [2] Cánepa, G. (1998). Máscara, transformación e identidad.
                             </a>
-                            <a href="https://revistas.pucp.edu.pe/index.php/historica/article/download/28718/26367" target="_blank" class="hover:text-candelaria-purple transition-colors truncate block">
+                            <a href="https://revistas.pucp.edu.pe/index.php/historica/article/download/28718/26367"
+                                target="_blank" class="hover:text-candelaria-purple transition-colors truncate block">
                                 [3] Cahill, D. (2002). The Siege of La Paz and the Battle of Puno.
                             </a>
-                            <a href="http://intranet.comunidadandina.org/documentos/BDA/pe-ca-0005.pdf" target="_blank" class="hover:text-candelaria-purple transition-colors truncate block">
+                            <a href="http://intranet.comunidadandina.org/documentos/BDA/pe-ca-0005.pdf" target="_blank"
+                                class="hover:text-candelaria-purple transition-colors truncate block">
                                 [4] Comunidad Andina. Sincretismo y Cosmovisión en los Andes.
                             </a>
                         </div>
@@ -793,15 +707,21 @@
             <!-- 2. HISTORIA DE LOS CONJUNTOS -->
             <div id="conjuntos" class="tab-content hidden w-full bg-white py-16">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    
+
                     <!-- NEW HERO: EPOPEYA -->
                     <header class="text-center mb-16 reveal-up">
-                        <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">Arquitectura Cultural</span>
+                        <span
+                            class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">Arquitectura
+                            Cultural</span>
                         <h2 class="font-heading text-4xl md:text-5xl font-extrabold text-candelaria-purple mb-6">
                             Una Epopeya del Altiplano
                         </h2>
                         <p class="text-gray-700 text-lg leading-relaxed max-w-4xl mx-auto text-justify">
-                            La Festividad no representa únicamente una manifestación de fe religiosa, sino el eje gravitacional de la identidad del Altiplano. Reconocida por la UNESCO, es un complejo sincretismo donde los conjuntos folklóricos actúan como reservorios de memoria colectiva y motores de innovación estética. Estas agrupaciones, muchas centenarias, han forjado la historia de Puno a través de la danza, la música y una devoción inquebrantable.
+                            La Festividad no representa únicamente una manifestación de fe religiosa, sino el eje
+                            gravitacional de la identidad del Altiplano. Reconocida por la UNESCO, es un complejo
+                            sincretismo donde los conjuntos folklóricos actúan como reservorios de memoria colectiva y
+                            motores de innovación estética. Estas agrupaciones, muchas centenarias, han forjado la
+                            historia de Puno a través de la danza, la música y una devoción inquebrantable.
                         </p>
                     </header>
 
@@ -813,69 +733,109 @@
                     <div class="mb-20">
                         <div class="flex items-center gap-4 mb-8">
                             <div class="h-px bg-gray-200 flex-1"></div>
-                            <h3 class="font-heading text-3xl font-extrabold text-center text-gray-900 uppercase tracking-widest">
+                            <h3
+                                class="font-heading text-3xl font-extrabold text-center text-gray-900 uppercase tracking-widest">
                                 <span class="text-candelaria-gold">I.</span> Los Cimientos: Sikuris
                             </h3>
                             <div class="h-px bg-gray-200 flex-1"></div>
                         </div>
                         <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-                            La base espiritual reside en los sikuris, símbolo de la dualidad andina (arca/ira). Son las instituciones más antiguas, manteniendo su estructura comunitaria.
+                            La base espiritual reside en los sikuris, símbolo de la dualidad andina (arca/ira). Son las
+                            instituciones más antiguas, manteniendo su estructura comunitaria.
                         </p>
 
                         <div class="grid md:grid-cols-3 gap-8">
                             <!-- CARD 1: MAÑAZO -->
-                            <div class="group relative bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300">
-                                <div class="absolute top-4 right-4 z-10 bg-candelaria-purple text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">1892</div>
+                            <div
+                                class="group relative bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300">
+                                <div
+                                    class="absolute top-4 right-4 z-10 bg-candelaria-purple text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                    1892</div>
                                 <div class="h-56 overflow-hidden relative">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-                                    <img src="https://imgmedia.larepublica.pe/640x384/larepublica/migration/images/AUYVEJ2FDJGGXBBFODIK7OQQKY.webp" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
-                                    <h4 class="absolute bottom-4 left-4 z-20 text-white font-heading text-xl font-bold">Sikuris Mañazo</h4>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10">
+                                    </div>
+                                    <img src="https://imgmedia.larepublica.pe/640x384/larepublica/migration/images/AUYVEJ2FDJGGXBBFODIK7OQQKY.webp"
+                                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                    <h4 class="absolute bottom-4 left-4 z-20 text-white font-heading text-xl font-bold">
+                                        Sikuris Mañazo</h4>
                                 </div>
                                 <div class="p-6">
                                     <p class="text-sm text-gray-600 mb-4 text-justify">
-                                        <strong>Resistencia de los Matarifes.</strong> Surgió del gremio de carniceros. Se sostiene que de aquí surgieron los primeros "diablos" con máscaras de toro. Guardianes del estilo de un solo bombo.
+                                        <strong>Resistencia de los Matarifes.</strong> Surgió del gremio de carniceros.
+                                        Se sostiene que de aquí surgieron los primeros "diablos" con máscaras de toro.
+                                        Guardianes del estilo de un solo bombo.
                                     </p>
                                     <div class="flex gap-2">
-                                        <button onclick="openConjuntoModal('sikuris-manazo')" class="flex-1 py-2 text-candelaria-purple font-bold text-sm border border-candelaria-purple rounded hover:bg-purple-50 transition-colors">Ver Historia</button>
-                                        <button onclick="generatePDF('sikuris-manazo')" class="px-3 py-2 bg-candelaria-gold text-purple-900 rounded hover:bg-yellow-400 transition-colors"><i data-lucide="download" class="w-4 h-4"></i></button>
+                                        <button onclick="openConjuntoModal('sikuris-manazo')"
+                                            class="flex-1 py-2 text-candelaria-purple font-bold text-sm border border-candelaria-purple rounded hover:bg-purple-50 transition-colors">Ver
+                                            Historia</button>
+                                        <button onclick="generatePDF('sikuris-manazo')"
+                                            class="px-3 py-2 bg-candelaria-gold text-purple-900 rounded hover:bg-yellow-400 transition-colors"><i
+                                                data-lucide="download" class="w-4 h-4"></i></button>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- CARD 2: JUVENTUD OBRERA -->
-                            <div class="group relative bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300">
-                                <div class="absolute top-4 right-4 z-10 bg-candelaria-purple text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">1884</div>
+                            <div
+                                class="group relative bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300">
+                                <div
+                                    class="absolute top-4 right-4 z-10 bg-candelaria-purple text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                    1884</div>
                                 <div class="h-56 overflow-hidden relative">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-                                    <img src="https://www.punomagico.com/image/juventud%20obrera%202021.jpg" onerror="this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=JUVENTUD+OBRERA'" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
-                                    <h4 class="absolute bottom-4 left-4 z-20 text-white font-heading text-xl font-bold">Juventud Obrera</h4>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10">
+                                    </div>
+                                    <img src="https://www.punomagico.com/image/juventud%20obrera%202021.jpg"
+                                        onerror="this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=JUVENTUD+OBRERA'"
+                                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                    <h4 class="absolute bottom-4 left-4 z-20 text-white font-heading text-xl font-bold">
+                                        Juventud Obrera</h4>
                                 </div>
                                 <div class="p-6">
                                     <p class="text-sm text-gray-600 mb-4 text-justify">
-                                        <strong>El Legado Obrero.</strong> Representa el vínculo entre el campesinado y la nueva clase obrera urbana. A través de sus talleres, han asegurado la transmisión de la técnica del siku por generaciones.
+                                        <strong>El Legado Obrero.</strong> Representa el vínculo entre el campesinado y
+                                        la nueva clase obrera urbana. A través de sus talleres, han asegurado la
+                                        transmisión de la técnica del siku por generaciones.
                                     </p>
                                     <div class="flex gap-2">
-                                        <button onclick="openConjuntoModal('sikuris-juventud-obrera')" class="flex-1 py-2 text-candelaria-purple font-bold text-sm border border-candelaria-purple rounded hover:bg-purple-50 transition-colors">Ver Historia</button>
-                                        <button onclick="generatePDF('sikuris-juventud-obrera')" class="px-3 py-2 bg-candelaria-gold text-purple-900 rounded hover:bg-yellow-400 transition-colors"><i data-lucide="download" class="w-4 h-4"></i></button>
+                                        <button onclick="openConjuntoModal('sikuris-juventud-obrera')"
+                                            class="flex-1 py-2 text-candelaria-purple font-bold text-sm border border-candelaria-purple rounded hover:bg-purple-50 transition-colors">Ver
+                                            Historia</button>
+                                        <button onclick="generatePDF('sikuris-juventud-obrera')"
+                                            class="px-3 py-2 bg-candelaria-gold text-purple-900 rounded hover:bg-yellow-400 transition-colors"><i
+                                                data-lucide="download" class="w-4 h-4"></i></button>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- CARD 3: QHANTATI URURI -->
-                            <div class="group relative bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300">
-                                <div class="absolute top-4 right-4 z-10 bg-candelaria-purple text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">1913</div>
+                            <div
+                                class="group relative bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300">
+                                <div
+                                    class="absolute top-4 right-4 z-10 bg-candelaria-purple text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                    1913</div>
                                 <div class="h-56 overflow-hidden relative">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-                                    <img src="https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/468534294_10160885465911295_6005985246805577581_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=0b6b33&_nc_eui2=AeF_HogN7k97sYMMtIX1sZWpdqNZLu11YW12o1ku7XVhbfchF8x_z-rA7g5q0O4YqDwgFWati0h75Z7IE3SMT1iO&_nc_ohc=vvTTmmsEzqQQ7kNvwGw1KTn&_nc_oc=AdkiUVkrpCNKzBNcPACNvZ1qZEhoQ_3022hNaWlRKxCkHPrNd66i_7VqyioQfJIJE8o&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=oTyCPorLYwjnd-R6A3wLVw&oh=00_AfrTbtgij2r8aSs4wEcMBRd7JhMFlJMvcvJNNIiKkjsOGQ&oe=6979AF7B" onerror="this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=QHANTATI+URURI'" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
-                                    <h4 class="absolute bottom-4 left-4 z-20 text-white font-heading text-xl font-bold">Qhantati Ururi</h4>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10">
+                                    </div>
+                                    <img src="https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/468534294_10160885465911295_6005985246805577581_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=0b6b33&_nc_eui2=AeF_HogN7k97sYMMtIX1sZWpdqNZLu11YW12o1ku7XVhbfchF8x_z-rA7g5q0O4YqDwgFWati0h75Z7IE3SMT1iO&_nc_ohc=vvTTmmsEzqQQ7kNvwGw1KTn&_nc_oc=AdkiUVkrpCNKzBNcPACNvZ1qZEhoQ_3022hNaWlRKxCkHPrNd66i_7VqyioQfJIJE8o&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=oTyCPorLYwjnd-R6A3wLVw&oh=00_AfrTbtgij2r8aSs4wEcMBRd7JhMFlJMvcvJNNIiKkjsOGQ&oe=6979AF7B"
+                                        onerror="this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=QHANTATI+URURI'"
+                                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                    <h4 class="absolute bottom-4 left-4 z-20 text-white font-heading text-xl font-bold">
+                                        Qhantati Ururi</h4>
                                 </div>
                                 <div class="p-6">
                                     <p class="text-sm text-gray-600 mb-4 text-justify">
-                                        <strong>La Leyenda del Siku.</strong> Desde Conima (Moho). Aportaron una dimensión mística y melódica única ("estilo suave"). Su presencia subraya que la festividad integra a las provincias lejanas.
+                                        <strong>La Leyenda del Siku.</strong> Desde Conima (Moho). Aportaron una
+                                        dimensión mística y melódica única ("estilo suave"). Su presencia subraya que la
+                                        festividad integra a las provincias lejanas.
                                     </p>
                                     <div class="flex gap-2">
-                                        <button onclick="openConjuntoModal('sikuris-qhantati-ururi')" class="flex-1 py-2 text-candelaria-purple font-bold text-sm border border-candelaria-purple rounded hover:bg-purple-50 transition-colors">Ver Historia</button>
-                                        <button onclick="generatePDF('sikuris-qhantati-ururi')" class="px-3 py-2 bg-candelaria-gold text-purple-900 rounded hover:bg-yellow-400 transition-colors"><i data-lucide="download" class="w-4 h-4"></i></button>
+                                        <button onclick="openConjuntoModal('sikuris-qhantati-ururi')"
+                                            class="flex-1 py-2 text-candelaria-purple font-bold text-sm border border-candelaria-purple rounded hover:bg-purple-50 transition-colors">Ver
+                                            Historia</button>
+                                        <button onclick="generatePDF('sikuris-qhantati-ururi')"
+                                            class="px-3 py-2 bg-candelaria-gold text-purple-900 rounded hover:bg-yellow-400 transition-colors"><i
+                                                data-lucide="download" class="w-4 h-4"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -886,102 +846,140 @@
                     <div class="mb-20">
                         <div class="flex items-center gap-4 mb-8">
                             <div class="h-px bg-gray-200 flex-1"></div>
-                            <h3 class="font-heading text-3xl font-extrabold text-center text-gray-900 uppercase tracking-widest">
+                            <h3
+                                class="font-heading text-3xl font-extrabold text-center text-gray-900 uppercase tracking-widest">
                                 <span class="text-candelaria-gold">II.</span> El Resplandor: Trajes de Luces
                             </h3>
                             <div class="h-px bg-gray-200 flex-1"></div>
                         </div>
                         <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-                            A mediados del s. XX, la fiesta se transforma. Aparecen los bordados en oro, la pedrería y las bandas de metales. Es la era de la "Diablada" y la "Morenada".
+                            A mediados del s. XX, la fiesta se transforma. Aparecen los bordados en oro, la pedrería y
+                            las bandas de metales. Es la era de la "Diablada" y la "Morenada".
                         </p>
 
                         <!-- SUBSECTION: DIABLADAS -->
-                        <h4 class="font-heading text-xl font-bold text-candelaria-purple mb-6 pl-4 border-l-4 border-candelaria-purple">La Diablada: Lucifer en el Altiplano</h4>
+                        <h4
+                            class="font-heading text-xl font-bold text-candelaria-purple mb-6 pl-4 border-l-4 border-candelaria-purple">
+                            La Diablada: Lucifer en el Altiplano</h4>
                         <div class="grid md:grid-cols-2 gap-8 mb-12">
                             <!-- DIABLADA PORTEÑO -->
-                            <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
+                            <div
+                                class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
                                 <div class="w-full md:w-1/3 h-40 shrink-0">
-                                    <img src="assets/dporteno.png" onerror="this.src='https://placehold.co/400x400/b91c1c/ffffff?text=PORTEÑO'" class="w-full h-full object-cover rounded-lg shadow-sm">
+                                    <img src="assets/dporteno.png"
+                                        onerror="this.src='https://placehold.co/400x400/b91c1c/ffffff?text=PORTEÑO'"
+                                        class="w-full h-full object-cover rounded-lg shadow-sm">
                                 </div>
                                 <div>
                                     <div class="flex justify-between items-center mb-2">
                                         <h5 class="font-bold text-lg">Tradicional Diablada Porteño</h5>
-                                        <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded">1962</span>
+                                        <span
+                                            class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded">1962</span>
                                     </div>
                                     <p class="text-sm text-gray-600 mb-3 text-justify">
-                                        Surgida en el Barrio Porteño, profesionalizó la danza y elevó los estándares artísticos. Un punto de inflexión en la competencia moderna.
+                                        Surgida en el Barrio Porteño, profesionalizó la danza y elevó los estándares
+                                        artísticos. Un punto de inflexión en la competencia moderna.
                                     </p>
-                                    <button onclick="openConjuntoModal('diablada-porteno')" class="text-candelaria-purple text-sm font-bold hover:underline">Leer más</button>
+                                    <button onclick="openConjuntoModal('diablada-porteno')"
+                                        class="text-candelaria-purple text-sm font-bold hover:underline">Leer
+                                        más</button>
                                 </div>
                             </div>
                             <!-- DIABLADA BELLAVISTA -->
-                            <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
+                            <div
+                                class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
                                 <div class="w-full md:w-1/3 h-40 shrink-0">
-                                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhE6LPtSpDH5jaLU0pg8jsFTPzL5Kg4e0YBV-QgmSDdtP0QKj7T3l7tYYJJJXPQ8VoCm9ArqO5fbnA6az1-o_G2UrFHo2umlKrsavvCWkDqGyGNtrkvHSkljM709uAyz5kwMFuU9troCBPF/s280/Diablos_Puno.jpg" class="w-full h-full object-cover rounded-lg shadow-sm">
+                                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhE6LPtSpDH5jaLU0pg8jsFTPzL5Kg4e0YBV-QgmSDdtP0QKj7T3l7tYYJJJXPQ8VoCm9ArqO5fbnA6az1-o_G2UrFHo2umlKrsavvCWkDqGyGNtrkvHSkljM709uAyz5kwMFuU9troCBPF/s280/Diablos_Puno.jpg"
+                                        class="w-full h-full object-cover rounded-lg shadow-sm">
                                 </div>
                                 <div>
                                     <div class="flex justify-between items-center mb-2">
                                         <h5 class="font-bold text-lg">Diablada Bellavista</h5>
-                                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">1963</span>
+                                        <span
+                                            class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">1963</span>
                                     </div>
                                     <p class="text-sm text-gray-600 mb-3 text-justify">
-                                        Su rival histórica. Fundada por Simón Rodríguez y Paulina Gómez. Famosa por la influencia de maestros bolivianos y el lujo de sus trajes.
+                                        Su rival histórica. Fundada por Simón Rodríguez y Paulina Gómez. Famosa por la
+                                        influencia de maestros bolivianos y el lujo de sus trajes.
                                     </p>
                                     <div class="flex gap-2">
-                                        <button onclick="openConjuntoModal('diablada-bellavista')" class="text-candelaria-purple text-sm font-bold hover:underline">Leer más</button>
-                                        <button onclick="generatePDF('diablada-bellavista')" class="text-candelaria-gold hover:text-yellow-600"><i data-lucide="download" class="w-4 h-4"></i></button>
+                                        <button onclick="openConjuntoModal('diablada-bellavista')"
+                                            class="text-candelaria-purple text-sm font-bold hover:underline">Leer
+                                            más</button>
+                                        <button onclick="generatePDF('diablada-bellavista')"
+                                            class="text-candelaria-gold hover:text-yellow-600"><i data-lucide="download"
+                                                class="w-4 h-4"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- SUBSECTION: MORENADAS -->
-                        <h4 class="font-heading text-xl font-bold text-candelaria-purple mb-6 pl-4 border-l-4 border-candelaria-purple">Morenadas: Elegancia y Peso</h4>
+                        <h4
+                            class="font-heading text-xl font-bold text-candelaria-purple mb-6 pl-4 border-l-4 border-candelaria-purple">
+                            Morenadas: Elegancia y Peso</h4>
                         <div class="grid md:grid-cols-2 gap-8 mb-12">
                             <!-- ORKAPATA -->
-                            <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
+                            <div
+                                class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
                                 <div class="w-full md:w-1/3 h-40 shrink-0">
-                                    <img src="https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg" class="w-full h-full object-cover rounded-lg shadow-sm">
+                                    <img src="https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg"
+                                        class="w-full h-full object-cover rounded-lg shadow-sm">
                                 </div>
                                 <div>
                                     <div class="flex justify-between items-center mb-2">
                                         <h5 class="font-bold text-lg">Morenada Orkapata</h5>
-                                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded">1955</span>
+                                        <span
+                                            class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded">1955</span>
                                     </div>
                                     <p class="text-sm text-gray-600 mb-3 text-justify">
-                                        Pionera. Sus miembros bailaban en Mañazo antes de institucionalizarse. Transición orgánica de lo autóctono a lo mestizo.
+                                        Pionera. Sus miembros bailaban en Mañazo antes de institucionalizarse.
+                                        Transición orgánica de lo autóctono a lo mestizo.
                                     </p>
                                     <div class="flex gap-2">
-                                        <button onclick="openConjuntoModal('morenada-orkapata')" class="text-candelaria-purple text-sm font-bold hover:underline">Leer más</button>
-                                        <button onclick="generatePDF('morenada-orkapata')" class="text-candelaria-gold hover:text-yellow-600"><i data-lucide="download" class="w-4 h-4"></i></button>
+                                        <button onclick="openConjuntoModal('morenada-orkapata')"
+                                            class="text-candelaria-purple text-sm font-bold hover:underline">Leer
+                                            más</button>
+                                        <button onclick="generatePDF('morenada-orkapata')"
+                                            class="text-candelaria-gold hover:text-yellow-600"><i data-lucide="download"
+                                                class="w-4 h-4"></i></button>
                                     </div>
                                 </div>
                             </div>
                             <!-- LAYKAKOTA -->
-                            <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
+                            <div
+                                class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
                                 <div class="w-full md:w-1/3 h-40 shrink-0">
-                                    <img src="https://www.punomagico.com/image/negritos%203.jpg" onerror="this.src='https://www.punomagico.com/image/negritos%203.jpg'" class="w-full h-full object-cover rounded-lg shadow-sm">
+                                    <img src="https://www.punomagico.com/image/negritos%203.jpg"
+                                        onerror="this.src='https://www.punomagico.com/image/negritos%203.jpg'"
+                                        class="w-full h-full object-cover rounded-lg shadow-sm">
                                 </div>
                                 <div>
                                     <div class="flex justify-between items-center mb-2">
                                         <h5 class="font-bold text-lg">Morenada Laykakota</h5>
-                                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded">1962</span>
+                                        <span
+                                            class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded">1962</span>
                                     </div>
                                     <p class="text-sm text-gray-600 mb-3 text-justify">
-                                        Evolucionó de "Rey Moreno" a Morenada masiva (2007). Campeón de campeones en 2012, representando la masificación moderna.
+                                        Evolucionó de "Rey Moreno" a Morenada masiva (2007). Campeón de campeones en
+                                        2012, representando la masificación moderna.
                                     </p>
-                                    <button onclick="openConjuntoModal('morenada-laykakota')" class="text-candelaria-purple text-sm font-bold hover:underline">Leer más</button>
+                                    <button onclick="openConjuntoModal('morenada-laykakota')"
+                                        class="text-candelaria-purple text-sm font-bold hover:underline">Leer
+                                        más</button>
                                 </div>
                             </div>
                         </div>
 
                         <!-- TABLE: FUNDACIONES -->
                         <div class="bg-slate-900 rounded-xl p-6 text-white overflow-hidden">
-                            <h4 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="list" class="w-5 h-5 text-yellow-400"></i> Cronología Histórica de la Festividad</h4>
-                            
+                            <h4 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="list"
+                                    class="w-5 h-5 text-yellow-400"></i> Cronología Histórica de la Festividad</h4>
+
                             <!-- PERIODO: ORÍGENES -->
                             <div class="mb-6">
-                                <h5 class="text-yellow-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                <h5
+                                    class="text-yellow-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
                                     <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
                                     Período Colonial y Fundacional (1583 - 1900)
                                 </h5>
@@ -998,27 +996,34 @@
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1583</td>
                                                 <td class="px-4 py-2">Fundación del pueblo de Puno</td>
-                                                <td class="px-4 py-2">Llegada de la imagen de la Virgen de la Candelaria de España, traída por los mineros de Laykakota.</td>
+                                                <td class="px-4 py-2">Llegada de la imagen de la Virgen de la Candelaria
+                                                    de España, traída por los mineros de Laykakota.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1668</td>
                                                 <td class="px-4 py-2">Milagro del Cerro Huajsapata</td>
-                                                <td class="px-4 py-2">Leyenda fundacional: la Virgen defiende a los indígenas durante la rebelión de Laykakota contra los españoles.</td>
+                                                <td class="px-4 py-2">Leyenda fundacional: la Virgen defiende a los
+                                                    indígenas durante la rebelión de Laykakota contra los españoles.
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1871</td>
                                                 <td class="px-4 py-2">Cabildo de Naturales</td>
-                                                <td class="px-4 py-2">Primera procesión documentada con danzas autóctonas (Sicuris, Wifala). Origen del calendario festivo actual.</td>
+                                                <td class="px-4 py-2">Primera procesión documentada con danzas
+                                                    autóctonas (Sicuris, Wifala). Origen del calendario festivo actual.
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1884</td>
                                                 <td class="px-4 py-2">Sikuris Juventud Obrera</td>
-                                                <td class="px-4 py-2">Uno de los primeros conjuntos de sikuris institucionalizado en Puno. Símbolo del gremio obrero.</td>
+                                                <td class="px-4 py-2">Uno de los primeros conjuntos de sikuris
+                                                    institucionalizado en Puno. Símbolo del gremio obrero.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1892</td>
                                                 <td class="px-4 py-2">Sikuris Mañazo</td>
-                                                <td class="px-4 py-2">Fundado por el gremio de matarifes. Origen del estilo de \"un solo bombo\". Raíz de la Diablada puneña.</td>
+                                                <td class="px-4 py-2">Fundado por el gremio de matarifes. Origen del
+                                                    estilo de \"un solo bombo\". Raíz de la Diablada puneña.</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1027,7 +1032,8 @@
 
                             <!-- PERIODO: ERA DE LOS SIKURIS -->
                             <div class="mb-6">
-                                <h5 class="text-green-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                <h5
+                                    class="text-green-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
                                     <span class="w-3 h-3 bg-green-400 rounded-full"></span>
                                     Era de los Sikuris y Primeras Danzas de Luces (1900 - 1960)
                                 </h5>
@@ -1044,27 +1050,32 @@
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1913</td>
                                                 <td class="px-4 py-2">Qhantati Ururi (Conima)</td>
-                                                <td class="px-4 py-2">Conjunto mítico de sikuris de Moho. Creadores del \"estilo suave\". Conecta las provincias con la capital.</td>
+                                                <td class="px-4 py-2">Conjunto mítico de sikuris de Moho. Creadores del
+                                                    \"estilo suave\". Conecta las provincias con la capital.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1918</td>
                                                 <td class="px-4 py-2">Sikuris 27 de Junio</td>
-                                                <td class="px-4 py-2">Fundado en Juli (Chucuito). Representantes del estilo Lupaka, con zampoñas de mayor tamaño.</td>
+                                                <td class="px-4 py-2">Fundado en Juli (Chucuito). Representantes del
+                                                    estilo Lupaka, con zampoñas de mayor tamaño.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1943</td>
                                                 <td class="px-4 py-2">Primera Diablada en Puno</td>
-                                                <td class="px-4 py-2">Aparecen los primeros \"diablos\" con máscaras de yeso, inspirados en autos sacramentales y la Morenada.</td>
+                                                <td class="px-4 py-2">Aparecen los primeros \"diablos\" con máscaras de
+                                                    yeso, inspirados en autos sacramentales y la Morenada.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1955</td>
                                                 <td class="px-4 py-2">Morenada Orkapata</td>
-                                                <td class="px-4 py-2">Primera morenada institucionalizada. Transición de lo autóctono a lo mestizo. Pionera del género.</td>
+                                                <td class="px-4 py-2">Primera morenada institucionalizada. Transición de
+                                                    lo autóctono a lo mestizo. Pionera del género.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1956</td>
                                                 <td class="px-4 py-2">Hermanos Velásquez (Taller)</td>
-                                                <td class="px-4 py-2">Revolucionan la mascarería puneña: ojos de vidrio soplado e iconografía local propia.</td>
+                                                <td class="px-4 py-2">Revolucionan la mascarería puneña: ojos de vidrio
+                                                    soplado e iconografía local propia.</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1073,7 +1084,8 @@
 
                             <!-- PERIODO: ERA DORADA -->
                             <div class="mb-6">
-                                <h5 class="text-purple-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                <h5
+                                    class="text-purple-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
                                     <span class="w-3 h-3 bg-purple-400 rounded-full"></span>
                                     Era Dorada de los Trajes de Luces (1960 - 1985)
                                 </h5>
@@ -1090,42 +1102,50 @@
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1962</td>
                                                 <td class="px-4 py-2">Tradicional Diablada Porteño</td>
-                                                <td class="px-4 py-2">Iniciadora de la era moderna. Profesionaliza la danza con estándares artísticos y organizativos.</td>
+                                                <td class="px-4 py-2">Iniciadora de la era moderna. Profesionaliza la
+                                                    danza con estándares artísticos y organizativos.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1962</td>
                                                 <td class="px-4 py-2">Morenada Laykakota (Rey Moreno)</td>
-                                                <td class="px-4 py-2">Nace como \"Rey Moreno\". Evoluciona a Morenada masiva. Representa la masificación moderna.</td>
+                                                <td class="px-4 py-2">Nace como \"Rey Moreno\". Evoluciona a Morenada
+                                                    masiva. Representa la masificación moderna.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1963</td>
                                                 <td class="px-4 py-2">Diablada Bellavista</td>
-                                                <td class="px-4 py-2">Fundada por Simón Rodríguez y Paulina Gómez. Influencia de maestros bolivianos. Once veces campeona.</td>
+                                                <td class="px-4 py-2">Fundada por Simón Rodríguez y Paulina Gómez.
+                                                    Influencia de maestros bolivianos. Once veces campeona.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1965</td>
                                                 <td class="px-4 py-2">Confraternidad Diablada Victoria</td>
-                                                <td class="px-4 py-2">Expansión del folklore puneño a nivel nacional. Rivalidad con Porteño y Bellavista.</td>
+                                                <td class="px-4 py-2">Expansión del folklore puneño a nivel nacional.
+                                                    Rivalidad con Porteño y Bellavista.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1967</td>
                                                 <td class="px-4 py-2">Visita de José María Arguedas</td>
-                                                <td class="px-4 py-2">El escritor declara a Puno \"Capital del Folklore Peruano\". Punto de inflexión para el reconocimiento nacional.</td>
+                                                <td class="px-4 py-2">El escritor declara a Puno \"Capital del Folklore
+                                                    Peruano\". Punto de inflexión para el reconocimiento nacional.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1970</td>
                                                 <td class="px-4 py-2">Creación de la Fed. Regional de Folklore</td>
-                                                <td class="px-4 py-2">Institucionaliza el concurso anual de danzas. Se establecen categorías (Luces vs. Autóctonos).</td>
+                                                <td class="px-4 py-2">Institucionaliza el concurso anual de danzas. Se
+                                                    establecen categorías (Luces vs. Autóctonos).</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1975</td>
                                                 <td class="px-4 py-2">Diablada Amigos de la PNP</td>
-                                                <td class="px-4 py-2">Fundada por suboficiales de la policía. Disciplina militar aplicada a la danza. Múltiples campeonatos.</td>
+                                                <td class="px-4 py-2">Fundada por suboficiales de la policía. Disciplina
+                                                    militar aplicada a la danza. Múltiples campeonatos.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1982</td>
                                                 <td class="px-4 py-2">Caporales Huáscar</td>
-                                                <td class="px-4 py-2">Primera agrupación de Caporales en Puno. Danza recreada en Bolivia llega al Altiplano peruano.</td>
+                                                <td class="px-4 py-2">Primera agrupación de Caporales en Puno. Danza
+                                                    recreada en Bolivia llega al Altiplano peruano.</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1134,7 +1154,8 @@
 
                             <!-- PERIODO: GLOBALIZACION -->
                             <div class="mb-6">
-                                <h5 class="text-blue-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                <h5
+                                    class="text-blue-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
                                     <span class="w-3 h-3 bg-blue-400 rounded-full"></span>
                                     Globalización y Reconocimiento Mundial (1985 - Presente)
                                 </h5>
@@ -1151,37 +1172,45 @@
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1985</td>
                                                 <td class="px-4 py-2">Ley N° 24325 del Congreso</td>
-                                                <td class="px-4 py-2">La ley reconoce oficialmente a Puno como \"Capital del Folklore Peruano\".</td>
+                                                <td class="px-4 py-2">La ley reconoce oficialmente a Puno como \"Capital
+                                                    del Folklore Peruano\".</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">1996</td>
                                                 <td class="px-4 py-2">Caporales Centralistas Puno</td>
-                                                <td class="px-4 py-2">Internacionalización del Caporal puneño. Presentaciones en Miami y Nueva York.</td>
+                                                <td class="px-4 py-2">Internacionalización del Caporal puneño.
+                                                    Presentaciones en Miami y Nueva York.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">2003</td>
                                                 <td class="px-4 py-2">Patrimonio Cultural de la Nación</td>
-                                                <td class="px-4 py-2">El Instituto Nacional de Cultura (INC) declara la festividad como Patrimonio Cultural.</td>
+                                                <td class="px-4 py-2">El Instituto Nacional de Cultura (INC) declara la
+                                                    festividad como Patrimonio Cultural.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">2014</td>
                                                 <td class="px-4 py-2">Patrimonio UNESCO</td>
-                                                <td class="px-4 py-2">La festividad es inscrita en la Lista Representativa del Patrimonio Cultural Inmaterial de la Humanidad.</td>
+                                                <td class="px-4 py-2">La festividad es inscrita en la Lista
+                                                    Representativa del Patrimonio Cultural Inmaterial de la Humanidad.
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">2020</td>
                                                 <td class="px-4 py-2">Última edición pre-pandemia</td>
-                                                <td class="px-4 py-2">Diablada Bellavista gana con 94.26 pts. Más de 150 conjuntos participan antes del cierre mundial.</td>
+                                                <td class="px-4 py-2">Diablada Bellavista gana con 94.26 pts. Más de 150
+                                                    conjuntos participan antes del cierre mundial.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">2024</td>
                                                 <td class="px-4 py-2">Retorno Post-Pandemia</td>
-                                                <td class="px-4 py-2">Morenada Laykakota gana el concurso. La festividad vuelve con más de 130,000 danzantes.</td>
+                                                <td class="px-4 py-2">Morenada Laykakota gana el concurso. La festividad
+                                                    vuelve con más de 130,000 danzantes.</td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-2 font-medium text-white">2025</td>
                                                 <td class="px-4 py-2">Morenada Santa Rosa / Wifalas Muñani</td>
-                                                <td class="px-4 py-2">Campeones actuales. Santa Rosa (87.71 pts) y Muñani (63.10 pts) lideran sus categorías respectivas.</td>
+                                                <td class="px-4 py-2">Campeones actuales. Santa Rosa (87.71 pts) y
+                                                    Muñani (63.10 pts) lideran sus categorías respectivas.</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1190,10 +1219,13 @@
 
                             <!-- REFERENCIAS -->
                             <div class="mt-6 pt-4 border-t border-slate-700">
-                                <h5 class="text-slate-400 text-xs uppercase tracking-wider mb-2">Referencias Bibliográficas</h5>
+                                <h5 class="text-slate-400 text-xs uppercase tracking-wider mb-2">Referencias
+                                    Bibliográficas</h5>
                                 <ul class="text-xs text-slate-500 space-y-1">
-                                    <li>• Cánepa Koch, G. (1998). <em>Máscara, transformación e identidad en los Andes</em>. PUCP.</li>
-                                    <li>• UNESCO (2014). Expediente de inscripción de la Festividad Virgen de la Candelaria.</li>
+                                    <li>• Cánepa Koch, G. (1998). <em>Máscara, transformación e identidad en los
+                                            Andes</em>. PUCP.</li>
+                                    <li>• UNESCO (2014). Expediente de inscripción de la Festividad Virgen de la
+                                        Candelaria.</li>
                                     <li>• Núñez Butrón, M. (1959). <em>Estampas puneñas</em>. Ed. Los Andes.</li>
                                     <li>• Federación Regional de Folklore de Puno. Archivos históricos (1970-2025).</li>
                                 </ul>
@@ -1204,32 +1236,47 @@
                     <!-- SECTION: INSTITUCIONALIZACIÓN & GLOBALIZACIÓN -->
                     <div class="grid md:grid-cols-2 gap-12 mb-20 items-center">
                         <div>
-                            <span class="text-indigo-600 font-bold uppercase tracking-wider text-xs mb-2 block">1967 - Presente</span>
-                            <h3 class="font-heading text-2xl font-bold text-gray-900 mb-4">La Era de la Institucionalización</h3>
+                            <span class="text-indigo-600 font-bold uppercase tracking-wider text-xs mb-2 block">1967 -
+                                Presente</span>
+                            <h3 class="font-heading text-2xl font-bold text-gray-900 mb-4">La Era de la
+                                Institucionalización</h3>
                             <p class="text-gray-600 mb-6 text-justify">
-                                La visita de <strong>José María Arguedas</strong> en 1967 fue clave. Al ver el espectáculo en el Estadio Torres Belón, llamó a Puno la "Capital Simbólica de la Danza". La creación de la Federación Regional de Folklore transformó la fiesta parroquial en un concurso de escala global con más de 130,000 danzantes.
+                                La visita de <strong>José María Arguedas</strong> en 1967 fue clave. Al ver el
+                                espectáculo en el Estadio Torres Belón, llamó a Puno la "Capital Simbólica de la Danza".
+                                La creación de la Federación Regional de Folklore transformó la fiesta parroquial en un
+                                concurso de escala global con más de 130,000 danzantes.
                             </p>
                             <h4 class="font-heading text-lg font-bold text-gray-900 mb-2 mt-8">Impacto Caporal</h4>
                             <p class="text-sm text-gray-600 text-justify">
-                                En los 80s, los Caporales (recreados en Bolivia por los Hnos. Estrada) conquistaron a la juventud. Agrupaciones como <em>Caporales Huáscar</em> (1982) y <em>Centralistas</em> (1996) internacionalizaron la fiesta a Miami y NY.
+                                En los 80s, los Caporales (recreados en Bolivia por los Hnos. Estrada) conquistaron a la
+                                juventud. Agrupaciones como <em>Caporales Huáscar</em> (1982) y <em>Centralistas</em>
+                                (1996) internacionalizaron la fiesta a Miami y NY.
                             </p>
                         </div>
                         <div class="bg-gray-100 rounded-xl p-6 relative">
-                            <div class="absolute -top-4 -right-4 bg-yellow-400 w-12 h-12 flex items-center justify-center rounded-full shadow-lg font-bold text-lg">!</div>
+                            <div
+                                class="absolute -top-4 -right-4 bg-yellow-400 w-12 h-12 flex items-center justify-center rounded-full shadow-lg font-bold text-lg">
+                                !</div>
                             <blockquote class="italic text-gray-600 text-center font-serif text-lg">
-                                "La festividad redistribuye la riqueza y refuerza los lazos de parentesco. Nadie baila solo; se baila en y para la comunidad."
+                                "La festividad redistribuye la riqueza y refuerza los lazos de parentesco. Nadie baila
+                                solo; se baila en y para la comunidad."
                             </blockquote>
                         </div>
                     </div>
 
                     <!-- SECTION: ARTESANOS -->
                     <div class="bg-indigo-900 rounded-2xl p-8 md:p-12 text-white mb-20 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                        <div
+                            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10">
+                        </div>
                         <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
                             <div>
                                 <h3 class="font-heading text-3xl font-bold mb-6">Maestros Mascareros y Bordadores</h3>
                                 <p class="text-indigo-200 mb-6 text-justify leading-relaxed">
-                                    La magnificencia visual es obra de los talleres de Puno. En 1956, los hermanos Velásquez revolucionaron la mascarería, reemplazando la importación por una iconografía propia de ojos de vidrio soplado. Los bordadores convirtieron cada traje en un "texto visual" de la identidad local.
+                                    La magnificencia visual es obra de los talleres de Puno. En 1956, los hermanos
+                                    Velásquez revolucionaron la mascarería, reemplazando la importación por una
+                                    iconografía propia de ojos de vidrio soplado. Los bordadores convirtieron cada traje
+                                    en un "texto visual" de la identidad local.
                                 </p>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
@@ -1249,26 +1296,37 @@
 
                     <!-- ARCHIVOS VISUALES -->
                     <div class="mb-16">
-                        <h3 class="font-heading text-2xl font-bold text-gray-900 mb-6 text-center">Archivos de la Memoria</h3>
+                        <h3 class="font-heading text-2xl font-bold text-gray-900 mb-6 text-center">Archivos de la
+                            Memoria</h3>
                         <div class="grid md:grid-cols-3 gap-6">
-                            <a href="https://ich.unesco.org/es/10-lista-representativa-00748?include=slideshow_inc.php&id=00956&width=620&call=slideshow&mode=scroll" target="_blank" class="group bg-white p-6 rounded-xl border border-gray-200 hover:border-candelaria-purple hover:shadow-lg transition-all">
+                            <a href="https://ich.unesco.org/es/10-lista-representativa-00748?include=slideshow_inc.php&id=00956&width=620&call=slideshow&mode=scroll"
+                                target="_blank"
+                                class="group bg-white p-6 rounded-xl border border-gray-200 hover:border-candelaria-purple hover:shadow-lg transition-all">
                                 <div class="flex items-center gap-3 mb-3">
-                                    <div class="bg-blue-100 p-2 rounded-lg text-blue-600"><i data-lucide="globe" class="w-5 h-5"></i></div>
-                                    <h4 class="font-bold text-gray-900 group-hover:text-candelaria-purple">UNESCO Gallery</h4>
+                                    <div class="bg-blue-100 p-2 rounded-lg text-blue-600"><i data-lucide="globe"
+                                            class="w-5 h-5"></i></div>
+                                    <h4 class="font-bold text-gray-900 group-hover:text-candelaria-purple">UNESCO
+                                        Gallery</h4>
                                 </div>
                                 <p class="text-xs text-gray-500">Diapositivas históricas y contemporáneas oficiales.</p>
                             </a>
-                            <a href="http://repositorio.unap.edu.pe/" target="_blank" class="group bg-white p-6 rounded-xl border border-gray-200 hover:border-candelaria-purple hover:shadow-lg transition-all">
+                            <a href="http://repositorio.unap.edu.pe/" target="_blank"
+                                class="group bg-white p-6 rounded-xl border border-gray-200 hover:border-candelaria-purple hover:shadow-lg transition-all">
                                 <div class="flex items-center gap-3 mb-3">
-                                    <div class="bg-candelaria-purple/10 p-2 rounded-lg text-candelaria-purple"><i data-lucide="book-open" class="w-5 h-5"></i></div>
-                                    <h4 class="font-bold text-gray-900 group-hover:text-candelaria-purple">Repositorio UNAP</h4>
+                                    <div class="bg-candelaria-purple/10 p-2 rounded-lg text-candelaria-purple"><i
+                                            data-lucide="book-open" class="w-5 h-5"></i></div>
+                                    <h4 class="font-bold text-gray-900 group-hover:text-candelaria-purple">Repositorio
+                                        UNAP</h4>
                                 </div>
                                 <p class="text-xs text-gray-500">Investigaciones y fotos de campo históricas.</p>
                             </a>
-                            <a href="https://www.punomagico.com/folklor%20historia.html" target="_blank" class="group bg-white p-6 rounded-xl border border-gray-200 hover:border-candelaria-purple hover:shadow-lg transition-all">
+                            <a href="https://www.punomagico.com/folklor%20historia.html" target="_blank"
+                                class="group bg-white p-6 rounded-xl border border-gray-200 hover:border-candelaria-purple hover:shadow-lg transition-all">
                                 <div class="flex items-center gap-3 mb-3">
-                                    <div class="bg-amber-100 p-2 rounded-lg text-amber-600"><i data-lucide="image" class="w-5 h-5"></i></div>
-                                    <h4 class="font-bold text-gray-900 group-hover:text-candelaria-purple">Puno Mágico</h4>
+                                    <div class="bg-amber-100 p-2 rounded-lg text-amber-600"><i data-lucide="image"
+                                            class="w-5 h-5"></i></div>
+                                    <h4 class="font-bold text-gray-900 group-hover:text-candelaria-purple">Puno Mágico
+                                    </h4>
                                 </div>
                                 <p class="text-xs text-gray-500">Crónicas y fotos de conjuntos fundacionales.</p>
                             </a>
@@ -1349,7 +1407,8 @@
             </div>
 
             <!-- 3. HISTORIA DE LAS DANZAS (CON SIGNIFICADO) -->
-            <div id="danzas" class="tab-content hidden w-full bg-gray-100 py-16 relative" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
+            <div id="danzas" class="tab-content hidden w-full bg-gray-100 py-16 relative"
+                style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
                 <?php include 'danzas_content.php'; ?>
             </div>
 
@@ -1404,19 +1463,29 @@
                     <!-- Ganadores recientes -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <!-- 2025 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2025</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2025</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Confraternidad Morenada Santa Rosa</h3>
-                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Confraternidad Morenada
+                                        Santa Rosa</h3>
+                                    <span
+                                        class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes
+                                        de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2025 con 87.71 puntos. Destacó por la armonía de sus pasos y la espectacularidad de su banda.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2025 con 87.71 puntos.
+                                    Destacó por la armonía de sus pasos y la espectacularidad de su banda.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('morenada-santa-rosa-2025')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('morenada-santa-rosa-2025')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1427,19 +1496,27 @@
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2025</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2025</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
                                     <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas de Muñani</h3>
-                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                    <span
+                                        class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Ganador oficial 2025 con 63.10 puntos. Prioridad ganada sobre criterios técnicos por su coreografía impecable.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Ganador oficial 2025 con 63.10 puntos. Prioridad
+                                    ganada sobre criterios técnicos por su coreografía impecable.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('wifalas-munani-2025')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('wifalas-munani-2025')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1451,19 +1528,28 @@
                         </div>
 
                         <!-- 2024 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2024</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2024</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
                                     <h3 class="font-heading text-xl font-bold text-gray-900">Morenada Laykakota</h3>
-                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                    <span
+                                        class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes
+                                        de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2024 con un puntaje final de 86.32 puntos, liderando la categoría de Traje de Luces.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2024 con un puntaje final de
+                                    86.32 puntos, liderando la categoría de Traje de Luces.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('rey-moreno-2024')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('rey-moreno-2024')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1474,19 +1560,28 @@
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2024</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2024</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Unucajas de Azángaro</h3>
-                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural
+                                        Unucajas de Azángaro</h3>
+                                    <span
+                                        class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Primer lugar 2024 con 88.68 puntos, reafirmando que la zona quechua continúa siendo la reserva técnica de las danzas.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Primer lugar 2024 con 88.68 puntos, reafirmando
+                                    que la zona quechua continúa siendo la reserva técnica de las danzas.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('unucajas-2024')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('unucajas-2024')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1498,19 +1593,29 @@
                         </div>
 
                         <!-- 2020 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2020</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2020</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Folklórica Espectacular Diablada Bellavista</h3>
-                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Folklórica
+                                        Espectacular Diablada Bellavista</h3>
+                                    <span
+                                        class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes
+                                        de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Último gran ganador antes de la pandemia (94.26 puntos). Sofisticación técnica en su bloque de arcángeles.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Último gran ganador antes de la pandemia (94.26
+                                    puntos). Sofisticación técnica en su bloque de arcángeles.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('diablada-bellavista-2020')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('diablada-bellavista-2020')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1521,19 +1626,28 @@
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2020</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2020</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Musuq Illariy "Carnaval de Patambuco"</h3>
-                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Musuq
+                                        Illariy "Carnaval de Patambuco"</h3>
+                                    <span
+                                        class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Triunfo indiscutible con una puntuación de 88.84 en el último concurso antes de la emergencia sanitaria.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Triunfo indiscutible con una puntuación de 88.84
+                                    en el último concurso antes de la emergencia sanitaria.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('patambuco-2020')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('patambuco-2020')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1545,19 +1659,29 @@
                         </div>
 
                         <!-- 2019 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2019</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2019</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Incomparable Gran Diablada Amigos de la PNP</h3>
-                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Incomparable Gran Diablada
+                                        Amigos de la PNP</h3>
+                                    <span
+                                        class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes
+                                        de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Recuperaron el título con 88.66 puntos, destacando por su disciplina y consistencia en ambos escenarios.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Recuperaron el título con 88.66 puntos, destacando
+                                    por su disciplina y consistencia en ambos escenarios.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('pnp-2019')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('pnp-2019')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1568,19 +1692,28 @@
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2019</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2019</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Chunchos de Esquilaya (Ayapata)</h3>
-                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural
+                                        Chunchos de Esquilaya (Ayapata)</h3>
+                                    <span
+                                        class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Récord Histórico de 97.69 puntos. Emocionaron al jurado con su danza ancestral para evitar su extinción.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Récord Histórico de 97.69 puntos. Emocionaron al
+                                    jurado con su danza ancestral para evitar su extinción.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('chunchos-esquilaya-2019')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('chunchos-esquilaya-2019')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1592,19 +1725,29 @@
                         </div>
 
                         <!-- 2018 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2018</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2018</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Confraternidad Morenada Orkapata</h3>
-                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Confraternidad Morenada
+                                        Orkapata</h3>
+                                    <span
+                                        class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes
+                                        de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Retornaron al título máximo después de décadas (89.47 puntos), marcando el resurgimiento de la Morenada.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Retornaron al título máximo después de décadas
+                                    (89.47 puntos), marcando el resurgimiento de la Morenada.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('morenada-orkapata-2018')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('morenada-orkapata-2018')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1616,19 +1759,30 @@
                         </div>
 
                         <!-- 2017 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://www.punomagico.com/image/pnp%202021.png" onerror="this.src='https://placehold.co/600x400/b91c1c/ffffff?text=DIABLADA+PNP'" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Diablada PNP">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2017</div>
+                                <img src="https://www.punomagico.com/image/pnp%202021.png"
+                                    onerror="this.src='https://placehold.co/600x400/b91c1c/ffffff?text=DIABLADA+PNP'"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Diablada PNP">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2017</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Incomparable Gran Diablada Amigos de la PNP</h3>
-                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Incomparable Gran Diablada
+                                        Amigos de la PNP</h3>
+                                    <span
+                                        class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes
+                                        de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Sexto campeonato histórico con 90.53 puntos, definiendo la estética moderna con bloques masivos.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Sexto campeonato histórico con 90.53 puntos,
+                                    definiendo la estética moderna con bloques masivos.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('pnp-2017')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('pnp-2017')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1639,19 +1793,28 @@
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2017</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2017</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Carnaval Chaku de Chucahuacas</h3>
-                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural
+                                        Carnaval Chaku de Chucahuacas</h3>
+                                    <span
+                                        class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Campeón con 93.10 puntos. Danza ritual enérgica y vestimenta colorida que cautivó al jurado.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón con 93.10 puntos. Danza ritual enérgica y
+                                    vestimenta colorida que cautivó al jurado.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('chaku-2017')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('chaku-2017')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1663,19 +1826,29 @@
                         </div>
 
                         <!-- 2016 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2016</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2016</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Folklórica Diablada Centinelas del Altiplano</h3>
-                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Folklórica
+                                        Diablada Centinelas del Altiplano</h3>
+                                    <span
+                                        class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes
+                                        de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Primer campeonato absoluto con 91.54 puntos. Elogiado por su disciplina y simetría militar en la danza.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Primer campeonato absoluto con 91.54 puntos.
+                                    Elogiado por su disciplina y simetría militar en la danza.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('centinelas-2016')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('centinelas-2016')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1686,19 +1859,28 @@
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2016</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2016</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Conjunto de Wifalas San Antonio de Putina</h3>
-                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Conjunto de Wifalas San
+                                        Antonio de Putina</h3>
+                                    <span
+                                        class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Triunfo con 94.00 puntos. Con cintas de colores y pinkillos evocan sonidos de la naturaleza.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Triunfo con 94.00 puntos. Con cintas de colores y
+                                    pinkillos evocan sonidos de la naturaleza.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('wifalas-putina-2016')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('wifalas-putina-2016')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1710,19 +1892,29 @@
                         </div>
 
                         <!-- 2015 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2015</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2015</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Caporales Centralistas Puno</h3>
-                                    <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural
+                                        Caporales Centralistas Puno</h3>
+                                    <span
+                                        class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes
+                                        de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones con 90.37 puntos. Hito histórico en la categoría frente a su gran rival.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones con 90.37 puntos. Hito
+                                    histórico en la categoría frente a su gran rival.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('caporales-centralistas-2015')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('caporales-centralistas-2015')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1733,19 +1925,28 @@
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up"
+                            data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
-                                <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2015</div>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    alt="Cargando...">
+                                <div
+                                    class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">
+                                    2015</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas San Francisco Javier de Muñani (Azángaro)</h3>
-                                    <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas San Francisco
+                                        Javier de Muñani (Azángaro)</h3>
+                                    <span
+                                        class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Ganador oficial 2015. Patrimonio de la Nación de gran elegancia y pureza en la zona quechua.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Ganador oficial 2015. Patrimonio de la Nación de
+                                    gran elegancia y pureza en la zona quechua.</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="openGanadorModal('wifalas-munani-2015')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
+                                    <button onclick="openGanadorModal('wifalas-munani-2015')"
+                                        class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
                                     </button>
                                     <div class="flex items-center text-candelaria-gold">
@@ -1758,36 +1959,51 @@
                     </div>
 
                     <!-- Los Años de Suspensión -->
-                    <div class="mt-16 bg-slate-900 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden text-white reveal-up">
-                        <div class="absolute top-0 right-0 p-32 bg-red-600 rounded-full blur-3xl opacity-20 -mr-16 -mt-16"></div>
+                    <div
+                        class="mt-16 bg-slate-900 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden text-white reveal-up">
+                        <div
+                            class="absolute top-0 right-0 p-32 bg-red-600 rounded-full blur-3xl opacity-20 -mr-16 -mt-16">
+                        </div>
                         <div class="relative z-10">
                             <h3 class="flex items-center gap-3 text-2xl font-bold mb-6 font-heading">
-                                <span class="bg-red-600 text-white w-10 h-10 flex items-center justify-center rounded-lg"><i data-lucide="alert-triangle" class="w-5 h-5"></i></span>
+                                <span
+                                    class="bg-red-600 text-white w-10 h-10 flex items-center justify-center rounded-lg"><i
+                                        data-lucide="alert-triangle" class="w-5 h-5"></i></span>
                                 El Silencio Progresivo (2021-2023)
                             </h3>
                             <div class="grid md:grid-cols-2 gap-8 items-start">
                                 <div class="space-y-4">
                                     <p class="text-slate-300 leading-relaxed text-justify">
-                                        Por primera vez en la era moderna, la festividad enfrentó tres años de suspensión consecutiva. Un vacío cultural y económico que puso a prueba la resiliencia de la Capital del Folklore.
+                                        Por primera vez en la era moderna, la festividad enfrentó tres años de
+                                        suspensión consecutiva. Un vacío cultural y económico que puso a prueba la
+                                        resiliencia de la Capital del Folklore.
                                     </p>
                                     <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
                                         <h4 class="font-bold text-red-400 mb-2">Impacto Económico</h4>
-                                        <p class="text-sm text-slate-400">Se estima que la región dejó de percibir más de <span class="text-white font-bold">230 millones de soles</span> durante la crisis social y sanitaria.</p>
+                                        <p class="text-sm text-slate-400">Se estima que la región dejó de percibir más
+                                            de <span class="text-white font-bold">230 millones de soles</span> durante
+                                            la crisis social y sanitaria.</p>
                                     </div>
                                 </div>
                                 <div class="space-y-6">
                                     <div class="flex gap-4">
-                                        <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 text-slate-300 font-bold shrink-0">1</div>
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 text-slate-300 font-bold shrink-0">
+                                            1</div>
                                         <div>
                                             <h4 class="font-bold text-lg">Pandemia (2021-2022)</h4>
-                                            <p class="text-sm text-slate-400">Cancelación estricta por motivos de salud pública mundial (COVID-19).</p>
+                                            <p class="text-sm text-slate-400">Cancelación estricta por motivos de salud
+                                                pública mundial (COVID-19).</p>
                                         </div>
                                     </div>
                                     <div class="flex gap-4">
-                                        <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 text-slate-300 font-bold shrink-0">2</div>
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 text-slate-300 font-bold shrink-0">
+                                            2</div>
                                         <div>
                                             <h4 class="font-bold text-lg">Crisis Social (2023)</h4>
-                                            <p class="text-sm text-slate-400">El luto por los sucesos de Juliaca llevó a los conjuntos a votar por la cancelación total en señal de duelo.</p>
+                                            <p class="text-sm text-slate-400">El luto por los sucesos de Juliaca llevó a
+                                                los conjuntos a votar por la cancelación total en señal de duelo.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1821,17 +2037,24 @@
 
                         <!-- Elementos de la línea de tiempo -->
                         <div class="space-y-20">
-                            
+
                             <!-- Era 0: ORÍGENES COLONIALES (1583-1800) -->
                             <div class="relative flex flex-col md:flex-row items-center">
                                 <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Orígenes Coloniales (1583-1800)</h3>
-                                        <p class="text-gray-700 mb-4">La imagen de la Virgen llega con los mineros españoles de Laykakota. En 1668, según la leyenda, la Virgen protege a los indígenas durante la rebelión. Nace el sincretismo entre la fe católica y la Pachamama andina.</p>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Orígenes
+                                            Coloniales (1583-1800)</h3>
+                                        <p class="text-gray-700 mb-4">La imagen de la Virgen llega con los mineros
+                                            españoles de Laykakota. En 1668, según la leyenda, la Virgen protege a los
+                                            indígenas durante la rebelión. Nace el sincretismo entre la fe católica y la
+                                            Pachamama andina.</p>
                                         <div class="flex flex-wrap gap-2 justify-end">
-                                            <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Evangelización</span>
-                                            <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Sincretismo</span>
-                                            <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Minería</span>
+                                            <span
+                                                class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Evangelización</span>
+                                            <span
+                                                class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Sincretismo</span>
+                                            <span
+                                                class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Minería</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1857,12 +2080,19 @@
                                 <div class="timeline-dot" onclick="toggleTimelineContent(1)"></div>
                                 <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Era de los Sikuris (1870-1940)</h3>
-                                        <p class="text-gray-700 mb-4">Surgen las primeras cofradías formales: Sikuris Mañazo (1892) del gremio de matarifes y Juventud Obrera (1884). El siku (zampoña) domina el paisaje sonoro. Aparecen las primeras procesiones documentadas con danzas autóctonas.</p>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Era de
+                                            los Sikuris (1870-1940)</h3>
+                                        <p class="text-gray-700 mb-4">Surgen las primeras cofradías formales: Sikuris
+                                            Mañazo (1892) del gremio de matarifes y Juventud Obrera (1884). El siku
+                                            (zampoña) domina el paisaje sonoro. Aparecen las primeras procesiones
+                                            documentadas con danzas autóctonas.</p>
                                         <div class="flex flex-wrap gap-2">
-                                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Sikuris</span>
-                                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Gremios</span>
-                                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Cofradías</span>
+                                            <span
+                                                class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Sikuris</span>
+                                            <span
+                                                class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Gremios</span>
+                                            <span
+                                                class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Cofradías</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1872,12 +2102,21 @@
                             <div class="relative flex flex-col md:flex-row items-center">
                                 <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Décadas de Oro (1950-1970)</h3>
-                                        <p class="text-gray-700 mb-4">La época de las cofradías originales y el inicio de la formalización del concurso. Nace Morenada Orkapata (1955), Diablada Porteño (1962) y Bellavista (1963). Las máscaras de yeso y los trajes de lana definen esta era.</p>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Décadas
+                                            de Oro (1950-1970)</h3>
+                                        <p class="text-gray-700 mb-4">La época de las cofradías originales y el inicio
+                                            de la formalización del concurso. Nace Morenada Orkapata (1955), Diablada
+                                            Porteño (1962) y Bellavista (1963). Las máscaras de yeso y los trajes de
+                                            lana definen esta era.</p>
                                         <div class="flex flex-wrap gap-2 justify-end">
-                                            <span class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Cofradías</span>
-                                            <span class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Máscaras de Yeso</span>
-                                            <span class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Tradición Oral</span>
+                                            <span
+                                                class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Cofradías</span>
+                                            <span
+                                                class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Máscaras
+                                                de Yeso</span>
+                                            <span
+                                                class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Tradición
+                                                Oral</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1903,12 +2142,20 @@
                                 <div class="timeline-dot" onclick="toggleTimelineContent(3)"></div>
                                 <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Institucionalización (1967-1985)</h3>
-                                        <p class="text-gray-700 mb-4">José María Arguedas visita Puno (1967) y declara la ciudad "Capital del Folklore". Se crea la Federación Regional de Folklore (1970). El Congreso promulga la Ley N° 24325 (1985) oficializando el título.</p>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">
+                                            Institucionalización (1967-1985)</h3>
+                                        <p class="text-gray-700 mb-4">José María Arguedas visita Puno (1967) y declara
+                                            la ciudad "Capital del Folklore". Se crea la Federación Regional de Folklore
+                                            (1970). El Congreso promulga la Ley N° 24325 (1985) oficializando el título.
+                                        </p>
                                         <div class="flex flex-wrap gap-2">
-                                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Arguedas</span>
-                                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Federación</span>
-                                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Ley N° 24325</span>
+                                            <span
+                                                class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Arguedas</span>
+                                            <span
+                                                class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Federación</span>
+                                            <span
+                                                class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Ley
+                                                N° 24325</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1918,12 +2165,20 @@
                             <div class="relative flex flex-col md:flex-row items-center">
                                 <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">El Boom del Bordado (1980-2000)</h3>
-                                        <p class="text-gray-700 mb-4">Ingresa la alta costura andina. Los trajes se vuelven más elaborados con lentejuelas y bordados de hilos de oro. Llegan los Caporales (1982). La rivalidad entre conjuntos se intensifica y la competencia alcanza estándares internacionales.</p>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">El Boom
+                                            del Bordado (1980-2000)</h3>
+                                        <p class="text-gray-700 mb-4">Ingresa la alta costura andina. Los trajes se
+                                            vuelven más elaborados con lentejuelas y bordados de hilos de oro. Llegan
+                                            los Caporales (1982). La rivalidad entre conjuntos se intensifica y la
+                                            competencia alcanza estándares internacionales.</p>
                                         <div class="flex flex-wrap gap-2 justify-end">
-                                            <span class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Alta Costura</span>
-                                            <span class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Lentejuelas</span>
-                                            <span class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Caporales</span>
+                                            <span
+                                                class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Alta
+                                                Costura</span>
+                                            <span
+                                                class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Lentejuelas</span>
+                                            <span
+                                                class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Caporales</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1949,12 +2204,22 @@
                                 <div class="timeline-dot" onclick="toggleTimelineContent(5)"></div>
                                 <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Patrimonio Mundial (2003-2020)</h3>
-                                        <p class="text-gray-700 mb-4">En 2003, el INC declara la festividad Patrimonio Cultural de la Nación. En 2014, la UNESCO la inscribe como Patrimonio Inmaterial de la Humanidad. El concurso supera los 150 conjuntos y 130,000 danzantes.</p>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">
+                                            Patrimonio Mundial (2003-2020)</h3>
+                                        <p class="text-gray-700 mb-4">En 2003, el INC declara la festividad Patrimonio
+                                            Cultural de la Nación. En 2014, la UNESCO la inscribe como Patrimonio
+                                            Inmaterial de la Humanidad. El concurso supera los 150 conjuntos y 130,000
+                                            danzantes.</p>
                                         <div class="flex flex-wrap gap-2">
-                                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">UNESCO 2014</span>
-                                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">INC 2003</span>
-                                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">130K Danzantes</span>
+                                            <span
+                                                class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">UNESCO
+                                                2014</span>
+                                            <span
+                                                class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">INC
+                                                2003</span>
+                                            <span
+                                                class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">130K
+                                                Danzantes</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1964,12 +2229,21 @@
                             <div class="relative flex flex-col md:flex-row items-center">
                                 <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Era Digital (2020 - Hoy)</h3>
-                                        <p class="text-gray-700 mb-4">Tras la pausa pandémica (2021-2023), la festividad vuelve con fuerza en 2024. Morenada Laykakota y Wifalas Muñani lideran. En 2025, Santa Rosa (87.71 pts) y Muñani (63.10 pts) son los nuevos campeones. La transmisión digital lleva la fiesta al mundo.</p>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Era
+                                            Digital (2020 - Hoy)</h3>
+                                        <p class="text-gray-700 mb-4">Tras la pausa pandémica (2021-2023), la festividad
+                                            vuelve con fuerza en 2024. Morenada Laykakota y Wifalas Muñani lideran. En
+                                            2025, Santa Rosa (87.71 pts) y Muñani (63.10 pts) son los nuevos campeones.
+                                            La transmisión digital lleva la fiesta al mundo.</p>
                                         <div class="flex flex-wrap gap-2 justify-end">
-                                            <span class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Streaming</span>
-                                            <span class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Retorno 2024</span>
-                                            <span class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Santa Rosa 2025</span>
+                                            <span
+                                                class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Streaming</span>
+                                            <span
+                                                class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Retorno
+                                                2024</span>
+                                            <span
+                                                class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Santa
+                                                Rosa 2025</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1993,11 +2267,13 @@
                         <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
                             <div class="flex items-start gap-2">
                                 <span class="text-candelaria-gold font-bold">[1]</span>
-                                <p>Cánepa Koch, G. (1998). <em>Máscara, transformación e identidad en los Andes</em>. Fondo Editorial PUCP.</p>
+                                <p>Cánepa Koch, G. (1998). <em>Máscara, transformación e identidad en los Andes</em>.
+                                    Fondo Editorial PUCP.</p>
                             </div>
                             <div class="flex items-start gap-2">
                                 <span class="text-candelaria-gold font-bold">[2]</span>
-                                <p>UNESCO (2014). <em>Expediente de inscripción: Festividad Virgen de la Candelaria de Puno</em>.</p>
+                                <p>UNESCO (2014). <em>Expediente de inscripción: Festividad Virgen de la Candelaria de
+                                        Puno</em>.</p>
                             </div>
                             <div class="flex items-start gap-2">
                                 <span class="text-candelaria-gold font-bold">[3]</span>
@@ -2005,7 +2281,8 @@
                             </div>
                             <div class="flex items-start gap-2">
                                 <span class="text-candelaria-gold font-bold">[4]</span>
-                                <p>Federación Regional de Folklore de Puno. <em>Archivos históricos del concurso</em> (1970-2025).</p>
+                                <p>Federación Regional de Folklore de Puno. <em>Archivos históricos del concurso</em>
+                                    (1970-2025).</p>
                             </div>
                         </div>
                     </div>
@@ -2254,11 +2531,11 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
         function formatYoutubeEmbed(url) {
             if (!url) return '';
             let videoId = '';
-            
+
             // Caso 1: youtu.be/ID
             if (url.includes('youtu.be/')) {
                 videoId = url.split('youtu.be/')[1].split('?')[0];
-            } 
+            }
             // Caso 2: youtube.com/watch?v=ID
             else if (url.includes('v=')) {
                 videoId = url.split('v=')[1].split('&')[0];
@@ -2274,7 +2551,7 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
             }
 
             if (!videoId) return url; // Retornar original si no se reconoce
-            
+
             // Retornar formato embed con parámetros de autoplay y limpieza
             return `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`;
         }
@@ -2931,23 +3208,23 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
 
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            
+
             // Configuración de colores y fuentes
             const purple = '#4c1d95';
             const gold = '#fbbf24';
             const gray = '#4b5563';
-            
+
             // --- HEADER ---
             // Barra superior
             doc.setFillColor(purple);
             doc.rect(0, 0, 210, 40, 'F');
-            
+
             // Título Principal
             doc.setTextColor('#ffffff');
             doc.setFontSize(22);
             doc.setFont('helvetica', 'bold');
             doc.text('FESTIVIDAD VIRGEN DE LA CANDELARIA', 105, 20, { align: 'center' });
-            
+
             doc.setFontSize(12);
             doc.setFont('helvetica', 'normal');
             doc.text('Patrimonio Cultural Inmaterial de la Humanidad (UNESCO)', 105, 30, { align: 'center' });
@@ -2960,13 +3237,13 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
             doc.setFontSize(18);
             doc.setFont('helvetica', 'bold');
             doc.text(data.title.toUpperCase(), 20, yPos);
-            
+
             // Línea decorativa
             yPos += 3;
             doc.setDrawColor(gold);
             doc.setLineWidth(1);
             doc.line(20, yPos, 190, yPos);
-            
+
             yPos += 15;
 
             // Metadatos
@@ -2976,7 +3253,7 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
             doc.text(`AÑO DE FUNDACIÓN:`, 20, yPos);
             doc.setFont('helvetica', 'normal');
             doc.text(data.year, 70, yPos);
-            
+
             yPos += 8;
             doc.setFont('helvetica', 'bold');
             doc.text(`CATEGORÍA:`, 20, yPos);
@@ -3002,11 +3279,11 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
             doc.setTextColor('#000000');
             doc.setFontSize(10);
             doc.setFont('helvetica', 'normal');
-            
+
             // Dividir texto para ajuste de línea (max width 170)
             const splitHistory = doc.splitTextToSize(data.fullText, 170);
             doc.text(splitHistory, 20, yPos);
-            
+
             yPos += (splitHistory.length * 5) + 15;
 
             // Características
@@ -3021,7 +3298,7 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
             doc.setTextColor('#000000');
             doc.setFontSize(10);
             doc.setFont('helvetica', 'normal');
-            
+
             data.features.forEach(feature => {
                 doc.text(`• ${feature}`, 25, yPos);
                 yPos += 7;
@@ -3031,7 +3308,7 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
             const pageHeight = doc.internal.pageSize.height;
             doc.setDrawColor(purple);
             doc.line(20, pageHeight - 20, 190, pageHeight - 20);
-            
+
             doc.setFontSize(8);
             doc.setTextColor(gray);
             doc.text(`Documento generado automáticamen el ${new Date().toLocaleDateString()}`, 20, pageHeight - 12);
@@ -3071,7 +3348,7 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
         }
 
         // Ejecución inmediata para evitar flicker
-        (function() {
+        (function () {
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', syncCardImages);
             } else {
@@ -3084,15 +3361,15 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
         window.onload = () => {
             lucide.createIcons();
             syncCardImages(); // Sincronizar imágenes de portada
-            
+
             // Animaciones iniciales solo en el contenido activo
             const activeTab = localStorage.getItem('activeCulturaTab') || 'historia';
             const activeContent = document.getElementById(activeTab);
-            
+
             if (activeContent) {
                 // No afectar al header HERO, solo a los elementos dentro de las secciones
                 activeContent.querySelectorAll('.reveal-up').forEach(el => {
-                     if (!el.closest('header.relative')) { 
+                    if (!el.closest('header.relative')) {
                         el.classList.add('active');
                     }
                 });
@@ -3101,16 +3378,16 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
             // Activar el primer elemento de la línea de tiempo si estamos en esa pestaña
             setTimeout(() => {
                 const timelineContent = document.querySelectorAll('.timeline-content')[0];
-                if(timelineContent) timelineContent.classList.add('active');
+                if (timelineContent) timelineContent.classList.add('active');
             }, 500);
         };
-        
+
         // EJECUTAR INMEDIATAMENTE (Sync) para evitar flash
         (function initTabs() {
             const savedTab = localStorage.getItem('activeCulturaTab');
             const defaultTab = 'historia';
             const tabToLoad = savedTab || defaultTab;
-            
+
             // Establecer estado inicial
             setActiveTab(tabToLoad);
         })();
@@ -3119,11 +3396,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
 
     <!-- Auth Modal and Dropdown -->
     <?= getAuthModalHTML() ?>
-    <?= getAuthJS('../') ?>
+    <?= getAuthJS() ?>
 
-    <?php 
+    <?php
     $footerDepth = 1;
-    include '../includes/standard-footer.php'; 
+    include '../includes/standard-footer.php';
     ?>
 </body>
+
 </html>

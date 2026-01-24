@@ -124,85 +124,7 @@ function timeAgo($datetime)
             font-family: 'Montserrat', sans-serif;
         }
 
-        .nav-link-custom {
-            color: #e9d5ff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 8px 16px;
-            position: relative;
-            transition: color 0.3s ease;
-        }
 
-        .nav-link-custom:hover,
-        .nav-link-custom.active {
-            color: #fbbf24;
-        }
-
-        .nav-link-custom::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: #fbbf24;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link-custom:hover::after,
-        .nav-link-custom.active::after {
-            width: 80%;
-        }
-
-        .btn-live {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            animation: pulseLive 2s infinite;
-        }
-
-        @keyframes pulseLive {
-
-            0%,
-            100% {
-                box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            }
-
-            50% {
-                box-shadow: 0 4px 25px rgba(220, 38, 38, 0.7);
-            }
-        }
-
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.3;
-            }
-        }
 
         .news-card-img {
             transition: transform 0.5s ease;
@@ -211,34 +133,6 @@ function timeAgo($datetime)
         .news-card:hover .news-card-img {
             transform: scale(1.05);
         }
-
-        /* Header Manta Premium Style - Lliclla Pattern */
-        .header-manta-premium {
-            height: 140px;
-            background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('../principal/headerfondo2.jpg');
-            background-size: auto 100%;
-            background-repeat: repeat-x;
-            background-position: center;
-            position: relative;
-            border-bottom: 3px solid #fbbf24;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .header-manta-premium::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
-            pointer-events: none;
-        }
-
-        .header-manta-premium>div {
-            position: relative;
-            z-index: 2;
-        }
     </style>
     <!-- Spark Effect CSS -->
     <link rel="stylesheet" href="../assets/css/sparks.css">
@@ -246,49 +140,11 @@ function timeAgo($datetime)
 
 <body>
     <!-- Navbar -->
-    <header class="header-manta-premium text-white shadow-lg sticky top-0 z-50">
-        <div class="w-full px-4 md:px-12 h-20 md:h-22 flex items-center">
-            <div class="flex justify-between items-center w-full h-full">
-                <a href="../index.php" id="logo-container"
-                    class="flex items-center group h-full relative spark-container">
-                    <img src="../principal/logoc.png" alt="Candelaria"
-                        class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
-                </a>
-                <div class="flex items-center gap-6">
-                    <nav class="hidden md:flex items-center gap-1">
-                        <a href="../servicios/index.php" class="nav-link-custom">Servicios</a>
-                        <a href="../cultura/cultura.php" class="nav-link-custom">Cultura</a>
-                        <a href="../horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
-                        <a href="index.php" class="nav-link-custom active">Noticias</a>
-                    </nav>
-                    <?php include '../includes/auth-header.php'; ?>
-                    <?= getAuthButtonHTML() ?>
-                    <a href="../live-platform/index.php"
-                        class="btn-live text-white font-bold no-underline group !p-2.5 md:!px-6 md:!py-2.5">
-                        <div class="live-dot"></div> <span class="tracking-wider hidden md:inline">EN TIEMPO REAL</span>
-                    </a>
-                    <button class="md:hidden text-white ml-4" id="mobile-menu-btn">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Menu (Hidden by default) -->
-    <div id="mobile-menu"
-        class="hidden md:hidden bg-candelaria-purple absolute top-20 left-0 w-full shadow-lg border-t border-purple-800 z-40 transition-all duration-300">
-        <nav class="flex flex-col p-6 space-y-4">
-            <a href="../servicios/index.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Servicios</a>
-            <a href="../cultura/cultura.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
-            <a href="../horarios_y_danzas/index.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Horarios</a>
-            <a href="index.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 active text-candelaria-gold">Noticias</a>
-        </nav>
-    </div>
+    <?php
+    $headerDepth = 1;
+    $activePage = 'noticias';
+    include '../includes/standard-header.php';
+    ?>
 
     <!-- Breaking News Ticker -->
     <div class="bg-gray-900 border-b border-gray-800">
@@ -398,16 +254,16 @@ function timeAgo($datetime)
         </div>
     </main>
 
-    <?php 
+    <?php
     $footerDepth = 1;
-    include '../includes/standard-footer.php'; 
+    include '../includes/standard-footer.php';
     ?>
     <script>lucide.createIcons();</script>
     <script src="../assets/js/spark-effect.js"></script>
 
     <!-- Auth Modal and Dropdown -->
     <?= getAuthModalHTML() ?>
-    <?= getAuthJS('../') ?>
+    <?= getAuthJS() ?>
     <script>
         // Mobile Menu Logic
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');

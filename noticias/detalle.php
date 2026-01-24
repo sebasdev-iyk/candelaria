@@ -113,18 +113,6 @@ function timeAgo($datetime)
         }
     </script>
     <style>
-        .nav-link-custom {
-            color: #e9d5ff;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 16px;
-            position: relative;
-        }
-
-        .nav-link-custom:hover {
-            color: #fbbf24;
-        }
-
         .article-content p {
             margin-bottom: 1.5rem;
             line-height: 1.8;
@@ -148,64 +136,17 @@ function timeAgo($datetime)
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             margin: 2rem 0;
         }
-
-        /* Header Manta Premium Style - Lliclla Pattern */
-        .header-manta-premium {
-            height: 140px;
-            background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('../principal/headerfondo2.jpg');
-            background-size: auto 100%;
-            background-repeat: repeat-x;
-            background-position: center;
-            position: relative;
-            border-bottom: 3px solid #fbbf24;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .header-manta-premium::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
-            pointer-events: none;
-        }
-
-        .header-manta-premium>div {
-            position: relative;
-            z-index: 2;
-        }
     </style>
 </head>
 
 <body class="bg-gray-50">
     <!-- Header -->
     <!-- Navbar -->
-    <header class="header-manta-premium text-white shadow-lg sticky top-0 z-50">
-        <div class="bg-purple-950 text-xs py-1 text-center text-purple-200">Festividad de la Virgen de la Candelaria
-            2025 - Del 2 al 11 de Febrero</div>
-        <div class="w-full px-4 md:px-12 py-4">
-            <div class="flex justify-between items-center">
-                <a href="../index.php" class="flex items-center group">
-                    <img src="../principal/logoc.png" alt="Candelaria" class="h-10 md:h-12 w-auto object-contain">
-                </a>
-                <div class="flex items-center gap-6">
-                    <nav class="hidden md:flex items-center gap-1">
-                        <a href="../servicios/index.php" class="nav-link-custom">Servicios</a>
-                        <a href="../cultura/cultura.php" class="nav-link-custom">Cultura</a>
-                        <a href="../horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
-                        <a href="index.php" class="nav-link-custom active">Noticias</a>
-                    </nav>
-                    <?php include '../includes/auth-header.php'; ?>
-                    <?= getAuthButtonHTML() ?>
-                    <a href="../live-platform/index.php" class="btn-live text-white font-bold no-underline">
-                        <div class="live-dot"></div> EN VIVO
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php
+    $headerDepth = 1;
+    $activePage = 'noticias';
+    include '../includes/standard-header.php';
+    ?>
 
     <main class="max-w-4xl mx-auto px-4 py-10">
         <?php if ($article): ?>
@@ -288,14 +229,14 @@ function timeAgo($datetime)
         <?php endif; ?>
     </main>
 
-    <?php 
+    <?php
     $footerDepth = 1;
-    include '../includes/standard-footer.php'; 
+    include '../includes/standard-footer.php';
     ?>
 
     <!-- Auth Modal & Logic -->
     <?= getAuthModalHTML() ?>
-    <?= getAuthJS('../') ?>
+    <?= getAuthJS() ?>
 
     <script>lucide.createIcons();</script>
 </body>

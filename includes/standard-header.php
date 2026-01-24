@@ -7,6 +7,13 @@
 // Determine base path based on current file location
 $depth = isset($headerDepth) ? $headerDepth : 0;
 $basePath = str_repeat('../', $depth);
+$activePage = isset($activePage) ? $activePage : '';
+
+// Helper for active class
+function getActiveClass($page, $activePage)
+{
+    return $page === $activePage ? 'active' : '';
+}
 ?>
 
 <!-- Header Section - Standardized -->
@@ -23,18 +30,24 @@ $basePath = str_repeat('../', $depth);
             <!-- Right: Navigation + EN TIEMPO REAL -->
             <div class="flex items-center gap-2 md:gap-6">
                 <nav class="hidden md:flex items-center gap-2">
-                    <a href="<?= $basePath ?>servicios/index.php" class="nav-link-custom">Servicios</a>
-                    <a href="<?= $basePath ?>cultura/cultura.php" class="nav-link-custom">Cultura</a>
-                    <a href="<?= $basePath ?>horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
-                    <a href="<?= $basePath ?>noticias/index.php" class="nav-link-custom">Noticias</a>
+                    <a href="<?= $basePath ?>servicios/index.php"
+                        class="nav-link-custom <?= getActiveClass('servicios', $activePage) ?>">Servicios</a>
+                    <a href="<?= $basePath ?>cultura/cultura.php"
+                        class="nav-link-custom <?= getActiveClass('cultura', $activePage) ?>">Cultura</a>
+                    <a href="<?= $basePath ?>horarios_y_danzas/index.php"
+                        class="nav-link-custom <?= getActiveClass('horarios', $activePage) ?>">Horarios</a>
+                    <a href="<?= $basePath ?>noticias/index.php"
+                        class="nav-link-custom <?= getActiveClass('noticias', $activePage) ?>">Noticias</a>
                 </nav>
 
                 <?php
                 // Include auth header if not already included
                 $authHeaderPath = $basePath . 'includes/auth-header.php';
-                if (file_exists($authHeaderPath) && !function_exists('getAuthButtonHTML')) {
-                    include_once $authHeaderPath;
+                // Check if getAuthButtonHTML exists to avoid re-include issues if manually included
+                if (!function_exists('getAuthButtonHTML') && file_exists(__DIR__ . '/auth-header.php')) {
+                    include_once __DIR__ . '/auth-header.php';
                 }
+
                 if (function_exists('getAuthButtonHTML')) {
                     echo getAuthButtonHTML();
                 }
@@ -59,27 +72,49 @@ $basePath = str_repeat('../', $depth);
         class="hidden md:hidden bg-candelaria-purple absolute top-full left-0 w-full shadow-lg border-t border-purple-800 z-30 transition-all duration-300">
         <nav class="flex flex-col p-6 space-y-4">
             <a href="<?= $basePath ?>servicios/index.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Servicios</a>
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'servicios' ? 'text-candelaria-gold' : '' ?>">Servicios</a>
             <a href="<?= $basePath ?>cultura/cultura.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'cultura' ? 'text-candelaria-gold' : '' ?>">Cultura</a>
             <a href="<?= $basePath ?>horarios_y_danzas/index.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Horarios</a>
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'horarios' ? 'text-candelaria-gold' : '' ?>">Horarios</a>
             <a href="<?= $basePath ?>noticias/index.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Noticias</a>
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'noticias' ? 'text-candelaria-gold' : '' ?>">Noticias</a>
         </nav>
     </div>
 </header>
 
 <style>
-    /* Header Styles - Anti-Shake Fix */
+    /* Header Styles - Premium */
     .header-manta-premium {
+        height: 100px;
+        /* Reduced from 140px to be less obtrusive but still premium */
+        background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('<?= $basePath ?>principal/headerfondo2.jpg');
+        background-size: auto 100%;
+        background-repeat: repeat-x;
+        background-position: center;
         position: sticky;
         top: 0;
-        background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
+        border-bottom: 3px solid #fbbf24;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         will-change: transform;
-        transform: translateZ(0);
-        backface-visibility: hidden;
-        -webkit-font-smoothing: subpixel-antialiased;
+        z-index: 40;
+    }
+
+    @media (max-width: 768px) {
+        .header-manta-premium {
+            height: 80px;
+        }
+    }
+
+    .header-manta-premium::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
+        pointer-events: none;
     }
 
     .nav-link-custom {
@@ -87,12 +122,39 @@ $basePath = str_repeat('../', $depth);
         text-decoration: none;
         font-weight: 600;
         font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
         padding: 8px 16px;
+        position: relative;
         transition: color 0.3s ease;
     }
 
     .nav-link-custom:hover {
         color: #fbbf24;
+    }
+
+    .nav-link-custom::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background: #fbbf24;
+        transition: width 0.3s ease;
+    }
+
+    .nav-link-custom:hover::after {
+        width: 80%;
+    }
+
+    .nav-link-custom.active {
+        color: #fbbf24;
+    }
+
+    .nav-link-custom.active::after {
+        width: 80%;
     }
 
     .btn-live {
@@ -156,9 +218,22 @@ $basePath = str_repeat('../', $depth);
         const mobileMenu = document.getElementById('mobile-menu');
 
         if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.preventDefault();
                 mobileMenu.classList.toggle('hidden');
             });
+
+            // Close on click outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target) && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        }
+
+        // Init icons if available
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
         }
     });
 </script>
