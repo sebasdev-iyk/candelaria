@@ -200,6 +200,107 @@
     }
 
     /**
+     * Update user profile (metadata + backend sync)
+     * @param {object} updates - { name, picture }
+     */
+    async function updateUser(updates) {
+        const client = initSupabase();
+        if (!client) return { error: new Error('Supabase not initialized') };
+
+        // 1. Update Supabase Auth Metadata
+        const sbUpdates = { data: {} };
+        if (updates.name) sbUpdates.data.full_name = updates.name;
+        if (updates.picture) sbUpdates.data.avatar_url = updates.picture;
+
+        const { data: sbData, error: sbError } = await client.auth.updateUser(sbUpdates);
+
+        if (sbError) return { error: sbError };
+
+        // 2. Refresh Session to propagate changes to cookie immediately
+        const { data: { session }, error: refreshError } = await client.auth.refreshSession();
+
+        if (session) {
+            setCookie(COOKIE_NAME, session.access_token);
+            currentUser = session.user;
+        }
+
+        // 3. Sync with local Backend (MySQL - Reservaciones)
+        // We use the NEW Endpoint that accepts Supabase Token
+        try {
+            const token = getCookie(COOKIE_NAME);
+            const payload = {
+                name: updates.name,
+                picture: updates.picture
+            };
+
+            const response = await fetch('/candelaria/api/user_update.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+            console.log('[Supabase Core] Sync result:', result);
+
+        } catch (err) {
+            console.error('[Supabase Core] Backend sync error:', err);
+            // Non-blocking error
+        }
+
+        return { data: sbData, error: null };
+    }
+
+    /**
+     * Update user profile (metadata + backend sync)
+     * @param {object} updates - { name, picture }
+     */
+    async function updateUser(updates) {
+        const client = initSupabase();
+        if (!client) return { error: new Error('Supabase not initialized') };
+
+        // 1. Update Supabase Auth Metadata
+        const sbUpdates = { data: {} };
+        if (updates.name) sbUpdates.data.full_name = updates.name;
+        if (updates.picture) sbUpdates.data.avatar_url = updates.picture;
+
+        const { data: sbData, error: sbError } = await client.auth.updateUser(sbUpdates);
+
+        if (sbError) return { error: sbError };
+
+        // 2. Sync with local Backend (MySQL)
+        // We trigger the sync without ID because api/user_update.php uses the Session ID.
+        try {
+            const payload = {
+                name: updates.name,
+                picture: updates.picture
+            };
+
+            const response = await fetch('/candelaria/api/user_update.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (!result.success) {
+                console.warn('[Supabase Core] Backend sync warning:', result.message);
+                return { data: sbData, error: new Error(result.message || 'Error syncing backend') };
+            }
+
+        } catch (err) {
+            console.error('[Supabase Core] Backend sync error:', err);
+            // We return error because if backend sync fails, user sees old data on reload
+            return { data: sbData, error: new Error('Network error syncing profile') };
+        }
+
+        return { data: sbData, error: null };
+    }
+
+    /**
      * Get current authenticated user
      * @returns {Promise<{user: object|null, error: Error|null}>}
      */
@@ -382,6 +483,7 @@
         signInWithEmail,
         resetPasswordForEmail,
         signOut,
+        updateUser,
         getCurrentUser,
         getSession,
         getAccessToken,

@@ -124,20 +124,30 @@
             <div class="bg-gradient-to-r from-candelaria-purple to-purple-800 h-32"></div>
             <div class="px-8 pb-8">
                 <div class="flex flex-col sm:flex-row items-center sm:items-end -mt-16 sm:-mt-12">
-                    <img id="profile-avatar" src="" alt="Avatar"
-                        class="w-32 h-32 rounded-full border-4 border-white shadow-xl object-cover">
-                    <div class="mt-4 sm:mt-0 sm:ml-6 text-center sm:text-left">
+                    <div class="relative group">
+                        <img id="profile-avatar" src="" alt="Avatar"
+                            class="w-32 h-32 rounded-full border-4 border-white shadow-xl object-cover bg-white">
+                    </div>
+
+                    <div class="mt-4 sm:mt-0 sm:ml-6 text-center sm:text-left flex-grow">
                         <h1 id="profile-name" class="text-3xl font-bold text-gray-900">Cargando...</h1>
                         <p id="profile-email" class="text-gray-600 mt-1">email@ejemplo.com</p>
-                        <div class="flex items-center justify-center sm:justify-start gap-2 mt-2">
-                            <span id="profile-provider-badge"
-                                class="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full uppercase">
-                                Email
-                            </span>
-                            <span
-                                class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full uppercase">
-                                Miembro
-                            </span>
+                        <div class="flex flex-col sm:flex-row items-center gap-4 mt-3">
+                            <div class="flex items-center gap-2">
+                                <span id="profile-provider-badge"
+                                    class="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full uppercase">
+                                    Email
+                                </span>
+                                <span
+                                    class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full uppercase">
+                                    Miembro
+                                </span>
+                            </div>
+                            <!-- Edit Button -->
+                            <button onclick="openEditProfileModal()"
+                                class="flex items-center gap-2 px-4 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-bold rounded-full transition-colors">
+                                <i data-lucide="edit-2" class="w-3 h-3"></i> Editar Perfil
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -233,6 +243,55 @@
 
     <!-- Auth Modal -->
     <?= getAuthModalHTML() ?>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" onclick="closeEditProfileModal()">
+        </div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4">
+                <div
+                    class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all w-full max-w-md border border-gray-100">
+                    <div class="px-6 py-6 border-b border-gray-100 flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-gray-900">Editar Perfil</h3>
+                        <button onclick="closeEditProfileModal()"
+                            class="text-gray-400 hover:text-gray-600 rounded-full p-1 hover:bg-gray-100">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <form id="edit-profile-form" class="p-6 space-y-4">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Nombre Completo</label>
+                            <input type="text" id="edit-name" required
+                                class="w-full rounded-xl border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-purple-500 focus:ring-purple-500 text-sm">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">URL de Foto (Opcional)</label>
+                            <div class="flex gap-2">
+                                <input type="url" id="edit-picture" placeholder="https://..."
+                                    class="w-full rounded-xl border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-purple-500 focus:ring-purple-500 text-sm">
+                            </div>
+                            <p class="mt-1 text-xs text-gray-500">Por ahora solo soportamos URLs externas.</p>
+                        </div>
+
+                        <div class="pt-4 flex gap-3">
+                            <button type="button" onclick="closeEditProfileModal()"
+                                class="flex-1 px-4 py-2 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200">
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                class="flex-1 px-4 py-2 bg-candelaria-purple text-white font-bold rounded-xl hover:bg-purple-800 shadow-md hover:shadow-lg transition-all">
+                                Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Auth JS -->
     <?= getAuthJS() ?>
@@ -404,6 +463,71 @@
             };
             return colors[status] || 'bg-gray-100 text-gray-800';
         }
+
+        // --- Edit Profile Logic ---
+        function openEditProfileModal() {
+            const modal = document.getElementById('edit-profile-modal');
+            const currentUser = window.currentUser || JSON.parse(localStorage.getItem('candelaria_user'));
+
+            if (currentUser) {
+                document.getElementById('edit-name').value = currentUser.name || '';
+                document.getElementById('edit-picture').value = currentUser.picture || '';
+            }
+
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeEditProfileModal() {
+            document.getElementById('edit-profile-modal').classList.add('hidden');
+        }
+
+        document.getElementById('edit-profile-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('edit-name').value.trim();
+            const picture = document.getElementById('edit-picture').value.trim();
+            const btn = e.target.querySelector('button[type="submit"]');
+
+            if (!name) return showToast('El nombre es obligatorio', 'warning');
+
+            // UI Loading
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin inline mr-2"></i> Guardando...';
+            btn.disabled = true;
+            lucide.createIcons();
+
+            try {
+                if (typeof SupabaseCore === 'undefined') throw new Error('Supabase no cargado');
+
+                const { error } = await SupabaseCore.updateUser({
+                    name: name,
+                    picture: picture || null
+                });
+
+                if (error) throw error;
+
+                showToast('Perfil actualizado correctamente', 'success');
+                closeEditProfileModal();
+
+                // Reload UI immediately without refresh
+                loadUserProfile();
+
+                // Update header too if possible
+                if (window.showLoggedInState && window.currentUser) {
+                    window.currentUser.name = name;
+                    window.currentUser.picture = picture;
+                    window.showLoggedInState(window.currentUser);
+                }
+
+            } catch (e) {
+                console.error(e);
+                showToast(e.message || 'Error al actualizar perfil', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
 
         // confirmLogout removed - using global handleLogout from auth-header.php
 
