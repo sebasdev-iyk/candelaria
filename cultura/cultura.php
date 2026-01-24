@@ -161,14 +161,14 @@
         }
 
         .timeline-content {
-            opacity: 0;
-            transform: translateY(20px);
+            opacity: 1;
+            transform: translateY(0);
             transition: all 0.5s ease;
         }
 
-        .timeline-content.active {
-            opacity: 1;
-            transform: translateY(0);
+        .timeline-content.hidden {
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         /* ========== EN TIEMPO REAL Button Styles ========== */
@@ -1821,28 +1821,67 @@
 
                         <!-- Elementos de la línea de tiempo -->
                         <div class="space-y-20">
-                            <!-- Era 1: 1950-1970 -->
+                            
+                            <!-- Era 0: ORÍGENES COLONIALES (1583-1800) -->
                             <div class="relative flex flex-col md:flex-row items-center">
                                 <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Décadas
-                                            de Oro (1950-1970)</h3>
-                                        <p class="text-gray-700 mb-4">La época de las cofradías originales y el inicio
-                                            de la formalización del concurso. Las máscaras de yeso y los trajes de lana
-                                            definen esta era. Pura esencia ritual.</p>
-                                        <div class="flex flex-wrap gap-2">
-                                            <span
-                                                class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Cofradías</span>
-                                            <span
-                                                class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Máscaras
-                                                de Yeso</span>
-                                            <span
-                                                class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Tradición
-                                                Oral</span>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Orígenes Coloniales (1583-1800)</h3>
+                                        <p class="text-gray-700 mb-4">La imagen de la Virgen llega con los mineros españoles de Laykakota. En 1668, según la leyenda, la Virgen protege a los indígenas durante la rebelión. Nace el sincretismo entre la fe católica y la Pachamama andina.</p>
+                                        <div class="flex flex-wrap gap-2 justify-end">
+                                            <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Evangelización</span>
+                                            <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Sincretismo</span>
+                                            <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">Minería</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="timeline-dot" onclick="toggleTimelineContent(0)"></div>
+                                <div class="md:w-1/2 md:pl-12">
+                                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Cerro_Rico_Potosi.jpg/1200px-Cerro_Rico_Potosi.jpg"
+                                            class="w-full h-48 object-cover vintage-photo" alt="Minas coloniales"
+                                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/92400e/fbbf24?text=COLONIA+1583';">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Era 1: SIKURIS Y PRIMERAS COFRADÍAS (1870-1940) -->
+                            <div class="relative flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+                                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                        <img src="https://imgmedia.larepublica.pe/640x384/larepublica/migration/images/AUYVEJ2FDJGGXBBFODIK7OQQKY.webp"
+                                            class="w-full h-48 object-cover vintage-photo" alt="Sikuris históricos"
+                                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=SIKURIS+1892';">
+                                    </div>
+                                </div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(1)"></div>
+                                <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
+                                    <div class="timeline-content">
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Era de los Sikuris (1870-1940)</h3>
+                                        <p class="text-gray-700 mb-4">Surgen las primeras cofradías formales: Sikuris Mañazo (1892) del gremio de matarifes y Juventud Obrera (1884). El siku (zampoña) domina el paisaje sonoro. Aparecen las primeras procesiones documentadas con danzas autóctonas.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Sikuris</span>
+                                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Gremios</span>
+                                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">Cofradías</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Era 2: DÉCADAS DE ORO (1950-1970) -->
+                            <div class="relative flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
+                                    <div class="timeline-content">
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Décadas de Oro (1950-1970)</h3>
+                                        <p class="text-gray-700 mb-4">La época de las cofradías originales y el inicio de la formalización del concurso. Nace Morenada Orkapata (1955), Diablada Porteño (1962) y Bellavista (1963). Las máscaras de yeso y los trajes de lana definen esta era.</p>
+                                        <div class="flex flex-wrap gap-2 justify-end">
+                                            <span class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Cofradías</span>
+                                            <span class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Máscaras de Yeso</span>
+                                            <span class="bg-candelaria-purple/10 text-candelaria-purple px-3 py-1 rounded-full text-xs font-medium">Tradición Oral</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(2)"></div>
                                 <div class="md:w-1/2 md:pl-12">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiijAyeVlb8shbRm-HMeE-XNwfbG4uRXlBUImio62n416pNahZ-iij-ug09YMBTqK4GwnEN2OXQh-iO8tNKai-pH7y8_PgSp3EXvIBSAg4TPiEMpxqI0phlGdujmt17EpqCXNL1icP7Q1Q/s1600/Edwin+Losa.jpg"
@@ -1852,64 +1891,121 @@
                                 </div>
                             </div>
 
-                            <!-- Era 2: 1980-1990 -->
+                            <!-- Era 3: INSTITUCIONALIZACIÓN (1967-1985) -->
                             <div class="relative flex flex-col md:flex-row items-center">
                                 <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+                                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                        <img src="https://www.punomagico.com/image/arguedas.jpg"
+                                            class="w-full h-48 object-cover vintage-photo" alt="José María Arguedas"
+                                            onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Jos%C3%A9_Mar%C3%ADa_Arguedas.jpg/220px-Jos%C3%A9_Mar%C3%ADa_Arguedas.jpg';">
+                                    </div>
+                                </div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(3)"></div>
+                                <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
+                                    <div class="timeline-content">
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Institucionalización (1967-1985)</h3>
+                                        <p class="text-gray-700 mb-4">José María Arguedas visita Puno (1967) y declara la ciudad "Capital del Folklore". Se crea la Federación Regional de Folklore (1970). El Congreso promulga la Ley N° 24325 (1985) oficializando el título.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Arguedas</span>
+                                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Federación</span>
+                                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Ley N° 24325</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Era 4: BOOM DEL BORDADO (1980-2000) -->
+                            <div class="relative flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
+                                    <div class="timeline-content">
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">El Boom del Bordado (1980-2000)</h3>
+                                        <p class="text-gray-700 mb-4">Ingresa la alta costura andina. Los trajes se vuelven más elaborados con lentejuelas y bordados de hilos de oro. Llegan los Caporales (1982). La rivalidad entre conjuntos se intensifica y la competencia alcanza estándares internacionales.</p>
+                                        <div class="flex flex-wrap gap-2 justify-end">
+                                            <span class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Alta Costura</span>
+                                            <span class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Lentejuelas</span>
+                                            <span class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Caporales</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(4)"></div>
+                                <div class="md:w-1/2 md:pl-12">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://static.wixstatic.com/media/27f42d_c1c0a0c4f82643a290333250b73e52f0~mv2.jpg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/27f42d_c1c0a0c4f82643a290333250b73e52f0~mv2.jpg"
                                             class="w-full h-48 object-cover vintage-photo" alt="Candelaria años 80"
                                             onerror="this.onerror=null;this.src='https://vivecandelaria.com/wp-content/uploads/2017/02/candelaria-puno-1950.jpg';">
                                     </div>
                                 </div>
-                                <div class="timeline-dot" onclick="toggleTimelineContent(1)"></div>
+                            </div>
+
+                            <!-- Era 5: PATRIMONIO UNESCO (2003-2020) -->
+                            <div class="relative flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+                                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/UNESCO_logo.svg/1200px-UNESCO_logo.svg.png"
+                                            class="w-full h-48 object-contain bg-white p-4" alt="UNESCO"
+                                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/0ea5e9/ffffff?text=UNESCO+2014';">
+                                    </div>
+                                </div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(5)"></div>
                                 <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">El Boom
-                                            del Bordado (1980-1990)</h3>
-                                        <p class="text-gray-700 mb-4">Ingresa la alta costura andina. Los trajes se
-                                            vuelven más elaborados y pesados, con lentejuelas y bordados de hilos de
-                                            oro. El concurso crece en número de participantes y la rivalidad se
-                                            intensifica.</p>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Patrimonio Mundial (2003-2020)</h3>
+                                        <p class="text-gray-700 mb-4">En 2003, el INC declara la festividad Patrimonio Cultural de la Nación. En 2014, la UNESCO la inscribe como Patrimonio Inmaterial de la Humanidad. El concurso supera los 150 conjuntos y 130,000 danzantes.</p>
                                         <div class="flex flex-wrap gap-2">
-                                            <span
-                                                class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Alta
-                                                Costura</span>
-                                            <span
-                                                class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Lentejuelas</span>
-                                            <span
-                                                class="bg-candelaria-red/10 text-candelaria-red px-3 py-1 rounded-full text-xs font-medium">Crecimiento</span>
+                                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">UNESCO 2014</span>
+                                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">INC 2003</span>
+                                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">130K Danzantes</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Era 3: 2000-Presente -->
+                            <!-- Era 6: ERA DIGITAL Y PRESENTE (2020-2025) -->
                             <div class="relative flex flex-col md:flex-row items-center">
                                 <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
                                     <div class="timeline-content">
-                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">
-                                            Patrimonio Global (2000 - Hoy)</h3>
-                                        <p class="text-gray-700 mb-4">Declaración UNESCO (2014) y la globalización de la
-                                            danza. Se prioriza la agilidad y la sincronía masiva. El uso de la
-                                            tecnología en la difusión la convierte en un fenómeno mundial.</p>
-                                        <div class="flex flex-wrap gap-2">
-                                            <span
-                                                class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">UNESCO</span>
-                                            <span
-                                                class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Globalización</span>
-                                            <span
-                                                class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Tecnología</span>
+                                        <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Era Digital (2020 - Hoy)</h3>
+                                        <p class="text-gray-700 mb-4">Tras la pausa pandémica (2021-2023), la festividad vuelve con fuerza en 2024. Morenada Laykakota y Wifalas Muñani lideran. En 2025, Santa Rosa (87.71 pts) y Muñani (63.10 pts) son los nuevos campeones. La transmisión digital lleva la fiesta al mundo.</p>
+                                        <div class="flex flex-wrap gap-2 justify-end">
+                                            <span class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Streaming</span>
+                                            <span class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Retorno 2024</span>
+                                            <span class="bg-candelaria-green/10 text-candelaria-green px-3 py-1 rounded-full text-xs font-medium">Santa Rosa 2025</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="timeline-dot" onclick="toggleTimelineContent(2)"></div>
+                                <div class="timeline-dot" onclick="toggleTimelineContent(6)"></div>
                                 <div class="md:w-1/2 md:pl-12">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://vivecandelaria.com/wp-content/uploads/2024/12/festividad-virgen-candelaria-2025-una-puno.jpg"
                                             class="w-full h-48 object-cover vintage-photo" alt="Candelaria actual"
-                                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=CANDELARIA+ACTUAL';">
+                                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=CANDELARIA+2025';">
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Referencias académicas -->
+                    <div class="mt-12 bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                        <h4 class="font-heading text-lg font-bold text-candelaria-purple mb-4 flex items-center gap-2">
+                            <i data-lucide="book-open" class="w-5 h-5"></i> Referencias Bibliográficas
+                        </h4>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
+                            <div class="flex items-start gap-2">
+                                <span class="text-candelaria-gold font-bold">[1]</span>
+                                <p>Cánepa Koch, G. (1998). <em>Máscara, transformación e identidad en los Andes</em>. Fondo Editorial PUCP.</p>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-candelaria-gold font-bold">[2]</span>
+                                <p>UNESCO (2014). <em>Expediente de inscripción: Festividad Virgen de la Candelaria de Puno</em>.</p>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-candelaria-gold font-bold">[3]</span>
+                                <p>Núñez Butrón, M. (1959). <em>Estampas puneñas</em>. Editorial Los Andes, Puno.</p>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-candelaria-gold font-bold">[4]</span>
+                                <p>Federación Regional de Folklore de Puno. <em>Archivos históricos del concurso</em> (1970-2025).</p>
                             </div>
                         </div>
                     </div>
