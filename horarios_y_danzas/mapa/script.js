@@ -240,8 +240,8 @@ function updateMapMarkers() {
 
     // Update or create markers for each dance
     dansas.forEach(danza => {
-        // Only show markers for dances that have started or are not finished
-        const shouldShowMarker = danza.started || (danza.distance_traveled > 0 && !danza.finished);
+        // Only show markers for dances that have started AND are not finished
+        const shouldShowMarker = danza.started && !danza.finished;
 
         if (danceMarkers[danza.id]) {
             // Markers exist, update position if they should be visible
