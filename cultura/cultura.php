@@ -1219,15 +1219,15 @@
                         <!-- 2025 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://vivecandelaria.com/wp-content/uploads/2024/12/festividad-virgen-candelaria-2025-una-puno.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Morenada Santa Rosa">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2025</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Morenada Santa Rosa</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Confraternidad Morenada Santa Rosa</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2025. Destacó por la armonía de sus pasos y la espectacularidad de su banda.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2025 con 87.71 puntos. Destacó por la armonía de sus pasos y la espectacularidad de su banda.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('morenada-santa-rosa-2025')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1242,7 +1242,7 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Wifalas Muñani">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2025</div>
                             </div>
                             <div class="p-6">
@@ -1250,7 +1250,7 @@
                                     <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas de Muñani</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Ganador absoluto tras un empate histórico de 63.10 puntos, prioritario por su coreografía impecable.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Ganador oficial 2025 con 63.10 puntos. Prioridad ganada sobre criterios técnicos por su coreografía impecable.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('wifalas-munani-2025')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1266,15 +1266,15 @@
                         <!-- 2024 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2020/02/MORENADA-LAYKACOTA-.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Rey Moreno Laykakota">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2024</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Rey Moreno Laykakota</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Morenada Laykakota</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2024. Su victoria marcó un hito en la evolución del diseño de trajes de cholas puneñas.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones 2024 con un puntaje final de 86.32 puntos, liderando la categoría de Traje de Luces.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('rey-moreno-2024')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1289,15 +1289,15 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2024/02/Conjunto-Unucajas-de-Azangaro.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Unucajas de Azángaro">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2024</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Unucajas de Azángaro</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Unucajas de Azángaro</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Primer lugar 2024, reafirmando que la zona quechua continúa siendo la reserva técnica de las danzas.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Primer lugar 2024 con 88.68 puntos, reafirmando que la zona quechua continúa siendo la reserva técnica de las danzas.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('unucajas-2024')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1313,12 +1313,12 @@
                         <!-- 2020 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhE6LPtSpDH5jaLU0pg8jsFTPzL5Kg4e0YBV-QgmSDdtP0QKj7T3l7tYYJJJXPQ8VoCm9ArqO5fbnA6az1-o_G2UrFHo2umlKrsavvCWkDqGyGNtrkvHSkljM709uAyz5kwMFuU9troCBPF/s280/Diablos_Puno.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Diablada Bellavista">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2020</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Diablada Bellavista</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Folklórica Espectacular Diablada Bellavista</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Último gran ganador antes de la pandemia (94.26 puntos). Sofisticación técnica en su bloque de arcángeles.</p>
@@ -1336,15 +1336,15 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0109-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Carnaval de Patambuco">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2020</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Carnaval de Patambuco</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Musuq Illariy "Carnaval de Patambuco"</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Triunfo indiscutible con la mayor puntuación del concurso antes del cierre por emergencia sanitaria.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Triunfo indiscutible con una puntuación de 88.84 en el último concurso antes de la emergencia sanitaria.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('patambuco-2020')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1360,12 +1360,12 @@
                         <!-- 2019 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://www.punomagico.com/image/pnp%202021.png" onerror="this.src='https://placehold.co/600x400/b91c1c/ffffff?text=DIABLADA+PNP'" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Diablada PNP">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2019</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Diablada Amigos de la PNP</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Incomparable Gran Diablada Amigos de la PNP</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Recuperaron el título con 88.66 puntos, destacando por su disciplina y consistencia en ambos escenarios.</p>
@@ -1383,12 +1383,12 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0338-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Chunchos de Esquilaya">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2019</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Chunchos de Esquilaya</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Chunchos de Esquilaya (Ayapata)</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Récord Histórico de 97.69 puntos. Emocionaron al jurado con su danza ancestral para evitar su extinción.</p>
@@ -1407,12 +1407,12 @@
                         <!-- 2018 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Morenada Orkapata">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2018</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Morenada Orkapata</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Confraternidad Morenada Orkapata</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Retornaron al título máximo después de décadas (89.47 puntos), marcando el resurgimiento de la Morenada.</p>
@@ -1436,7 +1436,7 @@
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Diablada Amigos de la PNP</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Incomparable Gran Diablada Amigos de la PNP</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Sexto campeonato histórico con 90.53 puntos, definiendo la estética moderna con bloques masivos.</p>
@@ -1454,12 +1454,12 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://muniazangaro.gob.pe/web/wp-content/uploads/2019/08/santiago-de-pupuja.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Carnaval Chaku">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2017</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Carnaval Chaku de Chupa</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Carnaval Chaku de Chucahuacas</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Campeón con 93.10 puntos. Danza ritual enérgica y vestimenta colorida que cautivó al jurado.</p>
@@ -1478,15 +1478,15 @@
                         <!-- 2016 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2020/02/11/000654060W.jpg" onerror="this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=CENTINELAS'" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Centinelas del Altiplano">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2016</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Centinelas del Altiplano</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Folklórica Diablada Centinelas del Altiplano</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Primer campeonato absoluto (84.81). Elogiado por su disciplina y simetría militar en la danza.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Primer campeonato absoluto con 91.54 puntos. Elogiado por su disciplina y simetría militar en la danza.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('centinelas-2016')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1501,15 +1501,15 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://i.ytimg.com/vi/EoJO-bFrSaw/maxresdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Wifalas de Putina">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2016</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas de San Antonio</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Conjunto de Wifalas San Antonio de Putina</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Triunfo en una reñida competencia. Con cintas de colores y pinkillos evocan sonidos de la naturaleza.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Triunfo con 94.00 puntos. Con cintas de colores y pinkillos evocan sonidos de la naturaleza.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('wifalas-putina-2016')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1525,12 +1525,12 @@
                         <!-- 2015 -->
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="trajes-luces">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://www.punomagico.com/image/centralistas%202021.jpg" onerror="this.src='https://placehold.co/600x400/4c1d95/fbbf24?text=CENTRALISTAS'" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Caporales Centralistas">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2015</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Caporales Centralistas</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Asociación Cultural Caporales Centralistas Puno</h3>
                                     <span class="bg-candelaria-purple text-white text-xs font-bold px-2 py-1 rounded-full">Trajes de Luces</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm">Campeón de Campeones con 90.37 puntos. Hito histórico en la categoría frente a su gran rival.</p>
@@ -1548,15 +1548,15 @@
 
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 reveal-up" data-category="autoctonos">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Wifalas de Muñani">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Cargando...">
                                 <div class="absolute top-4 right-4 bg-candelaria-gold text-purple-900 px-2 py-1 rounded-lg text-xs font-bold">2015</div>
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas de Muñani</h3>
+                                    <h3 class="font-heading text-xl font-bold text-gray-900">Wifalas San Francisco Javier de Muñani (Azángaro)</h3>
                                     <span class="bg-candelaria-green text-white text-xs font-bold px-2 py-1 rounded-full">Autóctonos</span>
                                 </div>
-                                <p class="text-gray-600 mb-4 text-sm">Primera victoria en la era de dominio de Azángaro. Patrimonio de la Nación de gran elegancia y pureza.</p>
+                                <p class="text-gray-600 mb-4 text-sm">Ganador oficial 2015. Patrimonio de la Nación de gran elegancia y pureza en la zona quechua.</p>
                                 <div class="flex justify-between items-center">
                                     <button onclick="openGanadorModal('wifalas-munani-2015')" class="text-candelaria-purple font-medium hover:underline text-sm flex items-center gap-1">
                                         <i data-lucide="play" class="w-4 h-4"></i> Ver coreografía
@@ -1967,9 +1967,38 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
         }
 
         // 9. Lógica para modal de conjuntos
+        // Función para convertir links de YouTube a formato Embed compatible
+        function formatYoutubeEmbed(url) {
+            if (!url) return '';
+            let videoId = '';
+            
+            // Caso 1: youtu.be/ID
+            if (url.includes('youtu.be/')) {
+                videoId = url.split('youtu.be/')[1].split('?')[0];
+            } 
+            // Caso 2: youtube.com/watch?v=ID
+            else if (url.includes('v=')) {
+                videoId = url.split('v=')[1].split('&')[0];
+            }
+            // Caso 3: youtube.com/embed/ID
+            else if (url.includes('embed/')) {
+                videoId = url.split('embed/')[1].split('?')[0];
+            }
+            // Caso 4: short URL con ?v=
+            else if (url.includes('youtube.com/')) {
+                const parts = url.split('/');
+                videoId = parts[parts.length - 1].split('?')[0];
+            }
+
+            if (!videoId) return url; // Retornar original si no se reconoce
+            
+            // Retornar formato embed con parámetros de autoplay y limpieza
+            return `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`;
+        }
+
         const ganadoresData = {
             'morenada-santa-rosa-2025': {
-                title: 'Morenada Santa Rosa de Puno',
+                title: 'Confraternidad Morenada Santa Rosa',
                 year: '2025',
                 category: 'Trajes de Luces',
                 score: '87.71',
@@ -1980,29 +2009,39 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Innovación en el diseño de las polleras y mantas',
                     'Sincronización perfecta entre bloques masivos'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://vivecandelaria.com/wp-content/uploads/2024/12/festividad-virgen-candelaria-2025-una-puno.jpg'
+                video: 'https://youtu.be/zHyI2YsZOHM?si=oeJX9ukfku4pRYfg',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_6843-scaled.jpg',
+                gallery: [
+                    'https://i.ytimg.com/vi/offdD_fD7ec/sddefault.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_6845-scaled.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_6849-scaled.jpg'
+                ]
             },
             'wifalas-munani-2025': {
                 title: 'Wifalas San Francisco Javier de Muñani',
                 year: '2025',
                 category: 'Autóctonos',
                 score: '63.10',
-                badges: ['Ganador Absoluto', 'Danza Originaria'],
+                badges: ['Ganador Oficial*', 'Azángaro'],
                 reasons: [
                     'Ejecución técnica impecable de la danza Wifala',
-                    'Uso de vestimentas blancas de lana de oveja',
+                    'Uso de vestimentas de lana de oveja',
                     'Simbolismo puro de la alegría del carnaval',
                     'Prioridad ganada por criterios de desempate técnicos'
                 ],
-                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg'
+                video: 'https://youtu.be/Hdz7oQ2L56U?si=Hzxic8d8Xp8102s5',
+                image: 'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/481667780_607308822167738_924106991794853925_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFLAVA3lxGs8Ej9UFiB-DvBjyA_PgfEAxmPID8-B8QDGXEDsOLsEQT7VLCe4feW1VjNhdvvKc0FSItBw_Z9QOUr&_nc_ohc=Oztc0rf6B34Q7kNvwGwrOsK&_nc_oc=AdnoitbuUW-MHhasf-XJ_-NFbgX44SDHHhxVcoHL7HnUq7nmU19PtqZLVTyoV3o6Ei4&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=wxajznF_QQs_lW64Q5LDUw&oh=00_AfpXPUFgdW7nJWbPzL22HSrSYsN79wfHjN8sObr8sZyrfw&oe=6979ED0C',
+                gallery: [
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t39.30808-6/481829898_607309548834332_6895553575553519726_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHMkCrtV6xli4KPIUvlqPRoUCluByf5JGZQKW4HJ_kkZl_vm3r4usKC6XFX9eWbV7eIBNnBQloBBFVB5T8Zwv1q&_nc_ohc=yMe6mzyhzroQ7kNvwEo_JXk&_nc_oc=AdmpFsoaVivsvQ7Bi5qUuXHfKmtdHZvlpx8RiL73fAkcAM6Wz42XxgTSu5SmM_3iu8k&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=LavnZ_LUGxPUYznva1qCCw&oh=00_AfqJ-uBCfF49nl3he8N7ZFLHKd_rRqgGG1lf9VJIBKtr2A&oe=697A056C',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t39.30808-6/481697180_607309715500982_2190773412209976210_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFaYx47ZUaUqv3aayKdG6p46jQ2TN_knnjqNDZM3-SeeNsYQkj5vd59lhF_NaCbZMm3fhOyifnmQNrN9zvBCoVt&_nc_ohc=3OxPtdh718QQ7kNvwFTVOvm&_nc_oc=AdkAiSQuqRto4lg44s_B_KLAjXLbAdU95WkydgMfxx3hYUtaTyEe-fZwiwnQpwaVTAQ&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=f_1YtMJmOGWWxuAuAJPKrg&oh=00_AfoYcQ6qB1l5ZVRAwHT42yWP-pWMLQUzup6TGteNtEDgJg&oe=6979F699',
+                    'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg'
+                ]
             },
             'rey-moreno-2024': {
-                title: 'Rey Moreno Laykakota',
+                title: 'Morenada Laykakota',
                 year: '2024',
                 category: 'Trajes de Luces',
-                score: '98.5',
+                score: '86.32',
                 badges: ['Gran Campeón', 'Morenada'],
                 reasons: [
                     'Coreografía impecable con transiciones fluidas entre formaciones',
@@ -2010,14 +2049,19 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Interpretación musical precisa y potente',
                     'Excelente sincronización entre más de 200 danzantes'
                 ],
-                video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://radioondaazul.com/wp-content/uploads/2020/02/MORENADA-LAYKACOTA-.jpg'
+                video: 'https://youtu.be/mWjsPu_scqs?si=jwqM5lQK8AHy_IYH',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_7154-scaled.jpg',
+                gallery: [
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/IMG_4226-scaled.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-14-at-6.12.36-PM.jpeg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/Morenada-Laykakota.jpg'
+                ]
             },
             'unucajas-2024': {
-                title: 'Unucajas de Azángaro',
+                title: 'Asociación Cultural Unucajas de Azángaro',
                 year: '2024',
                 category: 'Autóctonos',
-                score: '94.20',
+                score: '88.68',
                 badges: ['Reserva Moral', 'Azángaro'],
                 reasons: [
                     'Mantenimiento fiel de la herencia dancística quechua',
@@ -2025,11 +2069,16 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Resiliencia regional en el retorno de la festividad',
                     'Vestimenta auténtica elaborada por comuneros'
                 ],
-                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/Conjunto-Unucajas-de-Azangaro.jpg'
+                video: 'https://youtu.be/zB-ZGsfYdaE?si=_Q91WqYb2HLpmGQy',
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0049-4-scaled.jpg',
+                gallery: [
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/Conjunto-Unucajas-de-Azangaro.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0056-5-scaled.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0002-1-scaled.jpg'
+                ]
             },
             'diablada-bellavista-2020': {
-                title: 'Diablada Bellavista',
+                title: 'Asociación Folklórica Espectacular Diablada Bellavista',
                 year: '2020',
                 category: 'Trajes de Luces',
                 score: '94.26',
@@ -2040,14 +2089,19 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Impacto visual de sus máscaras de fibra de vidrio',
                     'Tradición mantenida por 11 campeonatos previos'
                 ],
-                video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhE6LPtSpDH5jaLU0pg8jsFTPzL5Kg4e0YBV-QgmSDdtP0QKj7T3l7tYYJJJXPQ8VoCm9ArqO5fbnA6az1-o_G2UrFHo2umlKrsavvCWkDqGyGNtrkvHSkljM709uAyz5kwMFuU9troCBPF/s280/Diablos_Puno.jpg'
+                video: 'https://youtu.be/EIoshYmAf2w?si=r4fdlUGZlF1ojnuW',
+                image: 'https://scontent.flim6-2.fna.fbcdn.net/v/t1.6435-9/80399177_2710595505686820_4286447519698780160_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFtSYqMXS4zwcx_4az4bgPCCG32abCN2WYIbfZpsI3ZZt4SwC9pRF0ASA4mH55uBXKua72AakaBG_2i51-FiXKF&_nc_ohc=zqhTW2tXYiMQ7kNvwHtc3ts&_nc_oc=AdmH5i0H_2STGAR5jUhjXrqcsTgY6i_OOkcZdXx7rzU1mx75KtLAaqsNUQYBnE1wnxM&_nc_zt=23&_nc_ht=scontent.flim6-2.fna&_nc_gid=juzpviTW765zV-dWgJaL5A&oh=00_AfpABzjILw1xZj2tibAFOkW8HwysL9c9jovpr7XfyB-PZA&oe=699B9564',
+                gallery: [
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0032-7-scaled.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0033-4-scaled.jpg',
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0008-10-scaled.jpg'
+                ]
             },
             'patambuco-2020': {
-                title: 'Carnaval de Patambuco',
+                title: 'Asociación Cultural Musuq Illariy "Carnaval de Patambuco"',
                 year: '2020',
                 category: 'Autóctonos',
-                score: '95.10',
+                score: '88.84',
                 badges: ['Fuerza Sandia', 'Autóctono'],
                 reasons: [
                     'Consolidación como ganadora absoluta el primer día',
@@ -2055,11 +2109,16 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Trajes coloridos representativos de la selva puneña',
                     'Acompañamiento musical de gran calidad rítmica'
                 ],
-                video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0109-scaled.jpg'
+                video: 'https://youtu.be/EyUKR8_sGs0?si=PTq2if1ldVZalaUG',
+                image: 'https://radioondaazul.com/wp-content/uploads/2020/02/carnaval-de-patambuco-ok.jpg',
+                gallery: [
+                    'https://scontent.flim6-4.fna.fbcdn.net/v/t1.6435-9/83042737_2677440029007463_1278512382770937856_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFjYgOjWfUPYRE8UQ-jhadKqcjNpt9kJDupyM2m32QkO5SZ6FgEEMSC20PD-P588rMVDXYOkic07woXWqVoGegB&_nc_ohc=30qjoD5hKoMQ7kNvwFHeMnv&_nc_oc=Adk_P4vWRr8fCgPdbffARb0tGRL_2YNuXaaBdo4aF2R7zeAxsOc3JoeMgJjhyWmzL2c&_nc_zt=23&_nc_ht=scontent.flim6-4.fna&_nc_gid=_yY6JehqGp6y5pJbgiBImg&oh=00_AfriOCfISbhpqZIsJr2BEyX3PPpDJySnnJRg_nHnCluTHg&oe=699BA72C',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t1.6435-9/83171421_2677439985674134_1094952567235936256_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHu1ijhOiE_yQJm_PNP8LB206I0z_JN7n7TojTP8k3ufgY9hzq00ZP0yw_SxZUb_FkSSiN3xMHQzWVlaxJ3SGUy&_nc_ohc=gKiMBG_5xiYQ7kNvwGe4q1s&_nc_oc=Adl2kb7wTran8PPf5jc2wGaF21faHEYJNy5rGPLBc36wHaed9HfO-946zv1XJJAbixg&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=VZ-w3aUiUXQCVUdOvOLkOg&oh=00_Afq8vhAlscfQWo17CaRFWmp1sXbSNa_M-5ZBjn9JYDfmMw&oe=699B7F4D',
+                    'https://scontent.flim6-3.fna.fbcdn.net/v/t1.6435-9/82817043_2677439975674135_1684939000483151872_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFI4HoZvSmu3GhaNzsM5uslSLZ-wJJFYMVItn7AkkVgxUmD36ps115H2zOFbZux1gx28RaUbw7lVtp6FMGNKulP&_nc_ohc=7s4hwIP0ZbgQ7kNvwEF_AeQ&_nc_oc=Adl0IYz0iOAePrZcwlCsu2fX8SRzzKrDv73tJ7CaxiQXexd6kmM_d4XjT7PLSeO8YLQ&_nc_zt=23&_nc_ht=scontent.flim6-3.fna&_nc_gid=5dBPKkLtFXVe4XgOs50z4Q&oh=00_Afq0PFE60Mn8t1FsiBNng-ARlu3MdXWtGUTknTbqhIdTYQ&oe=699B83E8'
+                ]
             },
             'pnp-2019': {
-                title: 'Diablada Amigos de la PNP',
+                title: 'Incomparable Gran Diablada Amigos de la PNP',
                 year: '2019',
                 category: 'Trajes de Luces',
                 score: '88.66',
@@ -2071,10 +2130,15 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Recuperación del título con alto nivel artístico'
                 ],
                 video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://www.punomagico.com/image/pnp%202021.png'
+                image: 'https://www.punomagico.com/image/pnp%202021.png',
+                gallery: [
+                    'https://www.punomagico.com/image/pnp%202021.png',
+                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800',
+                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800'
+                ]
             },
             'chunchos-esquilaya-2019': {
-                title: 'Chunchos de Esquilaya',
+                title: 'Asociación Cultural Chunchos de Esquilaya (Ayapata)',
                 year: '2019',
                 category: 'Autóctonos',
                 score: '97.69',
@@ -2086,10 +2150,15 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Viaje de siete horas sumado a un esfuerzo físico total'
                 ],
                 video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0338-scaled.jpg'
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0338-scaled.jpg',
+                gallery: [
+                    'https://radioondaazul.com/wp-content/uploads/2024/02/DSC_0338-scaled.jpg',
+                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800',
+                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800'
+                ]
             },
             'morenada-orkapata-2018': {
-                title: 'Morenada Orkapata',
+                title: 'Confraternidad Morenada Orkapata',
                 year: '2018',
                 category: 'Trajes de Luces',
                 score: '89.47',
@@ -2101,10 +2170,15 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Elegancia suprema en el paso de las cholas puneñas'
                 ],
                 video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg'
+                image: 'https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg',
+                gallery: [
+                    'https://vivecandelaria.com/wp-content/uploads/2021/05/morenada-orkapata-1024x600.jpg',
+                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800',
+                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800'
+                ]
             },
             'wifalas-munani-2018': {
-                title: 'Wifalas de Muñani',
+                title: 'Wifalas San Francisco Javier de Muñani',
                 year: '2018',
                 category: 'Autóctonos',
                 score: '94.78',
@@ -2116,10 +2190,15 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Dominio absoluto en el ámbito de las danzas originarias'
                 ],
                 video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg'
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg',
+                gallery: [
+                    'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg',
+                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800',
+                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800'
+                ]
             },
             'pnp-2017': {
-                title: 'Diablada Amigos de la PNP',
+                title: 'Incomparable Gran Diablada Amigos de la PNP',
                 year: '2017',
                 category: 'Trajes de Luces',
                 score: '90.53',
@@ -2131,10 +2210,15 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Puntaje de 90.53 para consolidar supremacía'
                 ],
                 video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://www.punomagico.com/image/pnp%202021.png'
+                image: 'https://www.punomagico.com/image/pnp%202021.png',
+                gallery: [
+                    'https://www.punomagico.com/image/pnp%202021.png',
+                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800',
+                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800'
+                ]
             },
             'chaku-2017': {
-                title: 'Carnaval Chaku de Chucahuacas',
+                title: 'Asociación Cultural Carnaval Chaku de Chucahuacas',
                 year: '2017',
                 category: 'Autóctonos',
                 score: '93.10',
@@ -2146,40 +2230,55 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Representación auténtica del distrito de Chupa'
                 ],
                 video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://muniazangaro.gob.pe/web/wp-content/uploads/2019/08/santiago-de-pupuja.jpg'
+                image: 'https://muniazangaro.gob.pe/web/wp-content/uploads/2019/08/santiago-de-pupuja.jpg',
+                gallery: [
+                    'https://muniazangaro.gob.pe/web/wp-content/uploads/2019/08/santiago-de-pupuja.jpg',
+                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800',
+                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800'
+                ]
             },
             'centinelas-2016': {
-                title: 'Centinelas del Altiplano',
+                title: 'Asociación Folklórica Diablada Centinelas del Altiplano',
                 year: '2016',
                 category: 'Trajes de Luces',
-                score: '84.81',
+                score: '91.54',
                 badges: ['Primer Título', 'Diablada'],
                 reasons: [
                     'Despliegue coreográfico de gran disciplina y simetría',
                     'Ejecución militarizada de los pasos de la Diablada',
                     'Simetría perfecta en todas las fases del escenario',
-                    'Campeonato absoluto con promedio ajustado'
+                    'Campeonato absoluto ganado con excelencia técnica'
                 ],
                 video: 'https://www.youtube.com/embed/E2lx_G8kxFc',
-                image: 'https://portal.andina.pe/EDPfotografia3/Thumbnail/2020/02/11/000654060W.jpg'
+                image: 'https://portal.andina.pe/EDPfotografia3/Thumbnail/2020/02/11/000654060W.jpg',
+                gallery: [
+                    'https://portal.andina.pe/EDPfotografia3/Thumbnail/2020/02/11/000654060W.jpg',
+                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800',
+                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800'
+                ]
             },
             'wifalas-putina-2016': {
-                title: 'Wifalas de San Antonio de Putina',
+                title: 'Conjunto de Wifalas San Antonio de Putina',
                 year: '2016',
                 category: 'Autóctonos',
-                score: '89.50',
+                score: '94.00',
                 badges: ['Cintas Color', 'Putina'],
                 reasons: [
                     'Uso de cintas de colores y sonidos de la naturaleza',
                     'Interpretación magistral de pinkillos tradicionales',
                     'Evocación del cortejo amoroso en comunidades altoandinas',
-                    'Victoria en una competencia reñida contra Azángaro'
+                    'Victoria contundente con alto puntaje técnico'
                 ],
                 video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://i.ytimg.com/vi/EoJO-bFrSaw/maxresdefault.jpg'
+                image: 'https://i.ytimg.com/vi/EoJO-bFrSaw/maxresdefault.jpg',
+                gallery: [
+                    'https://i.ytimg.com/vi/EoJO-bFrSaw/maxresdefault.jpg',
+                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800',
+                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800'
+                ]
             },
             'caporales-centralistas-2015': {
-                title: 'Caporales Centralistas Puno',
+                title: 'Asociación Cultural Caporales Centralistas Puno',
                 year: '2015',
                 category: 'Trajes de Luces',
                 score: '90.37',
@@ -2191,13 +2290,18 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Título de Campeón de Campeones con alto puntaje'
                 ],
                 video: 'https://www.youtube.com/embed/qy2TWYUx2zI',
-                image: 'https://www.punomagico.com/image/centralistas%202021.jpg'
+                image: 'https://www.punomagico.com/image/centralistas%202021.jpg',
+                gallery: [
+                    'https://www.punomagico.com/image/centralistas%202021.jpg',
+                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800',
+                    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800'
+                ]
             },
             'wifalas-munani-2015': {
-                title: 'Wifalas de Muñani',
+                title: 'Wifalas San Francisco Javier de Muñani (Azángaro)',
                 year: '2015',
                 category: 'Autóctonos',
-                score: '88.70',
+                score: 'Ganador Oficial',
                 badges: ['Elegancia Pura', 'Muñani'],
                 reasons: [
                     'Vistosas vestimentas blancas de lana de oveja',
@@ -2206,7 +2310,12 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                     'Inicio de una era de dominio para Azángaro'
                 ],
                 video: 'https://www.youtube.com/embed/EoJO-bFrSaw',
-                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg'
+                image: 'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg',
+                gallery: [
+                    'https://radioondaazul.com/wp-content/uploads/2024/08/IMG_0378-scaled.jpg',
+                    'https://images.unsplash.com/photo-1518173946687-a4c899c3362e?auto=format&fit=crop&w=800',
+                    'https://images.unsplash.com/photo-1544919982-b61976f0ba43?auto=format&fit=crop&w=800'
+                ]
             }
         };
 
@@ -2282,7 +2391,7 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
                             <!-- Right Column: Video & Score -->
                             <div class="lg:w-2/5 flex flex-col gap-8">
                                 <div class="bg-gray-100 rounded-2xl overflow-hidden group relative aspect-[16/10] shadow-2xl border border-gray-200">
-                                    <iframe class="w-full h-full" src="${data.video}?autoplay=1&enablejsapi=1" 
+                                    <iframe class="w-full h-full" src="${formatYoutubeEmbed(data.video)}" 
                                         frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                         allowfullscreen></iframe>
                                     <div class="absolute bottom-3 left-0 right-0 text-center pointer-events-none">
@@ -2309,22 +2418,22 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
 
                         <div class="h-px bg-gray-100 my-10"></div>
 
-                        <!-- Gallery & Action Buttons -->
+                        <!-- Gallery -->
                         <div class="flex flex-col md:flex-row gap-10 items-end">
                             <div class="flex-1 w-full">
                                 <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
                                     <i data-lucide="images" class="w-4 h-4"></i> Galería del Conjunto
                                 </h4>
                                 <div class="flex gap-3">
-                                    <div class="group/img w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-candelaria-purple transition-all cursor-pointer shadow-lg">
-                                        <img src="https://images.unsplash.com/photo-1518173946687-a4c899c3362e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform">
-                                    </div>
-                                    <div class="group/img w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-candelaria-purple transition-all cursor-pointer shadow-lg">
-                                        <img src="https://images.unsplash.com/photo-1544919982-b61976f0ba43?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform">
-                                    </div>
-                                    <div class="group/img w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-candelaria-purple transition-all cursor-pointer shadow-lg">
-                                        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform">
-                                    </div>
+                                    ${data.gallery ? data.gallery.map(imgUrl => `
+                                        <div class="group/img w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-candelaria-purple transition-all cursor-pointer shadow-lg">
+                                            <img src="${imgUrl}" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform">
+                                        </div>
+                                    `).join('') : `
+                                        <div class="w-24 h-24 rounded-xl bg-gray-50 flex items-center justify-center border-2 border-dashed border-gray-200">
+                                            <i data-lucide="image" class="w-8 h-8 text-gray-200"></i>
+                                        </div>
+                                    `}
                                 </div>
                             </div>
                         </div>
@@ -2654,10 +2763,44 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
         document.getElementById('filter-trajes-luces').addEventListener('click', () => filterGanadores('trajes-luces'));
         document.getElementById('filter-autoctonos').addEventListener('click', () => filterGanadores('autoctonos'));
 
+        // 12. Sincronizar imágenes de cards con los datos de ganadoresData
+        function syncCardImages() {
+            for (const id in ganadoresData) {
+                const button = document.querySelector(`button[onclick*="'${id}'"]`);
+                if (button) {
+                    const card = button.closest('.reveal-up');
+                    if (card) {
+                        const img = card.querySelector('img');
+                        if (img && ganadoresData[id].image) {
+                            img.src = ganadoresData[id].image;
+                            img.alt = ganadoresData[id].title;
+                            // Pre-cargar las imágenes de la galería para que abran instantáneamente
+                            if (ganadoresData[id].gallery) {
+                                ganadoresData[id].gallery.forEach(url => {
+                                    const preloader = new Image();
+                                    preloader.src = url;
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Ejecución inmediata para evitar flicker
+        (function() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', syncCardImages);
+            } else {
+                syncCardImages();
+            }
+        })();
+
         // Inicializar íconos de Lucide y contenido
         // Inicializar íconos de Lucide y contenido
         window.onload = () => {
             lucide.createIcons();
+            syncCardImages(); // Sincronizar imágenes de portada
             
             // Animaciones iniciales solo en el contenido activo
             const activeTab = localStorage.getItem('activeCulturaTab') || 'historia';
