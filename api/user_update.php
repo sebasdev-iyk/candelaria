@@ -8,8 +8,12 @@ header('Content-Type: application/json');
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 
+use Config\Database;
+
 try {
     // 2. Load Dependencies
+    // Use Output Buffering to catch any stray echos from includes (like Database connection errors)
+    ob_start();
     $dbFile = '../src/Config/Database.php';
     $middlewareFile = '../includes/supabase-middleware.php';
 
@@ -19,8 +23,7 @@ try {
 
     require_once $dbFile;
     require_once $middlewareFile;
-
-    use Config\Database;
+    ob_end_clean(); // Discard any output from includes
 
     // 3. Validate Request
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -29,8 +32,8 @@ try {
 
     // 4. Authenticate via Supabase Middleware (Truth Source)
     // This checks the Bearer token or Cookie and returns the UUID
-    $user = requireAuth(); 
-    
+    $user = requireAuth();
+
     if (!$user || empty($user['id'])) {
         throw new Exception('Unauthorized', 401);
     }
@@ -59,7 +62,7 @@ try {
     // We update all references to this user's name in the reservations table
     $sql = "UPDATE reservaciones SET user_name = :name, updated_at = NOW() WHERE user_id = :uid";
     $stmt = $db->prepare($sql);
-    
+
     $result = $stmt->execute([
         ':name' => $name,
         ':uid' => $supabaseId
