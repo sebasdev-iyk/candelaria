@@ -887,7 +887,7 @@
             document.getElementById('hotel-location').textContent = hotel.ubicacion;
             document.getElementById('hotel-capacity').textContent = hotel.capacidad || '50';
             document.getElementById('hotel-description').textContent = hotel.descripcion || 'Sin descripción disponible';
-            document.getElementById('hotel-rating').textContent = parseFloat(hotel.calificacion || 4.5).toFixed(1);
+            document.getElementById('hotel-rating').textContent = parseFloat(hotel.calificacion || 0).toFixed(1);
             const mapAddr = document.getElementById('map-address');
             if (mapAddr) mapAddr.querySelector('span').textContent = hotel.ubicacion;
 

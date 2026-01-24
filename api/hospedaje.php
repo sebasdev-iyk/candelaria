@@ -14,7 +14,8 @@ if ($db) {
 
         if ($id) {
             // Fetch single hospedaje by ID
-            $query = "SELECT * FROM hospedajes WHERE id = :id";
+            $query = "SELECT h.*, (SELECT COUNT(*) FROM calificaciones c WHERE c.hospedaje_id = h.id) as total_reviews 
+                     FROM hospedajes h WHERE h.id = :id";
             $stmt = $db->prepare($query);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
@@ -41,7 +42,8 @@ if ($db) {
             }
         } else {
             // Fetch all hospedajes
-            $query = "SELECT * FROM hospedajes ORDER BY nombre ASC";
+            $query = "SELECT h.*, (SELECT COUNT(*) FROM calificaciones c WHERE c.hospedaje_id = h.id) as total_reviews 
+                     FROM hospedajes h ORDER BY h.nombre ASC";
             $stmt = $db->prepare($query);
             $stmt->execute();
             $items = $stmt->fetchAll(PDO::FETCH_ASSOC);

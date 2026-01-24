@@ -342,8 +342,8 @@
                 id: item.id,
                 name: item.nombre,
                 image: image,
-                rating: parseFloat(item.calificacion || 4.5), // Default to 4.5 if missing
-                reviews: Math.floor(Math.random() * 100) + 10, // Mock reviews count
+                rating: item.calificacion ? parseFloat(item.calificacion) : 0,
+                reviews: item.total_reviews ? parseInt(item.total_reviews) : 0,
                 price: parseFloat(item.precio_noche || item.precio_promedio || item.precio || 0),
                 location: item.ubicacion || item.lugar || 'Puno, Perú',
                 description: item.descripcion || 'Sin descripción disponible',
