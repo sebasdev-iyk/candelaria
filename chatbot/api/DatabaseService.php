@@ -352,8 +352,21 @@ class DatabaseService
         $text = "🎭 {$name}";
         if ($category)
             $text .= " ({$category})";
+
+        // Agregar detalles de programación si existen y son relevantes
+        $orden = $row['orden_concurso'] ?? null;
+        $diaConcurso = $row['dia_concurso'] ?? null;
+        $diaVeneracion = $row['dia_veneracion'] ?? null;
+
+        if ($orden)
+            $text .= " - Orden: {$orden}";
+        if ($diaConcurso)
+            $text .= " - Concurso: {$diaConcurso}";
+        if ($diaVeneracion)
+            $text .= " - Veneración: {$diaVeneracion}";
+
         if ($description)
-            $text .= ": " . substr(strip_tags($description), 0, 150) . "...";
+            $text .= "\n📝 " . substr(strip_tags($description), 0, 100) . "...";
 
         return $text;
     }
