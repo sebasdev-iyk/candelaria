@@ -246,16 +246,16 @@ class DatabaseService
         $dances = [];
 
         try {
-            $tables = ['danzas', 'dances', 'dance'];
+            $tables = ['candela_list'];
 
             foreach ($tables as $table) {
                 if ($this->tableExists($table)) {
                     if ($searchTerm) {
-                        $stmt = $this->pdo->prepare("SELECT * FROM {$table} WHERE LOWER(nombre) LIKE ? OR LOWER(descripcion) LIKE ? LIMIT 10");
+                        $stmt = $this->pdo->prepare("SELECT * FROM {$table} WHERE LOWER(conjunto) LIKE ? OR LOWER(descripcion) LIKE ? OR LOWER(historia) LIKE ? LIMIT 8");
                         $searchPattern = "%{$searchTerm}%";
-                        $stmt->execute([$searchPattern, $searchPattern]);
+                        $stmt->execute([$searchPattern, $searchPattern, $searchPattern]);
                     } else {
-                        $stmt = $this->pdo->query("SELECT * FROM {$table} LIMIT 10");
+                        $stmt = $this->pdo->query("SELECT * FROM {$table} ORDER BY conjunto ASC LIMIT 10");
                     }
 
                     $results = $stmt->fetchAll();
@@ -342,18 +342,18 @@ class DatabaseService
      */
     private function formatDance($row)
     {
-        $name = $row['nombre'] ?? $row['name'] ?? $row['dance_name'] ?? null;
-        $description = $row['descripcion'] ?? $row['description'] ?? null;
-        $origin = $row['origen'] ?? $row['origin'] ?? null;
+        $name = $row['conjunto'] ?? $row['nombre'] ?? null;
+        $description = $row['descripcion'] ?? $row['historia'] ?? null;
+        $category = $row['categoria'] ?? null;
 
         if (!$name)
             return null;
 
-        $text = $name;
+        $text = "🎭 {$name}";
+        if ($category)
+            $text .= " ({$category})";
         if ($description)
-            $text .= ": {$description}";
-        if ($origin)
-            $text .= " (Origen: {$origin})";
+            $text .= ": " . substr(strip_tags($description), 0, 150) . "...";
 
         return $text;
     }
@@ -430,19 +430,30 @@ class DatabaseService
                 }
             }
 
-            // Buscar restaurantes
-            if ($this->tableExists('restaurantes')) {
-                $stmt = $this->pdo->query("SELECT * FROM restaurantes LIMIT 5");
+            // Buscar restaurantes (candela_comida)
+            if ($this->tableExists('candela_comida')) {
+                $query = "SELECT * FROM candela_comida ";
+                if ($searchTerm && mb_strpos($searchTerm, 'comida') === false && mb_strpos($searchTerm, 'restaurante') === false) {
+                    // Si hay término específico
+                    $query .= "WHERE LOWER(nombre) LIKE '%" . $searchTerm . "%' ";
+                }
+                $query .= "LIMIT 5";
+
+                $stmt = $this->pdo->query($query);
                 $results = $stmt->fetchAll();
 
                 foreach ($results as $row) {
-                    $name = $row['nombre'] ?? $row['name'] ?? null;
-                    $type = $row['tipo_cocina'] ?? 'Restaurante';
-                    $id = $row['id'] ?? null;
+                    $name = $row['nombre'] ?? null;
+                    $desc = $row['descripcion'] ?? '';
+                    $price = $row['precio_promedio'] ?? null;
+                    $location = $row['ubicacion'] ?? '';
 
-                    if ($name && $id) {
-                        $text = "Restaurante: {$name} ({$type})";
-                        $text .= " <a href='servicios/index.php?categoria=restaurantes' style='color: #fbbf24; text-decoration: underline;'>Ver más →</a>";
+                    if ($name) {
+                        $text = "🍴 Restaurante: {$name}";
+                        if ($price)
+                            $text .= " (Promedio: S/. {$price})";
+                        if ($location)
+                            $text .= " - Ubicación: {$location}";
                         $services[] = $text;
                     }
                 }
