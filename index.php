@@ -16,6 +16,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- jsPDF & AutoTable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -1012,6 +1016,155 @@
       });
     }
 
+    // Generate PDF Function for Main Page
+    async function downloadDancesPDF() {
+      const btn = document.getElementById('btn-download-pdf-main');
+      const originalText = btn.innerHTML;
+
+      try {
+        btn.innerHTML = '<i class="animate-spin" data-lucide="loader-2" style="width: 16px; height: 16px;"></i> Generando...';
+        btn.disabled = true;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+        // 1. Fetch data
+        const response = await fetch('api/all-danzas.php');
+        if (!response.ok) throw new Error('Error al conectar con el servidor');
+
+        const dances = await response.json();
+        if (!dances || dances.length === 0) throw new Error('No hay danzas para descargar');
+
+        // 2. Setup PDF
+        if (!window.jspdf) throw new Error('Librería PDF no cargada');
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Colors
+        const purple = [76, 29, 149]; // #4c1d95
+        const gold = [251, 191, 36];  // #fbbf24
+        const white = [255, 255, 255]; // #ffffff
+        const textDark = [31, 41, 55]; // #1f2937
+
+        // Header Function
+        const addHeader = (pdf) => {
+          pdf.setFillColor(...purple);
+          pdf.rect(0, 0, 210, 25, 'F');
+          pdf.setTextColor(...gold);
+          pdf.setFontSize(18);
+          pdf.setFont('helvetica', 'bold');
+          pdf.text("Candelaria 2026 - Lista Oficial de Danzas", 105, 16, { align: 'center' });
+          pdf.setTextColor(...white);
+          pdf.setFontSize(10);
+          pdf.setFont('helvetica', 'normal');
+          // Add date generated
+          const today = new Date().toLocaleDateString('es-PE', { day: 'numeric', month: 'long', year: 'numeric' });
+          pdf.text(`Generado el: ${today}`, 105, 22, { align: 'center' });
+        };
+
+        addHeader(doc);
+        let yPos = 35;
+
+        // 3. Process Data for Grouping
+        const buckets = {
+          'originarias_d1': { title: 'Danzas Originarias - Sábado 31 de Enero 2026', subtitle: 'Estadio UNA Puno', data: [] },
+          'originarias_d2': { title: 'Danzas Originarias - Domingo 1 de Febrero 2026', subtitle: 'Estadio UNA Puno', data: [] },
+          'luces_estadio': { title: 'Trajes de Luces - Domingo 8 de Febrero 2026', subtitle: 'Estadio UNA Puno', data: [] },
+          'veneracion_d1': { title: 'Veneración y Parada - Lunes 9 de Febrero 2026', subtitle: 'Av. Simón Bolívar y otros', data: [] },
+          'veneracion_d2': { title: 'Veneración y Parada - Martes 10 de Febrero 2026', subtitle: 'Av. Simón Bolívar y otros', data: [] },
+          'otros': { title: 'Otras Presentaciones', subtitle: '', data: [] }
+        };
+
+        dances.forEach(d => {
+          const dia = (d.dia || '').toLowerCase();
+          const cat = (d.categoria || '').toLowerCase();
+          const fecha = (d.fecha || '').toLowerCase();
+
+          if (dia.includes('31 ene') || fecha.includes('31 ene') || (cat.includes('origin') && d.orden_concurso >= 1 && d.orden_concurso <= 40 && !dia.includes('feb'))) {
+            buckets.originarias_d1.data.push(d);
+          } else if (dia.includes('1 feb') || fecha.includes('1 feb') || (cat.includes('origin') && d.orden_concurso > 40)) {
+            buckets.originarias_d2.data.push(d);
+          } else if (dia.includes('8 feb') || fecha.includes('8 feb') || cat.includes('luce') || cat.includes('traje')) {
+            buckets.luces_estadio.data.push(d);
+          } else if (dia.includes('9 feb') || fecha.includes('9 feb') || (cat.includes('parada') && d.orden_veneracion && d.orden_veneracion < 50)) {
+            buckets.veneracion_d1.data.push(d);
+          } else if (dia.includes('10 feb') || fecha.includes('10 feb') || (cat.includes('parada') && d.orden_veneracion >= 50)) {
+            buckets.veneracion_d2.data.push(d);
+          } else {
+            if (cat.includes('origin')) buckets.originarias_d1.data.push(d);
+            else if (cat.includes('luce')) buckets.luces_estadio.data.push(d);
+            else buckets.otros.data.push(d);
+          }
+        });
+
+        const sectionOrder = ['originarias_d1', 'originarias_d2', 'luces_estadio', 'veneracion_d1', 'veneracion_d2', 'otros'];
+        let isFirstSection = true;
+
+        for (const key of sectionOrder) {
+          const section = buckets[key];
+          if (section.data.length === 0) continue;
+
+          // Sort
+          const isParade = key.includes('veneracion');
+          section.data.sort((a, b) => {
+            const valA = parseInt(isParade ? (a.orden_veneracion || a.orden_concurso) : a.orden_concurso) || 9999;
+            const valB = parseInt(isParade ? (b.orden_veneracion || b.orden_concurso) : b.orden_concurso) || 9999;
+            return valA - valB;
+          });
+
+          if (!isFirstSection) {
+            if (yPos > 200) { doc.addPage(); addHeader(doc); yPos = 35; }
+            else { yPos += 15; }
+          }
+          isFirstSection = false;
+
+          doc.setFontSize(14);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(...purple);
+          doc.text(section.title, 14, yPos);
+
+          yPos += 6;
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'italic');
+          doc.setTextColor(100, 100, 100);
+          doc.text(section.subtitle, 14, yPos);
+          yPos += 6;
+
+          const tableColumn = ["N°", "Conjunto", "Categoría"];
+          const tableRows = section.data.map(d => {
+            let order = isParade ? (d.orden_veneracion || '-') : (d.orden_concurso || '-');
+            if (d.orden_concurso === 0 && d.orden_veneracion === 0) order = "Exhibición";
+            return [order, d.conjunto, d.categoria];
+          });
+
+          doc.autoTable({
+            startY: yPos,
+            head: [tableColumn],
+            body: tableRows,
+            theme: 'grid',
+            headStyles: { fillColor: purple, textColor: gold, fontStyle: 'bold' },
+            styles: { fontSize: 9, cellPadding: 3, textColor: textDark },
+            columnStyles: { 0: { width: 15, halign: 'center', fontStyle: 'bold' }, 1: { width: 'auto' }, 2: { width: 40 } },
+            alternateRowStyles: { fillColor: [248, 246, 246] },
+            margin: { left: 14, right: 14 }
+          });
+
+          yPos = doc.lastAutoTable.finalY;
+        }
+
+        doc.save('Programacion_Candelaria_2026.pdf');
+
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      } catch (error) {
+        console.error('PDF Error:', error);
+        alert('Hubo un error al generar el PDF: ' + error.message);
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+    }
+
     // Attach to Live Button
     document.addEventListener('DOMContentLoaded', () => {
       const liveBtns = document.querySelectorAll('.btn-live');
@@ -1145,6 +1298,11 @@
         <button class="category-filter-btn" data-category="Luces Parada" onclick="filterByCategory('Luces Parada')">
           <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
           Traje de Luces
+        </button>
+        <button id="btn-download-pdf-main" onclick="downloadDancesPDF()" class="category-filter-btn download-btn"
+          style="border-color: #fbbf24; color: #fbbf24;">
+          <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+          Descargar Danzas
         </button>
       </div>
 
