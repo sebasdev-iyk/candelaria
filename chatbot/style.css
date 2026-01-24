@@ -267,7 +267,7 @@
     display: flex;
     width: 100%;
     gap: 10px;
-    align-items: flex-end;
+    align-items: center;
 }
 
 #messageInput {
@@ -304,8 +304,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s, background 0.2s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
+    padding: 0; /* Asegura centrado */
+    margin: 0;
 }
 
 .send-btn:hover {
