@@ -269,12 +269,13 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">URL de Foto (Opcional)</label>
-                            <div class="flex gap-2">
-                                <input type="url" id="edit-picture" placeholder="https://..."
-                                    class="w-full rounded-xl border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-purple-500 focus:ring-purple-500 text-sm">
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Foto de Perfil</label>
+                            <div class="flex flex-col gap-2">
+                                <input type="file" id="upload-picture"
+                                    accept="image/jpeg,image/png,image/webp,image/gif"
+                                    class="w-full rounded-xl border border-gray-300 bg-gray-50 p-2 text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100">
+                                <p class="text-xs text-gray-500">Máximo 5MB (JPG, PNG)</p>
                             </div>
-                            <p class="mt-1 text-xs text-gray-500">Por ahora solo soportamos URLs externas.</p>
                         </div>
 
                         <div class="pt-4 flex gap-3">
@@ -471,7 +472,9 @@
 
             if (currentUser) {
                 document.getElementById('edit-name').value = currentUser.name || '';
-                document.getElementById('edit-picture').value = currentUser.picture || '';
+                // Clear file input
+                const fileIn = document.getElementById('upload-picture');
+                if (fileIn) fileIn.value = '';
             }
 
             modal.classList.remove('hidden');
@@ -486,7 +489,6 @@
             e.preventDefault();
 
             const name = document.getElementById('edit-name').value.trim();
-            const picture = document.getElementById('edit-picture').value.trim();
             const btn = e.target.querySelector('button[type="submit"]');
 
             if (!name) return showToast('El nombre es obligatorio', 'warning');
@@ -496,14 +498,47 @@
             btn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin inline mr-2"></i> Guardando...';
             btn.disabled = true;
             lucide.createIcons();
-
+            
             try {
                 if (typeof SupabaseCore === 'undefined') throw new Error('Supabase no cargado');
+                
+                let pictureUrl = null;
+                const fileInput = document.getElementById('upload-picture');
 
-                const { error } = await SupabaseCore.updateUser({
-                    name: name,
-                    picture: picture || null
-                });
+                // 1. Upload Image (if selected)
+                if (fileInput && fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    
+                    const token = SupabaseCore.getAccessToken(); // Use cookie
+                    
+                    const uploadRes = await fetch('api/upload_profile_image.php', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + token
+                        },
+                        body: formData
+                    });
+                    
+                    if (!uploadRes.ok) {
+                         const errJson = await uploadRes.json().catch(()=>({}));
+                         throw new Error(errJson.message || 'Error al subir imagen');
+                    }
+                    
+                    const uploadData = await uploadRes.json();
+                    if (uploadData.success && uploadData.url) {
+                        pictureUrl = uploadData.url;
+                    } else {
+                        throw new Error(uploadData.message || 'Error desconocido al subir');
+                    }
+                }
+
+                // 2. Update Profile
+                const updates = { name: name };
+                if (pictureUrl) updates.picture = pictureUrl;
+
+                const { error } = await SupabaseCore.updateUser(updates);
 
                 if (error) throw error;
 
@@ -516,7 +551,7 @@
                 // Update header too if possible
                 if (window.showLoggedInState && window.currentUser) {
                     window.currentUser.name = name;
-                    window.currentUser.picture = picture;
+                    if(pictureUrl) window.currentUser.picture = pictureUrl;
                     window.showLoggedInState(window.currentUser);
                 }
 
