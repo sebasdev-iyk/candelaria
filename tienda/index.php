@@ -1,7 +1,8 @@
 <?php
 // candelaria/tienda/index.php
 include_once '../includes/db_connection.php'; // Ajustar según estructura real
-include_once '../includes/header.php';       // Ajustar path
+$headerDepth = 1;
+include_once '../includes/standard-header.php';       // Ajustar path
 
 // Mock de conexión DB si no existe el include
 if (!isset($pdo)) {

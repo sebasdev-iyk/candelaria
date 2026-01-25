@@ -15,7 +15,8 @@
 
 <body class="bg-gray-50 text-gray-900">
 
-    <?php include_once '../includes/navbar.php'; ?>
+    <?php $headerDepth = 1;
+    include_once '../includes/standard-header.php'; ?>
 
     <div class="max-w-7xl mx-auto px-4 py-8">
         <h1 class="text-3xl font-black mb-8">Tu Carrito de Compras</h1>

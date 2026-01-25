@@ -35,7 +35,8 @@ $mainImg = '../' . ($product['imagen'] ?: 'assets/placeholder.png');
 
 <body class="bg-white text-gray-900">
 
-    <?php include_once '../includes/navbar.php'; ?>
+    <?php $headerDepth = 1;
+    include_once '../includes/standard-header.php'; ?>
 
     <div class="max-w-7xl mx-auto px-4 py-8">
 

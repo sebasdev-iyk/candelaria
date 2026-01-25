@@ -1197,6 +1197,7 @@
         <div class="flex items-center gap-6">
           <nav class="hidden md:flex items-center gap-2">
             <a href="./servicios/index.php" class="nav-link-custom">Servicios</a>
+            <a href="./tienda/index.php" class="nav-link-custom text-candelaria-gold font-bold">TIENDA</a>
             <a href="./cultura/cultura.php" class="nav-link-custom">Cultura</a>
             <a href="./horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
             <a href="./noticias/index.php" class="nav-link-custom">Noticias</a>
@@ -1226,6 +1227,8 @@
       <nav class="flex flex-col p-6 space-y-4">
         <a href="./servicios/index.php"
           class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Servicios</a>
+        <a href="./tienda/index.php"
+          class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 text-candelaria-gold">TIENDA</a>
         <a href="./cultura/cultura.php"
           class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
         <a href="./horarios_y_danzas/index.php"
