@@ -83,7 +83,11 @@ include_once '../includes/standard-header.php';
 
 <body class="bg-gray-50 text-gray-900 overflow-y-auto h-screen">
 
-    <?php include_once '../includes/navbar.php'; ?>
+    <?php 
+    // Use standard-header.php which exists, fixing the missing navbar.php issue
+    $headerDepth = 1;
+    include_once '../includes/standard-header.php'; 
+    ?>
 
     <!-- Hero Banner removed by user request -->
     <div class="h-8"></div>
