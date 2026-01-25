@@ -399,37 +399,35 @@ function debugScores(msg, data = null) {
     }
 }
 
-async function fetchRealScores() {
-    debugScores('Fetching real scores from API...');
-    try {
-        // Try requesting the public API (which should return all dances with scores)
-        const response = await fetch('../api/danzas.php?pageSize=1000');
-
-        debugScores('API Response Status', response.status);
-
-        if (!response.ok) throw new Error("Network response was not ok");
-
-        const json = await response.json();
-        const data = Array.isArray(json) ? json : (json.data || []);
-
-        debugScores('Raw Data Loaded', data.length + ' items');
-
-        // Transform to our format
-        REAL_SCORES = data.map(d => ({
-            name: d.conjunto,
-            category: d.categoria,
-            estadio: parseFloat(d.puntaje_estadio || 0),
-            parada: parseFloat(d.puntaje_parada || 0),
-            final: (parseFloat(d.puntaje_estadio || 0) + parseFloat(d.puntaje_parada || 0))
-        }));
-
-        debugScores('Processed Scores', REAL_SCORES);
-
-    } catch (e) {
-        console.error("Error fetching scores", e);
-        debugScores('ERROR fetching scores', e.message);
+// Start with a default render
+document.addEventListener('DOMContentLoaded', async () => {
+    // Check URL hash for initial view
+    const hash = window.location.hash.substring(1);
+    if (hash === 'map') {
+        switchView('map');
+    } else if (hash === 'scores') {
+        switchView('scores');
+    } else {
+        // Default to live view if no hash or 'live'
+        switchView('live');
     }
-}
+
+    // Load Real Scores on Init
+    await fetchRealScores();
+    renderScores('autoctonos');
+
+    // Auto-Refresh Scores every 10 seconds
+    // This provides "near real-time" updates without overloading the server (vs 2s).
+    setInterval(async () => {
+        // Only fetch if "Scores" tab is visible to save bandwidth
+        if (!document.getElementById('view-scores').classList.contains('hidden')) {
+            debugScores('Auto-refreshing scores...');
+            await fetchRealScores();
+            const type = document.getElementById('btn-autoctonos').classList.contains('bg-purple-600') ? 'autoctonos' : 'luces';
+            renderScores(type);
+        }
+    }, 10000);
+});
 
 function switchView(viewName) {
     const liveView = document.getElementById('view-live');
@@ -461,15 +459,49 @@ function switchView(viewName) {
         if (viewName === 'scores') {
             scoresView.classList.remove('hidden');
             tabScores.classList.add('active');
-            // Refresh scores
-            const type = document.getElementById('btn-autoctonos').classList.contains('bg-purple-600') ? 'autoctonos' : 'luces';
-            renderScores(type);
+            // Refresh scores immediately on switch
+            fetchRealScores().then(() => {
+                const type = document.getElementById('btn-autoctonos').classList.contains('bg-purple-600') ? 'autoctonos' : 'luces';
+                renderScores(type);
+            });
         } else if (viewName === 'map') {
             mapView.classList.remove('hidden');
             tabMap.classList.add('active');
             // Initialize map if needed
             setTimeout(initMapLive, 200);
         }
+    }
+}
+
+async function fetchRealScores() {
+    debugScores('Fetching real scores from API...');
+    try {
+        // Try requesting the public API (which should return all dances with scores)
+        const response = await fetch('../api/danzas.php?pageSize=1000');
+
+        debugScores('API Response Status', response.status);
+
+        if (!response.ok) throw new Error("Network response was not ok");
+
+        const json = await response.json();
+        const data = Array.isArray(json) ? json : (json.data || []);
+
+        debugScores('Raw Data Loaded', data.length + ' items');
+
+        // Transform to our format
+        REAL_SCORES = data.map(d => ({
+            name: d.conjunto,
+            category: d.categoria,
+            estadio: parseFloat(d.puntaje_estadio || 0),
+            parada: parseFloat(d.puntaje_parada || 0),
+            final: (parseFloat(d.puntaje_estadio || 0) + parseFloat(d.puntaje_parada || 0))
+        }));
+
+        debugScores('Processed Scores', REAL_SCORES);
+
+    } catch (e) {
+        console.error("Error fetching scores", e);
+        debugScores('ERROR fetching scores', e.message);
     }
 }
 
@@ -701,6 +733,9 @@ function renderScores(type) {
     } else {
         debugScores('No Real Scores available');
     }
+
+    // FILTER: Show only if they have scores (Final > 0)
+    scores = scores.filter(s => s.final > 0);
 
     // Sort by final score desc
     scores.sort((a, b) => b.final - a.final);

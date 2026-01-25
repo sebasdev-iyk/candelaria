@@ -186,36 +186,36 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
     <!-- Header (Consistent with Main Project) -->
     <header class="header-manta-premium text-white shadow-lg sticky top-0 z-50">
         <div class="h-20 md:h-22 flex items-center justify-between px-6">
-        <div class="flex items-center gap-4 h-full">
-            <!-- Back to Main removed -->
+            <div class="flex items-center gap-4 h-full">
+                <!-- Back to Main removed -->
 
-            <a href="../index.php" id="logo-container"
-                class="flex items-center gap-2 h-full relative spark-container group">
-                <img src="../principal/logoc.png" alt="Logo"
-                    class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
-            </a>
+                <a href="../index.php" id="logo-container"
+                    class="flex items-center gap-2 h-full relative spark-container group">
+                    <img src="../principal/logoc.png" alt="Logo"
+                        class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
+                </a>
 
-            <div class="hidden md:flex ml-8 bg-purple-900/50 rounded-full px-4 py-2 border border-purple-700">
-                <nav class="flex items-center gap-4">
-                    <div id="tab-live" class="nav-link-custom active" onclick="switchView('live')">
-                        <i class="fas fa-broadcast-tower mr-2"></i> En Vivo
-                    </div>
-                    <div id="tab-scores" class="nav-link-custom" onclick="switchView('scores')">
-                        <i class="fas fa-list-ol mr-2"></i> Puntajes
-                    </div>
-                    <div id="tab-map" class="nav-link-custom" onclick="switchView('map')">
-                        <i class="fas fa-map-marked-alt mr-2"></i> Mapa TR
-                    </div>
-                </nav>
+                <div class="hidden md:flex ml-8 bg-purple-900/50 rounded-full px-4 py-2 border border-purple-700">
+                    <nav class="flex items-center gap-4">
+                        <div id="tab-live" class="nav-link-custom active" onclick="switchView('live')">
+                            <i class="fas fa-broadcast-tower mr-2"></i> En Vivo
+                        </div>
+                        <div id="tab-scores" class="nav-link-custom" onclick="switchView('scores')">
+                            <i class="fas fa-list-ol mr-2"></i> Puntajes
+                        </div>
+                        <div id="tab-map" class="nav-link-custom" onclick="switchView('map')">
+                            <i class="fas fa-map-marked-alt mr-2"></i> Mapa TR
+                        </div>
+                    </nav>
+                </div>
             </div>
-        </div>
 
-        <div class="flex items-center gap-6">
-            <!-- User Auth Section -->
-            <div class="flex items-center">
-                <?= getAuthButtonHTML() ?>
+            <div class="flex items-center gap-6">
+                <!-- User Auth Section -->
+                <div class="flex items-center">
+                    <?= getAuthButtonHTML() ?>
+                </div>
             </div>
-        </div>
     </header>
 
     <!-- Main Live View -->
