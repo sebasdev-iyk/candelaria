@@ -205,6 +205,21 @@ include_once '../includes/standard-header.php';
     <script>
         lucide.createIcons();
 
+        // Debug: Count rendered products
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.product-card');
+            console.group("🔥 [STORE INDEX DEBUG]");
+            console.log("Page Loaded");
+            console.log("Products Rendered (DOM):", cards.length);
+            // Log IDs of rendered products
+            cards.forEach((card, i) => {
+                const link = card.getAttribute('href');
+                const id = link ? link.split('=')[1] : 'unknown';
+                console.log(`Product #${i + 1}: ID ${id}`);
+            });
+            console.groupEnd();
+        });
+
         function addToCart(productId) {
             // Placeholder logic -> Tienda.js handle this
             if (window.Tienda) {

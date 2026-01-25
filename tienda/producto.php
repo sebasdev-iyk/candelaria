@@ -91,14 +91,19 @@ $mainImg = '../' . $baseImg;
             <div class="space-y-4">
                 <div class="aspect-square bg-gray-100 rounded-2xl overflow-hidden border border-gray-100">
                     <img src="<?= $mainImg ?>" id="mainImage" class="w-full h-full object-cover"
+                        onload="console.log('✅ [PRODUCT DEBUG] Main Image Loaded:', this.src)"
+                        onerror="console.error('🔥 [PRODUCT DEBUG] Main Image Failed:', this.src)"
                         alt="Producto Principal">
                 </div>
                 <div class="flex gap-4 overflow-x-auto pb-2">
                     <?php foreach ($product['imagenes'] as $img): ?>
                         <?php $thumbUrl = '../' . $img; ?>
-                        <button onclick="document.getElementById('mainImage').src = '<?= $thumbUrl ?>'"
+                        <button
+                            onclick="document.getElementById('mainImage').src = '<?= $thumbUrl ?>'; console.log('📸 [PRODUCT DEBUG] Switched to:', '<?= $thumbUrl ?>')"
                             class="w-20 h-20 flex-shrink-0 border-2 border-transparent hover:border-purple-500 rounded-lg overflow-hidden transition-all">
-                            <img src="<?= $thumbUrl ?>" class="w-full h-full object-cover">
+                            <img src="<?= $thumbUrl ?>" class="w-full h-full object-cover"
+                                onload="console.log('✅ [PRODUCT DEBUG] Thumb Loaded:', this.src)"
+                                onerror="console.error('🔥 [PRODUCT DEBUG] Thumb Failed:', this.src)">
                         </button>
                     <?php endforeach; ?>
                 </div>
@@ -171,12 +176,22 @@ $mainImg = '../' . $baseImg;
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
+        // Extreme Debugging: Dump Product Info
+        console.group("🔥 [PRODUCT PAGE DEBUG]");
+        console.log("Product ID:", <?= $product['id'] ?>);
+        console.log("Name:", "<?= htmlspecialchars($product['nombre'], ENT_QUOTES) ?>");
+        console.log("Price:", <?= $product['precio'] ?>);
+        console.log("Stock:", <?= $product['stock'] ?>);
+        console.log("Image:", "<?= $mainImg ?>");
+        console.groupEnd();
+
         lucide.createIcons();
 
         function updateQty(change) {
             const input = document.getElementById('qty');
             let val = parseInt(input.value) + change;
             if (val < 1) val = 1;
+            console.log("🔢 [PRODUCT DEBUG] Qty changed to:", val);
             input.value = val;
         }
 
