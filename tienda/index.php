@@ -2,7 +2,7 @@
 // candelaria/tienda/index.php
 
 // --- EXTREME DEBUGGING START ---
-ini_set('display_errors', 1);
+ini_set('display_errors', 0); // Changed to 0 to prevent HTML breakage
 error_reporting(E_ALL);
 error_log("🔥 [STORE DEBUG] Accessing Store Index");
 
@@ -155,6 +155,8 @@ include_once '../includes/standard-header.php';
 
                         <div class="aspect-[1/1] overflow-hidden bg-gray-100 relative">
                             <img src="<?= $img ?>" alt="<?= htmlspecialchars($p['nombre']) ?>"
+                                onerror="console.error('🔥 [IMAGE FAIL] Could not load:', this.src, 'for product ID:', <?= $p['id'] ?>)"
+                                onload="console.log('✅ [IMAGE OK] Loaded:', this.src)"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
 
                             <!-- Quick Add Button (Desktop Hover) -->
