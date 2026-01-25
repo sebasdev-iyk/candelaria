@@ -43,19 +43,23 @@ const Tienda = {
     },
 
     addItem(productId, quantity = 1, productDetails = null) {
+        console.log(`🛒 [DEBUG - Tienda] Adding Item: ID=${productId}, Qty=${quantity}`, productDetails);
         const existing = this.cart.find(item => item.id === productId);
 
         if (existing) {
+            console.log("🛒 [DEBUG - Tienda] Item exists, updating quantity");
             existing.qty += quantity;
         } else {
+            console.log("🛒 [DEBUG - Tienda] New item, pushing to cart");
             this.cart.push({
                 id: productId,
                 qty: quantity,
-                ...productDetails // Store basic info for offline rendering
+                ...productDetails
             });
         }
 
         this.saveCart();
+        console.log("🛒 [DEBUG - Tienda] Cart saved:", this.cart);
         this.showFeedback('Producto agregado al carrito');
     },
 
