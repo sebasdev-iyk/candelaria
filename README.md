@@ -1,408 +1,212 @@
-# 🎭 Festividad Virgen de la Candelaria 2026 - Documentación Técnica Completa
+# 📘 Documentación Técnica Maestra - Candelaria 2026
 
-![Candelaria Banner](assets/img/banner_readme.jpg)
-
-> **Versión**: 2.0.0 (Release Candidate)  
-> **Estado**: Producción / Estable  
-> **Desarrollado por**: Candela Digital Team
-
-Este documento constituye la referencia técnica definitiva para la plataforma web de la **Festividad Virgen de la Candelaria 2026**. Cubre arquitectura, bases de datos, APIs, frontend, despliegue y manual de contribución con un nivel de detalle exhaustivo.
+**Versión del Documento:** 2.0 (Análisis Profundo de Código)
+**Fecha de Generación:** Enero 2026
+**Tecnología Base:** PHP 8+, MySQL 8, Supabase Auth, Leaflet JS.
 
 ---
 
-## 📑 Tabla de Contenidos
+## 1. 🔐 Autenticación y Seguridad (Deep Dive)
 
-1. [Visión General del Proyecto](#visión-general-del-proyecto)
-2. [Arquitectura del Sistema](#arquitectura-del-sistema)
-3. [Estructura de Directorios](#estructura-de-directorios)
-4. [Módulos Principales](#módulos-principales)
-    - [Plataforma En Vivo](#1-plataforma-en-vivo-live-platform)
-    - [Chatbot con IA](#2-chatbot-con-ia-chatbot)
-    - [Directorio de Servicios](#3-directorio-de-servicios-servicios)
-    - [Agenda y Cultura](#4-agenda-y-cultura)
-5. [Referencia de Base de Datos](#referencia-de-base-de-datos)
-6. [Documentación de API](#documentación-de-api)
-    - [Autenticación](#api-autenticación)
-    - [Clientes y Reservas](#api-clientes-y-reservas)
-    - [Servicios y Calificaciones](#api-servicios)
-7. [Guía de Clases Backend](#guía-de-clases-backend)
-8. [Frontend y Assets](#frontend-y-assets)
-9. [Seguridad y Rendimiento](#seguridad-y-rendimiento)
-10. [Guía de Instalación y Despliegue](#guía-de-instalación-y-despliegue)
-11. [Troubleshooting](#troubleshooting)
+El sistema de identidad es **híbrido y asincrónico**, operando con dos fuentes de verdad distintas que sirven a propósitos diferentes.
 
----
+### A. Sistema Moderno (Supabase - Auth 2.0)
+Este es el sistema "oficial" para las nuevas interacciones en tiempo real.
 
-## 🔭 Visión General del Proyecto
+*   **Middleware (`includes/supabase-middleware.php`)**:
+    *   No confía ciegamente en el frontend. Valida el JWT contra la API de Supabase (`/auth/v1/user`).
+    *   **Extracción del Token**: Busca en este orden:
+        1.  Cookie: `sb-access-token` (Seteada por `supabase-core.js`).
+        2.  Header: `Authorization: Bearer <token>`.
+    *   **Respuesta User**: Normaliza el objeto JSON de Supabase devolviendo un array PHP con `id` (UUID), `email`, `name`, `picture`, `provider`.
 
-La plataforma **Candelaria 2026** es una solución web integral diseñada para digitalizar la experiencia de la festividad más grande del Perú. No es solo un sitio informativo, sino una **PWA (Progressive Web App)** funcional que ofrece:
+*   **Uso en Endpoints**:
+    *   `api/reservar.php`: Llama a `requireAuth()`. Si el token es inválido o expiro, termina el script con `HTTP 401`.
+    *   `api/chat.php`: Usa `validateSupabaseToken()` para asociar el mensaje al UUID del usuario.
 
-*   **Geolocalización en Tiempo Real**: Rastreo GPS de comparsas.
-*   **Interacción Social**: Chat en vivo y sistema de comentarios.
-*   **Comercio Electrónico**: Reservas de hoteles y gastronomía.
-*   **Inteligencia Artificial**: Asistente virtual contextual.
+### B. Sistema Legacy (MySQL - Sessions)
+Remanente de la versión anterior, aún activo para compatibilidad.
 
-El sistema está construido siguiendo principios de **arquitectura monolítica modular**, priorizando la velocidad de carga (milisegundos) y la resiliencia ante alto tráfico.
+*   **Tabla Base de Datos**: `users`
+    *   Columnas: `id` (INT, PK), `name`, `email`, `picture`, `oauth_provider`, `oauth_uid`.
+*   **API (`api/auth.php`)**:
+    *   Recibe un payload JSON `{email, name, picture, provider}`.
+    *   **Lógica "Upsert"**: Si el email existe, actualiza el registro (`UPDATE`). Si no, lo crea (`INSERT`).
+    *   **Sesión PHP**: Ejecuta `session_start()` y guarda `$_SESSION['user_id']`.
+    *   **Debilidad**: La sesión de PHP (`PHPSESSID`) **no** es leída por el middleware de Supabase. Un usuario puede estar logueado en "Legacy" pero no en "Moderno", causando fallos en el chat si los clientes JS no manejan ambos estados.
 
 ---
 
-## 🏗️ Arquitectura del Sistema
+## 2. � Módulo de Danzas y Concurso (Core Logic)
 
-### Stack Tecnológico
+El "corazón" de la información estática del evento.
 
-| Capa | Tecnología | Descripción |
-| :--- | :--- | :--- |
-| **Backend** | PHP 8.2 | Sin frameworks pesados. Arquitectura MVC propia ("Nano-MVC"). |
-| **Database** | MySQL 8.0 / MariaDB 10.6 | Motor InnoDB. ACID compliant. |
-| **Frontend** | HTML5, JS (ES6+) | Vanilla JS para máximo rendimiento. Sin React/Vue. |
-| **Estilos** | TailwindCSS 3.4 | Utility-first CSS via CDN (o build process). |
-| **Mapas** | Leaflet.js | Renderizado de mapas OpenStreetMap/CartoDB. |
-| **IA** | Groq API | Modelo Llama-3-70b-Versatile para inferencia rápida. |
-| **Server** | Apache 2.4 | Con `mod_rewrite` y `mod_headers`. |
+### Base de Datos (`candela_list`)
+Esta tabla es la fuente de la verdad para toda la información de los conjuntos.
+*   **Columnas Clave**: `id`, `conjunto` (Nombre), `categoria` (Ej: 'Traje de Luces'), `dia_concurso`, `dia_veneracion`, `orden_concurso` (INT), `orden_veneracion` (INT), `descripcion`, `historia`.
 
-### Flujo de Datos
-1.  **Cliente (Browser)**: Realiza peticiones `fetch` asíncronas a los endpoints JSON en `/api/`.
-2.  **Router**: Apache maneja las rutas amigables o directas a archivos `.php`.
-3.  **Controller/Service**: Scripts PHP (ej: `api/auth.php`) procesan la lógica, validan input y llaman a clases de servicio.
-4.  **Model/DB**: `src/Config/Database.php` gestiona la conexión PDO Singleton.
-5.  **Respuesta**: Se devuelve JSON estrictamente tipado (`Content-Type: application/json`).
-
----
-
-## 📂 Estructura de Directorios
-
-El proyecto sigue una estructura semántica donde cada carpeta raíz es un módulo funcional.
-
-```text
-/var/www/html/php-candelaria/candelaria/
-├── api/                        # 📡 ENDPOINTS DE API (Backend)
-│   ├── auth.php                # Login social (Google/Facebook)
-│   ├── auth_email.php          # Login/Registro tradicional
-│   ├── clientes.php            # CRUD de perfil de usuario
-│   ├── reservar.php            # Lógica transaccional de reservas
-│   ├── disponibilidad.php      # Consulta de habitaciones libres
-│   ├── calificaciones.php      # Sistema de ratings y reviews
-│   ├── chat.php                # Polling y envío de mensajes (Live)
-│   ├── hospedaje.php           # GET listado de hoteles
-│   └── ...
-├── assets/                     # 🎨 RECURSOS ESTÁTICOS
-│   ├── css/                    # Estilos globales (sparks.css, etc.)
-│   ├── js/                     # Scripts globales
-│   ├── img/                    # Logos, banners, placeholders
-│   └── uploads/                # Cargas de usuarios (avatars, comprobantes)
-├── chatbot/                    # 🤖 MÓDULO IA
-│   ├── api/                    # Backend específico del bot
-│   │   ├── GroqService.php     # Cliente API para Groq
-│   │   ├── DatabaseService.php # RAG (Retrieval Augmented Generation) simple
-│   │   └── chat.php            # Endpoint principal del bot
-│   ├── assets/                 # Videos del avatar (webm con alfa)
-│   ├── script.js               # Lógica de Canvas y Chroma Key
-│   └── style.css               # Estilos del widget flotante
-├── database/                   # 💾 ESQUEMAS SQL
-│   ├── EJECUTAR_ESTO.sql       # Script maestro de instalación
-│   ├── auth_advanced.sql       # Tablas de usuarios y seguridad
-│   └── scripts/                # Migraciones incrementales
-├── horarios_y_danzas/          # 📅 MÓDULO AGENDA
-├── includes/                   # 🧩 LIBRERÍAS COMPARTIDAS
-│   ├── auth_config.php         # Constantes y API Keys
-│   ├── auth-header.php         # Lógica de sesión y navbar
-│   ├── db.php                  # (Legacy) Conexión antigua
-│   ├── ActivityLogger.php      # Clase de auditoría
-│   └── EmailService.php        # Clase de envío de correos
-├── live-platform/              # 🔴 MÓDULO STREAMING
-│   ├── includes/               # Helpers de video
-│   ├── index.php               # Vista principal del player
-│   └── script.js               # Lógica de WebSocket simulado (polling)
-├── servicios/                  # 🏨 MÓDULO TURÍSTICO
-│   ├── index.php               # Buscador principal
-│   └── styles.css              # Estilos específicos de tarjetas
-├── src/                        # 🏗️ NÚCLEO (PSR-4 Friendly)
-│   └── Config/
-│       └── Database.php        # Clase Singleton de conexión BD
-├── index.php                   # Landing Page (Hero, Countdown)
-└── Dockerfile                  # Configuración de contenedor
-```
-
----
-
-## 🧩 Módulos Principales
-
-### 1. Plataforma En Vivo (`live-platform`)
-Diseñada para soportar miles de usuarios concurrentes.
-*   **Player Híbrido**: Soporta iframes de YouTube, Facebook Watch y streams RTMP directos.
-*   **Chat Híbrido**: 
-    *   Usa `api/chat.php` con *long-polling* (2s de intervalo) para simular tiempo real sin sobrecargar sockets.
-    *   Persistencia en tabla `chat_messages` (limpieza automática cada 24h).
-*   **Mapa GPS**:
-    *   Consume `api/admin/mapa.php` para obtener coordenadas `lat,lng`.
-    *   Renderiza marcadores personalizados con iconos de danza usando `L.divIcon` de Leaflet.
-
-### 2. Chatbot con IA (`chatbot`)
-Un asistente que "habla" visualmente.
-*   **Avatar de Video**:
-    *   Usa `<canvas>` para procesar un video `.webm` de una presentadora.
-    *   Algoritmo de *Green Screen Removal* en JS (`metrics: r<40, g<40, b<40`) para transparencia en tiempo real.
-*   **Cerebro (Groq Llama 3)**:
-    *   El `GroqService.php` construye un prompt de sistema inyectando contexto de la base de datos (horarios, hoteles).
-    *   Esto permite respuestas precisas ("¿A qué hora baila la Diablada?") sin alucinaciones.
-
-### 3. Directorio de Servicios (`servicios`)
-marketplace para el turismo local.
-*   **Motor de Búsqueda**: Filtrado multicriterio (Precio, Ubicación, Calificación) en Javascript (`getFilteredData()`) para respuesta instantánea, con carga inicial de datos via API.
-*   **Sistema de Reservas**:
-    *   Flow: `Ver Disponibilidad` -> `Seleccionar Fechas` -> `Auth Check` -> `POST /api/reservar.php`.
-    *   Validación de doble reserva (Race condition protection en SQL).
-
-### 4. Agenda y Cultura
-*   **Simulador**: Algoritmo en Frontend que estima la hora real de presentación basándose en el "promedio de retraso" histórico.
-
----
-
-## 🗄️ Referencia de Base de Datos
-
-El esquema relacional está normalizado (3NF). Aquí las tablas críticas:
-
-### `users` (Central de Identidad)
-| Columna | Tipo | Descripción |
-| :--- | :--- | :--- |
-| `id` | INT (PK) | Identificador único |
-| `email` | VARCHAR(100) | Único, indexado |
-| `password` | VARCHAR(255) | Hash Bcrypt (solo si `oauth_provider='email'`) |
-| `oauth_provider` | ENUM | 'google', 'facebook', 'email' |
-| `oauth_uid` | VARCHAR | ID del proveedor externo |
-| `role` | ENUM | 'user', 'admin', 'moderator' |
-
-### `reservaciones` (Transaccional)
-| Columna | Tipo | Descripción |
-| :--- | :--- | :--- |
-| `id` | INT (PK) | ID Reserva |
-| `cliente_id` | INT (FK) | Referencia a `clientes.id` |
-| `hospedaje_id` | INT (FK) | Referencia a `hospedajes.id` |
-| `habitacion_id` | INT (FK) | Referencia a `habitaciones.id` |
-| `fecha_entrada` | DATE | Check-in |
-| `fecha_salida` | DATE | Check-out |
-| `estado` | ENUM | 'pendiente', 'confirmada', 'cancelada' |
-| `precio_total` | DECIMAL | Monto final calculado |
-
-### `calificaciones` (Feedback)
-| Columna | Tipo | Descripción |
-| :--- | :--- | :--- |
-| `hospedaje_id` | INT (FK) | Servicio calificado |
-| `cliente_id` | INT (FK) | Autor de la reseña |
-| `estrellas` | INT | 1-5 |
-| `comentario` | TEXT | Opinión opcional |
-
----
-
-## 🔌 Documentación de API
-
-Todas las respuestas son JSON. Errores siguen formato `{ "message": "Error desc", "success": false }`.
-
-### API Autenticación
-
-#### `POST /api/auth_email.php`
-Registra o loguea un usuario con credenciales locales.
-
-**Payload (Login):**
-```json
-{
-  "action": "login",
-  "email": "juan@example.com",
-  "password": "secret_password"
-}
-```
-
-**Payload (Register):**
-```json
-{
-  "action": "register",
-  "name": "Juan Perez",
-  "email": "juan@example.com",
-  "password": "secret_password"
-}
-```
-
-**Respuesta Exitosa:**
-```json
-{
-  "success": true,
-  "message": "Inicio de sesión exitoso",
-  "user": {
-    "id": 15,
-    "name": "Juan Perez",
-    "email": "juan@example.com",
-    "picture": "https://ui-avatars.com/..."
-  }
-}
-```
-
-### API Clientes y Reservas
-
-#### `POST /api/reservar.php`
-Crea una nueva reserva. Requiere Token Bearer.
-
-**Headers:**
-`Authorization: Bearer <base64_token>`
-
-**Payload:**
-```json
-{
-  "hospedaje_id": 5,
-  "habitacion_id": 12,
-  "fecha_entrada": "2026-02-02",
-  "fecha_salida": "2026-02-05",
-  "num_huespedes": 2,
-  "notas": "Llegada tarde"
-}
-```
-
-### API Servicios
-
-#### `GET /api/disponibilidad.php`
-Verifica disponibilidad de habitaciones.
-
-**Query Params:**
-`?hospedaje_id=5&fecha_entrada=2026-02-02&fecha_salida=2026-02-05`
-
-**Respuesta:**
-```json
-{
-  "hospedaje_id": 5,
-  "habitaciones": [
+### API (`api/danzas.php`)
+*   **Endpoint**: `GET /api/danzas.php`
+*   **Parámetros**:
+    *   `q`: Búsqueda de texto (LIKE) en nombre, categoría o descripción.
+    *   `category`: Filtro exacto por columna `categoria`.
+    *   `page` / `pageSize`: Paginación offset-based.
+*   **Respuesta JSON**:
+    ```json
     {
-      "id": 12,
-      "nombre": "Habitación Doble",
-      "precio_noche": 150.00,
-      "disponibles": 3,
-      "precio_total": 450.00
+      "data": [ ... array de objetos danza ... ],
+      "pagination": {
+        "page": 1,
+        "total": 150,
+        "totalPages": 15
+      }
     }
-  ]
-}
-```
+    ```
 
 ---
 
-## 🧠 Guía de Clases Backend
+## 3. 📍 Mapa GPS en Tiempo Real (backend Logic)
 
-### `ActivityLogger` (`includes/ActivityLogger.php`)
-Sistema de auditoría para seguridad y analítica.
-*   **log($userId, $action, $desc, $meta)**: Registra un evento. Captura automáticamente IP y User Agent.
-*   **getActivity($userId)**: Retorna historial reciente.
+El sistema de tracking NO es un simple "pasamanos" de coordenadas. El backend **simula** y **calcula** el movimiento.
 
-### `EmailService` (`includes/EmailService.php`)
-Wrapper para envío de correos transaccionales.
-*   En **Desarrollo** (`localhost`), escribe logs en `/logs/emails.log` en lugar de enviar.
-*   En **Producción**, usa `mail()` de PHP (configurar SMTP en php.ini para mejor entregabilidad).
-*   Métodos: `sendWelcome`, `sendPasswordReset`, `sendEmailVerification`.
+### Arquitectura de Simulación (`php-admin/api/admin/mapa.php`)
+A diferencia de sistemas GPS reales que reciben lat/lng de dispositivos, este sistema **simula el avance** para garantizar un espectáculo visual fluido incluso si la señal falla.
 
-### `GroqService` (`chatbot/api/GroqService.php`)
-Cliente HTTP para IA.
-*   Maneja timeouts y reintentos.
-*   Implementa `buildSystemPrompt()` para inyectar la personalidad "festiva" del bot.
+1.  **Tablas Involucradas**:
+    *   `candela_route_points`: Puntos lat/lng que definen el polígono de la ruta oficial (ordenados por `number`).
+    *   `candela_route_distances`: Segmentos precalculados con distancia en KM.
+    *   `candela_map_dances`: Estado actual de cada conjunto en el mapa.
 
----
+2.  **Motor de Física en PHP**:
+    *   El endpoint `GET /dances` se comporta como un "Game Loop".
+    *   **Cálculo de Delta Tiempo**: `elapsed = microtime(true) - last_update_time`.
+    *   **Velocidad**: Constante definida `$SPEED_KM_H = 1.6` (aprox. velocidad de desfile).
+    *   **Avance**: `distancia_nueva = distancia_actual + (elapsed * velocidad)`.
+    *   **Interpolación Lineal**:
+        *   El backend busca en qué segmento de la ruta cae la `distancia_nueva`.
+        *   Calcula el ratio dentro del segmento (0.0 a 1.0).
+        *   Calcula `lat` y `lng` exactos usando la fórmula de la recta entre el inicio y fin del segmento.
+    *   **Persistencia**: Actualiza la DB con la nueva `lat`, `lng`, `distance_traveled` y `last_update_time` antes de responder al cliente.
 
-## 💻 Frontend y Assets
+    > **Efecto**: Cada vez que un usuario consulta el mapa, el backend "mueve" a todos los conjuntos un poquito hacia adelante.
 
-### Vanilla JS Modules
-El código JS se organiza por funcionalidad para evitar bundles gigantes.
-*   `script.js` (Global): Maneja el contador regresivo, navbar sticky y scroll effects.
-*   `live-platform/script.js`: Maneja el player de video y la lógica de sockets simulados.
-*   `chatbot/script.js`: Maneja el canvas de video y la UI del chat flotante.
-
-### Estilos (Tailwind)
-La configuración de colores se extiende en `tailwind.config` dentro del HTML (modo JIT CDN):
-*   `candelaria-purple`: `#4c1d95` (Identidad visual)
-*   `candelaria-gold`: `#fbbf24` (Acentos premium)
+3.  **Sincronización (`/sync-dances`)**:
+    *   Copia los conjuntos desde `candela_list` a `candela_map_dances`.
+    *   Asigna colores e íconos automáticamente según palabras clave en la categoría (Ej: "autoctono" -> 🟢/🕺, "luces" -> 🟣/✨).
 
 ---
 
-## 🛡️ Seguridad y Rendimiento
+## 4. 🏨 Servicios Turísticos (Directory SPA)
 
-1.  **Protección SQL Injection**: Uso estricto de `PDO Adventure` y `Prepared Statements` en todas las consultas.
-2.  **XSS Protection**: Inputs sanitizados con `htmlspecialchars` antes de renderizar en el chat o reseñas.
-3.  **Session Hijacking**: Regeneración de ID de sesión al login. Cookies `HttpOnly`.
-4.  **Rate Limiting**: (Implementado a nivel de servidor web) para endpoints de login.
-5.  **Passwords**: Hashed con `PASSWORD_DEFAULT` (Bcrypt).
+El módulo `servicios/` opera como un directorio de alto rendimiento.
 
----
+### Modelo de Datos Unificado
+Aunque existen 4 tablas (`hospedajes`, `candela_comida`, `transporte`, `turismo`), el frontend (`servicios/index.php`) las normaliza en una estructura común en memoria llamada `DB`.
 
-## 🚀 Guía de Instalación y Despliegue
+#### API Endpoints
+*   **Hospedajes (`api/hospedaje.php`)**:
+    *   Retorna listado con `servicios` (JSON Array: wifi, tv) e `imagenes` (JSON Array).
+    *   Subquery SQL: Calcula `total_reviews` contando filas en la tabla `calificaciones`.
+*   **Gastronomía (`api/comida.php`)**: Retorna tabla `candela_comida`.
+*   **Transporte (`api/transporte.php`)**: Retorna tabla `transporte`.
+*   **Turismo (`api/turismo.php`)**: Retorna tabla `turismo`.
 
-Sigue estos pasos para desplegar el proyecto desde cero en un entorno Linux (Ubuntu/Debian).
-
-### 1. Preparación del Entorno
-```bash
-# Actualizar sistema
-sudo apt update && sudo apt upgrade -y
-
-# Instalar pila LAMP
-sudo apt install apache2 mysql-server php8.2 php8.2-mysql php8.2-curl php8.2-gd php8.2-xml libapache2-mod-php8.2 -y
-
-# Habilitar mod_rewrite
-sudo a2enmod rewrite
-sudo systemctl restart apache2
-```
-
-### 2. Configuración de Base de Datos
-```bash
-# Entrar a MySQL
-sudo mysql
-
-# Crear DB y Usuario
-CREATE DATABASE mipuno_candelaria CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'candelaria_user'@'localhost' IDENTIFIED BY 'tu_contraseña_segura';
-GRANT ALL PRIVILEGES ON mipuno_candelaria.* TO 'candelaria_user'@'localhost';
-FLUSH PRIVILEGES;
-EXIT;
-
-# Importar Esquema
-mysql -u candelaria_user -p mipuno_candelaria < database/EJECUTAR_ESTO.sql
-```
-
-### 3. Despliegue de Código
-```bash
-# Clonar repo (o copiar archivos) a /var/www/html/candelaria
-cd /var/www/html
-git clone https://github.com/tu-repo/candelaria.git
-
-# Ajustar permisos
-sudo chown -R www-data:www-data /var/www/html/candelaria
-sudo chmod -R 755 /var/www/html/candelaria
-sudo chmod -R 777 /var/www/html/candelaria/assets/uploads # Permiso de escritura
-```
-
-### 4. Configuración de Credenciales
-Edita `src/Config/Database.php`:
-```php
-private $host = 'localhost';
-private $user = 'candelaria_user';
-private $password = 'tu_contraseña_segura';
-```
-
-Edita `includes/auth_config.php` con tus API Keys reales.
-
-### 5. Configuración Apache
-Asegúrate de que `AllowOverride All` esté configurado para el directorio web para permitir `.htaccess`.
+### Lógica Frontend vs Backend
+*   **Backend**: Tonto. Simplemente vuelca toda la tabla (`SELECT *`).
+*   **Frontend**: Inteligente.
+    *   Descarga **todo** al inicio (`Promise.all`).
+    *   **Filtrado Local**: La búsqueda por texto, precio y calificación se hace en JavaScript (`Array.filter`), no en SQL. Esto permite respuesta instantánea (<10ms) al escribir en el buscador.
 
 ---
 
-## ❓ Troubleshooting
+## 5. 💬 Chat de Ultra-Baja Latencia (File Based)
 
-### Error: "Database connection failed"
-*   Verifica `src/Config/Database.php`.
-*   Asegúrate de que el servicio MySQL esté corriendo: `sudo systemctl status mysql`.
-*   Verifica permisos de usuario de DB.
+Diseñado para soportar miles de usuarios concurrentes sin tumbar la base de datos SQL.
 
-### Error: Chatbot no responde
-*   Verifica logs de PHP/Apache: `/var/log/apache2/error.log`.
-*   Confirma que la `GROQ_API_KEY` en `config.php` sea válida y tenga crédito.
-*   Revisa la consola del navegador para errores JS.
+### Arquitectura "Flat-File"
+*   **Almacenamiento**: `live-platform/data/chat_messages.json`.
+    *   Estructura: `{ "stream_default": [ {id: 1, msg: "Hola", user: "Juan"}, ... ] }`.
+*   **Escritura (`POST api/chat.php`)**:
+    *   Valida Token Supabase.
+    *   Bloquea el archivo (flock), lee el JSON entero, añade el mensaje, trunca el array a los últimos 100 mensajes (buffer circular soft), y guarda.
+*   **Lectura (`GET api/chat.php`)**:
+    *   Recibe parámetro `last_id`.
+    *   Devuelve solo los mensajes con `id > last_id`.
+    *   Esta operación es O(1) en disco (lectura secuencial pequeña) vs O(log N) en MySQL.
 
-### Error: Mapa no carga puntitos
-*   Verifica la consola de red (F12 -> Network). ¿`api/admin/mapa.php` devuelve 200 OK?
-*   Si devuelve 404, revisa la ruta relativa en `script.js`.
+### Viewer Count (Heartbeat)
+*   Archivo: `live-platform/data/viewers.json`.
+*   Lógica:
+    *   Genera ID único de espectador: `md5(IP + UserAgent)`.
+    *   Guardar Timestamp actual en el array del stream.
+    *   **Garbage Collection**: Elimina IDs con timestamp > 30 segundos de antigüedad.
+    *   Responde con `count(ids)`.
 
 ---
 
-*Documentación generada automáticamente por el equipo de desarrollo de Candelaria 2026. Última actualización: Enero 2026.*
+## 6. 🏆 Sistema de Puntajes (`puntajes.php`)
+
+Consumo directo de datos públicos.
+
+*   **API**: Reutiliza `api/danzas.php`.
+*   **Lógica**:
+    *   El campo `puntaje_estadio` y `puntaje_parada` vienen de la DB.
+    *   **Cálculo en Cliente**: `Total = parseFloat(estadio) + parseFloat(parada)`.
+    *   **Ranking**: `Array.sort((a,b) => b.total - a.total)`.
+    *   **Medallas**: Asignación visual por índice `[0]=Oro`, `[1]=Plata`, `[2]=Bronce`.
+
+---
+
+## 7. 🤖 Chatbot Grok (Video Avatar)
+
+Un experimento de interfaz de usuario avanzada.
+
+### Motor Chroma Key (JS)
+Archivo: `chatbot/script.js`
+1.  **Canvas Doble**: Usa un canvas oculto (`triggerCanvas`) para procesar y un canvas visible (`mainCanvas`) para renderizar.
+2.  **Pipeline de Renderizado**:
+    *   `ctx.drawImage(video)`: Pinta el frame actual.
+    *   `ctx.getImageData()`: Obtiene el buffer de píxeles `Uint8ClampedArray`.
+    *   **Loop de Píxeles**:
+        ```javascript
+        if (r < 40 && g < 40 && b < 40) { // Si es negro oscuro
+             alpha = 0; // Transparente
+        }
+        ```
+    *   `ctx.putImageData()`: Vuelca los píxeles modificados.
+3.  **Interacción**:
+    *   Envía el mensaje del usuario a `chatbot/api/chat.php` (Proxy a LLM).
+    *   Muestra respuesta en burbujas de chat HTML sobrepuestas al video.
+
+---
+
+## 8. 🏨 Motor de Reservas (Transaccional)
+
+El único componente con lógica de negocio compleja y validaciones estrictas.
+
+### API (`POST api/reservar.php`)
+1.  **Validación de Identidad**: Exige `requireAuth()` (Supabase).
+2.  **Validación de Disponibilidad (Critical Section)**:
+    *   Verifica si `habitaciones.activo = TRUE`.
+    *   **Concurrencia**: Realiza un `COUNT(*)` en la tabla `reservaciones` buscando solapamientos de fecha para esa habitación.
+    *   `WHERE estado IN ('pendiente', 'confirmada') AND (fecha_entrada < NEW_OUT AND fecha_salida > NEW_IN)`.
+    *   Si `count >= capacidad_habitacion`, lanza error `409 Conflict`.
+3.  **Persistencia**:
+    *   Inserta la reserva con `user_id` (UUID de Supabase).
+    *   Estado inicial: `pendiente`.
+    *   Guarda una "foto" del precio en ese momento (`precio_total`).
+
+---
+
+## 📝 Resumen de Tablas SQL Críticas
+
+| Tabla | Uso Principal | Notas |
+|-------|---------------|-------|
+| `users` | Auth Legacy | Puede quedar obsoleta. |
+| `candela_list` | Info Danzas | Fuente maestra del concurso. |
+| `candela_route_points` | Mapa | Define la línea verde del recorrido. |
+| `candela_route_distances` | Mapa | Pre-cálculo de distancias para interpolación rápida. |
+| `candela_map_dances` | Mapa | "Cache" de estado dinámico (lat/lng actual). |
+| `hospedajes` | Servicios | Directorio de hoteles . |
+| `habitaciones` | Servicios | Inventario de cuartos por hotel. |
+| `reservaciones` | Transaccional | Vincula User UUID <-> Habitación ID. |
