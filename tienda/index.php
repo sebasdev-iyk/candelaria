@@ -48,19 +48,12 @@ if (!isset($pdo)) {
     </style>
 </head>
 
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-gray-50 text-gray-900 overflow-y-auto h-screen">
 
     <?php include_once '../includes/navbar.php'; ?>
 
-    <!-- Hero Banner Tienda -->
-    <div class="relative bg-purple-900 text-white overflow-hidden mb-8">
-        <div class="absolute inset-0 bg-[url('../assets/pattern.png')] opacity-10"></div>
-        <div class="max-w-7xl mx-auto px-4 py-16 relative z-10 text-center">
-            <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight">TIENDA OFICIAL</h1>
-            <p class="text-purple-200 text-lg max-w-2xl mx-auto">Llévate un pedazo de la fiesta más grande del Perú.
-                Productos exclusivos y artesanía local.</p>
-        </div>
-    </div>
+    <!-- Hero Banner removed by user request -->
+    <div class="h-8"></div>
 
     <div class="max-w-7xl mx-auto px-4 pb-20">
 
