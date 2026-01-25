@@ -10,13 +10,17 @@ $products = [];
 try {
     // 1. Locate Database Class
     // Relative path from candelaria/tienda/ -> ../../php-admin/src/Config/Database.php
-    $dbPath = __DIR__ . '/../../php-admin/src/Config/Database.php';
+    // Dual check for Production (candelaria-admin) vs Local (php-admin)
+    $localDbPath = __DIR__ . '/../../php-admin/src/Config/Database.php';
+    $prodDbPath = __DIR__ . '/../../candelaria-admin/src/Config/Database.php';
 
-    if (!file_exists($dbPath)) {
-        throw new Exception("Database file not found at: " . $dbPath);
+    if (file_exists($prodDbPath)) {
+        require_once $prodDbPath;
+    } elseif (file_exists($localDbPath)) {
+        require_once $localDbPath;
+    } else {
+        throw new Exception("Database file not found. Checked: \n- $prodDbPath \n- $localDbPath");
     }
-
-    require_once $dbPath;
 
     if (!class_exists('Config\Database')) {
         throw new Exception("Database Class not found after include");
@@ -83,10 +87,10 @@ include_once '../includes/standard-header.php';
 
 <body class="bg-gray-50 text-gray-900 overflow-y-auto h-screen">
 
-    <?php 
+    <?php
     // Use standard-header.php which exists, fixing the missing navbar.php issue
     $headerDepth = 1;
-    include_once '../includes/standard-header.php'; 
+    include_once '../includes/standard-header.php';
     ?>
 
     <!-- Hero Banner removed by user request -->
@@ -194,7 +198,7 @@ include_once '../includes/standard-header.php';
             } else {
                 alert('Añadido al carrito (Demo ID: ' + productId + ')');
             }
-        }
+    }
     </script>
 
     <!-- Tienda Core JS -->
