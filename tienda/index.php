@@ -1,24 +1,57 @@
 <?php
 // candelaria/tienda/index.php
-include_once '../includes/db_connection.php'; // Ajustar según estructura real
-$headerDepth = 1;
-include_once '../includes/standard-header.php';       // Ajustar path
 
-// Mock de conexión DB si no existe el include
-if (!isset($pdo)) {
-    // Fallback temporal para visualización
-    $products = [
-        ['id' => 1, 'nombre' => 'Camiseta Oficial 2026', 'precio' => 45.00, 'imagen' => 'assets/uploads/tienda/demo_tshirt.jpg', 'estrellas' => 5],
-        ['id' => 2, 'nombre' => 'Gorro Bordado', 'precio' => 25.00, 'imagen' => 'assets/uploads/tienda/demo_hat.jpg', 'estrellas' => 4],
-        ['id' => 3, 'nombre' => 'Taza Candelaria', 'precio' => 15.00, 'imagen' => 'assets/uploads/tienda/demo_mug.jpg', 'estrellas' => 5],
-        ['id' => 4, 'nombre' => 'Poncho Tradicional', 'precio' => 120.00, 'imagen' => 'assets/uploads/tienda/demo_poncho.jpg', 'estrellas' => 5],
-        ['id' => 5, 'nombre' => 'Llavero Metálico', 'precio' => 10.00, 'imagen' => 'assets/uploads/tienda/demo_keychain.jpg', 'estrellas' => 4],
-    ];
-} else {
-    // Fetch Real
-    $stmt = $pdo->query("SELECT * FROM tienda_productos WHERE estado='activo' ORDER BY id DESC");
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// --- EXTREME DEBUGGING START ---
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+error_log("🔥 [STORE DEBUG] Accessing Store Index");
+
+$products = [];
+try {
+    // 1. Locate Database Class
+    // Relative path from candelaria/tienda/ -> ../../php-admin/src/Config/Database.php
+    $dbPath = __DIR__ . '/../../php-admin/src/Config/Database.php';
+
+    if (!file_exists($dbPath)) {
+        throw new Exception("Database file not found at: " . $dbPath);
+    }
+
+    require_once $dbPath;
+
+    if (!class_exists('Config\Database')) {
+        throw new Exception("Database Class not found after include");
+    }
+
+    // 2. Connect
+    $database = new Config\Database();
+    $pdo = $database->connect('mipuno_candelaria');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    error_log("🔥 [STORE DEBUG] DB Connected Successfully");
+
+    // 3. Fetch Products
+    // NOTE: 'estado' column might allow 'activo', check your schema. Adjusting to fetch ALL for debug if needed, or stick to active.
+    // Querying all for now to verify connectivity, filtering active.
+    $stmt = $pdo->query("SELECT * FROM tienda_productos ORDER BY id DESC");
+    $allProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    error_log("🔥 [STORE DEBUG] Total products found: " . count($allProducts));
+
+    // Filter active in PHP or SQL. Let's do SQL next time, but for now filtering here to be safe if column missing
+    $products = $allProducts;
+
+    foreach ($products as $p) {
+        error_log("🔥 [STORE DEBUG] Product Loaded: ID " . $p['id'] . " - " . $p['nombre']);
+    }
+
+} catch (Throwable $e) {
+    error_log("🔥 [STORE DEBUG] CRITICAL ERROR: " . $e->getMessage());
+    echo "<div style='background:red;color:white;padding:10px'>Error Crítico en Tienda: " . $e->getMessage() . "</div>";
+    // Do NOT fall back to mock data. We want to see the error.
 }
+
+$headerDepth = 1;
+include_once '../includes/standard-header.php';
 ?>
 
 <!DOCTYPE html>
