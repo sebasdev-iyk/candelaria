@@ -125,65 +125,77 @@ include_once '../includes/standard-header.php';
         </div>
 
         <!-- Grid de Productos -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            <?php foreach ($products as $p): ?>
-                <?php
-                $precioInt = floor($p['precio']);
-                $precioDec = number_format(($p['precio'] - $precioInt) * 100, 0);
-                $img = !empty($p['imagen_principal']) ? '../' . $p['imagen_principal'] : '../assets/placeholder.png'; // Fix path logic later
-                ?>
-                <a href="producto.php?id=<?= $p['id'] ?>"
-                    class="group block bg-white rounded-xl overflow-hidden border border-gray-100 product-card relative">
-                    <!-- Badge Oferta (Demo) -->
-                    <?php if (isset($p['precio_oferta'])): ?>
-                        <div
-                            class="absolute top-2 left-2 z-10 discount-badge text-white text-xs font-bold px-2 py-1 rounded-md shadow-sm">
-                            OFERTA
-                        </div>
-                    <?php endif; ?>
+        <?php if (empty($products)): ?>
+            <div class="text-center py-20">
+                <div class="bg-gray-100 rounded-full h-24 w-24 flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="shopping-bag" class="w-10 h-10 text-gray-400"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">La tienda está vacía</h3>
+                <p class="text-gray-500 max-w-md mx-auto">No hay productos disponibles por el momento. Intente más tarde.
+                </p>
+            </div>
+        <?php else: ?>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                <?php foreach ($products as $p): ?>
+                    <?php
+                    $precioInt = floor($p['precio']);
+                    $precioDec = number_format(($p['precio'] - $precioInt) * 100, 0);
+                    // Use clean logic relative to public root
+                    $img = !empty($p['imagen_principal']) ? '../' . $p['imagen_principal'] : '../assets/placeholder.png';
+                    ?>
+                    <a href="producto.php?id=<?= $p['id'] ?>"
+                        class="group block bg-white rounded-xl overflow-hidden border border-gray-100 product-card relative">
+                        <!-- Badge Oferta (Demo check) -->
+                        <?php if (isset($p['precio_oferta']) && $p['precio_oferta'] > 0): ?>
+                            <div
+                                class="absolute top-2 left-2 z-10 discount-badge text-white text-xs font-bold px-2 py-1 rounded-md shadow-sm">
+                                OFERTA
+                            </div>
+                        <?php endif; ?>
 
-                    <div class="aspect-[1/1] overflow-hidden bg-gray-100 relative">
-                        <img src="<?= $img ?>" alt="<?= htmlspecialchars($p['nombre']) ?>"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="aspect-[1/1] overflow-hidden bg-gray-100 relative">
+                            <img src="<?= $img ?>" alt="<?= htmlspecialchars($p['nombre']) ?>"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
 
-                        <!-- Quick Add Button (Desktop Hover) -->
-                        <button onclick="event.preventDefault(); addToCart(<?= $p['id'] ?>)"
-                            class="absolute bottom-3 right-3 bg-white text-purple-700 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-purple-50">
-                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-
-                    <div class="p-4">
-                        <h3
-                            class="text-gray-900 font-medium text-sm md:text-base line-clamp-2 h-10 md:h-12 leading-snug mb-1">
-                            <?= htmlspecialchars($p['nombre']) ?>
-                        </h3>
-
-                        <!-- Rating -->
-                        <div class="flex items-center mb-2">
-                            <?php for ($i = 0; $i < 5; $i++): ?>
-                                <i data-lucide="star"
-                                    class="w-3 h-3 <?= $i < ($p['estrellas'] ?? 5) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200' ?>"></i>
-                            <?php endfor; ?>
-                            <span class="text-xs text-gray-400 ml-1">(<?= rand(10, 500) ?>)</span>
+                            <!-- Quick Add Button (Desktop Hover) -->
+                            <button onclick="event.preventDefault(); addToCart(<?= $p['id'] ?>)"
+                                class="absolute bottom-3 right-3 bg-white text-purple-700 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-purple-50">
+                                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                            </button>
                         </div>
 
-                        <div class="flex items-baseline gap-1 mt-auto">
-                            <span class="text-2xl font-bold text-gray-900">S/ <?= $p['precio'] ?></span>
-                            <?php if (isset($p['precio_oferta'])): ?>
-                                <span class="text-sm text-gray-400 line-through">S/ <?= $p['precio_oferta'] ?></span>
-                            <?php endif; ?>
-                        </div>
+                        <div class="p-4">
+                            <h3
+                                class="text-gray-900 font-medium text-sm md:text-base line-clamp-2 h-10 md:h-12 leading-snug mb-1">
+                                <?= htmlspecialchars($p['nombre']) ?>
+                            </h3>
 
-                        <!-- Mobile Only Add Button -->
-                        <button onclick="event.preventDefault(); addToCart(<?= $p['id'] ?>)"
-                            class="md:hidden w-full mt-3 bg-gray-50 text-gray-700 font-bold py-2 rounded-lg text-sm border border-gray-200 active:bg-purple-100 active:border-purple-200 login-to-buy">
-                            Agregar
-                        </button>
-                    </div>
-                </a>
-            <?php endforeach; ?>
-        </div>
+                            <!-- Rating -->
+                            <div class="flex items-center mb-2">
+                                <?php for ($i = 0; $i < 5; $i++): ?>
+                                    <i data-lucide="star"
+                                        class="w-3 h-3 <?= $i < ($p['estrellas'] ?? 5) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200' ?>"></i>
+                                <?php endfor; ?>
+                                <span class="text-xs text-gray-400 ml-1">(<?= rand(10, 500) ?>)</span>
+                            </div>
+
+                            <div class="flex items-baseline gap-1 mt-auto">
+                                <span class="text-2xl font-bold text-gray-900">S/ <?= $p['precio'] ?></span>
+                                <?php if (isset($p['precio_oferta']) && $p['precio_oferta'] > 0): ?>
+                                    <span class="text-sm text-gray-400 line-through">S/ <?= $p['precio_oferta'] ?></span>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Mobile Only Add Button -->
+                            <button onclick="event.preventDefault(); addToCart(<?= $p['id'] ?>)"
+                                class="md:hidden w-full mt-3 bg-gray-50 text-gray-700 font-bold py-2 rounded-lg text-sm border border-gray-200 active:bg-purple-100 active:border-purple-200 login-to-buy">
+                                Agregar
+                            </button>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
     </div>
 
@@ -198,7 +210,7 @@ include_once '../includes/standard-header.php';
             } else {
                 alert('Añadido al carrito (Demo ID: ' + productId + ')');
             }
-    }
+        }
     </script>
 
     <!-- Tienda Core JS -->

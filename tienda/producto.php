@@ -1,23 +1,59 @@
 <?php
 // candelaria/tienda/producto.php
+
+// --- EXTREME DEBUGGING ---
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 $id = $_GET['id'] ?? 0;
+$product = null;
 
-// Mock Data (Replace with DB fetch)
-$product = [
-    'id' => $id,
-    'nombre' => 'Camiseta Oficial Candelaria 2026',
-    'descripcion' => 'Vive la fiesta con la camiseta oficial de la Virgen de la Candelaria 2026. Fabricada en algodón 100% peruano de alta calidad, con estampado tacto cero de los diseños premiados del concurso de afiches. Disponible en todas las tallas. Ideal para usar durante las paradas y ensayos.',
-    'precio' => 45.00,
-    'stock' => 50,
-    'imagen' => 'assets/uploads/tienda/demo_tshirt.jpg', // Should be relative to public root
-    'imagenes' => ['assets/uploads/tienda/demo_tshirt.jpg', 'assets/uploads/tienda/demo_detail1.jpg', 'assets/uploads/tienda/demo_detail2.jpg'],
-    'estrellas' => 5,
-    'reviews' => 128
-];
-// En producción: Fetch DB WHERE id = $id
+try {
+    // 1. Locate Database Class (Dual Path Check)
+    $localDbPath = __DIR__ . '/../../php-admin/src/Config/Database.php';
+    $prodDbPath = __DIR__ . '/../../candelaria-admin/src/Config/Database.php';
 
-// Fix image path for display
-$mainImg = '../' . ($product['imagen'] ?: 'assets/placeholder.png');
+    if (file_exists($prodDbPath)) {
+        require_once $prodDbPath;
+    } elseif (file_exists($localDbPath)) {
+        require_once $localDbPath;
+    } else {
+        throw new Exception("Database file not found.");
+    }
+
+    if (!class_exists('Config\Database')) {
+        throw new Exception("Database Class not found.");
+    }
+
+    // 2. Connect
+    $database = new Config\Database();
+    $pdo = $database->connect('mipuno_candelaria');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // 3. Fetch Product
+    $stmt = $pdo->prepare("SELECT * FROM tienda_productos WHERE id = ?");
+    $stmt->execute([$id]);
+    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$product) {
+        die("Producto no encontrado o eliminado.");
+    }
+
+    // Normalizing data for view
+    $product['imagenes'] = [$product['imagen_principal']]; // Array por si luego hay galería real
+    $product['estrellas'] = 5; // Default/Mock por ahora hasta tener tabla reviews
+    $product['reviews'] = rand(10, 100);
+
+} catch (Throwable $e) {
+    die("Error Base de Datos: " . $e->getMessage());
+}
+
+// Fix image path logic
+// Database stores: "assets/uploads/tienda/foto.jpg"
+// We are in: candelaria/tienda/
+// We need: "../assets/uploads/tienda/foto.jpg"
+$baseImg = !empty($product['imagen_principal']) ? $product['imagen_principal'] : 'assets/placeholder.png';
+$mainImg = '../' . $baseImg;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -59,9 +95,10 @@ $mainImg = '../' . ($product['imagen'] ?: 'assets/placeholder.png');
                 </div>
                 <div class="flex gap-4 overflow-x-auto pb-2">
                     <?php foreach ($product['imagenes'] as $img): ?>
-                        <button onclick="document.getElementById('mainImage').src = '../<?= $img ?>'"
+                        <?php $thumbUrl = '../' . $img; ?>
+                        <button onclick="document.getElementById('mainImage').src = '<?= $thumbUrl ?>'"
                             class="w-20 h-20 flex-shrink-0 border-2 border-transparent hover:border-purple-500 rounded-lg overflow-hidden transition-all">
-                            <img src="../<?= $img ?>" class="w-full h-full object-cover">
+                            <img src="<?= $thumbUrl ?>" class="w-full h-full object-cover">
                         </button>
                     <?php endforeach; ?>
                 </div>
@@ -148,9 +185,9 @@ $mainImg = '../' . ($product['imagen'] ?: 'assets/placeholder.png');
             // Pass minimal details purely for immediate UI update before sync
             if (window.Tienda) {
                 window.Tienda.addItem(<?= $product['id'] ?>, qty, {
-                    nombre: '<?= $product['nombre'] ?>',
+                    nombre: '<?= htmlspecialchars($product['nombre'], ENT_QUOTES) ?>',
                     precio: <?= $product['precio'] ?>,
-                    imagen: '<?= $product['imagen'] ?>'
+                    imagen: '<?= $baseImg ?>'
                 });
             } else {
                 alert('Añadido: ' + qty + ' unidades');
