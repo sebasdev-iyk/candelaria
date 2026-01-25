@@ -13,7 +13,7 @@ if ($db) {
     try {
         // Get pagination parameters
         $page = isset($_GET['page']) ? max(1, (int) $_GET['page']) : 1;
-        $pageSize = isset($_GET['pageSize']) ? max(1, min(50, (int) $_GET['pageSize'])) : 10;
+        $pageSize = isset($_GET['pageSize']) ? max(1, min(1000, (int) $_GET['pageSize'])) : 10;
         $searchQuery = isset($_GET['q']) ? trim($_GET['q']) : '';
         $categoryFilter = isset($_GET['category']) ? trim($_GET['category']) : '';
 
