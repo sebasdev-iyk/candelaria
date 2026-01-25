@@ -357,6 +357,12 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
                                 class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 text-gray-300 hover:text-white">
                                 Trajes de Luces
                             </button>
+                            <div class="w-px h-6 bg-gray-600 mx-2 self-center"></div>
+                            <button onclick="refreshScores()" id="btn-refresh"
+                                class="px-3 py-2 rounded-md text-gray-400 hover:text-candelaria-gold hover:bg-gray-700 transition-colors"
+                                title="Actualizar Puntajes">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
                         </div>
                     </div>
 
