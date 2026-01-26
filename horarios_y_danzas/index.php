@@ -601,63 +601,143 @@
             lucide.createIcons();
         }
 
+        // Listado de Danzas Originarias (Sábado 31 de Enero 2026)
+        const danzasOriginarias = [
+            { id: 0, nombre: "Exhibición Conjunto en Exhibición", tipo: "Exhibición" },
+            { id: 1, nombre: "1 Carnaval De Nicasio", tipo: "Concurso" },
+            { id: 2, nombre: "2 Conjunto De Zampoñas Juventud Central Chucuito - Puno", tipo: "Concurso" },
+            { id: 3, nombre: "3 Asociación Folklórica Ayarachis Riqchary Huayna De Cuyo Cuyo- Sandia", tipo: "Concurso" },
+            { id: 4, nombre: "4 Danza Autóctona Choquelas De Calacoto", tipo: "Concurso" },
+            { id: 5, nombre: "5 Carnaval De Mañazo", tipo: "Concurso" },
+            { id: 6, nombre: "6 Conjunto De Sikuris Proyecto Cultural Wiñay Panqara Marka - Moho", tipo: "Concurso" },
+            { id: 7, nombre: "7 Institución Cultural Mallku Kunturine - Kelluyo", tipo: "Concurso" },
+            { id: 8, nombre: "8 Los Turcos De Cabanilla - Lampa", tipo: "Concurso" },
+            { id: 9, nombre: "9 Agrupación Sentimiento Sikuris De Ingeniería Civil", tipo: "Concurso" },
+            { id: 10, nombre: "10 Centro de Expresión Cultural Sikuris 12 de Julio Inchupalla-Huancane", tipo: "Concurso" },
+            { id: 11, nombre: "11 Asociación Cultural Carnaval Chaku Chucahuacas - Chupa - Azangaro", tipo: "Concurso" },
+            { id: 12, nombre: "12 Asociación Folklórica Carnaval De Jayllihuaya", tipo: "Concurso" },
+            { id: 13, nombre: "13 Cultural De Arte Milenario Heraldos Sangre Aymara - Ilave", tipo: "Concurso" },
+            { id: 14, nombre: "14 Conjunto Autóctono Cahuires Tajquina - Chucuito", tipo: "Concurso" },
+            { id: 15, nombre: "15 Conjunto Arte Folklórico Nueva Generación Kajelos Del C.P. Marca Esqueña", tipo: "Concurso" },
+            { id: 16, nombre: "16 Asociación Central Pulipulis De Taraco", tipo: "Concurso" },
+            { id: 17, nombre: "17 Asociación Cultural Carnaval De Chupa", tipo: "Concurso" },
+            { id: 18, nombre: "18 Conjunto Folklórico Carnaval De Taraco", tipo: "Concurso" },
+            { id: 19, nombre: "19 Asociación De Arte Folklórico Conjunto Yapuchiris 25 De Julio Huilacaya", tipo: "Concurso" },
+            { id: 20, nombre: "20 Asociación Juvenil De Sikuris Y Zampoñas Wayra Marca - Juliaca", tipo: "Concurso" },
+            { id: 21, nombre: "21 Asociación Cultural Carnaval De Huerta Huaraya - Puno", tipo: "Concurso" },
+            { id: 22, nombre: "22 Centro De Expresión Cultural \"Carnaval De Patambuco\"", tipo: "Concurso" },
+            { id: 23, nombre: "23 Asociación Cultural Chokela De La Comunidad Campesina Huarijuyo", tipo: "Concurso" },
+            { id: 24, nombre: "24 Conjunto Folklórico Carnaval De Churo - Huayrapata", tipo: "Concurso" },
+            { id: 25, nombre: "25 Conjunto De Sikuris Centro Cultural 2 De Febrero De Sucuni - Conima", tipo: "Concurso" },
+            { id: 26, nombre: "26 Conjunto Carnaval De Chullunquiani Palca Lampa", tipo: "Concurso" },
+            { id: 27, nombre: "27 Asociación Folklórica Alpaqueros De Culta Acora", tipo: "Concurso" },
+            { id: 28, nombre: "28 Asociación Cultural De Luriguyos Auténticos Rivales De Aychuyo - Yunguyo", tipo: "Concurso" },
+            { id: 29, nombre: "29 Danza Guerrera Los Unkakus De La Comunidad Campesina Pacaje", tipo: "Concurso" },
+            { id: 30, nombre: "30 Asociación Cultural Originarios Hach'akallas De Usicayos - Carabaya Puno", tipo: "Concurso" },
+            { id: 31, nombre: "31 Asociación Cultural Unucajas De Azangaro - Acupa", tipo: "Concurso" },
+            { id: 32, nombre: "32 Asociación Cultural Carnaval De Santiago Del Distrito De Santiago De Pupuja - Azangaro", tipo: "Concurso" },
+            { id: 33, nombre: "33 Centro De Expresión Cultural Sikuris \"Sentimiento Q'ori Wayra\" San Antonio De Putina", tipo: "Concurso" },
+            { id: 34, nombre: "34 Confraternidad Negritos De Ccacca - Acora", tipo: "Concurso" },
+            { id: 35, nombre: "35 Conjunto Wifalas De San Fernando San Juan De Salinas", tipo: "Concurso" },
+            { id: 36, nombre: "36 Sociedad De Expresión Cultural Café Pallay De Las Yungas De San Juan Del Oro", tipo: "Concurso" },
+            { id: 37, nombre: "37 Asociación De Arte Y Cultura Carnaval De Chucuito", tipo: "Concurso" },
+            { id: 38, nombre: "38 Conjunto Juventud K'ajelos San Juan De Dios De Pichacani", tipo: "Concurso" },
+            { id: 39, nombre: "39 Conjunto Folklórico Carnaval De Pusi-Cofocap", tipo: "Concurso" },
+            { id: 40, nombre: "40 Sikuris 27 De Junio Nueva Era - Puno", tipo: "Concurso" },
+            { id: 41, nombre: "41 Internacional Grupo De Arte Sikuris Los Chasquis De Coasia Vilquechico", tipo: "Concurso" },
+            { id: 42, nombre: "42 Luriguyos Fraternidad Cultural Los Compadres De Yunguyo", tipo: "Concurso" },
+            { id: 43, nombre: "43 Sociedad Cultural 9 de Agosto - Perka", tipo: "Concurso" },
+            { id: 44, nombre: "44 A.C. Carnaval Ceniza Sangre Aymara Zona Lago - Perka Plateria", tipo: "Concurso" },
+            { id: 45, nombre: "45 Asociación Cultural \"Qawra T'ikhiris\" Kelluyo", tipo: "Concurso" },
+            { id: 46, nombre: "46 Conjunto Autóctono Pinkillada Utachiris Aymaras - Desaguadero", tipo: "Concurso" },
+            { id: 47, nombre: "47 Conjunto Folklórico Flor De Sankayo Centro Pucara Acora", tipo: "Concurso" },
+            { id: 48, nombre: "48 Asociación Cultural Música Danza Sikuris Viento Andino Nueva Era Santa Lucia-Lampa", tipo: "Concurso" },
+            { id: 49, nombre: "49 Asociación Cultural Carnaval Misturitas Atuncolla - Sillustani", tipo: "Concurso" },
+            { id: 50, nombre: "50 Conjunto De Danzas Pinkilladas Lu'qe Pankara De La Comunidad De Carancas - Desaguadero", tipo: "Concurso" },
+            { id: 51, nombre: "51 Asociación Cultural Los Tenientes De Incasaya - Caracoto", tipo: "Concurso" },
+            { id: 52, nombre: "52 Conjunto Juventud Wifalas De Centro Poblado De San Isidro-Putina", tipo: "Concurso" },
+            { id: 53, nombre: "53 Conjunto Milenario De Sikuris 12 De Diciembre - El Collao", tipo: "Concurso" },
+            { id: 54, nombre: "54 Conjunto Awatiris Santiago De Vizcachani Jayllihuaya", tipo: "Concurso" },
+            { id: 55, nombre: "55 Asociación Cultural Chacareros De Caritamaya Acora - Puno", tipo: "Concurso" },
+            { id: 56, nombre: "56 Agrupación Cultural De Música Y Danzas Autóctonas Sikuris 29 De Septiembre Chillcapata - Conima", tipo: "Concurso" },
+            { id: 57, nombre: "57 Autenticos Lawa Kumus Del Centro Poblado Thunco - Acora", tipo: "Concurso" },
+            { id: 58, nombre: "58 Centro Cultural Juventud K'ajelos Laraqueri", tipo: "Concurso" },
+            { id: 59, nombre: "59 Autentico Y Original Carnaval De Ichu", tipo: "Concurso" },
+            { id: 60, nombre: "60 Guerreros Hach'akallas De Oruro - Crucero", tipo: "Concurso" },
+            { id: 61, nombre: "61 Agrupación Cultural Sikuris Sentimiento Rosal Andino - Cabana", tipo: "Concurso" },
+            { id: 62, nombre: "62 Centro Cultural Sikuris y Danza Proyecto Peñablanca-Santa Lucia-Lampa", tipo: "Concurso" },
+            { id: 63, nombre: "63 Asociación Cultural Q'aswa 5 Claveles De Capachica", tipo: "Concurso" },
+            { id: 64, nombre: "64 Conjunto Folklórico \"Carnaval De Chuque De La Parcialidad De Lluscahaque Jurunawi\" - Acora", tipo: "Concurso" },
+            { id: 65, nombre: "65 Asociación Cultural Carnaval Machu - Thinkay Santa Lucia", tipo: "Concurso" },
+            { id: 66, nombre: "66 Asociación Chacallada Juventud Clavelitos De Camacani - Plateria", tipo: "Concurso" },
+            { id: 67, nombre: "67 Asociación Cultural \"Ispalla Llachon\" - Capachica", tipo: "Concurso" },
+            { id: 68, nombre: "68 Asociación Cultural Sikuris Kalacampana - Chucuito", tipo: "Concurso" },
+            { id: 69, nombre: "69 Conjunto Juventud De Wifalas San Antonio De Putina", tipo: "Concurso" },
+            { id: 70, nombre: "70 Conjunto Folklórico Carnaval Autóctono De Angara - Vilavila", tipo: "Concurso" },
+            { id: 71, nombre: "71 Kajelos Asociación Cultural Estudiantes Laraqueri", tipo: "Concurso" },
+            { id: 72, nombre: "72 Conjunto Carnaval De Alto Antalla", tipo: "Concurso" },
+            { id: 73, nombre: "73 Asociación Cultural Chacareros Fuerza Aymara Yanaque Zona Lago - Acora", tipo: "Concurso" },
+            { id: 74, nombre: "Exhibición Asociación Cultural los Argentinos de Paucarcolla", tipo: "Exhibición" }
+        ];
+
+        // Función Helper para sumar minutos a una fecha
+        function addMinutes(date, minutes) {
+            return new Date(date.getTime() + minutes * 60000);
+        }
+
         // Renderizar Simulador (Real-Time Schedule UI)
         function renderSimulador() {
+
             const container = document.getElementById('events-container');
             if (!container) return;
 
-            // Updated Layout for "Real-Time" with Cheerful/Professional Theme
-            const isDay1 = state.activeDay === 'day1';
-            const isDay2 = state.activeDay === 'day2';
-            const isDay3 = state.activeDay === 'day3';
+            // 1. Calcular Tiempos
+            // Fecha Base: Sábado 31 de Enero 2026, 10:00 AM
+            const baseDate = new Date('2026-01-31T10:00:00-05:00'); // Hora Puno/Perú
+            const slotDuration = 10; // minutos
 
-            container.innerHTML = `
-                <!-- Heading & Tabs -->
+            // Simular fecha actual para pruebas si no estamos en 2026 (Comentar para producción real)
+            // const now = new Date('2026-01-31T10:25:00-05:00');
+            const now = new Date(); // Fecha Real del sistema del usuario
+
+            const fullSchedule = danzasOriginarias.map((danza, index) => {
+                const start = addMinutes(baseDate, index * slotDuration);
+                const end = addMinutes(start, slotDuration);
+
+                let status = 'upcoming'; // upcoming, live, past
+                if (now >= end) status = 'past';
+                else if (now >= start && now < end) status = 'live';
+
+                return {
+                    ...danza,
+                    start,
+                    end,
+                    status,
+                    startTimeStr: start.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', hour12: true }),
+                    endTimeStr: end.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', hour12: true })
+                };
+            });
+
+            // 2. Filtrar Eventos
+            const liveEvent = fullSchedule.find(e => e.status === 'live');
+            const pastEvents = fullSchedule.filter(e => e.status === 'past').slice(-2); // Últimos 2
+            const upcomingEvents = fullSchedule.filter(e => e.status === 'upcoming');
+
+            // 3. Renderizar
+            let html = `
+                <!-- Heading -->
                 <div class="flex flex-col gap-6 mb-8 font-display">
                     <div class="flex flex-wrap justify-between items-end gap-4">
                         <div class="flex flex-col gap-2">
-                            <h1 class="text-gray-900 text-3xl md:text-5xl font-black tracking-tight">Horario en Vivo</h1>
-                            <p class="text-gray-500 text-lg max-w-2xl">Sigue el orden oficial de presentación de la Festividad de la Candelaria.</p>
+                            <h1 class="text-gray-900 text-3xl md:text-5xl font-black tracking-tight">Simulador en Vivo</h1>
+                            <p class="text-gray-500 text-lg max-w-2xl">
+                                Danzas Originarias - Sábado 31 de Enero 2026 <br>
+                                <span class="text-sm font-medium text-candelaria-purple">Estadio UNA Puno • Cada danza 10 min</span>
+                            </p>
                         </div>
-                        <!-- Date Toggle -->
-                        <div class="bg-white p-1 rounded-full inline-flex border border-gray-200 self-start md:self-end shadow-sm">
-                            <button onclick="setActiveDay('day1')" class="px-5 py-2 rounded-full text-sm font-bold transition-colors ${state.activeDay === 'day1' ? 'bg-candelaria-primary text-white shadow-md' : 'text-gray-500 hover:text-gray-900'}">
-                                Día 1
-                            </button>
-                            <button onclick="setActiveDay('day2')" class="px-5 py-2 rounded-full text-sm font-bold transition-colors ${state.activeDay === 'day2' ? 'bg-candelaria-primary text-white shadow-md' : 'text-gray-500 hover:text-gray-900'}">
-                                Día 2: Trajes de Luces
-                            </button>
-                            <button onclick="setActiveDay('day3')" class="px-5 py-2 rounded-full text-sm font-bold transition-colors ${state.activeDay === 'day3' ? 'bg-candelaria-primary text-white shadow-md' : 'text-gray-500 hover:text-gray-900'}">
-                                Día 3
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Stats Cards -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="flex flex-col gap-1 rounded-2xl p-5 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-                            <div class="flex items-center gap-2 text-gray-500 mb-1">
-                                <span class="material-symbols-outlined text-xl">groups</span>
-                                <span class="text-sm font-bold uppercase tracking-wider">Participación</span>
-                            </div>
-                            <p class="text-gray-900 text-3xl font-bold">45 <span class="text-gray-400 text-xl font-medium">/ 80</span></p>
-                            <p class="text-xs text-gray-500">Conjuntos presentados</p>
-                        </div>
-                        <div class="flex flex-col gap-1 rounded-2xl p-5 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-                            <div class="flex items-center gap-2 text-gray-500 mb-1">
-                                <span class="material-symbols-outlined text-xl">schedule</span>
-                                <span class="text-sm font-bold uppercase tracking-wider">Retraso Promedio</span>
-                            </div>
-                            <p class="text-candelaria-primary text-3xl font-bold">+25 min</p>
-                            <p class="text-xs text-gray-500">Detrás del horario</p>
-                        </div>
-                        <div class="flex flex-col gap-1 rounded-2xl p-5 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow sm:col-span-2 lg:col-span-1">
-                            <div class="flex items-center gap-2 text-gray-500 mb-1">
-                                <span class="material-symbols-outlined text-xl">sunny</span>
-                                <span class="text-sm font-bold uppercase tracking-wider">Clima (Puno)</span>
-                            </div>
-                            <p class="text-gray-900 text-3xl font-bold">14°C</p>
-                            <p class="text-xs text-gray-500">Parcialmente Nublado, UV Alto</p>
+                        <div class="bg-white p-2 rounded-xl border border-gray-200 shadow-sm text-right">
+                            <p class="text-xs text-gray-400 uppercase font-bold">Hora Actual</p>
+                            <p class="text-xl font-mono font-bold text-gray-800">${now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</p>
                         </div>
                     </div>
                 </div>
@@ -667,151 +747,137 @@
                     <!-- Vertical Line -->
                     <div class="absolute left-6 md:left-10 top-4 bottom-0 w-0.5 bg-gradient-to-b from-gray-200 via-gray-200 to-transparent"></div>
                     <div class="flex flex-col gap-10">
+            `;
 
-                        <!-- Past Item 1 -->
-                        <div class="relative pl-16 md:pl-20 group opacity-60 hover:opacity-90 transition-opacity">
-                            <div class="absolute left-[21px] md:left-[37px] top-2 size-3 bg-gray-300 rounded-full ring-4 ring-white"></div>
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-transparent hover:border-gray-200 hover:bg-white hover:shadow-sm transition-all">
-                                <div class="flex flex-col gap-1">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-gray-500 font-mono text-sm">07:45 AM</span>
-                                        <span class="px-2 py-0.5 rounded-full bg-gray-100 border border-gray-200 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Finalizado</span>
-                                    </div>
-                                    <h3 class="text-gray-800 text-lg font-bold leading-tight">Asociación Cultural Caporales Centralistas</h3>
+            // A) Past Events
+            pastEvents.forEach(evt => {
+                html += `
+                    <div class="relative pl-16 md:pl-20 group opacity-60 hover:opacity-90 transition-opacity">
+                        <div class="absolute left-[21px] md:left-[37px] top-2 size-3 bg-gray-300 rounded-full ring-4 ring-white"></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-transparent hover:border-gray-200 hover:bg-white hover:shadow-sm transition-all">
+                            <div class="flex flex-col gap-1">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-gray-500 font-mono text-sm">${evt.startTimeStr}</span>
+                                    <span class="px-2 py-0.5 rounded-full bg-gray-100 border border-gray-200 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Finalizado</span>
                                 </div>
-                                <div class="text-right sm:text-left">
-                                    <span class="text-sm text-green-600 font-medium">A tiempo</span>
-                                </div>
+                                <h3 class="text-gray-800 text-lg font-bold leading-tight">${evt.nombre}</h3>
                             </div>
                         </div>
+                    </div>
+                `;
+            });
 
-                         <!-- Past Item 2 -->
-                        <div class="relative pl-16 md:pl-20 group opacity-70 hover:opacity-100 transition-opacity">
-                            <div class="absolute left-[21px] md:left-[37px] top-2 size-3 bg-gray-300 rounded-full ring-4 ring-white"></div>
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-transparent hover:border-gray-200 hover:bg-white hover:shadow-sm transition-all">
-                                <div class="flex flex-col gap-1">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-gray-500 font-mono text-sm">08:15 AM</span>
-                                        <span class="px-2 py-0.5 rounded-full bg-gray-100 border border-gray-200 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Finalizado</span>
-                                    </div>
-                                    <h3 class="text-gray-800 text-lg font-bold leading-tight">Conjunto Sicuris del Barrio Mañazo</h3>
-                                </div>
-                                <div class="text-right sm:text-left">
-                                    <span class="text-sm text-red-500 font-medium">+10m Retraso</span>
-                                </div>
-                            </div>
+            // B) Live Event
+            if (liveEvent) {
+                html += `
+                    <div class="relative pl-0 md:pl-16">
+                        <!-- Custom Node for Live -->
+                        <div class="absolute left-[37px] top-1/2 -translate-y-1/2 hidden md:block">
+                            <span class="relative flex h-4 w-4">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-candelaria-primary opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-4 w-4 bg-candelaria-primary"></span>
+                            </span>
                         </div>
-
-                        <!-- LIVE ITEM -->
-                        <div class="relative pl-0 md:pl-16">
-                            <!-- Custom Node for Live -->
-                            <div class="absolute left-[37px] top-1/2 -translate-y-1/2 hidden md:block">
-                                <span class="relative flex h-4 w-4">
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-candelaria-primary opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-4 w-4 bg-candelaria-primary"></span>
-                                </span>
-                            </div>
-                            
-                            <!-- Live Card -->
-                            <div class="bg-white rounded-2xl border border-candelaria-primary/30 shadow-[0_10px_40px_-10px_rgba(236,19,37,0.15)] overflow-hidden relative">
-                                <!-- Live Banner -->
-                                <div class="bg-candelaria-primary/5 border-b border-candelaria-primary/10 px-6 py-2 flex items-center justify-between">
-                                    <div class="flex items-center gap-2 text-candelaria-primary font-black tracking-wider text-sm uppercase">
-                                        <span class="material-symbols-outlined text-lg animate-pulse fill-1">circle</span>
-                                        Escenario Principal
-                                    </div>
-                                    <div class="flex items-center gap-2 opacity-80">
-                                        <span class="material-symbols-outlined text-candelaria-primary text-lg">visibility</span>
-                                        <span class="text-gray-800 text-xs font-bold">12.5k viendo</span>
-                                    </div>
-                                </div>
-
-                                <div class="p-6 grid grid-cols-1 md:grid-cols-12 gap-6">
-                                    <!-- Info Column -->
-                                    <div class="md:col-span-7 flex flex-col justify-between gap-6">
-                                        <div>
-                                            <div class="flex items-center gap-3 mb-2">
-                                                <span class="text-gray-500 font-mono text-sm">Prog: 08:30 AM</span>
-                                                <span class="px-3 py-1 rounded-full bg-candelaria-primary text-white text-[10px] font-black uppercase tracking-wider shadow-sm">Presentándose Ahora</span>
-                                            </div>
-                                            <h2 class="text-3xl font-black text-gray-900 leading-tight mb-2">Diablada Bellavista</h2>
-                                            <p class="text-gray-500 text-sm">Tradicional diablada con más de 400 danzarines y 3 bandas de músicos. Conocidos por sus máscaras intrincadas.</p>
-                                        </div>
-                                        
-                                        <div class="grid grid-cols-3 gap-2 mt-2">
-                                            <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                                                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">Inicio Real</p>
-                                                <p class="text-gray-900 font-mono font-bold">08:50</p>
-                                            </div>
-                                            <div class="bg-gray-50 rounded-xl p-3 border border-gray-100 border-l-2 border-l-candelaria-primary">
-                                                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">Retraso</p>
-                                                <p class="text-candelaria-primary font-mono font-bold">+20m</p>
-                                            </div>
-                                            <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                                                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">Fin Est.</p>
-                                                <p class="text-gray-900 font-mono font-bold">09:35</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="flex gap-3 mt-2">
-                                            <a href="../live-platform/index.php" class="flex-1 bg-gray-900 text-white hover:bg-gray-800 py-3 rounded-full font-bold text-sm transition-colors flex items-center justify-center gap-2 shadow-lg shadow-gray-900/20">
-                                                <span class="material-symbols-outlined text-lg">play_circle</span>
-                                                Ver Transmisión
-                                            </a>
-                                            <button class="size-11 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:text-candelaria-primary hover:border-candelaria-primary hover:bg-red-50 transition-colors" title="Compartir">
-                                                <span class="material-symbols-outlined text-lg">share</span>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Visual Column -->
-                                    <div class="md:col-span-5 relative h-48 md:h-auto rounded-xl overflow-hidden bg-gray-100 group/video cursor-pointer border border-gray-200">
-                                        <img alt="Diablada" class="absolute inset-0 w-full h-full object-cover group-hover/video:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAerOl6EH8tGjccvYLHzd4uCFj3lQ9XCX3mg5C-FIzOD_zoMA6bJkUMs-zAqc4MpETwE9viTXg2UqGvyziBVELeRqtPl5KC3eT5Rg_1wCMppAmujAa9l8qJs9iaglBK4GbMRI2IJCauU-OSeYOgg1yU4JNspVW_k1wJMJJWyWVMdt4KvWmCCcSdvw1H_Ur44PkCmhygNeGM0BurSWDPzrx-6OrG2KMMJ63iXEDQeJu6Z9fpFHcw1GGHvSYqv3ikq-eUaVOMQjq4KXgM">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                                        <div class="absolute inset-0 flex items-center justify-center">
-                                            <div class="size-12 rounded-full bg-white/90 text-candelaria-primary flex items-center justify-center shadow-lg group-hover/video:scale-110 transition-transform">
-                                                <span class="material-symbols-outlined text-2xl">play_arrow</span>
-                                            </div>
-                                        </div>
-                                        <div class="absolute bottom-3 left-3">
-                                            <p class="text-white text-xs font-bold shadow-black drop-shadow-md">En Vivo • Escenario Principal</p>
-                                        </div>
-                                    </div>
+                        
+                        <!-- Live Card -->
+                        <div class="bg-white rounded-2xl border border-candelaria-primary/30 shadow-[0_10px_40px_-10px_rgba(236,19,37,0.15)] overflow-hidden relative">
+                            <div class="bg-candelaria-primary/5 border-b border-candelaria-primary/10 px-6 py-2 flex items-center justify-between">
+                                <div class="flex items-center gap-2 text-candelaria-primary font-black tracking-wider text-sm uppercase">
+                                    <span class="material-symbols-outlined text-lg animate-pulse fill-1">circle</span>
+                                    En Escenario
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Upcoming Item 1 -->
-                        <div class="relative pl-16 md:pl-20 group">
-                            <!-- Node -->
-                            <div class="absolute left-[21px] md:left-[37px] top-6 size-3 bg-white border-2 border-gray-300 rounded-full"></div>
-                            <!-- Connector (Dotted) -->
-                            <div class="absolute left-6 md:left-10 top-9 bottom-[-40px] w-px border-l border-dashed border-gray-300"></div>
-                            
-                            <div class="flex flex-col gap-3 p-4 rounded-xl hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-gray-100 cursor-pointer">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-gray-900 font-mono font-bold text-lg">09:35 AM</span>
-                                        <span class="px-2 py-0.5 rounded-full bg-gray-100 border border-gray-200 text-[10px] font-bold text-gray-700 uppercase tracking-wider">A Continuación</span>
-                                    </div>
-                                    <div class="flex items-center gap-1 text-orange-500 text-sm font-medium">
-                                        <span class="material-symbols-outlined text-base">warning</span>
-                                        <span>Est. +25m Tarde</span>
-                                    </div>
-                                </div>
-                                <div class="flex gap-4">
-                                    <div class="size-12 rounded-full bg-gray-100 border border-gray-200 flex-shrink-0 overflow-hidden">
-                                        <img alt="Morenada" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD62isiJ67ZgQT7JTAIxUL8Ely53D_ukcAcCn1qMbbky7AiTJGb1itVxMtj9kYyXDZafHtesTetDXqV0A-cp49dZcrtswdUVHrFqQMlf1EaVTOkYhUoJpw4gmXtC7eNCCtjlKfSWJybF3n187gHlwiqrEIhpUEA8ks48rq3B5CnhBAOKLtu3Tgtf__wYXmrOspwLoukyDrtPV15iW6aBRwAYs1aG3S2M7U8QMp63EiS7flcrjXE8IA-PdLQtTlTzqtTlMuqupHuRR-T">
-                                    </div>
+                            <div class="p-6">
+                                <div class="flex flex-col justify-between gap-6">
                                     <div>
-                                        <h3 class="text-gray-900 text-xl font-bold">Morenada Laykakota</h3>
-                                        <p class="text-gray-500 text-sm mt-1">Una de las fraternidades más antiguas. Se espera retraso por cambio de vestuario.</p>
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span class="text-gray-500 font-mono text-sm">Inicio: ${liveEvent.startTimeStr}</span>
+                                            <span class="px-3 py-1 rounded-full bg-candelaria-primary text-white text-[10px] font-black uppercase tracking-wider shadow-sm">Presentándose Ahora</span>
+                                        </div>
+                                        <h2 class="text-3xl font-black text-gray-900 leading-tight mb-2">${liveEvent.nombre}</h2>
+                                        <p class="text-gray-500 text-sm">Duras 10 minutos strictos en el escenario.</p>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-2 gap-2 mt-2">
+                                        <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">Fin Programado</p>
+                                            <p class="text-gray-900 font-mono font-bold">${liveEvent.endTimeStr}</p>
+                                        </div>
+                                        <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">Slot</p>
+                                            <p class="text-gray-900 font-mono font-bold">#${liveEvent.id}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                `;
+            } else if (upcomingEvents.length > 0 && pastEvents.length > 0) {
+                // No live event but in between slots? Or just waiting for next.
+                // Actually logic covers all times. If now < start[0], all upcoming.
+            } else if (upcomingEvents.length === danzasOriginarias.length) {
+                // Before event starts
+                html += `
+                    <div class="relative pl-0 md:pl-16 mb-8">
+                        <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100 text-center">
+                            <h3 class="text-blue-900 font-bold text-lg">El evento aún no ha comenzado</h3>
+                            <p class="text-blue-700 text-sm">Inicia el Sábado 31 de Enero a las 10:00 AM</p>
+                        </div>
+                    </div>
+                 `;
+            }
 
-                         <!-- Upcoming Item 2 -->
+            // C) Upcoming Events (Show next 5)
+            upcomingEvents.slice(0, 50).forEach((evt, idx) => {
+                const label = idx === 0 ? 'A Continuación' : 'Programado';
+                html += `
+                    <div class="relative pl-16 md:pl-20 group">
+                        <!-- Node -->
+                        <div class="absolute left-[21px] md:left-[37px] top-6 size-3 bg-white border-2 border-gray-300 rounded-full"></div>
+                        <!-- Connector -->
+                        <div class="absolute left-6 md:left-10 top-9 bottom-[-40px] w-px border-l border-dashed border-gray-300"></div>
+                        
+                        <div class="flex flex-col gap-3 p-4 rounded-xl hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-gray-100 cursor-pointer">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-gray-900 font-mono font-bold text-lg">${evt.startTimeStr}</span>
+                                    <span class="px-2 py-0.5 rounded-full bg-gray-100 border border-gray-200 text-[10px] font-bold text-gray-700 uppercase tracking-wider">${label}</span>
+                                </div>
+                            </div>
+                            <h3 class="text-gray-700 font-bold text-base">${evt.nombre}</h3>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div> <!-- End Timeline flex col -->
+                </div> <!-- End Timeline Container -->
+            `;
+
+            container.innerHTML = html;
+
+            // Re-schedule update every 10 seconds to keep clock fresh
+            if (!window.simuladorInterval) {
+                window.simuladorInterval = setInterval(renderSimulador, 10000);
+            }
+        }
+                                </div >
+            <div class="flex gap-4">
+                <div class="size-12 rounded-full bg-gray-100 border border-gray-200 flex-shrink-0 overflow-hidden">
+                    <img alt="Morenada" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD62isiJ67ZgQT7JTAIxUL8Ely53D_ukcAcCn1qMbbky7AiTJGb1itVxMtj9kYyXDZafHtesTetDXqV0A-cp49dZcrtswdUVHrFqQMlf1EaVTOkYhUoJpw4gmXtC7eNCCtjlKfSWJybF3n187gHlwiqrEIhpUEA8ks48rq3B5CnhBAOKLtu3Tgtf__wYXmrOspwLoukyDrtPV15iW6aBRwAYs1aG3S2M7U8QMp63EiS7flcrjXE8IA-PdLQtTlTzqtTlMuqupHuRR-T">
+                </div>
+                <div>
+                    <h3 class="text-gray-900 text-xl font-bold">Morenada Laykakota</h3>
+                    <p class="text-gray-500 text-sm mt-1">Una de las fraternidades más antiguas. Se espera retraso por cambio de vestuario.</p>
+                </div>
+            </div>
+                            </div >
+                        </div >
+
+                         < !--Upcoming Item 2 -- >
                         <div class="relative pl-16 md:pl-20 group">
                             <!-- Node -->
                             <div class="absolute left-[21px] md:left-[37px] top-6 size-3 bg-gray-300 rounded-full"></div>
@@ -835,7 +901,7 @@
                             </div>
                         </div>
 
-                         <!-- Upcoming Item 3 -->
+                         <!--Upcoming Item 3 -- >
                         <div class="relative pl-16 md:pl-20 group">
                             <!-- Node -->
                             <div class="absolute left-[21px] md:left-[37px] top-6 size-3 bg-gray-300 rounded-full"></div>
@@ -865,8 +931,8 @@
                                 <span class="material-symbols-outlined">expand_more</span>
                             </button>
                         </div>
-                    </div>
-                </div>
+                    </div >
+                </div >
             `;
 
             // Re-render icons just in case
@@ -879,7 +945,7 @@
             if (!container) return;
 
             container.innerHTML = `
-                <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+            < div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6" >
                     <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
                         <i data-lucide="help-circle" class="w-5 h-5 mr-2 text-candelaria-purple"></i>
                         Preguntas Frecuentes
@@ -897,32 +963,32 @@
                             </div>
                         `).join('')}
                     </div>
+                </div >
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-gradient-to-br from-purple-500 to-candelaria-purple rounded-2xl shadow-lg p-6 text-white">
+                    <h3 class="font-bold text-lg mb-2 flex items-center">
+                        <i data-lucide="mail" class="w-5 h-5 mr-2"></i>
+                        Correo Electrónico
+                    </h3>
+                    <p class="text-purple-100 mb-4">Envíanos tu consulta por correo</p>
+                    <button class="w-full py-3 bg-white text-candelaria-purple rounded-lg font-bold hover:bg-purple-50 transition-colors">
+                        Enviar Correo
+                    </button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <div class="bg-gradient-to-br from-purple-500 to-candelaria-purple rounded-2xl shadow-lg p-6 text-white">
-                        <h3 class="font-bold text-lg mb-2 flex items-center">
-                            <i data-lucide="mail" class="w-5 h-5 mr-2"></i>
-                            Correo Electrónico
-                        </h3>
-                        <p class="text-purple-100 mb-4">Envíanos tu consulta por correo</p>
-                        <button class="w-full py-3 bg-white text-candelaria-purple rounded-lg font-bold hover:bg-purple-50 transition-colors">
-                            Enviar Correo
-                        </button>
-                    </div>
-
-                    <div class="bg-gradient-to-br from-blue-500 to-candelaria-lake rounded-2xl shadow-lg p-6 text-white">
-                        <h3 class="font-bold text-lg mb-2 flex items-center">
-                            <i data-lucide="phone" class="w-5 h-5 mr-2"></i>
-                            Contacto Directo
-                        </h3>
-                        <p class="text-blue-100 mb-4">Habla con nuestro equipo</p>
-                        <button class="w-full py-3 bg-white text-blue-600 rounded-lg font-bold hover:bg-blue-50 transition-colors">
-                            Llamar Ahora
-                        </button>
-                    </div>
+                <div class="bg-gradient-to-br from-blue-500 to-candelaria-lake rounded-2xl shadow-lg p-6 text-white">
+                    <h3 class="font-bold text-lg mb-2 flex items-center">
+                        <i data-lucide="phone" class="w-5 h-5 mr-2"></i>
+                        Contacto Directo
+                    </h3>
+                    <p class="text-blue-100 mb-4">Habla con nuestro equipo</p>
+                    <button class="w-full py-3 bg-white text-blue-600 rounded-lg font-bold hover:bg-blue-50 transition-colors">
+                        Llamar Ahora
+                    </button>
                 </div>
-            `;
+            </div>
+        `;
 
             // Actualizar los íconos de Lucide
             lucide.createIcons();
@@ -935,7 +1001,7 @@
 
             // Show loading state first
             container.innerHTML = `
-                <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+            < div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6" >
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xl font-bold text-gray-900 flex items-center">
                             <i data-lucide="users" class="w-5 h-5 mr-2 text-candelaria-purple"></i>
@@ -943,7 +1009,7 @@
                         </h2>
                     </div>
 
-                    <!-- Search bar for danzas -->
+                    <!--Search bar for danzas-- >
                     <form id="danzas-search-form" class="mb-6">
                         <div class="flex gap-3">
                             <div class="relative flex-grow group">
@@ -982,7 +1048,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div >
             `;
 
             // Actualizar los íconos de Lucide
@@ -994,7 +1060,7 @@
                 const response = await fetch('../api/danzas.php');
 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    throw new Error(`HTTP error! status: ${ response.status } `);
                 }
 
                 const result = await response.json();
@@ -1005,7 +1071,7 @@
                 const danzasGrid = document.getElementById('danzas-grid');
                 if (danzasGrid) {
                     if (dances.length === 0) {
-                        danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">No se encontraron dansas en la base de datos</div>`;
+                        danzasGrid.innerHTML = `< div class="col-span-full text-center py-8 text-gray-500" > No se encontraron dansas en la base de datos</div > `;
                     } else {
                         // Store in global danzas array for modal access
                         danzas = dances;
@@ -1032,7 +1098,7 @@
                             const card = document.createElement('div');
                             card.className = 'event-card';
                             card.innerHTML = `
-                                <div class="event-image-container">
+            < div class="event-image-container" >
                                     <img class="event-image" src="${fixPhotoPath(danza.foto)}"
                                          alt="${danza.conjunto}"
                                          onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';">
@@ -1044,7 +1110,7 @@
                                         Ver Detalles
                                     </button>
                                 </div>
-                            `;
+        `;
                             danzasGrid.appendChild(card);
                         });
                     }
@@ -1058,16 +1124,16 @@
                     if (resultsInfo) {
                         const start = (pagination.page - 1) * pagination.pageSize + 1;
                         const end = Math.min(pagination.page * pagination.pageSize, pagination.total);
-                        resultsInfo.textContent = `Mostrando ${start} a ${end} de ${pagination.total} resultados`;
+                        resultsInfo.textContent = `Mostrando ${ start } a ${ end } de ${ pagination.total } resultados`;
                     }
 
                     if (paginationContainer) {
                         let paginationHtml = '';
 
                         if (pagination.hasPrev) {
-                            paginationHtml += `<button class="prev px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${pagination.page - 1})">← Anterior</button>`;
+                            paginationHtml += `< button class="prev px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick = "changeDanzaPage(${pagination.page - 1})" >← Anterior</button > `;
                         } else {
-                            paginationHtml += `<button class="prev px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>← Anterior</button>`;
+                            paginationHtml += `< button class="prev px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled >← Anterior</button > `;
                         }
 
                         // Calculate the range of pages to show
@@ -1082,7 +1148,7 @@
 
                         // Add first page if not already included and we have more than the max visible pages
                         if (startPage > 1) {
-                            paginationHtml += `<button class="px-3 py-2 rounded-lg ${startPage === pagination.page ? 'bg-candelaria-purple text-white' : 'bg-gray-100 hover:bg-gray-200'}" onclick="changeDanzaPage(1)">1</button>`;
+                            paginationHtml += `< button class="px-3 py-2 rounded-lg ${startPage === pagination.page ? 'bg-candelaria-purple text-white' : 'bg-gray-100 hover:bg-gray-200'}" onclick = "changeDanzaPage(1)" > 1</button > `;
                             if (startPage > 2) {
                                 paginationHtml += '<span class="px-2">...</span>';
                             }
@@ -1091,9 +1157,9 @@
                         // Add the page numbers in the range
                         for (let i = startPage; i <= endPage; i++) {
                             if (i === pagination.page) {
-                                paginationHtml += `<button class="px-3 py-2 bg-candelaria-purple text-white rounded-lg">${i}</button>`;
+                                paginationHtml += `< button class="px-3 py-2 bg-candelaria-purple text-white rounded-lg" > ${ i }</button > `;
                             } else {
-                                paginationHtml += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${i})">${i}</button>`;
+                                paginationHtml += `< button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick = "changeDanzaPage(${i})" > ${ i }</button > `;
                             }
                         }
 
@@ -1102,13 +1168,13 @@
                             if (endPage < pagination.totalPages - 1) {
                                 paginationHtml += '<span class="px-2">...</span>';
                             }
-                            paginationHtml += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${pagination.totalPages})">${pagination.totalPages}</button>`;
+                            paginationHtml += `< button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick = "changeDanzaPage(${pagination.totalPages})" > ${ pagination.totalPages }</button > `;
                         }
 
                         if (pagination.hasNext) {
-                            paginationHtml += `<button class="next px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${pagination.page + 1})">Siguiente →</button>`;
+                            paginationHtml += `< button class="next px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick = "changeDanzaPage(${pagination.page + 1})" > Siguiente →</button > `;
                         } else {
-                            paginationHtml += `<button class="next px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>Siguiente →</button>`;
+                            paginationHtml += `< button class="next px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled > Siguiente →</button > `;
                         }
 
                         paginationContainer.innerHTML = paginationHtml;
@@ -1116,7 +1182,7 @@
                 } else {
                     const resultsInfo = document.getElementById('results-info');
                     if (resultsInfo) {
-                        resultsInfo.textContent = `Mostrando ${dances.length} resultados`;
+                        resultsInfo.textContent = `Mostrando ${ dances.length } resultados`;
                     }
                 }
 
@@ -1124,7 +1190,7 @@
                 console.error('Error loading danzas:', error);
                 const danzasGrid = document.getElementById('danzas-grid');
                 if (danzasGrid) {
-                    danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-red-500">Error al cargar las dansas: ${error.message}</div>`;
+                    danzasGrid.innerHTML = `< div class="col-span-full text-center py-8 text-red-500" > Error al cargar las dansas: ${ error.message }</div > `;
                 }
             }
 
@@ -1173,16 +1239,16 @@
             try {
                 // Construct URL with proper pagination parameters
                 const pageSize = 12; // Set consistent page size
-                let url = `../api/danzas.php?page=${page}&pageSize=${pageSize}`;
+                let url = `../ api / danzas.php ? page = ${ page }& pageSize=${ pageSize } `;
 
                 if (query && query.trim() !== '') {
-                    url += `&q=${encodeURIComponent(query)}`;
+                    url += `& q=${ encodeURIComponent(query) } `;
                 }
 
                 console.log('[DEBUG] Fetching URL:', url);
 
                 const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${ response.status } `);
 
                 const result = await response.json();
                 console.log('[DEBUG] API Response:', result);
@@ -1192,7 +1258,7 @@
 
                 // Update the danzas grid
                 if (dances.length === 0) {
-                    danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">No se encontraron danzas${query ? ` que coincidan con "${query}"` : ''}</div>`;
+                    danzasGrid.innerHTML = `< div class="col-span-full text-center py-8 text-gray-500" > No se encontraron danzas${ query ? ` que coincidan con "${query}"` : '' }</div > `;
                 } else {
                     // Store in global danzas array for modal access
                     danzas = dances;
@@ -1202,7 +1268,7 @@
                     dances.forEach(danza => {
                         const card = document.createElement('div');
                         card.className = 'event-card';
-                        card.innerHTML = `<div class="event-image-container"><img class="event-image" src="${fixPhotoPath(danza.foto)}" alt="${danza.conjunto}" onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';"></div><div class="event-content"><div class="event-genre">${danza.categoria || 'N/A'}</div><h3 class="event-title">${danza.conjunto}</h3><button class="event-btn" onclick="openDanceModal(${danza.id})">Ver Detalles</button></div>`;
+                        card.innerHTML = `< div class="event-image-container" ><img class="event-image" src="${fixPhotoPath(danza.foto)}" alt="${danza.conjunto}" onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';"></div><div class="event-content"><div class="event-genre">${danza.categoria || 'N/A'}</div><h3 class="event-title">${danza.conjunto}</h3><button class="event-btn" onclick="openDanceModal(${danza.id})">Ver Detalles</button></div>`;
                         danzasGrid.appendChild(card);
                     });
                 }
@@ -1215,11 +1281,11 @@
                     if (resultsInfo) {
                         const start = (pagination.page - 1) * pagination.pageSize + 1;
                         const end = Math.min(pagination.page * pagination.pageSize, pagination.total);
-                        resultsInfo.textContent = `Mostrando ${start} a ${end} de ${pagination.total} resultados`;
+                        resultsInfo.textContent = `Mostrando ${ start } a ${ end } de ${ pagination.total } resultados`;
                     }
 
                     if (paginationContainer) {
-                        let html = pagination.hasPrev ? `<button class="prev px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${pagination.page - 1})">← Anterior</button>` : '<button class="prev px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>← Anterior</button>';
+                        let html = pagination.hasPrev ? `< button class="prev px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick = "changeDanzaPage(${pagination.page - 1})" >← Anterior</button > ` : '<button class="prev px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>← Anterior</button>';
 
                         const maxPages = 5;
                         let startPage = Math.max(1, pagination.page - Math.floor(maxPages / 2));
@@ -1228,33 +1294,33 @@
                         if (endPage - startPage + 1 < maxPages) startPage = Math.max(1, endPage - maxPages + 1);
 
                         if (startPage > 1) {
-                            html += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(1)">1</button>`;
+                            html += `< button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick = "changeDanzaPage(1)" > 1</button > `;
                             if (startPage > 2) html += '<span class="px-2">...</span>';
                         }
 
                         for (let i = startPage; i <= endPage; i++) {
-                            html += i === pagination.page ? `<button class="px-3 py-2 bg-candelaria-purple text-white rounded-lg">${i}</button>` : `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${i})">${i}</button>`;
+                            html += i === pagination.page ? `< button class="px-3 py-2 bg-candelaria-purple text-white rounded-lg" > ${ i }</button > ` : ` < button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick = "changeDanzaPage(${i})" > ${ i }</button > `;
                         }
 
                         if (endPage < pagination.totalPages) {
                             if (endPage < pagination.totalPages - 1) html += '<span class="px-2">...</span>';
-                            html += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${pagination.totalPages})">${pagination.totalPages}</button>`;
+                            html += `< button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick = "changeDanzaPage(${pagination.totalPages})" > ${ pagination.totalPages }</button > `;
                         }
 
-                        html += pagination.hasNext ? `<button class="next px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${pagination.page + 1})">Siguiente →</button>` : '<button class="next px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>Siguiente →</button>';
+                        html += pagination.hasNext ? `< button class="next px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick = "changeDanzaPage(${pagination.page + 1})" > Siguiente →</button > ` : '<button class="next px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>Siguiente →</button>';
 
                         paginationContainer.innerHTML = html;
                     }
                 } else {
                     const resultsInfo = document.getElementById('results-info');
-                    if (resultsInfo) resultsInfo.textContent = `Mostrando ${dances.length} resultados`;
+                    if (resultsInfo) resultsInfo.textContent = `Mostrando ${ dances.length } resultados`;
                 }
 
                 lucide.createIcons();
 
             } catch (error) {
                 console.error('[DEBUG] Error searching danzas:', error);
-                danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-red-500">Error al buscar danzas: ${error.message}</div>`;
+                danzasGrid.innerHTML = `< div class="col-span-full text-center py-8 text-red-500" > Error al buscar danzas: ${ error.message }</div > `;
             }
         }
 
@@ -1378,7 +1444,7 @@
             modalTitle.textContent = evento.banda;
 
             modalBody.innerHTML = `
-                <div class="dance-details-grid">
+            < div class="dance-details-grid" >
                     <div>
                         <img src="${evento.imagen}" alt="${evento.banda}" class="dance-image">
                         <div style="margin-top: 1.5rem;">
@@ -1420,7 +1486,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div >
             `;
 
 
@@ -1488,7 +1554,7 @@
             const fotoValue = fixPhotoPath(danza.foto);
 
             modalBody.innerHTML = `
-                <div class="dance-details-grid">
+            < div class="dance-details-grid" >
                     <div>
                         <img src="${fotoValue}"
                              alt="${nombre}"
@@ -1542,28 +1608,30 @@
                         </div>
                         ` : ''}
                     </div>
-                </div>
+                </div >
 
-                ${historiaValue ? `
+            ${
+                historiaValue ? `
                 <div class="modal-section">
                     <h3>Historia del Conjunto</h3>
                     <p style="line-height: 1.6; color: #4b5563;">${historiaValue}</p>
                 </div>
-                ` : ''}
+                ` : ''
+        }
 
-                <div class="card-actions">
-                    <button class="btn-modal-action btn-modal-live" onclick="window.location.href='../live-platform/index.php#live'">
-                        <i data-lucide="radio" style="width: 18px; height: 18px; margin-right: 8px;"></i> Ver En Vivo
-                    </button>
-                    <button class="btn-modal-action btn-modal-score" onclick="window.location.href='../live-platform/index.php#scores'">
-                        <i data-lucide="trophy" style="width: 18px; height: 18px; margin-right: 8px;"></i> Ver Puntaje
-                    </button>
-                    <button class="btn-modal-action btn-modal-map" onclick="window.location.href='../live-platform/index.php#map'">
-                        Ver en Mapa
-                    </button>
-                    <button class="btn-modal-action btn-modal-share">Compartir</button>
-                    <button class="btn-modal-action btn-modal-recordarme">Recordarme</button>
-                </div>
+        <div class="card-actions">
+            <button class="btn-modal-action btn-modal-live" onclick="window.location.href='../live-platform/index.php#live'">
+                <i data-lucide="radio" style="width: 18px; height: 18px; margin-right: 8px;"></i> Ver En Vivo
+            </button>
+            <button class="btn-modal-action btn-modal-score" onclick="window.location.href='../live-platform/index.php#scores'">
+                <i data-lucide="trophy" style="width: 18px; height: 18px; margin-right: 8px;"></i> Ver Puntaje
+            </button>
+            <button class="btn-modal-action btn-modal-map" onclick="window.location.href='../live-platform/index.php#map'">
+                Ver en Mapa
+            </button>
+            <button class="btn-modal-action btn-modal-share">Compartir</button>
+            <button class="btn-modal-action btn-modal-recordarme">Recordarme</button>
+        </div>
             `;
 
             if (typeof lucide !== 'undefined') {

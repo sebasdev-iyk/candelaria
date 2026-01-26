@@ -43,15 +43,15 @@ $basePath = isset($footerDepth) ? str_repeat('../', $footerDepth) : './';
                 class="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 mb-4 uppercase tracking-wider">
                 Síguenos</h3>
             <div class="flex justify-center gap-4">
-                <a href="#"
+                <a href="https://www.facebook.com/MiPuno.pe/" target="_blank" rel="noopener noreferrer"
                     class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all transform hover:scale-110">
                     <i data-lucide="facebook" class="w-4 h-4"></i>
                 </a>
-                <a href="#"
+                <a href="https://www.instagram.com/mipuno.pe/" target="_blank" rel="noopener noreferrer"
                     class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-pink-600 hover:text-white transition-all transform hover:scale-110">
                     <i data-lucide="instagram" class="w-4 h-4"></i>
                 </a>
-                <a href="#"
+                <a href="https://www.youtube.com/@MiPuno" target="_blank" rel="noopener noreferrer"
                     class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-red-600 hover:text-white transition-all transform hover:scale-110">
                     <i data-lucide="youtube" class="w-4 h-4"></i>
                 </a>
