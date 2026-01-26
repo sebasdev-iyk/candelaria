@@ -142,19 +142,33 @@ $mainImg = '../' . $baseImg;
                 </div>
 
                 <!-- Selector de Cantidad y Botón -->
-                <div class="flex flex-col sm:flex-row gap-4 mb-8 border-t border-b border-gray-100 py-6">
-                    <div class="flex items-center border border-gray-300 rounded-xl w-max">
-                        <button class="px-4 py-2 text-gray-600 hover:bg-gray-100" onclick="updateQty(-1)">-</button>
-                        <input type="number" id="qty" value="1" min="1" max="<?= $product['stock'] ?>"
-                            class="w-12 text-center border-none focus:ring-0 p-0 text-lg font-bold">
-                        <button class="px-4 py-2 text-gray-600 hover:bg-gray-100" onclick="updateQty(1)">+</button>
+                <div class="flex flex-col gap-4 mb-8 border-t border-b border-gray-100 py-6">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="flex items-center border border-gray-300 rounded-xl w-max">
+                            <button class="px-4 py-2 text-gray-600 hover:bg-gray-100" onclick="updateQty(-1)">-</button>
+                            <input type="number" id="qty" value="1" min="1" max="<?= $product['stock'] ?>"
+                                class="w-12 text-center border-none focus:ring-0 p-0 text-lg font-bold">
+                            <button class="px-4 py-2 text-gray-600 hover:bg-gray-100" onclick="updateQty(1)">+</button>
+                        </div>
+
+                        <button onclick="addToCart()"
+                            class="flex-1 bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-xl flex items-center justify-center gap-2 transform active:scale-95 transition-all shadow-lg shadow-purple-200">
+                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                            Añadir
+                        </button>
                     </div>
 
-                    <button onclick="addToCart()"
-                        class="flex-1 bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-xl flex items-center justify-center gap-2 transform active:scale-95 transition-all shadow-lg shadow-purple-200">
-                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                        Añadir al Carrito
-                    </button>
+                    <?php if (!empty($product['numero_whatsapp'])): ?>
+                        <?php
+                        $waMsg = "Hola, me interesa el producto: " . $product['nombre'] . " (Precio: S/ " . $product['precio'] . ")";
+                        $waLink = "https://wa.me/" . preg_replace('/[^0-9]/', '', $product['numero_whatsapp']) . "?text=" . urlencode($waMsg);
+                        ?>
+                        <a href="<?= $waLink ?>" target="_blank"
+                            class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl flex items-center justify-center gap-2 transform active:scale-95 transition-all shadow-lg shadow-green-200">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                            Pedir por WhatsApp
+                        </a>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Beneficios -->
