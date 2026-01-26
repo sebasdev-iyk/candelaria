@@ -2376,6 +2376,10 @@
   </script>
 
   <?php
+  // Footer
+  $footerDepth = 0;
+  include __DIR__ . '/includes/standard-footer.php';
+
   // Include Global Chatbot with Video Avatar
   if (!isset($basePath)) {
     $basePath = './';
