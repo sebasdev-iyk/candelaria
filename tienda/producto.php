@@ -197,16 +197,22 @@ $mainImg = '../' . $baseImg;
 
         function addToCart() {
             const qty = parseInt(document.getElementById('qty').value);
-            // Pass minimal details purely for immediate UI update before sync
-            if (window.Tienda) {
-                window.Tienda.addItem(<?= $product['id'] ?>, qty, {
-                    nombre: '<?= htmlspecialchars($product['nombre'], ENT_QUOTES) ?>',
-                    precio: <?= $product['precio'] ?>,
-                    imagen: '<?= $baseImg ?>'
-                });
-            } else {
-                alert('Añadido: ' + qty + ' unidades');
+            console.log("⚡ [PRODUCT] addToCart BUTTON CLICKED. Quantity:", qty);
+
+            if (typeof window.Tienda === 'undefined') {
+                console.error("🔥 [PRODUCT CRITICAL] window.Tienda IS NOT DEFINED. Store script not loaded?");
+                alert("Error crítico: El sistema de tienda no cargó correctamente. Revisa la consola.");
+                return;
             }
+
+            console.log("✅ [PRODUCT] window.Tienda found. Calling addItem...");
+
+            // Pass minimal details purely for immediate UI update before sync
+            window.Tienda.addItem(<?= $product['id'] ?>, qty, {
+                nombre: '<?= htmlspecialchars($product['nombre'], ENT_QUOTES) ?>',
+                precio: <?= $product['precio'] ?>,
+                imagen: '<?= $baseImg ?>'
+            });
         }
     </script>
     <script src="../assets/js/tienda.js"></script>

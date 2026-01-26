@@ -678,46 +678,43 @@ function getAuthJS()
     }
 
     // --- Global Login Finalizer ---
-    function loginUser(user) {
+    async function loginUser(user) {
         console.log('Logging in user:', user);
         
         // 1. Save to Local Storage
         localStorage.setItem('candelaria_user', JSON.stringify(user));
         
-        // 2. UI Updates - Force immediate update
+        // 2. Feedback (Immediate)
         closeAuthModal();
-        
-        // Force UI update with a small delay to ensure DOM is ready
-        setTimeout(() => {
-            showLoggedInState(user);
-            
-            // Re-initialize icons
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-        }, 100);
-        
-        // 3. Feedback
-        showToast('¡Bienvenido ' + user.name.split(' ')[0] + '! Sesión iniciada.', 'success');
-        
-        // 4. Backend Sync
+        showToast('Iniciando sesión...', 'info');
+
+        // 3. Backend Sync (Await this to ensure Session is set before UI components react)
         const apiBase = window.location.origin + '/candelaria/api/';
-        fetch(apiBase + 'auth.php', { 
-            method: 'POST', 
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user) 
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Backend Sync:', data);
+        try {
+            const response = await fetch(apiBase + 'auth.php', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(user) 
+            });
+            const data = await response.json();
+            console.log('Backend Sync Result:', data);
+            
             if (!data.success) {
-                console.error('Backend sync failed:', data);
+                console.warn('Backend sync warning:', data);
             }
-        })
-        .catch(error => {
+        } catch (error) {
             console.error('Error syncing session:', error);
-            // Don't show error to user, login still works with localStorage
-        });
+            // We proceed anyway so client-side works
+        }
+        
+        // 4. Update UI & Fire Events (Now safe to call Cart Sync)
+        showLoggedInState(user);
+        
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+        
+        showToast('¡Bienvenido ' + user.name.split(' ')[0] + '! Sesión iniciada.', 'success');
     }
 
     // --- Toast Notification System ---
