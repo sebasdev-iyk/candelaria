@@ -42,6 +42,14 @@ function getActiveClass($page, $activePage)
                         class="nav-link-custom <?= getActiveClass('noticias', $activePage) ?>">Noticias</a>
                 </nav>
 
+                <!-- Shopping Cart Icon -->
+                <a href="<?= $basePath ?>tienda/carrito.php"
+                    class="relative group p-2 rounded-full hover:bg-white/10 transition-colors mr-1">
+                    <i data-lucide="shopping-cart" class="w-6 h-6 text-white group-hover:text-candelaria-gold"></i>
+                    <span
+                        class="cart-count absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
+                </a>
+
                 <?php
                 // Include auth header if not already included
                 $authHeaderPath = $basePath . 'includes/auth-header.php';
