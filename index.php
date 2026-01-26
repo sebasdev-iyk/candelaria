@@ -1050,7 +1050,7 @@
         <div class="flex items-center gap-6">
           <nav class="hidden md:flex items-center gap-2">
             <a href="./servicios/index.php" class="nav-link-custom">Servicios</a>
-            <a href="./tienda/index.php" class="nav-link-custom text-candelaria-gold font-bold">TIENDA</a>
+            <a href="./tienda/index.php" class="nav-link-custom">Tienda</a>
             <a href="./cultura/cultura.php" class="nav-link-custom">Cultura</a>
             <a href="./horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
             <a href="./noticias/index.php" class="nav-link-custom">Noticias</a>
@@ -1081,7 +1081,7 @@
         <a href="./servicios/index.php"
           class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Servicios</a>
         <a href="./tienda/index.php"
-          class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 text-candelaria-gold">TIENDA</a>
+          class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Tienda</a>
         <a href="./cultura/cultura.php"
           class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
         <a href="./horarios_y_danzas/index.php"
@@ -1155,7 +1155,8 @@
           <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
           Traje de Luces
         </button>
-        <a href="./assets/orden.pdf" download="Programacion_Candelaria_2026.pdf" class="category-filter-btn download-btn"
+        <a href="./assets/orden.pdf" download="Programacion_Candelaria_2026.pdf"
+          class="category-filter-btn download-btn"
           style="border-color: #fbbf24; color: #fbbf24; text-decoration: none;">
           <i data-lucide="download" style="width: 16px; height: 16px;"></i>
           Descargar Danzas
