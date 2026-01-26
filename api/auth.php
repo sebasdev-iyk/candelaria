@@ -35,32 +35,30 @@ try {
     }
 
     // 4. Check if user exists
-    $stmt = $db->prepare("SELECT id FROM users WHERE email = :email LIMIT 1");
+    $stmt = $db->prepare("SELECT id FROM usuarios WHERE email = :email LIMIT 1");
     $stmt->execute([':email' => $email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        // UPDATE existing user
-        $updateStmt = $db->prepare("UPDATE users SET name = :name, picture = :picture, oauth_provider = :provider, updated_at = NOW() WHERE id = :id");
+        // UPDATE existing user (Sync Name)
+        $updateStmt = $db->prepare("UPDATE usuarios SET full_name = :name WHERE id = :id");
         $updateStmt->execute([
-            ':name' => $name, 
-            ':picture' => $picture, 
-            ':provider' => $provider,
+            ':name' => $name,
             ':id' => $user['id']
         ]);
         $userId = $user['id'];
     } else {
         // INSERT new user
-        // Note: oauth_uid might be null or generated. For now we use email as main key if uid missing.
-        $uid = $oauth_uid ?: uniqid('user_'); 
-        
-        $insertStmt = $db->prepare("INSERT INTO users (name, email, picture, oauth_provider, oauth_uid) VALUES (:name, :email, :picture, :provider, :uid)");
+        // 'usuarios' table requires: email, password, full_name.
+        // Since this is Social Login/Supabase, we generate a random password.
+        $randomPass = bin2hex(random_bytes(16));
+        $passHash = password_hash($randomPass, PASSWORD_DEFAULT);
+
+        $insertStmt = $db->prepare("INSERT INTO usuarios (full_name, email, password) VALUES (:name, :email, :pass)");
         $insertStmt->execute([
             ':name' => $name,
             ':email' => $email,
-            ':picture' => $picture,
-            ':provider' => $provider,
-            ':uid' => $uid
+            ':pass' => $passHash
         ]);
         $userId = $db->lastInsertId();
     }
@@ -75,16 +73,19 @@ try {
     $_SESSION['user_email'] = $email;
     $_SESSION['logged_in'] = true;
 
-    // Log activity
-    require_once __DIR__ . '/../includes/ActivityLogger.php';
-    $logger = new ActivityLogger();
-    $logger->log($userId, 'login', 'Inicio de sesión con ' . $provider, ['provider' => $provider]);
-
-    // Update last login
-    $db->prepare("UPDATE users SET last_login_at = NOW() WHERE id = :id")->execute([':id' => $userId]);
+    // Log activity (Try/Catch to avoid crashing if Logger fails or table missing)
+    try {
+        if (file_exists(__DIR__ . '/../includes/ActivityLogger.php')) {
+            require_once __DIR__ . '/../includes/ActivityLogger.php';
+            $logger = new ActivityLogger();
+            $logger->log($userId, 'login', 'Inicio de sesión (Sync) con ' . $provider);
+        }
+    } catch (Exception $logErr) {
+        // Ignore logging errors
+    }
 
     echo json_encode([
-        'success' => true, 
+        'success' => true,
         'message' => 'Session created',
         'user_id' => $userId
     ]);
