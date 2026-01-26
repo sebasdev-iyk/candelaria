@@ -3,7 +3,7 @@
  * Handles Cart, API interactions, and user session binding
  */
 
-const Tienda = {
+window.Tienda = {
     cart: [],
     CART_KEY: 'candelaria_cart',
 
