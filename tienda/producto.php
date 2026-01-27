@@ -7,56 +7,7 @@ error_reporting(E_ALL);
 
 // Authentication Check
 require_once '../includes/supabase-middleware.php';
-
-if (!isAuthenticated()) {
-    $headerDepth = 1;
-    include_once '../includes/standard-header.php';
-    ?>
-    <!DOCTYPE html>
-    <html lang="es">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Iniciar Sesión | Candelaria Shop</title>
-        <link rel="stylesheet" href="../styles.css">
-        <link href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css" rel="stylesheet">
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-
-    <body class="bg-gray-50 flex flex-col min-h-screen">
-        <div class="flex-grow flex flex-col items-center justify-center p-4">
-            <div class="text-center max-w-md">
-                <div class="bg-purple-100 p-4 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
-                    <i data-lucide="lock" class="w-10 h-10 text-purple-600"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-2">Contenido Exclusivo</h2>
-                <p class="text-gray-600 mb-8">Para ver los detalles de este producto y realizar compras, necesitas iniciar
-                    sesión.</p>
-
-                <button onclick="openAuthModal()"
-                    class="bg-purple-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-purple-700 transition-all transform hover:scale-105 shadow-lg shadow-purple-200 flex items-center justify-center gap-2 w-full">
-                    <i data-lucide="log-in" class="w-5 h-5"></i>
-                    Iniciar Sesión
-                </button>
-                <a href="index.php" class="block mt-4 text-sm text-gray-500 hover:text-purple-600">Volver a la tienda</a>
-            </div>
-        </div>
-        <script src="https://unpkg.com/lucide@latest"></script>
-        <script>lucide.createIcons();</script>
-
-        <?php
-        // Critical: Include Auth Modal
-        if (function_exists('getAuthModalHTML')) {
-            echo getAuthModalHTML();
-        }
-        ?>
-    </body>
-
-    </html>
-    <?php
-    exit();
-}
+$isGuest = !isAuthenticated();
 
 $id = $_GET['id'] ?? 0;
 $product = null;
@@ -120,139 +71,196 @@ $mainImg = '../' . $baseImg;
     <link rel="stylesheet" href="../styles.css">
     <link href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .login-overlay-backdrop {
+            background: rgba(243, 244, 246, 0.85);
+            backdrop-filter: blur(8px);
+        }
+    </style>
 </head>
 
-<body class="bg-white text-gray-900">
+<body class="bg-white text-gray-900 <?= $isGuest ? 'overflow-hidden h-screen' : '' ?>">
 
-    <?php $headerDepth = 1;
-    include_once '../includes/standard-header.php'; ?>
-
-    <div class="max-w-7xl mx-auto px-4 py-8">
-
-        <!-- Breadcrumb -->
-        <nav class="text-sm text-gray-500 mb-6 flex items-center gap-2">
-            <a href="index.php" class="hover:text-purple-600">Tienda</a>
-            <i data-lucide="chevron-right" class="w-4 h-4"></i>
-            <span class="text-gray-900 font-medium truncate">
-                <?= htmlspecialchars($product['nombre']) ?>
-            </span>
-        </nav>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-
-            <!-- Galería de Imágenes -->
-            <div class="space-y-4">
-                <div class="aspect-square bg-gray-100 rounded-2xl overflow-hidden border border-gray-100">
-                    <img src="<?= $mainImg ?>" id="mainImage" class="w-full h-full object-cover"
-                        onload="console.log('✅ [PRODUCT DEBUG] Main Image Loaded:', this.src)"
-                        onerror="console.error('🔥 [PRODUCT DEBUG] Main Image Failed:', this.src)"
-                        alt="Producto Principal">
+    <?php if ($isGuest): ?>
+        <!-- Facebook-style Floating Login Modal -->
+        <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 login-overlay-backdrop">
+            <div
+                class="bg-white w-full max-w-[400px] rounded-xl shadow-2xl overflow-hidden transform scale-100 transition-all border border-gray-100">
+                <!-- Header with Decor -->
+                <div class="bg-gradient-to-r from-purple-900 to-purple-800 p-6 text-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[url('../principal/headerfondo2.jpg')] opacity-30 bg-cover bg-center">
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <img src="../principal/logoc.png" class="h-16 w-auto mb-2 drop-shadow-md">
+                        <h3 class="text-white font-bold text-lg leading-tight">Federación Regional de Folklore y Cultura de
+                            Puno</h3>
+                    </div>
                 </div>
-                <div class="flex gap-4 overflow-x-auto pb-2">
-                    <?php foreach ($product['imagenes'] as $img): ?>
-                        <?php $thumbUrl = '../' . $img; ?>
-                        <button
-                            onclick="document.getElementById('mainImage').src = '<?= $thumbUrl ?>'; console.log('📸 [PRODUCT DEBUG] Switched to:', '<?= $thumbUrl ?>')"
-                            class="w-20 h-20 flex-shrink-0 border-2 border-transparent hover:border-purple-500 rounded-lg overflow-hidden transition-all">
-                            <img src="<?= $thumbUrl ?>" class="w-full h-full object-cover"
-                                onload="console.log('✅ [PRODUCT DEBUG] Thumb Loaded:', this.src)"
-                                onerror="console.error('🔥 [PRODUCT DEBUG] Thumb Failed:', this.src)">
-                        </button>
-                    <?php endforeach; ?>
+
+                <div class="p-8">
+                    <div class="text-center mb-6">
+                        <p class="text-gray-900 font-bold text-xl mb-1">Inicia sesión para ver producto</p>
+                        <p class="text-gray-500 text-sm">Accede a precios exclusivos y compra segura</p>
+                    </div>
+
+                    <!-- We reuse the global auth logic but inside this custom container -->
+                    <button onclick="openAuthModal()"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-3 transition-colors mb-3">
+                        <i data-lucide="log-in" class="w-5 h-5"></i>
+                        Iniciar Sesión / Registrarse
+                    </button>
+
+                    <div class="text-center mt-4">
+                        <a href="index.php" class="text-sm text-gray-400 hover:text-gray-600 font-medium font-sans">Ahora
+                            no, volver a la tienda</a>
+                    </div>
                 </div>
             </div>
+        </div>
+    <?php endif; ?>
 
-            <!-- Detalles del Producto -->
-            <div>
-                <h1 class="text-2xl md:text-4xl font-black text-gray-900 mb-2 leading-tight">
+    <!-- Main Content Wrapper (Blurred if Guest) -->
+    <div
+        class="<?= $isGuest ? 'blur-sm pointer-events-none select-none filter grayscale-[0.3]' : '' ?> transition-all duration-500">
+
+
+        <?php $headerDepth = 1;
+        include_once '../includes/standard-header.php'; ?>
+
+        <div class="max-w-7xl mx-auto px-4 py-8">
+
+            <!-- Breadcrumb -->
+            <nav class="text-sm text-gray-500 mb-6 flex items-center gap-2">
+                <a href="index.php" class="hover:text-purple-600">Tienda</a>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <span class="text-gray-900 font-medium truncate">
                     <?= htmlspecialchars($product['nombre']) ?>
-                </h1>
+                </span>
+            </nav>
 
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="flex text-yellow-400">
-                        <?php for ($i = 0; $i < 5; $i++): ?>
-                            <i data-lucide="star"
-                                class="w-5 h-5 <?= $i < $product['estrellas'] ? 'fill-current' : 'text-gray-200' ?>"></i>
-                        <?php endfor; ?>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+
+                <!-- Galería de Imágenes -->
+                <div class="space-y-4">
+                    <div class="aspect-square bg-gray-100 rounded-2xl overflow-hidden border border-gray-100">
+                        <img src="<?= $mainImg ?>" id="mainImage" class="w-full h-full object-cover"
+                            onload="console.log('✅ [PRODUCT DEBUG] Main Image Loaded:', this.src)"
+                            onerror="console.error('🔥 [PRODUCT DEBUG] Main Image Failed:', this.src)"
+                            alt="Producto Principal">
                     </div>
-                    <span class="text-blue-600 font-medium text-sm hover:underline cursor-pointer">
-                        <?= $product['reviews'] ?> calificaciones
-                    </span>
-                    <span class="text-gray-300">|</span>
-                    <span class="text-green-600 font-bold text-sm flex items-center gap-1">
-                        <i data-lucide="package-check" class="w-4 h-4"></i> Stock Disponible
-                    </span>
+                    <div class="flex gap-4 overflow-x-auto pb-2">
+                        <?php foreach ($product['imagenes'] as $img): ?>
+                            <?php $thumbUrl = '../' . $img; ?>
+                            <button
+                                onclick="document.getElementById('mainImage').src = '<?= $thumbUrl ?>'; console.log('📸 [PRODUCT DEBUG] Switched to:', '<?= $thumbUrl ?>')"
+                                class="w-20 h-20 flex-shrink-0 border-2 border-transparent hover:border-purple-500 rounded-lg overflow-hidden transition-all">
+                                <img src="<?= $thumbUrl ?>" class="w-full h-full object-cover"
+                                    onload="console.log('✅ [PRODUCT DEBUG] Thumb Loaded:', this.src)"
+                                    onerror="console.error('🔥 [PRODUCT DEBUG] Thumb Failed:', this.src)">
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
 
-                <div class="text-4xl font-bold text-gray-900 mb-6">
-                    S/
-                    <?= number_format($product['precio'], 2) ?>
-                    <span class="text-sm font-normal text-gray-500 block mt-1">Incluye IGV</span>
-                </div>
+                <!-- Detalles del Producto -->
+                <div>
+                    <h1 class="text-2xl md:text-4xl font-black text-gray-900 mb-2 leading-tight">
+                        <?= htmlspecialchars($product['nombre']) ?>
+                    </h1>
 
-                <div class="prose prose-purple text-gray-600 mb-8">
-                    <?= nl2br(htmlspecialchars($product['descripcion'])) ?>
-                </div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="flex text-yellow-400">
+                            <?php for ($i = 0; $i < 5; $i++): ?>
+                                <i data-lucide="star"
+                                    class="w-5 h-5 <?= $i < $product['estrellas'] ? 'fill-current' : 'text-gray-200' ?>"></i>
+                            <?php endfor; ?>
+                        </div>
+                        <span class="text-blue-600 font-medium text-sm hover:underline cursor-pointer">
+                            <?= $product['reviews'] ?> calificaciones
+                        </span>
+                        <span class="text-gray-300">|</span>
+                        <span class="text-green-600 font-bold text-sm flex items-center gap-1">
+                            <i data-lucide="package-check" class="w-4 h-4"></i> Stock Disponible
+                        </span>
+                    </div>
 
-                <!-- Selector de Cantidad y Botón -->
-                <div class="flex flex-col gap-4 mb-8 border-t border-b border-gray-100 py-6">
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <div class="flex items-center border border-gray-300 rounded-xl w-max">
-                            <button class="px-4 py-2 text-gray-600 hover:bg-gray-100" onclick="updateQty(-1)">-</button>
-                            <input type="number" id="qty" value="1" min="1" max="<?= $product['stock'] ?>"
-                                class="w-12 text-center border-none focus:ring-0 p-0 text-lg font-bold">
-                            <button class="px-4 py-2 text-gray-600 hover:bg-gray-100" onclick="updateQty(1)">+</button>
+                    <div class="text-4xl font-bold text-gray-900 mb-6">
+                        S/
+                        <?= number_format($product['precio'], 2) ?>
+                        <span class="text-sm font-normal text-gray-500 block mt-1">Incluye IGV</span>
+                    </div>
+
+                    <div class="prose prose-purple text-gray-600 mb-8">
+                        <?= nl2br(htmlspecialchars($product['descripcion'])) ?>
+                    </div>
+
+                    <!-- Selector de Cantidad y Botón -->
+                    <div class="flex flex-col gap-4 mb-8 border-t border-b border-gray-100 py-6">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex items-center border border-gray-300 rounded-xl w-max">
+                                <button class="px-4 py-2 text-gray-600 hover:bg-gray-100"
+                                    onclick="updateQty(-1)">-</button>
+                                <input type="number" id="qty" value="1" min="1" max="<?= $product['stock'] ?>"
+                                    class="w-12 text-center border-none focus:ring-0 p-0 text-lg font-bold">
+                                <button class="px-4 py-2 text-gray-600 hover:bg-gray-100"
+                                    onclick="updateQty(1)">+</button>
+                            </div>
+
+                            <button onclick="addToCart()"
+                                class="flex-1 bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-xl flex items-center justify-center gap-2 transform active:scale-95 transition-all shadow-lg shadow-purple-200">
+                                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                                Añadir
+                            </button>
                         </div>
 
-                        <button onclick="addToCart()"
-                            class="flex-1 bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-xl flex items-center justify-center gap-2 transform active:scale-95 transition-all shadow-lg shadow-purple-200">
-                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                            Añadir
-                        </button>
+                        <?php if (!empty($product['numero_whatsapp'])): ?>
+                            <?php
+                            $waMsg = "Hola, me interesa el producto: " . $product['nombre'] . " (Precio: S/ " . $product['precio'] . ")";
+                            $waLink = "https://wa.me/" . preg_replace('/[^0-9]/', '', $product['numero_whatsapp']) . "?text=" . urlencode($waMsg);
+                            ?>
+                            <a href="<?= $waLink ?>" target="_blank"
+                                class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl flex items-center justify-center gap-2 transform active:scale-95 transition-all shadow-lg shadow-green-200">
+                                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                                Pedir por WhatsApp
+                            </a>
+                        <?php endif; ?>
                     </div>
 
-                    <?php if (!empty($product['numero_whatsapp'])): ?>
-                        <?php
-                        $waMsg = "Hola, me interesa el producto: " . $product['nombre'] . " (Precio: S/ " . $product['precio'] . ")";
-                        $waLink = "https://wa.me/" . preg_replace('/[^0-9]/', '', $product['numero_whatsapp']) . "?text=" . urlencode($waMsg);
-                        ?>
-                        <a href="<?= $waLink ?>" target="_blank"
-                            class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl flex items-center justify-center gap-2 transform active:scale-95 transition-all shadow-lg shadow-green-200">
-                            <i data-lucide="message-circle" class="w-5 h-5"></i>
-                            Pedir por WhatsApp
-                        </a>
-                    <?php endif; ?>
+                    <!-- Beneficios -->
+                    <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-purple-600"></i>
+                            <span>Compra Segura</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="truck" class="w-5 h-5 text-purple-600"></i>
+                            <span>Envíos a todo Puno</span>
+                        </div>
+                    </div>
+
                 </div>
-
-                <!-- Beneficios -->
-                <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="shield-check" class="w-5 h-5 text-purple-600"></i>
-                        <span>Compra Segura</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="truck" class="w-5 h-5 text-purple-600"></i>
-                        <span>Envíos a todo Puno</span>
-                    </div>
-                </div>
-
             </div>
+
         </div>
 
+
+        <!-- End Main Content Wrapper -->
     </div>
 
-    <!-- Floating Cart Button -->
-    <a href="carrito.php"
-        class="fixed bottom-6 right-6 z-50 bg-white text-purple-700 p-4 rounded-full shadow-2xl border-2 border-purple-100 hover:scale-110 transition-transform group flex items-center justify-center gap-2">
-        <div class="relative">
-            <i data-lucide="shopping-cart" class="w-6 h-6 fill-current"></i>
+    <!-- Floating Cart Button (Hidden if guest) -->
+    <?php if (!$isGuest): ?>
+        <a href="carrito.php"
+            class="fixed bottom-6 right-6 z-50 bg-white text-purple-700 p-4 rounded-full shadow-2xl border-2 border-purple-100 hover:scale-110 transition-transform group flex items-center justify-center gap-2">
+            <div class="relative">
+                <i data-lucide="shopping-cart" class="w-6 h-6 fill-current"></i>
+                <span
+                    class="cart-count absolute -top-3 -right-3 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full hidden border-2 border-white">0</span>
+            </div>
             <span
-                class="cart-count absolute -top-3 -right-3 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full hidden border-2 border-white">0</span>
-        </div>
-        <span
-            class="font-bold hidden group-hover:block whitespace-nowrap overflow-hidden transition-all duration-300">Ver
-            Carrito</span>
-    </a>
+                class="font-bold hidden group-hover:block whitespace-nowrap overflow-hidden transition-all duration-300">Ver
+                Carrito</span>
+        </a>
+    <?php endif; ?>
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
