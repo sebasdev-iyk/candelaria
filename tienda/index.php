@@ -209,6 +209,19 @@ include_once '../includes/standard-header.php';
 
     </div>
 
+    <!-- Floating Cart Button -->
+    <a href="carrito.php"
+        class="fixed bottom-6 right-6 z-50 bg-white text-purple-700 p-4 rounded-full shadow-2xl border-2 border-purple-100 hover:scale-110 transition-transform group flex items-center justify-center gap-2">
+        <div class="relative">
+            <i data-lucide="shopping-cart" class="w-6 h-6 fill-current"></i>
+            <span
+                class="cart-count absolute -top-3 -right-3 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full hidden border-2 border-white">0</span>
+        </div>
+        <span
+            class="font-bold hidden group-hover:block whitespace-nowrap overflow-hidden transition-all duration-300">Ver
+            Carrito</span>
+    </a>
+
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         lucide.createIcons();
