@@ -5,6 +5,59 @@
 ini_set('display_errors', 0); // Changed to 0 to prevent HTML breakage
 error_reporting(E_ALL);
 
+// Authentication Check
+require_once '../includes/supabase-middleware.php';
+
+if (!isAuthenticated()) {
+    $headerDepth = 1;
+    include_once '../includes/standard-header.php';
+    ?>
+    <!DOCTYPE html>
+    <html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Iniciar Sesión | Candelaria Shop</title>
+        <link rel="stylesheet" href="../styles.css">
+        <link href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+
+    <body class="bg-gray-50 flex flex-col min-h-screen">
+        <div class="flex-grow flex flex-col items-center justify-center p-4">
+            <div class="text-center max-w-md">
+                <div class="bg-purple-100 p-4 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="lock" class="w-10 h-10 text-purple-600"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Contenido Exclusivo</h2>
+                <p class="text-gray-600 mb-8">Para ver los detalles de este producto y realizar compras, necesitas iniciar
+                    sesión.</p>
+
+                <button onclick="openAuthModal()"
+                    class="bg-purple-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-purple-700 transition-all transform hover:scale-105 shadow-lg shadow-purple-200 flex items-center justify-center gap-2 w-full">
+                    <i data-lucide="log-in" class="w-5 h-5"></i>
+                    Iniciar Sesión
+                </button>
+                <a href="index.php" class="block mt-4 text-sm text-gray-500 hover:text-purple-600">Volver a la tienda</a>
+            </div>
+        </div>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script>lucide.createIcons();</script>
+
+        <?php
+        // Critical: Include Auth Modal
+        if (function_exists('getAuthModalHTML')) {
+            echo getAuthModalHTML();
+        }
+        ?>
+    </body>
+
+    </html>
+    <?php
+    exit();
+}
+
 $id = $_GET['id'] ?? 0;
 $product = null;
 
@@ -244,6 +297,12 @@ $mainImg = '../' . $baseImg;
         }
     </script>
     <script src="../assets/js/tienda.js?v=<?= time() ?>"></script>
+    <?php
+    // Include Auth Modal for logged in users (logout etc)
+    if (function_exists('getAuthModalHTML')) {
+        echo getAuthModalHTML();
+    }
+    ?>
 </body>
 
 </html>
