@@ -418,24 +418,33 @@ $mainImg = '../' . $baseImg;
 
     // Custom Social Login for Product Page (Preserves ID parameter)
     window.handleProductSocialLogin = async function(provider) {
+        console.group("🔥 [DEBUG] handleProductSocialLogin");
+        console.log("Provider:", provider);
+        
         if (typeof SupabaseCore === 'undefined') {
+             console.error("SupabaseCore NOT defined");
              alert('Error: Sistema de autenticación no cargado.');
+             console.groupEnd();
              return;
         }
 
         try {
             // Explicitly pass window.location.href to preserve ?id=10
             const currentUrl = window.location.href;
+            console.log("📍 Current URL (to use as redirect):", currentUrl);
             
             if (provider === 'google') {
+                console.log("🚀 Calling signInWithGoogle with redirect:", currentUrl);
                 await SupabaseCore.signInWithGoogle(currentUrl);
             } else if (provider === 'facebook') {
+                console.log("🚀 Calling signInWithFacebook with redirect:", currentUrl);
                 await SupabaseCore.signInWithFacebook(currentUrl);
             }
         } catch (e) {
-            console.error('Social Login Error:', e);
+            console.error('❌ Social Login Error:', e);
             alert('Error al conectar con ' + provider);
         }
+        console.groupEnd();
     }
     </script>
 </body>
