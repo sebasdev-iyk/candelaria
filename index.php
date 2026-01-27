@@ -2099,12 +2099,62 @@
           url += `&category=${encodeURIComponent(currentCategory)}`;
         }
 
+        const fetchStart = performance.now(); // Start Timer Frontend
         const response = await fetch(url);
+        const fetchEnd = performance.now(); // End Timer Frontend
+        const rtt_total = fetchEnd - fetchStart;
+
         if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
         const result = await response.json();
         const danzas = Array.isArray(result) ? result : result.data || [];
         const pagination = result.pagination || null;
+
+        // ==========================================
+        // DIAGNÓSTICO DE RENDIMIENTO (Backend + Network)
+        // ==========================================
+        if (result.debug) {
+          const metrics = result.debug.metrics;
+          const diagnosis = [...result.debug.diagnosis];
+
+          // Caso C: Network Lag Calculation
+          // Si la RTT es mucho mayor que el tiempo total de PHP, es la red.
+          const network_lag = rtt_total - metrics.php_total_ms;
+
+          if (network_lag > 500 && metrics.php_total_ms < 100) {
+            diagnosis.push({
+              "case": "Caso C",
+              "symptom": `Red (RTT) ${Math.round(rtt_total)}ms vs PHP ${metrics.php_total_ms}ms`,
+              "guilty": "Internet/Wifi Lento (Cliente o Servidor)",
+              "solution": "El servidor es rápido, pero la descarga del JSON demora."
+            });
+          }
+
+          console.group("%c ⚡ DIAGNÓSTICO DE RENDIMIENTO 'DANZAS' ", "background: #4c1d95; color: #fbbf24; font-size: 14px; padding: 4px;");
+          console.log(`%c Búsqueda: "${query}" | RTT Total: ${Math.round(rtt_total)}ms`, "font-weight: bold");
+
+          // Mostrar tabla de métricas
+          console.table({
+            "1. DB Conexión": { "Tiempo (ms)": metrics.db_connect_ms + " ms" },
+            "2. SQL Count": { "Tiempo (ms)": metrics.sql_count_ms + " ms" },
+            "3. SQL Data": { "Tiempo (ms)": metrics.sql_data_ms + " ms" },
+            "4. PHP Overhead": { "Tiempo (ms)": metrics.php_processing_ms + " ms" },
+            "5. Red/Internet": { "Tiempo (ms)": Math.round(network_lag) + " ms" },
+            "TOTAL": { "Tiempo (ms)": Math.round(rtt_total) + " ms" }
+          });
+
+          // Mostrar Alertas de Culpables
+          if (diagnosis.length > 0) {
+            console.log("%c 🚨 CULPABLES DETECTADOS:", "color: red; font-weight: bold; font-size: 12px;");
+            diagnosis.forEach(d => {
+              console.warn(`[${d.case}] ${d.guilty}\nSíntoma: ${d.symptom}\nSolución: ${d.solution}`);
+            });
+          } else {
+            console.log("%c ✅ Rendimiento Óptimo: Todo parece estar bien.", "color: #16a34a; font-weight: bold;");
+          }
+          console.groupEnd();
+        }
+        // ==========================================
 
         if (danzas.length === 0) {
           danzasGrid.innerHTML = `

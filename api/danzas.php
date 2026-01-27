@@ -6,10 +6,14 @@ include_once '../src/Config/Database.php';
 
 use Config\Database;
 
+$time_start = microtime(true);
 $database = new Database();
 $db = $database->connect('mipuno_candelaria');
 
 if ($db) {
+    // Profiling Start
+    $time_connected = microtime(true);
+
     try {
         // Get pagination parameters
         $page = isset($_GET['page']) ? max(1, (int) $_GET['page']) : 1;
@@ -38,6 +42,9 @@ if ($db) {
             $baseQuery .= " WHERE " . implode(" AND ", $conditions);
         }
 
+        // Timer: Before Count
+        $time_before_count = microtime(true);
+
         // Get total count
         $countQuery = "SELECT COUNT(*) as total " . $baseQuery;
         $stmt = $db->prepare($countQuery);
@@ -47,6 +54,9 @@ if ($db) {
         $stmt->execute();
         $totalResult = $stmt->fetch(PDO::FETCH_ASSOC);
         $total = (int) $totalResult['total'];
+
+        // Timer: After Count
+        $time_after_count = microtime(true);
 
         // Calculate pagination
         $totalPages = ceil($total / $pageSize);
@@ -64,7 +74,50 @@ if ($db) {
 
         $danzas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Return response with pagination metadata
+        // Timer: After Data
+        $time_after_data = microtime(true);
+
+        // Calculate Metrics
+        $metric_db_connect = ($time_connected - $time_start) * 1000; // ms
+        $metric_sql_count = ($time_after_count - $time_before_count) * 1000; // ms
+        $metric_sql_data = ($time_after_data - $time_after_count) * 1000; // ms
+        $metric_php_total = ($time_after_data - $time_start) * 1000; // ms
+
+        // Diagnosis Logic
+        $diagnosis = [];
+
+        // Caso A: DB Connection High
+        if ($metric_db_connect > 100) {
+            $diagnosis[] = [
+                "case" => "Caso A",
+                "symptom" => "DB Conexión es alto (>100ms)",
+                "guilty" => "CONFIRMADO: Latencia de Red entre Web y DB.",
+                "solution" => "Usar conexión persistente o mover DB a local."
+            ];
+        }
+
+        // Caso B: SQL Slow
+        if ($metric_sql_count > 200 || $metric_sql_data > 200) {
+            $diagnosis[] = [
+                "case" => "Caso B",
+                "symptom" => "SQL Count o Data altos (>200ms)",
+                "guilty" => "CONFIRMADO: Base de Datos Lenta (Full Table Scan).",
+                "solution" => "El LIKE %...% en campos TEXT está matando el CPU de la DB."
+            ];
+        }
+
+        // Caso D: Boot High (Inferred if total is high but parts are low)
+        $php_overhead = $metric_php_total - ($metric_db_connect + $metric_sql_count + $metric_sql_data);
+        if ($php_overhead > 100) {
+            $diagnosis[] = [
+                "case" => "Caso D",
+                "symptom" => "php_boot_ms es alto",
+                "guilty" => "Servidor Web Sobrecargado.",
+                "solution" => "Plesk/Apache está tardando en arrancar."
+            ];
+        }
+
+        // Return response with pagination metadata and debug info
         echo json_encode([
             'data' => $danzas,
             'pagination' => [
@@ -74,6 +127,16 @@ if ($db) {
                 'totalPages' => $totalPages,
                 'hasPrev' => $page > 1,
                 'hasNext' => $page < $totalPages
+            ],
+            'debug' => [
+                'metrics' => [
+                    'db_connect_ms' => round($metric_db_connect, 2),
+                    'sql_count_ms' => round($metric_sql_count, 2),
+                    'sql_data_ms' => round($metric_sql_data, 2),
+                    'php_processing_ms' => round($php_overhead, 2),
+                    'php_total_ms' => round($metric_php_total, 2)
+                ],
+                'diagnosis' => $diagnosis
             ]
         ]);
     } catch (PDOException $e) {
