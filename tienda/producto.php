@@ -306,9 +306,14 @@ $mainImg = '../' . $baseImg;
     </script>
     <script src="../assets/js/tienda.js?v=<?= time() ?>"></script>
     <?php
-    // Include Auth Modal for logged in users (logout etc)
+    // Include Auth Modal for logged in users (logout etc) and for guest overlay interaction
     if (function_exists('getAuthModalHTML')) {
         echo getAuthModalHTML();
+    }
+
+    // Explicitly include JS helper
+    if (function_exists('getAuthJS')) {
+        echo getAuthJS();
     }
     ?>
 </body>

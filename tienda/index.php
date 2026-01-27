@@ -253,6 +253,27 @@ include_once '../includes/standard-header.php';
     <!-- Tienda Core JS -->
     <script src="../assets/js/tienda.js?v=<?= time() ?>"></script>
 
+    <?php
+    // Critical: Include Auth Modal & JS
+    if (function_exists('getAuthModalHTML')) {
+        echo getAuthModalHTML();
+        // Also include JS if it's not part of modal HTML (it seems getAuthModalHTML includes JS, but checking auth-header.php to be sure)
+        // Checking auth-header.php: getAuthModalHTML does NOT include JS scripts block, getAuthJS() does or it's separate.
+        // Wait, standard-header includes auth-header.php.
+        // Let's check auth-header.php again. It has getAuthModalHTML() which returns HTML string. 
+        // It consumes getAuthJS() inside? No.
+    
+        // Retrying logic based on file reading:
+        // auth-header.php has getAuthModalHTML() AND getAuthJS().
+        // getAuthModalHTML() returns the modal HTML and includes supabase-core.js script tags. 
+        // We need to verify if getAuthJS() is needed or if getAuthModalHTML covers it.
+    }
+
+    // Explicitly include JS helper if separate
+    if (function_exists('getAuthJS')) {
+        echo getAuthJS();
+    }
+    ?>
 </body>
 
 </html>
