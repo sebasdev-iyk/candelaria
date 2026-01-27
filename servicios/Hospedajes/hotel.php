@@ -262,7 +262,7 @@ $isGuest = !isAuthenticated();
 
     <?php if ($isGuest): ?>
         <!-- Guest Overlay -->
-        <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 login-overlay-backdrop">
+        <div class="fixed inset-0 z-[1200] flex items-center justify-center p-4 login-overlay-backdrop">
             <div
                 class="bg-white w-full max-w-[400px] rounded-xl shadow-2xl overflow-hidden transform scale-100 transition-all border border-gray-100">
                 <!-- Header -->
@@ -361,13 +361,13 @@ $isGuest = !isAuthenticated();
     <div
         class="<?= $isGuest ? 'blur-sm pointer-events-none select-none filter grayscale-[0.3]' : '' ?> transition-all duration-500">
         <!-- Toast Container -->
-        <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+        <div id="toast-container" class="fixed bottom-5 right-5 z-[1300] flex flex-col gap-2"></div>
 
         <!-- Auth Modal moved to global includes -->
         <!-- User Dropdown moved to global includes -->
 
         <!-- Header Section - Standardized with EN VIVO Style -->
-        <header class="header-manta-premium text-white shadow-lg sticky top-0 z-40">
+        <header class="header-manta-premium text-white shadow-lg sticky top-0 z-[1100]">
             <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center relative z-50">
                 <div class="w-full flex justify-between items-center h-full">
                     <!-- Left: Candelaria Branding -->
@@ -754,7 +754,7 @@ $isGuest = !isAuthenticated();
         <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
 
         <script>
-            // State
+                // St                    ate
             let hotel = null;
             let rooms = [];
             let selectedRoom = null;
