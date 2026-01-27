@@ -94,139 +94,6 @@
     /* Navegación Principal */
 
 
-    /* Botón EN VIVO con animación */
-    .btn-live {
-      position: relative;
-      background: linear-gradient(135deg, #16a34a, #15803d);
-      color: white;
-      padding: 10px 24px;
-      border-radius: 30px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4);
-      overflow: hidden;
-      animation: pulseLive 2s infinite;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .btn-live::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-      transition: left 0.6s;
-    }
-
-    .btn-live:hover::before {
-      left: 100%;
-    }
-
-    .btn-live:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 25px rgba(22, 163, 74, 0.6);
-    }
-
-    .live-dot {
-      width: 10px;
-      height: 10px;
-      background: white;
-      border-radius: 50%;
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0.3;
-      }
-    }
-
-    @keyframes pulseLive {
-
-      0%,
-      100% {
-        box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4);
-      }
-
-      50% {
-        box-shadow: 0 4px 25px rgba(22, 163, 74, 0.7), 0 0 30px rgba(22, 163, 74, 0.4);
-      }
-    }
-
-    /* ========== Navigation Link Styles ========== */
-    .nav-link-custom {
-      color: #e9d5ff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 8px 16px;
-      position: relative;
-      transition: color 0.3s ease;
-    }
-
-    .nav-link-custom:hover {
-      color: #fbbf24;
-    }
-
-    .nav-link-custom::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 2px;
-      background: #fbbf24;
-      transition: width 0.3s ease;
-    }
-
-    .nav-link-custom:hover::after {
-      width: 80%;
-    }
-
-    .nav-link-custom.active {
-      color: #fbbf24;
-    }
-
-    .nav-link-custom.active::after {
-      width: 80%;
-    }
-
-    /* Botón Perfil */
-    .btn-profile {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #475569, #1e293b);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fbbf24;
-      font-size: 1.2rem;
-      border: 2px solid rgba(251, 191, 36, 0.3);
-      transition: all 0.3s ease;
-    }
-
-    .btn-profile:hover {
-      transform: scale(1.1);
-      border-color: #fbbf24;
-      box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
-    }
 
     /* Contenido Principal */
     .hero {
@@ -890,56 +757,6 @@
       }
     }
 
-    /* Header Manta Premium Style - Professional Edition */
-    .header-manta-premium {
-      height: 140px;
-      /* Thicker header to show the fabric's full vertical patterns */
-      background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('./principal/headerfondo2.jpg');
-      background-size: auto 100%;
-      /* Shows the 'COMPLETE' vertical image, let width repeat */
-      background-repeat: repeat-x;
-      background-position: center;
-      position: relative;
-      border-bottom: 3px solid #fbbf24;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    @media (max-width: 768px) {
-      .header-manta-premium {
-        height: 80px !important;
-        min-height: 80px;
-      }
-
-      .header-manta-premium.scrolled {
-        height: auto !important;
-        min-height: 70px;
-      }
-    }
-
-    .header-manta-premium.scrolled {
-      height: 90px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
-      /* Darker overlay on scroll for better link legibility */
-      background-image: linear-gradient(rgba(45, 10, 80, 0.75), rgba(15, 5, 30, 0.9)), url('./principal/headerfondo1.jpg');
-    }
-
-    .header-manta-premium::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
-      pointer-events: none;
-    }
-
-    /* Ensure internal content is always centered regardless of height */
-    .header-manta-premium>div {
-      position: relative;
-      z-index: 2;
-    }
   </style>
   <link rel="stylesheet" href="./assets/css/sparks.css">
 </head>
@@ -1033,65 +850,13 @@
 
   <!-- Header Mejorado -->
   <!-- Header Section - Standardized with EN VIVO Style -->
-  <header class="header-manta-premium text-white shadow-lg sticky top-0 z-40">
-    <!-- Banner superior -->
-    <!-- Banner superior removed -->
-
-    <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center relative z-50">
-      <div class="w-full flex justify-between items-center h-full">
-        <!-- Left: Candelaria Branding -->
-        <!-- Left: Candelaria Branding -->
-        <a href="index.php" id="logo-container"
-          class="flex items-center cursor-pointer group h-full relative spark-container">
-          <img src="./principal/logoc.png" alt="Candelaria"
-            class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
-        </a>
-        <!-- Right: Navigation + EN TIEMPO REAL -->
-        <div class="flex items-center gap-6">
-          <nav class="hidden md:flex items-center gap-2">
-            <a href="./servicios/index.php" class="nav-link-custom">Servicios</a>
-            <a href="./tienda/index.php" class="nav-link-custom">Tienda</a>
-            <a href="./cultura/cultura.php" class="nav-link-custom">Cultura</a>
-            <a href="./horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
-            <a href="./noticias/index.php" class="nav-link-custom">Noticias</a>
-          </nav>
-
-          <?php include 'includes/auth-header.php'; ?>
-          <!-- User Auth Button -->
-          <?= getAuthButtonHTML() ?>
-
-          <!-- EN VIVO Button -->
-          <a href="./live-platform/index.php" class="btn-live group !p-2.5 md:!px-6 md:!py-2.5">
-            <div class="live-dot"></div>
-            <span class="tracking-wider hidden md:inline">EN TIEMPO REAL</span>
-          </a>
-
-          <!-- Mobile Menu Button -->
-          <button id="mobile-menu-btn" class="md:hidden text-white hover:text-candelaria-gold transition-colors">
-            <i data-lucide="menu" class="w-8 h-8"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile Menu (Hidden by default) -->
-    <div id="mobile-menu"
-      class="hidden md:hidden bg-candelaria-purple absolute top-full left-0 w-full shadow-lg border-t border-purple-800 z-30 transition-all duration-300">
-      <nav class="flex flex-col p-6 space-y-4">
-        <a href="./servicios/index.php"
-          class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Servicios</a>
-        <a href="./tienda/index.php"
-          class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Tienda</a>
-        <a href="./cultura/cultura.php"
-          class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
-        <a href="./horarios_y_danzas/index.php"
-          class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Horarios</a>
-        <a href="./noticias/index.php"
-          class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Noticias</a>
-      </nav>
-    </div>
-    </div>
-  </header>
+  <!-- Header Mejorado -->
+  <!-- Header Section - Standardized with EN TIEMPO REAL Style -->
+  <?php
+  $headerDepth = 0;
+  $activePage = 'inicio';
+  include 'includes/standard-header.php';
+  ?>
 
 
   <!-- Contenido Principal -->
@@ -2061,9 +1826,9 @@
       isLoading = true;
 
       const danzasGrid = document.getElementById('danzas-grid');
-      
+
       if (danzasGrid) {
-          danzasGrid.innerHTML = `
+        danzasGrid.innerHTML = `
             <div class="danza-card loading-skeleton">
               <div class="skeleton-image"></div>
               <div class="skeleton-content"><div class="skeleton-line short"></div><div class="skeleton-line"></div></div>
@@ -2083,7 +1848,7 @@
         console.time("🚀 Descarga Turbo");
         const response = await fetch('./api/danzas_all.php');
         if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-        
+
         RAM_DANZAS = await response.json();
         console.timeEnd("🚀 Descarga Turbo");
         console.log(`✅ ${RAM_DANZAS.length} danzas cargadas en RAM.`);
@@ -2094,7 +1859,7 @@
       } catch (error) {
         console.error('Error loading ALL danzas:', error);
         if (danzasGrid) {
-            danzasGrid.innerHTML = `
+          danzasGrid.innerHTML = `
               <div class="danza-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
                 <p style="color: rgba(255,255,255,0.7);">Error al cargar las danzas: ${error.message}</p>
                 <button onclick="loadAllDanzasIntoRam()" class="search-btn" style="margin-top:15px;">Reintentar</button>
@@ -2108,69 +1873,69 @@
 
     // ========== Logic: Filter RAM -> filteredDanzas -> Paginate -> Render ==========
     function filterAndRender() {
-        let results = RAM_DANZAS;
+      let results = RAM_DANZAS;
 
-        // Filtro por Categoría
-        if (currentCategory && currentCategory.trim() !== '') {
-            results = results.filter(d => 
-                (d.categoria && d.categoria === currentCategory) || 
-                (currentCategory === 'Luces Parada' && d.categoria === 'Luces Parada')
-            );
-        }
+      // Filtro por Categoría
+      if (currentCategory && currentCategory.trim() !== '') {
+        results = results.filter(d =>
+          (d.categoria && d.categoria === currentCategory) ||
+          (currentCategory === 'Luces Parada' && d.categoria === 'Luces Parada')
+        );
+      }
 
-        // Filtro por Búsqueda
-        if (currentSearchQuery && currentSearchQuery.trim() !== '') {
-            const q = currentSearchQuery.toLowerCase();
-            results = results.filter(d => {
-                const text = (
-                    (d.conjunto || '') + ' ' + 
-                    (d.categoria || '') + ' ' + 
-                    (d.descripcion || '')
-                ).toLowerCase();
-                return text.includes(q);
-            });
-        }
+      // Filtro por Búsqueda
+      if (currentSearchQuery && currentSearchQuery.trim() !== '') {
+        const q = currentSearchQuery.toLowerCase();
+        results = results.filter(d => {
+          const text = (
+            (d.conjunto || '') + ' ' +
+            (d.categoria || '') + ' ' +
+            (d.descripcion || '')
+          ).toLowerCase();
+          return text.includes(q);
+        });
+      }
 
-        filteredDanzas = results;
-        renderCurrentPage();
+      filteredDanzas = results;
+      renderCurrentPage();
     }
 
     function renderCurrentPage() {
-        const danzasGrid = document.getElementById('danzas-grid');
-        const resultsInfo = document.getElementById('results-info');
-        const paginationContainer = document.getElementById('pagination');
+      const danzasGrid = document.getElementById('danzas-grid');
+      const resultsInfo = document.getElementById('results-info');
+      const paginationContainer = document.getElementById('pagination');
 
-        if (!danzasGrid) return;
+      if (!danzasGrid) return;
 
-        const total = filteredDanzas.length;
-        
-        if (total === 0) {
-           danzasGrid.innerHTML = `
+      const total = filteredDanzas.length;
+
+      if (total === 0) {
+        danzasGrid.innerHTML = `
             <div class="danza-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
               <p style="color: rgba(255,255,255,0.7);">
                 ${currentSearchQuery ? `No se encontraron danzas para "${currentSearchQuery}"` : 'No hay danzas disponibles en esta categoría.'}
               </p>
             </div>
            `;
-           if (resultsInfo) resultsInfo.textContent = '0 resultados';
-           if (paginationContainer) paginationContainer.innerHTML = '';
-           return;
-        }
+        if (resultsInfo) resultsInfo.textContent = '0 resultados';
+        if (paginationContainer) paginationContainer.innerHTML = '';
+        return;
+      }
 
-        const totalPages = Math.ceil(total / pageSize);
-        if (currentPage > totalPages) currentPage = 1;
+      const totalPages = Math.ceil(total / pageSize);
+      if (currentPage > totalPages) currentPage = 1;
 
-        const startIdx = (currentPage - 1) * pageSize;
-        const endIdx = Math.min(startIdx + pageSize, total);
-        
-        const pageItems = filteredDanzas.slice(startIdx, endIdx);
+      const startIdx = (currentPage - 1) * pageSize;
+      const endIdx = Math.min(startIdx + pageSize, total);
 
-        danzasGrid.innerHTML = pageItems.map(danza => {
-          const categoriaRaw = danza.categoria || 'TRADICIONAL';
-          const displayCategory = categoriaRaw === 'Luces Parada' ? 'TRAJE DE LUCES' : categoriaRaw.toUpperCase();
-          const imageUrl = fixPhotoPath(danza.foto) || `https://placehold.co/400x300/4c1d95/fbbf24?text=${encodeURIComponent(danza.conjunto || 'Danza')}`;
-          
-          return `
+      const pageItems = filteredDanzas.slice(startIdx, endIdx);
+
+      danzasGrid.innerHTML = pageItems.map(danza => {
+        const categoriaRaw = danza.categoria || 'TRADICIONAL';
+        const displayCategory = categoriaRaw === 'Luces Parada' ? 'TRAJE DE LUCES' : categoriaRaw.toUpperCase();
+        const imageUrl = fixPhotoPath(danza.foto) || `https://placehold.co/400x300/4c1d95/fbbf24?text=${encodeURIComponent(danza.conjunto || 'Danza')}`;
+
+        return `
             <div class="danza-card">
               <div class="card-image-container">
                 <img class="card-image" 
@@ -2183,77 +1948,77 @@
               </div>
               <div class="card-content">
                 <h3 class="card-title">${danza.conjunto}</h3>
-                <button class="card-btn" onclick="openDanceModal('${danza.id}', '${danza.conjunto.replace(/'/g, "\\'")}', '${(danza.descripcion||'').replace(/'/g, "\\'")}', '${danza.categoria}', '${danza.hora}', '${danza.orden_concurso}', '${danza.orden_veneracion || ''}', '${(danza.detalles||'').replace(/'/g, "\\'")}', '${danza.foto}', '${danza.dia_concurso}', '${danza.dia_veneracion}')">
+                <button class="card-btn" onclick="openDanceModal('${danza.id}', '${danza.conjunto.replace(/'/g, "\\'")}', '${(danza.descripcion || '').replace(/'/g, "\\'")}', '${danza.categoria}', '${danza.hora}', '${danza.orden_concurso}', '${danza.orden_veneracion || ''}', '${(danza.detalles || '').replace(/'/g, "\\'")}', '${danza.foto}', '${danza.dia_concurso}', '${danza.dia_veneracion}')">
                   Ver Detalles
                   <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
                 </button>
               </div>
             </div>
           `;
-        }).join('');
+      }).join('');
 
-        if (resultsInfo) {
-            resultsInfo.textContent = `Mostrando ${startIdx + 1} a ${endIdx} de ${total} danzas`;
+      if (resultsInfo) {
+        resultsInfo.textContent = `Mostrando ${startIdx + 1} a ${endIdx} de ${total} danzas`;
+      }
+
+      if (paginationContainer) {
+        let paginationHtml = '';
+
+        const maxVisible = 5;
+        let pStart = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+        let pEnd = Math.min(totalPages, pStart + maxVisible - 1);
+        if (pEnd - pStart + 1 < maxVisible) pStart = Math.max(1, pEnd - maxVisible + 1);
+
+        // Prev
+        paginationHtml += `<button class="nav-btn" ${currentPage === 1 ? 'disabled' : `onclick="changeDanzaPage(${currentPage - 1})"`}>← Anterior</button>`;
+
+        if (pStart > 1) {
+          paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(1)">1</button>`;
+          if (pStart > 2) paginationHtml += '<span class="ellipsis">...</span>';
         }
 
-        if (paginationContainer) {
-            let paginationHtml = '';
-            
-            const maxVisible = 5;
-            let pStart = Math.max(1, currentPage - Math.floor(maxVisible/2));
-            let pEnd = Math.min(totalPages, pStart + maxVisible - 1);
-             if (pEnd - pStart + 1 < maxVisible) pStart = Math.max(1, pEnd - maxVisible + 1);
-
-            // Prev
-            paginationHtml += `<button class="nav-btn" ${currentPage === 1 ? 'disabled' : `onclick="changeDanzaPage(${currentPage - 1})"`}>← Anterior</button>`;
-
-            if (pStart > 1) {
-                paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(1)">1</button>`;
-                if (pStart > 2) paginationHtml += '<span class="ellipsis">...</span>';
-            }
-
-            for (let i = pStart; i <= pEnd; i++) {
-                paginationHtml += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changeDanzaPage(${i})">${i}</button>`;
-            }
-
-            if (pEnd < totalPages) {
-                if (pEnd < totalPages - 1) paginationHtml += '<span class="ellipsis">...</span>';
-                paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(${totalPages})">${totalPages}</button>`;
-            }
-
-            // Next
-            paginationHtml += `<button class="nav-btn" ${currentPage === totalPages ? 'disabled' : `onclick="changeDanzaPage(${currentPage + 1})"`}>Siguiente →</button>`;
-
-            paginationContainer.innerHTML = paginationHtml;
+        for (let i = pStart; i <= pEnd; i++) {
+          paginationHtml += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changeDanzaPage(${i})">${i}</button>`;
         }
 
-        if (typeof lucide !== 'undefined') lucide.createIcons();
+        if (pEnd < totalPages) {
+          if (pEnd < totalPages - 1) paginationHtml += '<span class="ellipsis">...</span>';
+          paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(${totalPages})">${totalPages}</button>`;
+        }
+
+        // Next
+        paginationHtml += `<button class="nav-btn" ${currentPage === totalPages ? 'disabled' : `onclick="changeDanzaPage(${currentPage + 1})"`}>Siguiente →</button>`;
+
+        paginationContainer.innerHTML = paginationHtml;
+      }
+
+      if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
     // Function to change page (Local)
     function changeDanzaPage(page) {
-        if (page < 1) return;
-        currentPage = page;
-        renderCurrentPage();
-        document.getElementById('danzas-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (page < 1) return;
+      currentPage = page;
+      renderCurrentPage();
+      document.getElementById('danzas-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     // Function to search danzas (Compat)
     function searchDanzas(query) {
-        currentSearchQuery = query;
-        currentPage = 1;
-        filterAndRender();
+      currentSearchQuery = query;
+      currentPage = 1;
+      filterAndRender();
     }
 
     // ========== Category Filter Function ==========
     function filterByCategory(category) {
-        document.querySelectorAll('.category-filter-btn').forEach(btn => {
-           btn.classList.toggle('active', btn.dataset.category === category);
-        });
+      document.querySelectorAll('.category-filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.category === category);
+      });
 
-        currentCategory = category;
-        currentPage = 1;
-        filterAndRender();
+      currentCategory = category;
+      currentPage = 1;
+      filterAndRender();
     }
 
     // ========== Dance Modal Functions ==========
@@ -2350,9 +2115,9 @@
       // Usamos 'input' para reacción inmediata sin debounce (o mínimo).
       if (searchInput) {
         searchInput.addEventListener('input', function (e) {
-            currentSearchQuery = e.target.value;
-            currentPage = 1; // Reset page
-            filterAndRender(); // Filtrado local instantáneo
+          currentSearchQuery = e.target.value;
+          currentPage = 1; // Reset page
+          filterAndRender(); // Filtrado local instantáneo
         });
       }
 
