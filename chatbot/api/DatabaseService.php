@@ -43,7 +43,7 @@ class DatabaseService
 
         // Detectar intención del usuario
         $isAskingAboutEvents = $this->containsKeywords($messageLower, ['evento', 'programación', 'horario', 'cuándo', 'fecha', 'día']);
-        $isAskingAboutDances = $this->containsKeywords($messageLower, ['danza', 'baile', 'conjunto', 'traje']);
+        $isAskingAboutDances = $this->containsKeywords($messageLower, ['danza', 'baile', 'conjunto', 'traje', 'morenada', 'diablada', 'caporales', 'tinku', 'saya', 'sikuri', 'llamerada', 'waca', 'kullawada', 'carnaval']);
         $isAskingAboutLocation = $this->containsKeywords($messageLower, ['dónde', 'ubicación', 'lugar', 'dirección', 'mapa']);
         $isAskingAboutHistory = $this->containsKeywords($messageLower, ['historia', 'origen', 'tradición', 'virgen', 'candelaria', 'cultura']);
         $isAskingAboutServices = $this->containsKeywords($messageLower, ['service', 'hotel', 'hospedaje', 'hostal', 'alojamiento', 'restaurante', 'comida', 'comer', 'cena', 'almuerzo']);
@@ -251,9 +251,60 @@ class DatabaseService
             foreach ($tables as $table) {
                 if ($this->tableExists($table)) {
                     if ($searchTerm) {
-                        $stmt = $this->pdo->prepare("SELECT * FROM {$table} WHERE LOWER(conjunto) LIKE ? OR LOWER(descripcion) LIKE ? OR LOWER(historia) LIKE ? LIMIT 8");
-                        $searchPattern = "%{$searchTerm}%";
-                        $stmt->execute([$searchPattern, $searchPattern, $searchPattern]);
+                        // Limpiar el término de búsqueda para tener más probabilidad de encontrar algo
+                        // 1. Quitar stopwords comunes
+                        $stopwords = ['que', 'qué', 'hay', 'sobre', 'las', 'los', 'el', 'la', 'un', 'una', 'de', 'del', 'con', 'para', 'por', 'en', 'a', 'hora', 'pasa', 'cuando', 'donde', 'dime', 'saber', 'cuanto'];
+                        $words = explode(' ', $searchTerm);
+                        $keywords = [];
+
+                        foreach ($words as $word) {
+                            $cleanWord = trim(str_replace(['?', '¿', '!', '¡', ',', '.', ';'], '', $word));
+                            if (strlen($cleanWord) > 3 && !in_array($cleanWord, $stopwords)) {
+                                $keywords[] = $cleanWord;
+                            }
+                        }
+
+                        // Si nos quedamos sin palabras (ej. solo stopwords), usar el original limpio
+                        if (empty($keywords)) {
+                            $searchPattern = "%" . trim(str_replace(['?', '¿', '!', '¡'], '', $searchTerm)) . "%";
+                            $stmt = $this->pdo->prepare("SELECT * FROM {$table} WHERE LOWER(conjunto) LIKE ? OR LOWER(descripcion) LIKE ? OR LOWER(historia) LIKE ? LIMIT 8");
+                            $stmt->execute([$searchPattern, $searchPattern, $searchPattern]);
+                        } else {
+                            // Construir query dinámica para buscar CUALQUIERA de las palabras clave
+                            // Ojo: Esto es un OR. Si queremos ser más estrictos, un AND. 
+                            // Para un chatbot es mejor OR para dar opciones, o buscar la frase entera si falla.
+
+                            // Estrategia híbrida: Intentar buscar la frase mas o menos exacta con las keywords
+                            $likeClauses = [];
+                            $params = [];
+
+                            foreach ($keywords as $k) {
+                                $likeClauses[] = "(LOWER(conjunto) LIKE ? OR LOWER(descripcion) LIKE ? OR LOWER(historia) LIKE ?)";
+                                $p = "%{$k}%";
+                                array_push($params, $p, $p, $p);
+                            }
+
+                            if (!empty($likeClauses)) {
+                                $sql = "SELECT * FROM {$table} WHERE " . implode(' AND ', $likeClauses) . " LIMIT 8";
+                                // Nota: Usamos AND para que si buscan "Diablada Bellavista" aparezca la que tenga AMBOS
+                                // Si no hay resultados con AND, podríamos intentar con OR.
+
+                                $stmt = $this->pdo->prepare($sql);
+                                $stmt->execute($params);
+
+                                // Fallback: Si con AND no sale nada, intentar con OR (al menos una coincidencia)
+                                if ($stmt->rowCount() == 0) {
+                                    $sqlOr = "SELECT * FROM {$table} WHERE " . implode(' OR ', $likeClauses) . " LIMIT 5";
+                                    $stmt = $this->pdo->prepare($sqlOr);
+                                    $stmt->execute($params);
+                                }
+                            } else {
+                                // Fallback total
+                                $searchPattern = "%{$searchTerm}%";
+                                $stmt = $this->pdo->prepare("SELECT * FROM {$table} WHERE LOWER(conjunto) LIKE ? LIMIT 5");
+                                $stmt->execute([$searchPattern]);
+                            }
+                        }
                     } else {
                         $stmt = $this->pdo->query("SELECT * FROM {$table} ORDER BY conjunto ASC LIMIT 10");
                     }
