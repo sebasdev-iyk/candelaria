@@ -37,7 +37,7 @@ function getActiveClass($page, $activePage)
                     <a href="<?= $basePath ?>cultura/cultura.php"
                         class="nav-link-custom <?= getActiveClass('cultura', $activePage) ?>">Cultura</a>
                     <a href="<?= $basePath ?>horarios_y_danzas/index.php"
-                        class="nav-link-custom <?= getActiveClass('horarios', $activePage) ?>">Horarios</a>
+                        class="nav-link-custom <?= getActiveClass('horarios', $activePage) ?>">Festividad</a>
                     <a href="<?= $basePath ?>noticias/index.php"
                         class="nav-link-custom <?= getActiveClass('noticias', $activePage) ?>">Noticias</a>
                 </nav>
@@ -82,7 +82,7 @@ function getActiveClass($page, $activePage)
             <a href="<?= $basePath ?>cultura/cultura.php"
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'cultura' ? 'text-candelaria-gold' : '' ?>">Cultura</a>
             <a href="<?= $basePath ?>horarios_y_danzas/index.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'horarios' ? 'text-candelaria-gold' : '' ?>">Horarios</a>
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'horarios' ? 'text-candelaria-gold' : '' ?>">Festividad</a>
             <a href="<?= $basePath ?>noticias/index.php"
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'noticias' ? 'text-candelaria-gold' : '' ?>">Noticias</a>
         </nav>

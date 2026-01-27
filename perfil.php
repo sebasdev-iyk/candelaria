@@ -104,7 +104,7 @@
                     <nav class="hidden md:flex items-center gap-2">
                         <a href="servicios/index.php" class="nav-link-custom">Servicios</a>
                         <a href="cultura/cultura.php" class="nav-link-custom">Cultura</a>
-                        <a href="horarios_y_danzas/index.php" class="nav-link-custom">Horarios</a>
+                        <a href="horarios_y_danzas/index.php" class="nav-link-custom">Festividad</a>
                         <a href="noticias/index.php" class="nav-link-custom">Noticias</a>
                     </nav>
                     <?= getAuthButtonHTML() ?>
