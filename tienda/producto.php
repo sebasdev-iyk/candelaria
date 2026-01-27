@@ -446,6 +446,20 @@ $mainImg = '../' . $baseImg;
         }
         console.groupEnd();
     }
+
+    // Auto-Reload on Social Login Return
+    // When coming back from Google/Facebook, the hash '#access_token=...' is present.
+    // SupabaseCore processes it and fires 'supabase-auth-change'.
+    // We catch it and reload to let PHP render the protected content.
+    window.addEventListener('supabase-auth-change', (e) => {
+        console.log("🔄 [PRODUCT] Auth Change Event:", e.detail);
+        if (e.detail && e.detail.event === 'SIGNED_IN' && e.detail.user) {
+            console.log("✅ [PRODUCT] User Signed In detected via event. reloading...");
+            
+            // Optional: Remove hash before reload to clean URL, but reload is enough
+            window.location.reload();
+        }
+    });
     </script>
 </body>
 
