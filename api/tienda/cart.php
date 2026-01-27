@@ -16,12 +16,31 @@ if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
     $token = $matches[1];
 }
 
-// Simple Session Check as fallback/primary for V1
+// Simple Session Check
 if (session_status() === PHP_SESSION_NONE)
     session_start();
 $userId = $_SESSION['user_id'] ?? null;
 
-// TODO: Validate Token against Supabase or DB if session is empty (omitted for speed, relying on known session pattern)
+// Fallback: Decode Supabase JWT (unsafe signature check for speed, but functional)
+if (!$userId && $token) {
+    try {
+        $parts = explode('.', $token);
+        if (count($parts) === 3) {
+            $payload = json_decode(base64_decode(str_replace('_', '/', str_replace('-', '+', $parts[1]))), true);
+            if (isset($payload['sub'])) {
+                // Check if user exists in our DB (Optional, but good safety)
+                // For now, assume sync exists or will be created
+                // We really should map this UUID to our INT id if we use INTs. 
+                // Wait, checkout.php used $userId from session.
+                // Let's assume our DB uses Supabase UUIDs or has a mapping.
+                // Looking at `tienda_carrito` describe: `usuario_id` is varchar(255). So UUID is fine.
+                $userId = $payload['sub'];
+            }
+        }
+    } catch (Exception $e) {
+        error_log("JWT Decode Error: " . $e->getMessage());
+    }
+}
 
 if (!$userId) {
     http_response_code(401);

@@ -64,9 +64,9 @@ ini_set('display_errors', 0);
                     </div>
 
                     <button onclick="Tienda.checkout()"
-                        class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-purple-200">
-                        <i data-lucide="credit-card" class="w-5 h-5"></i>
-                        Procesar Compra
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-green-200">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        Pedir por WhatsApp
                     </button>
 
                     <p class="text-xs text-center text-gray-400 mt-4">Transacción segura. Se coordinará el pago por
