@@ -79,6 +79,28 @@
                 window.dispatchEvent(new CustomEvent('supabase-auth-change', {
                     detail: { event, user: session.user }
                 }));
+
+                // --- REDIRECT FAILSAFE RECOVERY ---
+                // If we have a stored recovery URL and we are NOT on that URL, go there.
+                // This handles cases where Supabase ignored 'redirectTo' parameter.
+                const recoveryUrl = localStorage.getItem('auth_redirect_recovery');
+                if (recoveryUrl && event === 'SIGNED_IN') {
+                    console.log('🔄 [Supabase Core] Recovery URL found:', recoveryUrl);
+
+                    // Normalize URLs for comparison (ignore trailing slashes)
+                    const current = window.location.href.split('#')[0].replace(/\/$/, "");
+                    const target = recoveryUrl.split('#')[0].replace(/\/$/, "");
+
+                    if (current !== target && !current.includes('tailwindcss.com')) {
+                        console.log('🚀 [Supabase Core] Executing Failsafe Redirect to:', recoveryUrl);
+                        localStorage.removeItem('auth_redirect_recovery'); // Clear it so we don't loop
+                        window.location.href = recoveryUrl;
+                    } else {
+                        // We are already there
+                        localStorage.removeItem('auth_redirect_recovery');
+                    }
+                }
+
             } else if (event === 'SIGNED_OUT') {
                 deleteCookie(COOKIE_NAME);
                 deleteCookie(COOKIE_REFRESH_NAME);
@@ -105,19 +127,23 @@
         const client = initSupabase();
         if (!client) return { error: new Error('Supabase not initialized') };
 
+        const finalRedirect = redirectTo || window.location.href;
+
+        // FAILSAFE: Store desired URL in localStorage because Supabase might ignore redirectTo
+        // if the URL is not whitelisted in the dashboard.
+        localStorage.setItem('auth_redirect_recovery', finalRedirect);
+
         const { data, error } = await client.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: redirectTo || window.location.href
+                redirectTo: finalRedirect
             }
         });
 
         return { data, error };
     }
 
-    /**
-     * Sign out current user
-     */
+
     /**
      * Sign in with Facebook OAuth
      * @param {string} redirectTo - URL to redirect after auth (defaults to current page)
@@ -126,10 +152,15 @@
         const client = initSupabase();
         if (!client) return { error: new Error('Supabase not initialized') };
 
+        const finalRedirect = redirectTo || window.location.href;
+
+        // FAILSAFE: Store desired URL
+        localStorage.setItem('auth_redirect_recovery', finalRedirect);
+
         const { data, error } = await client.auth.signInWithOAuth({
             provider: 'facebook',
             options: {
-                redirectTo: redirectTo || window.location.href
+                redirectTo: finalRedirect
             }
         });
 
