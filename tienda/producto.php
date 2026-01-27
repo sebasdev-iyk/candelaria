@@ -142,7 +142,7 @@ $mainImg = '../' . $baseImg;
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
-                        <button type="button" onclick="handleGoogleLogin()"
+                        <button type="button" onclick="handleProductSocialLogin('google')"
                             class="flex items-center justify-center w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                             <svg class="h-5 w-5 mr-2" viewBox="0 0 24 24">
                                 <path
@@ -160,7 +160,7 @@ $mainImg = '../' . $baseImg;
                             </svg>
                             Google
                         </button>
-                        <button type="button" onclick="handleFacebookLogin()"
+                        <button type="button" onclick="handleProductSocialLogin('facebook')"
                             class="flex items-center justify-center w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                             <svg class="h-5 w-5 mr-2 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
                                 <path
@@ -169,13 +169,14 @@ $mainImg = '../' . $baseImg;
                             Facebook
                         </button>
                     </div>
+                </div>
 
-                    <div class="text-center mt-4">
-                        <a href="index.php" class="text-sm text-gray-400 hover:text-gray-600 font-medium font-sans">Ahora
-                            no, volver a la tienda</a>
-                    </div>
+                <div class="text-center mt-4">
+                    <a href="index.php" class="text-sm text-gray-400 hover:text-gray-600 font-medium font-sans">Ahora
+                        no, volver a la tienda</a>
                 </div>
             </div>
+        </div>
         </div>
     <?php endif; ?>
 
@@ -414,6 +415,28 @@ $mainImg = '../' . $baseImg;
             });
         }
     });
+
+    // Custom Social Login for Product Page (Preserves ID parameter)
+    window.handleProductSocialLogin = async function(provider) {
+        if (typeof SupabaseCore === 'undefined') {
+             alert('Error: Sistema de autenticación no cargado.');
+             return;
+        }
+
+        try {
+            // Explicitly pass window.location.href to preserve ?id=10
+            const currentUrl = window.location.href;
+            
+            if (provider === 'google') {
+                await SupabaseCore.signInWithGoogle(currentUrl);
+            } else if (provider === 'facebook') {
+                await SupabaseCore.signInWithFacebook(currentUrl);
+            }
+        } catch (e) {
+            console.error('Social Login Error:', e);
+            alert('Error al conectar con ' + provider);
+        }
+    }
     </script>
 </body>
 
