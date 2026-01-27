@@ -213,55 +213,56 @@ window.Tienda = {
     },
 
     async checkout() {
-        if (!window.currentUser) {
-            window.showToast('Por favor inicia sesión para continuar', 'info');
-            window.openAuthModal();
-            return;
-        }
         if (this.cart.length === 0) {
             window.showToast('Tu carrito está vacío', 'warning');
             return;
         }
-        const address = document.getElementById('checkout-address').value;
-        const phone = document.getElementById('checkout-phone').value;
-        if (!address || !phone) {
-            window.showToast('Completa los datos de envío', 'warning');
-            return;
+
+        const btn = document.querySelector('button[onclick="Tienda.checkout()"]');
+        if (btn) btn.innerHTML = '<i class="animate-spin" data-lucide="loader-2"></i> Procesando...';
+
+        // 1. Calculate Total
+        const total = this.cart.reduce((sum, item) => sum + (item.precio * item.qty), 0);
+
+        // 2. Build Message
+        let msg = `Hola, quiero realizar el siguiente pedido de la web:\n\n`;
+        this.cart.forEach(item => {
+            msg += `• ${item.qty}x ${item.nombre} (S/ ${(item.precio * item.qty).toFixed(2)})\n`;
+        });
+        msg += `\n*TOTAL: S/ ${total.toFixed(2)}*\n\n`;
+
+        // Add Contact Info if filled (optional now)
+        const address = document.getElementById('checkout-address') ? document.getElementById('checkout-address').value : '';
+        if (address) msg += `Dirección: ${address}\n`;
+
+        // 3. Determine WhatsApp Number
+        // Priority: 
+        // 1. Use the number of the first item that has one.
+        // 2. Fallback to a default number if none found.
+        let targetNumber = '';
+        const itemWithNumber = this.cart.find(item => item.whatsapp && item.whatsapp.length > 5);
+
+        if (itemWithNumber) {
+            targetNumber = itemWithNumber.whatsapp.replace(/[^0-9]/g, '');
+        } else {
+            // Fallback: If no products have a number, maybe alert user or use a default
+            // Just asking user to contact main line
+            targetNumber = '51951552140'; // Default Admin/Support Number (Placeholder)
         }
 
-        try {
-            const btn = document.querySelector('button[onclick="Tienda.checkout()"]');
-            btn.innerHTML = '<i class="animate-spin" data-lucide="loader-2"></i> Procesando...';
-            btn.disabled = true;
-            if (window.lucide) lucide.createIcons();
+        // 4. Open WhatsApp
+        const waLink = `https://wa.me/${targetNumber}?text=${encodeURIComponent(msg)}`;
+        window.open(waLink, '_blank');
 
-            const token = window.SupabaseCore ? window.SupabaseCore.getAccessToken() : '';
-            const total = this.cart.reduce((sum, item) => sum + (item.precio * item.qty), 0);
+        // Reset UI
+        if (btn) btn.innerHTML = 'Procesar Compra';
 
-            const response = await fetch('../api/tienda/checkout.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-                body: JSON.stringify({ items: this.cart, total: total, contact: { address, phone } })
-            });
-            const result = await response.json();
-            if (result.success) {
-                this.cart = [];
-                this.saveCart();
-                document.getElementById('cart-content').innerHTML = `
-                    <div class="text-center py-20 bg-white rounded-xl col-span-3">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-4">¡Gracias por tu compra!</h2>
-                        <p class="text-gray-500 mb-8">Pedido #${result.order_id} recibido.</p>
-                        <a href="index.php" class="bg-purple-600 text-white px-8 py-3 rounded-full font-bold">Seguir Comprando</a>
-                    </div>
-                `;
-            } else {
-                throw new Error(result.message);
-            }
-        } catch (e) {
-            window.showToast('Error: ' + e.message, 'error');
-            const btn = document.querySelector('button[onclick="Tienda.checkout()"]');
-            if (btn) { btn.innerHTML = 'Procesar Compra'; btn.disabled = false; }
-        }
+        // Optional: Clear cart or ask if sent?
+        // Let's keep cart for now or clear it? Standard is to clear if order placed.
+        // But since it's WhatsApp, we don't know if they sent it. 
+        // Let's NOT clear automatically, maybe shows a "Did you send it?" modal?
+        // For simplicity: Just open WA.
+        window.showToast('Abriendo WhatsApp para enviar pedido...', 'success');
     },
 
     getSimpleToken() {

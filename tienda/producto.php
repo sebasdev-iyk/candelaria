@@ -225,7 +225,8 @@ $mainImg = '../' . $baseImg;
             window.Tienda.addItem(<?= $product['id'] ?>, qty, {
                 nombre: '<?= htmlspecialchars($product['nombre'], ENT_QUOTES) ?>',
                 precio: <?= $product['precio'] ?>,
-                imagen: '<?= $baseImg ?>'
+                imagen: '<?= $baseImg ?>',
+                whatsapp: '<?= $product['numero_whatsapp'] ?? '' ?>'
             });
         }
     </script>
