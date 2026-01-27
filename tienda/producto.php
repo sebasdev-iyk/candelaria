@@ -452,12 +452,17 @@ $mainImg = '../' . $baseImg;
     // SupabaseCore processes it and fires 'supabase-auth-change'.
     // We catch it and reload to let PHP render the protected content.
     window.addEventListener('supabase-auth-change', (e) => {
+        // Only act if we are currently in "Guest Mode" (Overlay is present)
+        // This prevents infinite loops for already logged-in users
+        const loginOverlay = document.querySelector('.login-overlay-backdrop');
+        
         console.log("🔄 [PRODUCT] Auth Change Event:", e.detail);
-        if (e.detail && e.detail.event === 'SIGNED_IN' && e.detail.user) {
-            console.log("✅ [PRODUCT] User Signed In detected via event. reloading...");
-            
-            // Optional: Remove hash before reload to clean URL, but reload is enough
+        
+        if (loginOverlay && e.detail && e.detail.event === 'SIGNED_IN' && e.detail.user) {
+            console.log("✅ [PRODUCT] User Signed In detected & Overlay Present. Reloading to unlock content...");
             window.location.reload();
+        } else {
+             console.log("ℹ️ [PRODUCT] Auth change ignored (Overlay not present or event not SIGNED_IN)");
         }
     });
     </script>

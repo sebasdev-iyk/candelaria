@@ -108,7 +108,7 @@
         const { data, error } = await client.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: redirectTo || window.location.href.split('?')[0]
+                redirectTo: redirectTo || window.location.href
             }
         });
 
@@ -129,7 +129,7 @@
         const { data, error } = await client.auth.signInWithOAuth({
             provider: 'facebook',
             options: {
-                redirectTo: redirectTo || window.location.href.split('?')[0]
+                redirectTo: redirectTo || window.location.href
             }
         });
 
@@ -178,7 +178,7 @@
         if (!client) return { error: new Error('Supabase not initialized') };
 
         const { data, error } = await client.auth.resetPasswordForEmail(email, {
-            redirectTo: redirectTo || window.location.href.split('?')[0]
+            redirectTo: redirectTo || window.location.href
         });
 
         return { data, error };
