@@ -871,7 +871,7 @@
             if (!container) return;
 
             container.innerHTML = `
-            < div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6" >
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
                     <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
                         <i data-lucide="help-circle" class="w-5 h-5 mr-2 text-candelaria-purple"></i>
                         Preguntas Frecuentes
@@ -889,7 +889,7 @@
                             </div>
                         `).join('')}
                     </div>
-                </div >
+                </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 <div class="bg-gradient-to-br from-purple-500 to-candelaria-purple rounded-2xl shadow-lg p-6 text-white">
@@ -927,7 +927,7 @@
 
             // Show loading state first
             container.innerHTML = `
-            < div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6" >
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xl font-bold text-gray-900 flex items-center">
                             <i data-lucide="users" class="w-5 h-5 mr-2 text-candelaria-purple"></i>
@@ -935,7 +935,7 @@
                         </h2>
                     </div>
 
-                    <!--Search bar for danzas-- >
+                    <!--Search bar for danzas-->
                     <form id="danzas-search-form" class="mb-6">
                         <div class="flex gap-3">
                             <div class="relative flex-grow group">
@@ -974,7 +974,7 @@
                             </div>
                         </div>
                     </div>
-                </div >
+                </div>
             `;
 
             // Actualizar los íconos de Lucide
@@ -1165,10 +1165,10 @@
             try {
                 // Construct URL with proper pagination parameters
                 const pageSize = 12; // Set consistent page size
-                let url = `../ api / danzas.php ? page = ${page}& pageSize=${pageSize} `;
+                let url = `../api/danzas.php?page=${page}&pageSize=${pageSize}`;
 
                 if (query && query.trim() !== '') {
-                    url += `& q=${encodeURIComponent(query)} `;
+                    url += `&q=${encodeURIComponent(query)}`;
                 }
 
                 console.log('[DEBUG] Fetching URL:', url);
@@ -1184,7 +1184,7 @@
 
                 // Update the danzas grid
                 if (dances.length === 0) {
-                    danzasGrid.innerHTML = `< div class="col-span-full text-center py-8 text-gray-500" > No se encontraron danzas${query ? ` que coincidan con "${query}"` : ''}</div > `;
+                    danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">No se encontraron danzas${query ? ` que coincidan con "${query}"` : ''}</div>`;
                 } else {
                     // Store in global danzas array for modal access
                     danzas = dances;
@@ -1194,7 +1194,7 @@
                     dances.forEach(danza => {
                         const card = document.createElement('div');
                         card.className = 'event-card';
-                        card.innerHTML = `< div class="event-image-container" ><img class="event-image" src="${fixPhotoPath(danza.foto)}" alt="${danza.conjunto}" onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';"></div><div class="event-content"><div class="event-genre">${danza.categoria || 'N/A'}</div><h3 class="event-title">${danza.conjunto}</h3><button class="event-btn" onclick="openDanceModal(${danza.id})">Ver Detalles</button></div>`;
+                        card.innerHTML = `<div class="event-image-container"><img class="event-image" src="${fixPhotoPath(danza.foto)}" alt="${danza.conjunto}" onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';"></div><div class="event-content"><div class="event-genre">${danza.categoria || 'N/A'}</div><h3 class="event-title">${danza.conjunto}</h3><button class="event-btn" onclick="openDanceModal(${danza.id})">Ver Detalles</button></div>`;
                         danzasGrid.appendChild(card);
                     });
                 }
@@ -1211,7 +1211,7 @@
                     }
 
                     if (paginationContainer) {
-                        let html = pagination.hasPrev ? `< button class="prev px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick = "changeDanzaPage(${pagination.page - 1})" >← Anterior</button > ` : '<button class="prev px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>← Anterior</button>';
+                        let html = pagination.hasPrev ? `<button class="prev px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${pagination.page - 1})">← Anterior</button>` : '<button class="prev px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>← Anterior</button>';
 
                         const maxPages = 5;
                         let startPage = Math.max(1, pagination.page - Math.floor(maxPages / 2));
@@ -1220,20 +1220,20 @@
                         if (endPage - startPage + 1 < maxPages) startPage = Math.max(1, endPage - maxPages + 1);
 
                         if (startPage > 1) {
-                            html += `< button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick = "changeDanzaPage(1)" > 1</button > `;
+                            html += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(1)">1</button>`;
                             if (startPage > 2) html += '<span class="px-2">...</span>';
                         }
 
                         for (let i = startPage; i <= endPage; i++) {
-                            html += i === pagination.page ? `< button class="px-3 py-2 bg-candelaria-purple text-white rounded-lg" > ${i}</button > ` : ` < button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick = "changeDanzaPage(${i})" > ${i}</button > `;
+                            html += i === pagination.page ? `<button class="px-3 py-2 bg-candelaria-purple text-white rounded-lg">${i}</button>` : `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${i})">${i}</button>`;
                         }
 
                         if (endPage < pagination.totalPages) {
                             if (endPage < pagination.totalPages - 1) html += '<span class="px-2">...</span>';
-                            html += `< button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick = "changeDanzaPage(${pagination.totalPages})" > ${pagination.totalPages}</button > `;
+                            html += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${pagination.totalPages})">${pagination.totalPages}</button>`;
                         }
 
-                        html += pagination.hasNext ? `< button class="next px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick = "changeDanzaPage(${pagination.page + 1})" > Siguiente →</button > ` : '<button class="next px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>Siguiente →</button>';
+                        html += pagination.hasNext ? `<button class="next px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${pagination.page + 1})">Siguiente →</button>` : '<button class="next px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>Siguiente →</button>';
 
                         paginationContainer.innerHTML = html;
                     }
@@ -1246,7 +1246,7 @@
 
             } catch (error) {
                 console.error('[DEBUG] Error searching danzas:', error);
-                danzasGrid.innerHTML = `< div class="col-span-full text-center py-8 text-red-500" > Error al buscar danzas: ${error.message}</div > `;
+                danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-red-500">Error al buscar danzas: ${error.message}</div>`;
             }
         }
 
@@ -1370,7 +1370,7 @@
             modalTitle.textContent = evento.banda;
 
             modalBody.innerHTML = `
-            < div class="dance-details-grid" >
+            <div class="dance-details-grid">
                     <div>
                         <img src="${evento.imagen}" alt="${evento.banda}" class="dance-image">
                         <div style="margin-top: 1.5rem;">
@@ -1412,7 +1412,7 @@
                             </div>
                         </div>
                     </div>
-                </div >
+                </div>
             `;
 
 
@@ -1480,7 +1480,7 @@
             const fotoValue = fixPhotoPath(danza.foto);
 
             modalBody.innerHTML = `
-            < div class="dance-details-grid" >
+            <div class="dance-details-grid">
                     <div>
                         <img src="${fotoValue}"
                              alt="${nombre}"
@@ -1534,7 +1534,7 @@
                         </div>
                         ` : ''}
                     </div>
-                </div >
+                </div>
 
             ${historiaValue ? `
                 <div class="modal-section">
