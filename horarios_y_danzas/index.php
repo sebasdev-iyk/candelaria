@@ -463,7 +463,16 @@
         ];
 
         // danzas will be loaded from the API service
-        let danzas = [];
+        let danzas = []; // Keep for backward compatibility (used by modals)
+
+        // ========== Turbo Mode State ==========
+        let RAM_DANZAS = [];
+        let filteredDanzas = [];
+        let currentDanzaPage = 1;
+        const danzaPageSize = 12;
+        let currentDanzaSearch = '';
+        let isRamLoaded = false;
+        let isDanzaLoading = false;
 
         const faqs = [
             { id: 1, question: "¿Cuáles son los horarios del evento?", answer: "El evento se desarrolla durante dos meses, con actividades diarias. Consulta la pestaña de Programación para ver los horarios específicos de cada día." },
@@ -920,12 +929,12 @@
             lucide.createIcons();
         }
 
-        // Renderizar danzas
+        // Renderizar danzas (Turbo Mode Refactored)
         async function renderDanzas() {
             const container = document.getElementById('events-container');
             if (!container) return;
 
-            // Show loading state first
+            // Show loading state first (Layout Structure)
             container.innerHTML = `
             <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6">
@@ -957,11 +966,7 @@
                     </form>
 
                     <div id="danzas-grid" class="danzas-grid">
-                        <div class="animate-pulse flex flex-col space-y-4">
-                            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
-                            <div class="h-4 bg-gray-200 rounded"></div>
-                            <div class="h-4 bg-gray-200 rounded w-5/6"></div>
-                        </div>
+                        <!-- Skeleton Injection Point -->
                     </div>
 
                     <div id="pagination-container" class="mt-8">
@@ -970,291 +975,218 @@
                                 Cargando resultados...
                             </div>
                             <div class="flex space-x-2" id="pagination">
-                                <!-- Pagination controls will be loaded dynamically -->
+                                <!-- Pagination controls -->
                             </div>
                         </div>
                     </div>
                 </div>
             `;
 
-            // Actualizar los íconos de Lucide
             lucide.createIcons();
 
-            // Now load the actual danzas data
-            try {
-                // Load page 1 of danzas data
-                const response = await fetch('../api/danzas.php');
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status} `);
-                }
-
-                const result = await response.json();
-                const dances = Array.isArray(result) ? result : result.data || [];
-                const pagination = result.pagination || null;
-
-                // Update the danzas grid
-                const danzasGrid = document.getElementById('danzas-grid');
-                if (danzasGrid) {
-                    if (dances.length === 0) {
-                        danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">No se encontraron danzas en la base de datos</div>`;
-                    } else {
-                        // Store in global danzas array for modal access
-                        danzas = dances;
-                        console.log('[DEBUG] Danzas cargadas:', danzas.length);
-
-                        danzasGrid.innerHTML = '';
-                        dances.forEach(danza => {
-                            let categoria = danza.categoria || 'N/A';
-                            // Rename 'Luces Parada' to 'Traje de Luces'
-                            if (categoria === 'Luces Parada') categoria = 'Traje de Luces';
-
-                            const descripcionValue = danza.descripcion || 'Descripción no disponible';
-
-                            let categoryClass = 'traditional';
-                            if (categoria && categoria.includes('LUCE')) categoryClass = 'lights';  // Covers 'TRAJE DE LUCES', 'LUCE', etc.
-                            else if (categoria && categoria.includes('ORIGIN')) categoryClass = 'originary';  // Covers 'ORIGINARIAS', 'ORIGINARIO', etc.
-                            else if (categoria && categoria.includes('TRADICION')) categoryClass = 'traditional';  // Covers 'TRADICIONAL', 'TRADICION', etc.
-                            else if (categoria && (categoria === 'PARADA' || categoria === 'CIERRE / FIESTA' || categoria === 'RELIGIOSO')) categoryClass = 'traditional';  // Default category for other types
-
-                            const cardClass = categoryClass === 'traditional' ? 'bg-red-50 border-red-200' :
-                                categoryClass === 'lights' ? 'bg-yellow-50 border-yellow-200' :
-                                    'bg-green-50 border-green-200';
-
-                            const card = document.createElement('div');
-                            card.className = 'event-card';
-                            card.innerHTML = `
-                            <div class="event-image-container">
-                                    <img class="event-image" src="${fixPhotoPath(danza.foto)}"
-                                         alt="${danza.conjunto}"
-                                         onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';">
-                                </div>
-                                <div class="event-content">
-                                    <div class="event-genre">${categoria}</div>
-                                    <h3 class="event-title">${danza.conjunto}</h3>
-                                    <button class="event-btn" onclick="openDanceModal(${danza.id})">
-                                        Ver Detalles
-                                    </button>
-                                </div>
-        `;
-                            danzasGrid.appendChild(card);
-                        });
-                    }
-                }
-
-                // Update pagination
-                if (pagination) {
-                    const resultsInfo = document.getElementById('results-info');
-                    const paginationContainer = document.getElementById('pagination');
-
-                    if (resultsInfo) {
-                        const start = (pagination.page - 1) * pagination.pageSize + 1;
-                        const end = Math.min(pagination.page * pagination.pageSize, pagination.total);
-                        resultsInfo.textContent = `Mostrando ${start} a ${end} de ${pagination.total} resultados`;
-                    }
-
-                    if (paginationContainer) {
-                        let paginationHtml = '';
-
-                        if (pagination.hasPrev) {
-                            paginationHtml += `<button class="prev px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${pagination.page - 1})">← Anterior</button>`;
-                        } else {
-                            paginationHtml += `<button class="prev px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>← Anterior</button>`;
-                        }
-
-                        // Calculate the range of pages to show
-                        const maxVisiblePages = 5;
-                        let startPage = Math.max(1, pagination.page - Math.floor(maxVisiblePages / 2));
-                        let endPage = Math.min(pagination.totalPages, startPage + maxVisiblePages - 1);
-
-                        // Adjust startPage if we're near the end
-                        if (endPage - startPage + 1 < maxVisiblePages) {
-                            startPage = Math.max(1, endPage - maxVisiblePages + 1);
-                        }
-
-                        // Add first page if not already included and we have more than the max visible pages
-                        if (startPage > 1) {
-                            paginationHtml += `<button class="px-3 py-2 rounded-lg ${startPage === pagination.page ? 'bg-candelaria-purple text-white' : 'bg-gray-100 hover:bg-gray-200'}" onclick="changeDanzaPage(1)">1</button>`;
-                            if (startPage > 2) {
-                                paginationHtml += '<span class="px-2">...</span>';
-                            }
-                        }
-
-                        // Add the page numbers in the range
-                        for (let i = startPage; i <= endPage; i++) {
-                            if (i === pagination.page) {
-                                paginationHtml += `<button class="px-3 py-2 bg-candelaria-purple text-white rounded-lg">${i}</button>`;
-                            } else {
-                                paginationHtml += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${i})">${i}</button>`;
-                            }
-                        }
-
-                        // Add last page if not already included and we have more pages
-                        if (endPage < pagination.totalPages) {
-                            if (endPage < pagination.totalPages - 1) {
-                                paginationHtml += '<span class="px-2">...</span>';
-                            }
-                            paginationHtml += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${pagination.totalPages})">${pagination.totalPages}</button>`;
-                        }
-
-                        if (pagination.hasNext) {
-                            paginationHtml += `<button class="next px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${pagination.page + 1})">Siguiente →</button>`;
-                        } else {
-                            paginationHtml += `<button class="next px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>Siguiente →</button>`;
-                        }
-
-                        paginationContainer.innerHTML = paginationHtml;
-                    }
-                } else {
-                    const resultsInfo = document.getElementById('results-info');
-                    if (resultsInfo) {
-                        resultsInfo.textContent = `Mostrando ${dances.length} resultados`;
-                    }
-                }
-
-            } catch (error) {
-                console.error('Error loading danzas:', error);
-                const danzasGrid = document.getElementById('danzas-grid');
-                if (danzasGrid) {
-                    danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-red-500">Error al cargar las danzas: ${error.message}</div>`;
-                }
-            }
-
-            // Set up event listener for search form
+            // Setup Event Listeners
             const searchForm = document.getElementById('danzas-search-form');
             if (searchForm) {
                 searchForm.addEventListener('submit', function (e) {
                     e.preventDefault();
-                    const query = document.getElementById('danzas-search-input').value;
-                    searchDanzas(query, 1);
                 });
             }
 
-            // Instant search with debounce
             const searchInput = document.getElementById('danzas-search-input');
             if (searchInput) {
-                searchInput.addEventListener('input', debounce(function (e) {
-                    const query = e.target.value;
-                    searchDanzas(query, 1);
-                }, 300));
+                searchInput.value = currentDanzaSearch;
+                searchInput.addEventListener('input', function (e) {
+                    currentDanzaSearch = e.target.value;
+                    currentDanzaPage = 1;
+                    filterAndRenderDanzas();
+                });
+                searchInput.focus(); // Keep focus
+            }
+
+            // LOAD DATA
+            await loadAllDanzasIntoRam();
+        }
+
+        // ========== logic: Load ALL Danzas into RAM (Turbo Load) ==========
+        async function loadAllDanzasIntoRam() {
+            if (isRamLoaded) {
+                filterAndRenderDanzas();
+                return;
+            }
+            if (isDanzaLoading) return;
+
+            isDanzaLoading = true;
+            const danzasGrid = document.getElementById('danzas-grid');
+
+            if (danzasGrid) {
+                danzasGrid.innerHTML = `
+                <div class="animate-pulse flex flex-col space-y-4 col-span-full">
+                    <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                    <div class="h-4 bg-gray-200 rounded"></div>
+                    <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+                </div>
+              `;
+            }
+
+            try {
+                console.time("🚀 Descarga Turbo Horarios");
+                const response = await fetch('../api/danzas_all.php'); // Path relative to horarios_y_danzas/index.php
+                if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+
+                RAM_DANZAS = await response.json();
+                danzas = RAM_DANZAS; // Sync global for modal
+                console.timeEnd("🚀 Descarga Turbo Horarios");
+                console.log(`✅ ${RAM_DANZAS.length} danzas cargadas en RAM (Horarios).`);
+
+                isRamLoaded = true;
+                filterAndRenderDanzas();
+
+            } catch (error) {
+                console.error('Error loading ALL danzas:', error);
+                if (danzasGrid) {
+                    danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-red-500">Error al cargar las danzas: ${error.message}</div>`;
+                }
+            } finally {
+                isDanzaLoading = false;
             }
         }
 
-        // ========== Debounce Function ==========
-        function debounce(func, wait) {
-            let timeout;
-            return function (...args) {
-                const context = this;
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(context, args), wait);
-            };
+        // ========== Logic: Filter RAM -> filteredDanzas -> Paginate -> Render ==========
+        function filterAndRenderDanzas() {
+            let results = RAM_DANZAS;
+
+            if (currentDanzaSearch && currentDanzaSearch.trim() !== '') {
+                const q = currentDanzaSearch.toLowerCase();
+                results = results.filter(d => {
+                    const text = (
+                        (d.conjunto || '') + ' ' +
+                        (d.categoria || '') + ' ' +
+                        (d.descripcion || '')
+                    ).toLowerCase();
+                    return text.includes(q);
+                });
+            }
+
+            filteredDanzas = results;
+            renderCurrentDanzaPage();
         }
 
-        // Function to search danzas
-        async function searchDanzas(query, page = 1) {
-            console.log('[DEBUG] searchDanzas called', { query, page });
+        function renderCurrentDanzaPage() {
             const danzasGrid = document.getElementById('danzas-grid');
-            if (!danzasGrid) {
-                console.error('[DEBUG] danzas-grid element not found');
+            const resultsInfo = document.getElementById('results-info');
+            const paginationContainer = document.getElementById('pagination');
+
+            if (!danzasGrid) return;
+
+            const total = filteredDanzas.length;
+
+            if (total === 0) {
+                danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">No se encontraron danzas${currentDanzaSearch ? ` para "${currentDanzaSearch}"` : ''}</div>`;
+                if (resultsInfo) resultsInfo.textContent = '0 resultados';
+                if (paginationContainer) paginationContainer.innerHTML = '';
                 return;
             }
 
-            // Show loading state
-            danzasGrid.innerHTML = '<div class="col-span-full animate-pulse flex flex-col space-y-4"><div class="h-4 bg-gray-200 rounded w-3/4"></div><div class="h-4 bg-gray-200 rounded"></div><div class="h-4 bg-gray-200 rounded w-5/6"></div></div>';
+            const totalPages = Math.ceil(total / danzaPageSize);
+            if (currentDanzaPage > totalPages) currentDanzaPage = 1;
 
-            try {
-                // Construct URL with proper pagination parameters
-                const pageSize = 12; // Set consistent page size
-                let url = `../api/danzas.php?page=${page}&pageSize=${pageSize}`;
+            const startIdx = (currentDanzaPage - 1) * danzaPageSize;
+            const endIdx = Math.min(startIdx + danzaPageSize, total);
 
-                if (query && query.trim() !== '') {
-                    url += `&q=${encodeURIComponent(query)}`;
-                }
+            const pageItems = filteredDanzas.slice(startIdx, endIdx);
 
-                console.log('[DEBUG] Fetching URL:', url);
+            danzasGrid.innerHTML = '';
+            pageItems.forEach(danza => {
+                let categoria = danza.categoria || 'N/A';
+                if (categoria === 'Luces Parada') categoria = 'Traje de Luces';
 
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status} `);
+                let categoryClass = 'traditional';
+                const catUpper = categoria.toUpperCase();
+                if (catUpper.includes('LUCE')) categoryClass = 'lights';
+                else if (catUpper.includes('ORIGIN')) categoryClass = 'originary';
+                else if (catUpper.includes('TRADICION')) categoryClass = 'traditional';
+                else if (['PARADA', 'CIERRE / FIESTA', 'RELIGIOSO'].includes(catUpper)) categoryClass = 'traditional';
 
-                const result = await response.json();
-                console.log('[DEBUG] API Response:', result);
+                // We are not using categoryClass for styling in the card HTML structure similar to before,
+                // but if we wanted to revive the color logic:
+                // Currently reusing the 'event-card' style which is standard.
 
-                const dances = Array.isArray(result) ? result : result.data || [];
-                const pagination = result.pagination || null;
+                const card = document.createElement('div');
+                card.className = 'event-card';
+                card.innerHTML = `
+                    <div class="event-image-container">
+                        <img class="event-image" src="${fixPhotoPath(danza.foto)}"
+                             alt="${danza.conjunto}"
+                             loading="lazy"
+                             onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';">
+                    </div>
+                    <div class="event-content">
+                        <div class="event-genre">${categoria}</div>
+                        <h3 class="event-title">${danza.conjunto}</h3>
+                        <button class="event-btn" onclick="openDanceModal(${danza.id})">
+                            Ver Detalles
+                        </button>
+                    </div>
+                `;
+                danzasGrid.appendChild(card);
+            });
 
-                // Update the danzas grid
-                if (dances.length === 0) {
-                    danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">No se encontraron danzas${query ? ` que coincidan con "${query}"` : ''}</div>`;
-                } else {
-                    // Store in global danzas array for modal access
-                    danzas = dances;
-                    console.log('[DEBUG] Danzas updated in global state:', danzas.length);
-
-                    danzasGrid.innerHTML = '';
-                    dances.forEach(danza => {
-                        const card = document.createElement('div');
-                        card.className = 'event-card';
-                        card.innerHTML = `<div class="event-image-container"><img class="event-image" src="${fixPhotoPath(danza.foto)}" alt="${danza.conjunto}" onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';"></div><div class="event-content"><div class="event-genre">${danza.categoria || 'N/A'}</div><h3 class="event-title">${danza.conjunto}</h3><button class="event-btn" onclick="openDanceModal(${danza.id})">Ver Detalles</button></div>`;
-                        danzasGrid.appendChild(card);
-                    });
-                }
-
-                // Update pagination
-                if (pagination) {
-                    const resultsInfo = document.getElementById('results-info');
-                    const paginationContainer = document.getElementById('pagination');
-
-                    if (resultsInfo) {
-                        const start = (pagination.page - 1) * pagination.pageSize + 1;
-                        const end = Math.min(pagination.page * pagination.pageSize, pagination.total);
-                        resultsInfo.textContent = `Mostrando ${start} a ${end} de ${pagination.total} resultados`;
-                    }
-
-                    if (paginationContainer) {
-                        let html = pagination.hasPrev ? `<button class="prev px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${pagination.page - 1})">← Anterior</button>` : '<button class="prev px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>← Anterior</button>';
-
-                        const maxPages = 5;
-                        let startPage = Math.max(1, pagination.page - Math.floor(maxPages / 2));
-                        let endPage = Math.min(pagination.totalPages, startPage + maxPages - 1);
-
-                        if (endPage - startPage + 1 < maxPages) startPage = Math.max(1, endPage - maxPages + 1);
-
-                        if (startPage > 1) {
-                            html += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(1)">1</button>`;
-                            if (startPage > 2) html += '<span class="px-2">...</span>';
-                        }
-
-                        for (let i = startPage; i <= endPage; i++) {
-                            html += i === pagination.page ? `<button class="px-3 py-2 bg-candelaria-purple text-white rounded-lg">${i}</button>` : `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${i})">${i}</button>`;
-                        }
-
-                        if (endPage < pagination.totalPages) {
-                            if (endPage < pagination.totalPages - 1) html += '<span class="px-2">...</span>';
-                            html += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${pagination.totalPages})">${pagination.totalPages}</button>`;
-                        }
-
-                        html += pagination.hasNext ? `<button class="next px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${pagination.page + 1})">Siguiente →</button>` : '<button class="next px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>Siguiente →</button>';
-
-                        paginationContainer.innerHTML = html;
-                    }
-                } else {
-                    const resultsInfo = document.getElementById('results-info');
-                    if (resultsInfo) resultsInfo.textContent = `Mostrando ${dances.length} resultados`;
-                }
-
-                lucide.createIcons();
-
-            } catch (error) {
-                console.error('[DEBUG] Error searching danzas:', error);
-                danzasGrid.innerHTML = `<div class="col-span-full text-center py-8 text-red-500">Error al buscar danzas: ${error.message}</div>`;
+            if (resultsInfo) {
+                resultsInfo.textContent = `Mostrando ${startIdx + 1} a ${endIdx} de ${total} resultados`;
             }
+
+            if (paginationContainer) {
+                let paginationHtml = '';
+
+                // Prev
+                if (currentDanzaPage > 1) {
+                    paginationHtml += `<button class="prev px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${currentDanzaPage - 1})">← Anterior</button>`;
+                } else {
+                    paginationHtml += `<button class="prev px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>← Anterior</button>`;
+                }
+
+                const maxPages = 5;
+                let startPage = Math.max(1, currentDanzaPage - Math.floor(maxPages / 2));
+                let endPage = Math.min(totalPages, startPage + maxPages - 1);
+                if (endPage - startPage + 1 < maxPages) startPage = Math.max(1, endPage - maxPages + 1);
+
+                if (startPage > 1) {
+                    paginationHtml += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(1)">1</button>`;
+                    if (startPage > 2) paginationHtml += '<span class="px-2">...</span>';
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    if (i === currentDanzaPage) {
+                        paginationHtml += `<button class="px-3 py-2 bg-candelaria-purple text-white rounded-lg">${i}</button>`;
+                    } else {
+                        paginationHtml += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${i})">${i}</button>`;
+                    }
+                }
+
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) paginationHtml += '<span class="px-2">...</span>';
+                    paginationHtml += `<button class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg" onclick="changeDanzaPage(${totalPages})">${totalPages}</button>`;
+                }
+
+                // Next
+                if (currentDanzaPage < totalPages) {
+                    paginationHtml += `<button class="next px-4 py-2 bg-candelaria-purple text-white rounded-lg hover:bg-purple-600" onclick="changeDanzaPage(${currentDanzaPage + 1})">Siguiente →</button>`;
+                } else {
+                    paginationHtml += `<button class="next px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed" disabled>Siguiente →</button>`;
+                }
+
+                paginationContainer.innerHTML = paginationHtml;
+            }
+            lucide.createIcons();
         }
 
-        // Function to change danza page
-        async function changeDanzaPage(page) {
-            const searchInput = document.getElementById('danzas-search-input');
-            const query = searchInput ? searchInput.value : '';
-            searchDanzas(query, page);
+        // Function to change danza page (Local)
+        function changeDanzaPage(page) {
+            if (page < 1) return;
+            currentDanzaPage = page;
+            renderCurrentDanzaPage();
+            // Optional: scroll to top of grid
+            document.getElementById('events-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
 
