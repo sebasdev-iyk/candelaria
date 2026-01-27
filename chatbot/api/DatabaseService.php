@@ -353,20 +353,54 @@ class DatabaseService
         if ($category)
             $text .= " ({$category})";
 
-        // Agregar detalles de programación si existen y son relevantes
-        $orden = $row['orden_concurso'] ?? null;
+        // Detalles de programación
+        $ordenConcurso = $row['orden_concurso'] ?? null;
         $diaConcurso = $row['dia_concurso'] ?? null;
+        $ordenVeneracion = $row['orden_veneracion'] ?? null;
         $diaVeneracion = $row['dia_veneracion'] ?? null;
+        $hora = $row['hora'] ?? null;
 
-        if ($orden)
-            $text .= " - Orden: {$orden}";
+        if ($ordenConcurso)
+            $text .= "\n   - Orden Concurso: {$ordenConcurso}";
         if ($diaConcurso)
-            $text .= " - Concurso: {$diaConcurso}";
-        if ($diaVeneracion)
-            $text .= " - Veneración: {$diaVeneracion}";
+            $text .= " (Fecha: {$diaConcurso})";
 
+        if ($ordenVeneracion)
+            $text .= "\n   - Orden Veneración: {$ordenVeneracion}";
+        if ($diaVeneracion)
+            $text .= " (Fecha: {$diaVeneracion})";
+
+        if ($hora)
+            $text .= "\n   - Hora de inicio: {$hora}";
+
+        // Detalles adicionales
+        $bloques = $row['bloques'] ?? null;
+        $bandas = $row['bandas'] ?? null;
+
+        if ($bloques)
+            $text .= "\n   - Bloques: {$bloques}";
+        if ($bandas)
+            $text .= "\n   - Bandas: {$bandas}";
+
+        // Puntajes (solo si existen y son mayor a 0)
+        $puntajeEstadio = isset($row['puntaje_estadio']) ? floatval($row['puntaje_estadio']) : 0;
+        $puntajeParada = isset($row['puntaje_parada']) ? floatval($row['puntaje_parada']) : 0;
+
+        if ($puntajeEstadio > 0)
+            $text .= "\n   - Puntaje Estadio: {$puntajeEstadio}";
+        if ($puntajeParada > 0)
+            $text .= "\n   - Puntaje Parada: {$puntajeParada}";
+        if ($puntajeEstadio > 0 && $puntajeParada > 0)
+            $text .= "\n   - Puntaje Total: " . ($puntajeEstadio + $puntajeParada);
+
+        // Historia / Descripción (SIN TRUNCAR)
         if ($description)
-            $text .= "\n📝 " . substr(strip_tags($description), 0, 100) . "...";
+            $text .= "\n📝 Historia/Descripción: " . strip_tags($description);
+
+        // Junta directiva si existe
+        $junta = $row['junta_directiva'] ?? null;
+        if ($junta)
+            $text .= "\n👥 Junta Directiva: " . strip_tags($junta);
 
         return $text;
     }
