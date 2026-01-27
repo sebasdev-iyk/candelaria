@@ -15,49 +15,42 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// 2. Auth Check (Bearer Token)
+// --- EXTREME DEBUGGING ---
+error_log("🔥 [CHECKOUT API] Hit received.");
 $headers = getallheaders();
 $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? '';
-$token = '';
+error_log("🔥 [CHECKOUT API] Auth Header: " . $authHeader);
 
+// 2. Auth Check (Bearer Token)
+$token = '';
 if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
     $token = $matches[1];
 }
 
-// 2.1 Verify Token (Simplified for V1: Check if user exists in DB via Supabase logic or Session)
-// Ideally we verify Supabase JWT signature, but for velocity we'll trust the Client sending the ID 
-// IF and ONLY IF we map it to our users table via the email/uid logic found in auth.php
-// BUT better pattern: The client sends a Token. 
-// A proper way: Decode token (if JWT) or just accept that the frontend authentication (Supabase) 
-// has already happened and we are relying on the user_id sent in the body OR logic.
-// HOWEVER, trusting body user_id is insecure. 
-// Let's look at `api/reservar.php` approach (from hotel logic).
-// Since I can't see `api/reservar.php`, I will implement a robust check:
-// We will look up the user by the Supposed ID or Email if they are logged in via Session.
-
-// Fallback: Check PHP Session
+// Check PHP Session first
 if (session_status() === PHP_SESSION_NONE)
     session_start();
 $userId = $_SESSION['user_id'] ?? null;
+error_log("🔥 [CHECKOUT API] Session UserID: " . ($userId ?? 'NULL'));
 
-// 3. Get Input Data
-$input = json_decode(file_get_contents('php://input'), true);
-
-if (!$input) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Invalid JSON']);
-    exit;
+// Fallback: Decode Supabase JWT
+if (!$userId && $token) {
+    try {
+        $parts = explode('.', $token);
+        if (count($parts) === 3) {
+            $payload = json_decode(base64_decode(str_replace('_', '/', str_replace('-', '+', $parts[1]))), true);
+            if (isset($payload['sub'])) {
+                error_log("🔥 [CHECKOUT API] JWT Decoded. UserID found: " . $payload['sub']);
+                $userId = $payload['sub'];
+            }
+        }
+    } catch (Exception $e) {
+        error_log("🔥 [CHECKOUT API] JWT Error: " . $e->getMessage());
+    }
 }
 
-// If no session user, check if the input provides a way to validate (V2). 
-// For now, we REQUIRE the user to be logged in (which sets $_SESSION via auth.php calls or Supabase sync).
-// Wait, `auth.php` sets `$_SESSION['user_id']`. 
-// If the JS `loginUser` was called, it hit `auth.php` and set the session.
-// So `$_SESSION['user_id']` should be safe.
-
 if (!$userId) {
-    // Try to find user if token provided (advanced) or just fail.
-    // Let's be strict for security.
+    error_log("🔥 [CHECKOUT API] CRITICAL: Unauthorized access attempt.");
     http_response_code(401);
     echo json_encode(['success' => false, 'message' => 'Unauthorized. Please login.']);
     exit;

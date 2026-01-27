@@ -100,7 +100,7 @@ ini_set('display_errors', 0);
     <?= getAuthJS() ?>
 
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="../assets/js/tienda.js"></script>
+    <script src="../assets/js/tienda.js?v=<?= time() ?>"></script>
     <script>
         // Init page specific logic
         document.addEventListener('DOMContentLoaded', () => {

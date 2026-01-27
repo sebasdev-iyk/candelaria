@@ -238,7 +238,7 @@ include_once '../includes/standard-header.php';
     </script>
 
     <!-- Tienda Core JS -->
-    <script src="../assets/js/tienda.js"></script>
+    <script src="../assets/js/tienda.js?v=<?= time() ?>"></script>
 
 </body>
 

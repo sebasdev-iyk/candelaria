@@ -230,7 +230,7 @@ $mainImg = '../' . $baseImg;
             });
         }
     </script>
-    <script src="../assets/js/tienda.js"></script>
+    <script src="../assets/js/tienda.js?v=<?= time() ?>"></script>
 </body>
 
 </html>
