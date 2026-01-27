@@ -2044,154 +2044,146 @@
       return `./assets/uploads/${foto}`;
     }
 
-    // ========== Current state for danzas ==========
+    // ========== Current state for danzas (RAM MODE) ==========
+    let RAM_DANZAS = []; // Toda la base de datos en memoria
+    let filteredDanzas = []; // Resultados filtrados actuales
     let currentPage = 1;
+    const pageSize = 12; // Static page size
     let currentSearchQuery = '';
     let currentCategory = '';
+    let isRamLoaded = false;
+    let isLoading = false;
 
-    // ========== Load Danzas from API with Pagination ==========
-    async function loadDanzas(page = 1, query = '') {
+
+    // ========== Load ALL Danzas into RAM (Turbo Load) ==========
+    async function loadAllDanzasIntoRam() {
+      if (isRamLoaded || isLoading) return;
+      isLoading = true;
+
       const danzasGrid = document.getElementById('danzas-grid');
-      const resultsInfo = document.getElementById('results-info');
-      const paginationContainer = document.getElementById('pagination');
-
-      if (!danzasGrid) return;
-
-      currentPage = page;
-      currentSearchQuery = query;
-
-      // Show loading state
-      danzasGrid.innerHTML = `
-        <div class="danza-card loading-skeleton">
-          <div class="skeleton-image"></div>
-          <div class="skeleton-content">
-            <div class="skeleton-line short"></div>
-            <div class="skeleton-line"></div>
-            <div class="skeleton-line medium"></div>
-          </div>
-        </div>
-        <div class="danza-card loading-skeleton">
-          <div class="skeleton-image"></div>
-          <div class="skeleton-content">
-            <div class="skeleton-line short"></div>
-            <div class="skeleton-line"></div>
-            <div class="skeleton-line medium"></div>
-          </div>
-        </div>
-        <div class="danza-card loading-skeleton">
-          <div class="skeleton-image"></div>
-          <div class="skeleton-content">
-            <div class="skeleton-line short"></div>
-            <div class="skeleton-line"></div>
-            <div class="skeleton-line medium"></div>
-          </div>
-        </div>
-      `;
-
-      try {
-        const pageSize = 12; // Standardize page size to 12
-        let url = `./api/danzas.php?page=${page}&pageSize=${pageSize}`;
-
-        if (query && query.trim() !== '') {
-          url += `&q=${encodeURIComponent(query)}`;
-        }
-        if (currentCategory && currentCategory.trim() !== '') {
-          url += `&category=${encodeURIComponent(currentCategory)}`;
-        }
-
-        const fetchStart = performance.now(); // Start Timer Frontend
-        const response = await fetch(url);
-        const fetchEnd = performance.now(); // End Timer Frontend
-        const rtt_total = fetchEnd - fetchStart;
-
-        if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-
-        const result = await response.json();
-        const danzas = Array.isArray(result) ? result : result.data || [];
-        const pagination = result.pagination || null;
-
-        // ==========================================
-        // DIAGNÓSTICO DE RENDIMIENTO (Backend + Network)
-        // ==========================================
-        if (result.debug) {
-          const metrics = result.debug.metrics;
-          const diagnosis = [...result.debug.diagnosis];
-
-          // Caso C: Network Lag Calculation
-          // Si la RTT es mucho mayor que el tiempo total de PHP, es la red.
-          const network_lag = rtt_total - metrics.php_total_ms;
-
-          if (network_lag > 500 && metrics.php_total_ms < 100) {
-            diagnosis.push({
-              "case": "Caso C",
-              "symptom": `Red (RTT) ${Math.round(rtt_total)}ms vs PHP ${metrics.php_total_ms}ms`,
-              "guilty": "Internet/Wifi Lento (Cliente o Servidor)",
-              "solution": "El servidor es rápido, pero la descarga del JSON demora."
-            });
-          }
-
-          console.group("%c ⚡ DIAGNÓSTICO DE RENDIMIENTO 'DANZAS' ", "background: #4c1d95; color: #fbbf24; font-size: 14px; padding: 4px;");
-          console.log(`%c Búsqueda: "${query}" | RTT Total: ${Math.round(rtt_total)}ms`, "font-weight: bold");
-
-          // Mostrar tabla de métricas
-          console.table({
-            "1. DB Conexión": { "Tiempo (ms)": metrics.db_connect_ms + " ms" },
-            "2. SQL Count": { "Tiempo (ms)": metrics.sql_count_ms + " ms" },
-            "3. SQL Data": { "Tiempo (ms)": metrics.sql_data_ms + " ms" },
-            "4. PHP Overhead": { "Tiempo (ms)": metrics.php_processing_ms + " ms" },
-            "5. Red/Internet": { "Tiempo (ms)": Math.round(network_lag) + " ms" },
-            "TOTAL": { "Tiempo (ms)": Math.round(rtt_total) + " ms" }
-          });
-
-          // Mostrar Alertas de Culpables
-          if (diagnosis.length > 0) {
-            console.log("%c 🚨 CULPABLES DETECTADOS:", "color: red; font-weight: bold; font-size: 12px;");
-            diagnosis.forEach(d => {
-              console.warn(`[${d.case}] ${d.guilty}\nSíntoma: ${d.symptom}\nSolución: ${d.solution}`);
-            });
-          } else {
-            console.log("%c ✅ Rendimiento Óptimo: Todo parece estar bien.", "color: #16a34a; font-weight: bold;");
-          }
-          console.groupEnd();
-        }
-        // ==========================================
-
-        if (danzas.length === 0) {
+      
+      if (danzasGrid) {
           danzasGrid.innerHTML = `
-            <div class="danza-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-              <p style="color: rgba(255,255,255,0.7);">${query ? `No se encontraron danzas que coincidan con "${query}"` : 'No se encontraron danzas disponibles'}</p>
+            <div class="danza-card loading-skeleton">
+              <div class="skeleton-image"></div>
+              <div class="skeleton-content"><div class="skeleton-line short"></div><div class="skeleton-line"></div></div>
+            </div>
+            <div class="danza-card loading-skeleton">
+              <div class="skeleton-image"></div>
+              <div class="skeleton-content"><div class="skeleton-line short"></div><div class="skeleton-line"></div></div>
+            </div>
+            <div class="danza-card loading-skeleton">
+              <div class="skeleton-image"></div>
+              <div class="skeleton-content"><div class="skeleton-line short"></div><div class="skeleton-line"></div></div>
             </div>
           `;
-          if (resultsInfo) resultsInfo.textContent = '0 resultados';
-          if (paginationContainer) paginationContainer.innerHTML = '';
-          return;
+      }
+
+      try {
+        console.time("🚀 Descarga Turbo");
+        const response = await fetch('./api/danzas_all.php');
+        if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+        
+        RAM_DANZAS = await response.json();
+        console.timeEnd("🚀 Descarga Turbo");
+        console.log(`✅ ${RAM_DANZAS.length} danzas cargadas en RAM.`);
+
+        isRamLoaded = true;
+        filterAndRender();
+
+      } catch (error) {
+        console.error('Error loading ALL danzas:', error);
+        if (danzasGrid) {
+            danzasGrid.innerHTML = `
+              <div class="danza-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                <p style="color: rgba(255,255,255,0.7);">Error al cargar las danzas: ${error.message}</p>
+                <button onclick="loadAllDanzasIntoRam()" class="search-btn" style="margin-top:15px;">Reintentar</button>
+              </div>
+            `;
+        }
+      } finally {
+        isLoading = false;
+      }
+    }
+
+    // ========== Logic: Filter RAM -> filteredDanzas -> Paginate -> Render ==========
+    function filterAndRender() {
+        let results = RAM_DANZAS;
+
+        // Filtro por Categoría
+        if (currentCategory && currentCategory.trim() !== '') {
+            results = results.filter(d => 
+                (d.categoria && d.categoria === currentCategory) || 
+                (currentCategory === 'Luces Parada' && d.categoria === 'Luces Parada')
+            );
         }
 
-        // Render danzas cards with modal button
-        danzasGrid.innerHTML = danzas.map(danza => {
+        // Filtro por Búsqueda
+        if (currentSearchQuery && currentSearchQuery.trim() !== '') {
+            const q = currentSearchQuery.toLowerCase();
+            results = results.filter(d => {
+                const text = (
+                    (d.conjunto || '') + ' ' + 
+                    (d.categoria || '') + ' ' + 
+                    (d.descripcion || '')
+                ).toLowerCase();
+                return text.includes(q);
+            });
+        }
+
+        filteredDanzas = results;
+        renderCurrentPage();
+    }
+
+    function renderCurrentPage() {
+        const danzasGrid = document.getElementById('danzas-grid');
+        const resultsInfo = document.getElementById('results-info');
+        const paginationContainer = document.getElementById('pagination');
+
+        if (!danzasGrid) return;
+
+        const total = filteredDanzas.length;
+        
+        if (total === 0) {
+           danzasGrid.innerHTML = `
+            <div class="danza-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+              <p style="color: rgba(255,255,255,0.7);">
+                ${currentSearchQuery ? `No se encontraron danzas para "${currentSearchQuery}"` : 'No hay danzas disponibles en esta categoría.'}
+              </p>
+            </div>
+           `;
+           if (resultsInfo) resultsInfo.textContent = '0 resultados';
+           if (paginationContainer) paginationContainer.innerHTML = '';
+           return;
+        }
+
+        const totalPages = Math.ceil(total / pageSize);
+        if (currentPage > totalPages) currentPage = 1;
+
+        const startIdx = (currentPage - 1) * pageSize;
+        const endIdx = Math.min(startIdx + pageSize, total);
+        
+        const pageItems = filteredDanzas.slice(startIdx, endIdx);
+
+        danzasGrid.innerHTML = pageItems.map(danza => {
           const categoriaRaw = danza.categoria || 'TRADICIONAL';
-          // Display "Traje de Luces" instead of "Luces Parada"
           const displayCategory = categoriaRaw === 'Luces Parada' ? 'TRAJE DE LUCES' : categoriaRaw.toUpperCase();
           const imageUrl = fixPhotoPath(danza.foto) || `https://placehold.co/400x300/4c1d95/fbbf24?text=${encodeURIComponent(danza.conjunto || 'Danza')}`;
-          const descripcion = (danza.descripcion || '').replace(/'/g, "\\'");
-          const horaValue = danza.hora || 'Hora no especificada';
-          const detallesValue = (danza.detalles || '').replace(/'/g, "\\'");
-          const diaConcurso = danza.dia_concurso || '';
-          const diaVeneracion = danza.dia_veneracion || '';
-
+          
           return `
             <div class="danza-card">
               <div class="card-image-container">
                 <img class="card-image" 
                      src="${imageUrl}" 
                      alt="${danza.conjunto}"
+                     loading="lazy"
                      onerror="this.onerror=null; this.src='https://placehold.co/400x300/4c1d95/fbbf24?text=Danza';">
                 <div class="card-image-overlay"></div>
                 <span class="card-category">${displayCategory}</span>
               </div>
               <div class="card-content">
                 <h3 class="card-title">${danza.conjunto}</h3>
-                <button class="card-btn" onclick="window.location.href='./horarios_y_danzas/index.php?danzaId=${danza.id}#danzas'">
+                <button class="card-btn" onclick="openDanceModal('${danza.id}', '${danza.conjunto.replace(/'/g, "\\'")}', '${(danza.descripcion||'').replace(/'/g, "\\'")}', '${danza.categoria}', '${danza.hora}', '${danza.orden_concurso}', '${danza.orden_veneracion || ''}', '${(danza.detalles||'').replace(/'/g, "\\'")}', '${danza.foto}', '${danza.dia_concurso}', '${danza.dia_veneracion}')">
                   Ver Detalles
                   <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
                 </button>
@@ -2200,113 +2192,68 @@
           `;
         }).join('');
 
-        // Update pagination info
-        if (pagination) {
-          const start = (pagination.page - 1) * pagination.pageSize + 1;
-          const end = Math.min(pagination.page * pagination.pageSize, pagination.total);
-          if (resultsInfo) {
-            resultsInfo.textContent = `Mostrando ${start} a ${end} de ${pagination.total} danzas`;
-          }
-
-          // Render pagination controls
-          if (paginationContainer) {
-            let paginationHtml = '';
-
-            // Previous button
-            if (pagination.hasPrev) {
-              paginationHtml += `<button class="nav-btn" onclick="changeDanzaPage(${pagination.page - 1})">← Anterior</button>`;
-            } else {
-              paginationHtml += `<button class="nav-btn" disabled>← Anterior</button>`;
-            }
-
-            // Page numbers
-            const maxVisiblePages = 5;
-            let startPage = Math.max(1, pagination.page - Math.floor(maxVisiblePages / 2));
-            let endPage = Math.min(pagination.totalPages, startPage + maxVisiblePages - 1);
-            if (endPage - startPage + 1 < maxVisiblePages) {
-              startPage = Math.max(1, endPage - maxVisiblePages + 1);
-            }
-
-            if (startPage > 1) {
-              paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(1)">1</button>`;
-              if (startPage > 2) {
-                paginationHtml += '<span class="ellipsis">...</span>';
-              }
-            }
-
-            for (let i = startPage; i <= endPage; i++) {
-              if (i === pagination.page) {
-                paginationHtml += `<button class="page-btn active">${i}</button>`;
-              } else {
-                paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(${i})">${i}</button>`;
-              }
-            }
-
-            if (endPage < pagination.totalPages) {
-              if (endPage < pagination.totalPages - 1) {
-                paginationHtml += '<span class="ellipsis">...</span>';
-              }
-              paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(${pagination.totalPages})">${pagination.totalPages}</button>`;
-            }
-
-            // Next button
-            if (pagination.hasNext) {
-              paginationHtml += `<button class="nav-btn" onclick="changeDanzaPage(${pagination.page + 1})">Siguiente →</button>`;
-            } else {
-              paginationHtml += `<button class="nav-btn" disabled>Siguiente →</button>`;
-            }
-
-            paginationContainer.innerHTML = paginationHtml;
-          }
-        } else {
-          if (resultsInfo) resultsInfo.textContent = `Mostrando ${danzas.length} danzas`;
-          if (paginationContainer) paginationContainer.innerHTML = '';
+        if (resultsInfo) {
+            resultsInfo.textContent = `Mostrando ${startIdx + 1} a ${endIdx} de ${total} danzas`;
         }
 
-        // Re-initialize Lucide icons for the new cards
-        lucide.createIcons();
+        if (paginationContainer) {
+            let paginationHtml = '';
+            
+            const maxVisible = 5;
+            let pStart = Math.max(1, currentPage - Math.floor(maxVisible/2));
+            let pEnd = Math.min(totalPages, pStart + maxVisible - 1);
+             if (pEnd - pStart + 1 < maxVisible) pStart = Math.max(1, pEnd - maxVisible + 1);
 
-      } catch (error) {
-        console.error('Error loading danzas:', error);
-        danzasGrid.innerHTML = `
-          <div class="danza-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-            <p style="color: rgba(255,255,255,0.7);">Error al cargar las danzas: ${error.message}</p>
-          </div>
-        `;
-      }
+            // Prev
+            paginationHtml += `<button class="nav-btn" ${currentPage === 1 ? 'disabled' : `onclick="changeDanzaPage(${currentPage - 1})"`}>← Anterior</button>`;
+
+            if (pStart > 1) {
+                paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(1)">1</button>`;
+                if (pStart > 2) paginationHtml += '<span class="ellipsis">...</span>';
+            }
+
+            for (let i = pStart; i <= pEnd; i++) {
+                paginationHtml += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changeDanzaPage(${i})">${i}</button>`;
+            }
+
+            if (pEnd < totalPages) {
+                if (pEnd < totalPages - 1) paginationHtml += '<span class="ellipsis">...</span>';
+                paginationHtml += `<button class="page-btn" onclick="changeDanzaPage(${totalPages})">${totalPages}</button>`;
+            }
+
+            // Next
+            paginationHtml += `<button class="nav-btn" ${currentPage === totalPages ? 'disabled' : `onclick="changeDanzaPage(${currentPage + 1})"`}>Siguiente →</button>`;
+
+            paginationContainer.innerHTML = paginationHtml;
+        }
+
+        if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
-    // Function to change page
+    // Function to change page (Local)
     function changeDanzaPage(page) {
-      loadDanzas(page, currentSearchQuery);
-      // Scroll to danzas section
-      document.getElementById('danzas-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (page < 1) return;
+        currentPage = page;
+        renderCurrentPage();
+        document.getElementById('danzas-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Function to search danzas
+    // Function to search danzas (Compat)
     function searchDanzas(query) {
-      loadDanzas(1, query);
+        currentSearchQuery = query;
+        currentPage = 1;
+        filterAndRender();
     }
 
     // ========== Category Filter Function ==========
     function filterByCategory(category) {
-      // Update active button state
-      document.querySelectorAll('.category-filter-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.category === category) {
-          btn.classList.add('active');
-        }
-      });
+        document.querySelectorAll('.category-filter-btn').forEach(btn => {
+           btn.classList.toggle('active', btn.dataset.category === category);
+        });
 
-      // Update current category and reload
-      currentCategory = category;
-      currentPage = 1;
-      loadDanzas(1, currentSearchQuery);
-
-      // Re-initialize icons
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-      }
+        currentCategory = category;
+        currentPage = 1;
+        filterAndRender();
     }
 
     // ========== Dance Modal Functions ==========
@@ -2383,28 +2330,30 @@
     }
 
     // ========== Initialize ==========
+    // ========== Initialize ==========
     document.addEventListener('DOMContentLoaded', function () {
-      // Load danzas
-      loadDanzas();
+      // 1. CARGA INICIAL DE TODO (Turbo Mode)
+      loadAllDanzasIntoRam();
 
       // Set up search form
       const searchForm = document.getElementById('danzas-search-form');
       const searchInput = document.getElementById('danzas-search-input');
 
+      // Prevent Form Submit (Reload)
       if (searchForm) {
         searchForm.addEventListener('submit', function (e) {
           e.preventDefault();
-          const query = searchInput ? searchInput.value : '';
-          searchDanzas(query);
         });
       }
 
-      // Instant search with debounce
+      // 2. BUSQUEDA INSTANTANEA
+      // Usamos 'input' para reacción inmediata sin debounce (o mínimo).
       if (searchInput) {
-        searchInput.addEventListener('input', debounce(function (e) {
-          const query = e.target.value;
-          searchDanzas(query);
-        }, 300));
+        searchInput.addEventListener('input', function (e) {
+            currentSearchQuery = e.target.value;
+            currentPage = 1; // Reset page
+            filterAndRender(); // Filtrado local instantáneo
+        });
       }
 
       // Set up modal close
