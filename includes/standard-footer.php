@@ -17,6 +17,9 @@ $basePath = isset($footerDepth) ? str_repeat('../', $footerDepth) : './';
                         Privacidad</a></li>
                 <li><a href="<?= $basePath ?>terms.php" class="hover:text-yellow-400 transition-colors">Términos y
                         Condiciones</a></li>
+                <li><a href="<?= $basePath ?>delete-data.php" class="hover:text-yellow-400 transition-colors">Eliminar
+                        Mis
+                        Datos</a></li>
             </ul>
         </div>
 
