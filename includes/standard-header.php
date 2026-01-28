@@ -79,7 +79,7 @@ function getActiveClass($page, $activePage)
 
     <!-- Mobile Menu (Hidden by default) -->
     <div id="mobile-menu"
-        class="hidden md:hidden bg-candelaria-purple absolute top-full left-0 w-full shadow-lg border-t border-purple-800 z-30 transition-all duration-300">
+        class="hidden md:hidden bg-candelaria-purple absolute top-full left-0 w-full shadow-lg border-t border-purple-800 z-[70] transition-all duration-300">
         <nav class="flex flex-col p-6 space-y-4">
             <a href="<?= $basePath ?>servicios/index.php"
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'servicios' ? 'text-candelaria-gold' : '' ?>">Servicios</a>
@@ -114,36 +114,46 @@ function getActiveClass($page, $activePage)
         /* View Transition: Keep header stable during page transitions */
         view-transition-name: main-header;
     }
-    
+
     /* View Transitions API - Smooth page navigation */
     @view-transition {
         navigation: auto;
     }
-    
+
     /* Header stays in place during transition */
     ::view-transition-old(main-header),
     ::view-transition-new(main-header) {
         animation: none;
         mix-blend-mode: normal;
     }
-    
+
     /* Content area transitions smoothly */
     ::view-transition-old(root) {
         animation: fade-out 0.15s ease-out forwards;
     }
-    
+
     ::view-transition-new(root) {
         animation: fade-in 0.15s ease-in;
     }
-    
+
     @keyframes fade-out {
-        from { opacity: 1; }
-        to { opacity: 0; }
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
     }
-    
+
     @keyframes fade-in {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
     }
 
     @media (max-width: 768px) {
@@ -251,6 +261,7 @@ function getActiveClass($page, $activePage)
     /* Mobile Menu Toggle */
     #mobile-menu-btn {
         z-index: 60;
+        cursor: pointer;
     }
 </style>
 
@@ -260,9 +271,12 @@ function getActiveClass($page, $activePage)
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
+        console.log('[Header] Init', { mobileMenuBtn, mobileMenu });
+
         if (mobileMenuBtn && mobileMenu) {
             mobileMenuBtn.addEventListener('click', (e) => {
                 e.preventDefault();
+                console.log('[Header] Menu clicked');
                 mobileMenu.classList.toggle('hidden');
             });
 
@@ -272,6 +286,8 @@ function getActiveClass($page, $activePage)
                     mobileMenu.classList.add('hidden');
                 }
             });
+        } else {
+            console.error('[Header] Mobile menu elements not found');
         }
 
         // Init icons if available
