@@ -14,6 +14,24 @@ function getAuthModalHTML()
     // Base URL for links
     $baseUrl = defined('BASE_URL') ? BASE_URL : '/candelaria/';
 
+    // Check login state to conditionally render Google One Tap
+    $canShowGoogleOneTap = !isset($_COOKIE['sb-access-token']) || empty($_COOKIE['sb-access-token']);
+
+    $googleSDKBlock = '';
+    if ($canShowGoogleOneTap) {
+        $googleSDKBlock = <<<GSDK
+    <!-- Legacy Google SDK (fallback) -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+         data-client_id="{$googleClientId}"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-callback="handleGoogleCredentialResponse"
+         data-auto_select="false">
+    </div>
+GSDK;
+    }
+
     return <<<HTML
     <!-- Auth Modal (Light Theme) -->
     <div id="auth-modal" class="fixed inset-0 z-[100] hidden transition-opacity duration-300" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -137,15 +155,7 @@ function getAuthModalHTML()
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="/candelaria/assets/js/supabase-core.js?v=<?= time() ?>"></script>
 
-    <!-- Legacy Google SDK (fallback) -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <div id="g_id_onload"
-         data-client_id="{$googleClientId}"
-         data-context="signin"
-         data-ux_mode="popup"
-         data-callback="handleGoogleCredentialResponse"
-         data-auto_select="false">
-    </div>
+    {$googleSDKBlock}
 
     <!-- Facebook SDK -->
     <!-- Facebook SDK Removed -->
@@ -327,6 +337,23 @@ function getAuthJS()
     function showLoggedInState(user) {
         window.currentUser = user; // Ensure global sync
         // console.log('[Auth] Showing logged in state for:', user?.email);
+        
+        // --- FIX: Remove Google One Tap if present ---
+        try {
+            if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+                google.accounts.id.cancel();
+            }
+            const gId = document.getElementById('g_id_onload');
+            if (gId) {
+                gId.parentNode.removeChild(gId);
+            }
+            // Force remove any container Google might have created
+            const layers = document.querySelectorAll('[id^="credential_picker_container"]');
+            layers.forEach(layer => layer.remove());
+        } catch (e) {
+            console.log('[Auth] Error clearing Google prompt:', e);
+        }
+        // ---------------------------------------------
         
         const btnLogin = document.getElementById('auth-btn-login');
         const btnLoginMobile = document.getElementById('auth-btn-login-mobile');
