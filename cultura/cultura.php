@@ -244,7 +244,7 @@
     <main class="w-full">
 
         <!-- Navigation Tabs -->
-        <nav class="flex justify-center space-x-1 border-b border-gray-200 mb-6 overflow-x-auto pb-1 scrollbar-hide sticky top-[84px] bg-white z-30"
+        <nav class="flex justify-start md:justify-center space-x-1 border-b border-gray-200 mb-6 overflow-x-auto pb-1 scrollbar-hide sticky top-[84px] bg-white z-30"
             aria-label="Tabs">
             <button onclick="setActiveTab('historia')" id="tab-historia"
                 class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-candelaria-purple text-candelaria-purple">
