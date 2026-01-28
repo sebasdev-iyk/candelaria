@@ -157,26 +157,27 @@ function getAuthButtonHTML()
     // --- SERVER-SIDE AUTH CHECK (SSR) ---
     // Read Supabase cookie to determine initial state
     $isLoggedIn = isset($_COOKIE['sb-access-token']) && !empty($_COOKIE['sb-access-token']);
-    
+
     // CSS classes for visibility
     $loginClass = $isLoggedIn ? 'hidden' : 'flex';
     $loginMobileClass = $isLoggedIn ? 'hidden' : 'flex';
     $profileClass = $isLoggedIn ? 'flex' : 'hidden';
-    
+
     // Inline styles for display
-    $loginStyle = $isLoggedIn ? 'display:none;' : ''; 
+    $loginStyle = $isLoggedIn ? 'display:none;' : '';
     $profileStyle = $isLoggedIn ? '' : 'display:none;';
 
     // If logged in, try to get basic info from JWT
     $userName = 'Usuario';
     $userEmail = '';
-    
+
     if ($isLoggedIn) {
         try {
             $parts = explode('.', $_COOKIE['sb-access-token']);
             if (count($parts) === 3) {
                 $payload = json_decode(base64_decode(str_replace(['-', '_'], ['+', '/'], $parts[1])), true);
-                if (isset($payload['email'])) $userEmail = htmlspecialchars($payload['email']);
+                if (isset($payload['email']))
+                    $userEmail = htmlspecialchars($payload['email']);
                 if (isset($payload['user_metadata']['full_name'])) {
                     $userName = htmlspecialchars(explode(' ', $payload['user_metadata']['full_name'])[0]);
                 } elseif (isset($payload['user_metadata']['name'])) {
@@ -185,21 +186,22 @@ function getAuthButtonHTML()
                     $userName = htmlspecialchars(explode('@', $userEmail)[0]);
                 }
             }
-        } catch (Exception $e) { /* Ignore parsing errors */ }
+        } catch (Exception $e) { /* Ignore parsing errors */
+        }
     }
-    
+
     $avatarUrl = 'https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=4c1d95&color=fff';
 
     return <<<HTML
     <div id="auth-header-container" class="relative" style="view-transition-name: auth-container;">
         <!-- Logged Out State Button -->
-        <button id="auth-btn-login" onclick="openAuthModal()" class="{$loginClass} md:flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-gray-900 font-bold border border-gray-200 hover:bg-gray-50 hover:shadow-md hover:border-purple-200 transition-all duration-300" style="{$loginStyle}">
+        <button id="auth-btn-login" onclick="openAuthModal()" class="{$loginClass} hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-gray-900 font-bold border border-gray-200 hover:bg-gray-50 hover:shadow-md hover:border-purple-200 transition-all duration-300" style="{$loginStyle}">
             <span class="bg-gray-100 p-1 rounded-full"><i data-lucide="user" class="w-4 h-4 text-gray-600"></i></span>
             <span>Ingresar</span>
         </button>
 
         <!-- Mobile Icon (Only Icon) -->
-        <button id="auth-btn-login-mobile" onclick="openAuthModal()" class="md:hidden {$loginMobileClass} items-center justify-center w-10 h-10 rounded-full bg-white text-gray-900 border border-gray-200 shadow-md hover:scale-105 transition-transform" style="{$loginStyle}">
+        <button id="auth-btn-login-mobile" onclick="openAuthModal()" class="md:hidden {$loginMobileClass} flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-900 border border-gray-200 shadow-md hover:scale-105 transition-transform" style="{$loginStyle}">
             <i data-lucide="user" class="w-5 h-5"></i>
         </button>
 
@@ -333,11 +335,9 @@ function getAuthJS()
         // HIDE login buttons (safely remove styles)
         if(btnLogin) {
             btnLogin.style.display = 'none';
-            btnLogin.classList.add('hidden');
         }
         if(btnLoginMobile) {
             btnLoginMobile.style.display = 'none';
-            btnLoginMobile.classList.add('hidden');
         }
         
         // SHOW profile section
@@ -379,12 +379,10 @@ function getAuthJS()
         // SHOW login buttons
         if(btnLogin) {
             btnLogin.style.display = ''; // Reset
-            btnLogin.classList.remove('hidden');
             // Responsive check is handled by CSS classes (hidden md:flex)
         }
         if(btnLoginMobile) {
             btnLoginMobile.style.display = ''; // Reset
-            btnLoginMobile.classList.remove('hidden');
         }
         
         // HIDE profile dropdown
