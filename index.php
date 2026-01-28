@@ -756,7 +756,6 @@
         padding-bottom: 20px;
       }
     }
-
   </style>
   <link rel="stylesheet" href="./assets/css/sparks.css">
 </head>
@@ -1948,7 +1947,7 @@
               </div>
               <div class="card-content">
                 <h3 class="card-title">${danza.conjunto}</h3>
-                <button class="card-btn" onclick="openDanceModal('${danza.id}', '${danza.conjunto.replace(/'/g, "\\'")}', '${(danza.descripcion || '').replace(/'/g, "\\'")}', '${danza.categoria}', '${danza.hora}', '${danza.orden_concurso}', '${danza.orden_veneracion || ''}', '${(danza.detalles || '').replace(/'/g, "\\'")}', '${danza.foto}', '${danza.dia_concurso}', '${danza.dia_veneracion}')">
+                <button class="card-btn" onclick="window.location.href='./horarios_y_danzas/index.php?danzaId=${danza.id}#danzas'">
                   Ver Detalles
                   <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
                 </button>
