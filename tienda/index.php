@@ -55,6 +55,7 @@ try {
 }
 
 $headerDepth = 1;
+$activePage = 'servicios';
 include_once '../includes/standard-header.php';
 ?>
 
@@ -95,6 +96,32 @@ include_once '../includes/standard-header.php';
 
     <!-- Hero Banner removed by user request -->
     <div class="h-8"></div>
+
+    <div class="max-w-7xl mx-auto px-4">
+        <!-- Navigation Tabs (Mirrors Services Page) -->
+        <nav class="flex space-x-1 border-b border-gray-200 mb-6 overflow-x-auto pb-1 scrollbar-hide" aria-label="Tabs">
+            <a href="../servicios/index.php"
+                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 border-transparent font-medium text-sm flex items-center gap-2 text-gray-500 hover:text-candelaria-purple hover:border-gray-300 transition-colors">
+                <i data-lucide="bed-double" class="w-4 h-4"></i> Hospedajes
+            </a>
+            <a href="../servicios/index.php"
+                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 border-transparent font-medium text-sm flex items-center gap-2 text-gray-500 hover:text-candelaria-purple hover:border-gray-300 transition-colors">
+                <i data-lucide="utensils" class="w-4 h-4"></i> Gastronomía
+            </a>
+            <a href="../servicios/index.php"
+                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 border-transparent font-medium text-sm flex items-center gap-2 text-gray-500 hover:text-candelaria-purple hover:border-gray-300 transition-colors">
+                <i data-lucide="car" class="w-4 h-4"></i> Transporte
+            </a>
+            <a href="../servicios/index.php"
+                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 border-transparent font-medium text-sm flex items-center gap-2 text-gray-500 hover:text-candelaria-purple hover:border-gray-300 transition-colors">
+                <i data-lucide="info" class="w-4 h-4"></i> Turismo
+            </a>
+            <button
+                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 border-candelaria-purple font-medium text-sm flex items-center gap-2 text-gray-900 bg-purple-50 rounded-t-lg">
+                <i data-lucide="shopping-bag" class="w-4 h-4 text-candelaria-purple"></i> Tienda
+            </button>
+        </nav>
+    </div>
 
     <div class="max-w-7xl mx-auto px-4 pb-20">
 

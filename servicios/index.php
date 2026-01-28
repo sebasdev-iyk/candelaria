@@ -215,6 +215,10 @@
                 class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2">
                 <i data-lucide="info" class="w-4 h-4"></i> Turismo
             </button>
+            <a href="../tienda/index.php" id="tab-tienda"
+                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 border-transparent text-gray-500 font-medium text-sm flex items-center gap-2 hover:text-candelaria-purple hover:border-gray-300 transition-colors">
+                <i data-lucide="shopping-bag" class="w-4 h-4"></i> Tienda
+            </a>
         </nav>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">

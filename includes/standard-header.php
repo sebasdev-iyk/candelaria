@@ -32,8 +32,6 @@ function getActiveClass($page, $activePage)
                 <nav class="hidden md:flex items-center gap-2">
                     <a href="<?= $basePath ?>servicios/index.php"
                         class="nav-link-custom <?= getActiveClass('servicios', $activePage) ?>">Servicios</a>
-                    <a href="<?= $basePath ?>tienda/index.php"
-                        class="nav-link-custom <?= getActiveClass('tienda', $activePage) ?>">Tienda</a>
                     <a href="<?= $basePath ?>cultura/cultura.php"
                         class="nav-link-custom <?= getActiveClass('cultura', $activePage) ?>">Cultura</a>
                     <a href="<?= $basePath ?>horarios_y_danzas/index.php"
@@ -77,8 +75,6 @@ function getActiveClass($page, $activePage)
         <nav class="flex flex-col p-6 space-y-4">
             <a href="<?= $basePath ?>servicios/index.php"
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'servicios' ? 'text-candelaria-gold' : '' ?>">Servicios</a>
-            <a href="<?= $basePath ?>tienda/index.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'tienda' ? 'text-candelaria-gold' : '' ?>">Tienda</a>
             <a href="<?= $basePath ?>cultura/cultura.php"
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'cultura' ? 'text-candelaria-gold' : '' ?>">Cultura</a>
             <a href="<?= $basePath ?>horarios_y_danzas/index.php"
