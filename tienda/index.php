@@ -54,10 +54,8 @@ try {
     // Do NOT fall back to mock data. We want to see the error.
 }
 
-$headerDepth = 1;
-$activePage = 'servicios';
-include_once '../includes/standard-header.php';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -91,6 +89,7 @@ include_once '../includes/standard-header.php';
     <?php
     // Use standard-header.php which exists, fixing the missing navbar.php issue
     $headerDepth = 1;
+    $activePage = 'servicios'; // Active tab for header
     include_once '../includes/standard-header.php';
     ?>
 
