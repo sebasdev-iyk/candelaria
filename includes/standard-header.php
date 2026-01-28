@@ -78,8 +78,9 @@ function getActiveClass($page, $activePage)
     </div>
 
     <!-- Mobile Menu (Hidden by default) -->
+    <!-- Mobile Menu (Hidden by default) -->
     <div id="mobile-menu"
-        class="hidden md:hidden bg-candelaria-purple absolute top-full left-0 w-full shadow-lg border-t border-purple-800 z-[70] transition-all duration-300">
+        class="hidden md:hidden fixed top-[80px] left-0 w-full h-[calc(100vh-80px)] bg-[#2e1065] shadow-lg border-t border-purple-800 z-[100] overflow-y-auto transition-all duration-300">
         <nav class="flex flex-col p-6 space-y-4">
             <a href="<?= $basePath ?>servicios/index.php"
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'servicios' ? 'text-candelaria-gold' : '' ?>">Servicios</a>
@@ -278,6 +279,7 @@ function getActiveClass($page, $activePage)
                 e.preventDefault();
                 console.log('[Header] Menu clicked');
                 mobileMenu.classList.toggle('hidden');
+                console.log('[Header] State:', mobileMenu.classList.contains('hidden') ? 'Hidden' : 'Visible');
             });
 
             // Close on click outside
