@@ -1771,31 +1771,7 @@
     lucide.createIcons();
 
     // Mobile Menu Logic
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (mobileMenuBtn && mobileMenu) {
-      // Toggle menu
-      mobileMenuBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        mobileMenu.classList.toggle('hidden');
-      });
-
-      // Close on outside click
-      document.addEventListener('click', (e) => {
-        if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-          mobileMenu.classList.add('hidden');
-        }
-      });
-
-      // Close on link click
-      const menuLinks = mobileMenu.querySelectorAll('a');
-      menuLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.add('hidden');
-        });
-      });
-    }
+    // Mobile Menu Logic - Handled in standard-header.php
 
     // ========== Photo path helper function ==========
     function fixPhotoPath(foto) {
