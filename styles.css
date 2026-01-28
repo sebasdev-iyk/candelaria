@@ -7,8 +7,9 @@
 body {
   font-family: 'Montserrat', sans-serif;
   color: white;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  /* Removed fixed height and overflow hidden to allow scrolling on mobile */
+  overflow-x: hidden;
 }
 
 
