@@ -94,7 +94,21 @@ try {
     ?>
 
     <!-- Hero Banner removed by user request -->
-    <div class="h-8"></div>
+
+    <!-- Search Bar (Sticky) - Added to match Servicios page -->
+    <div class="bg-white border-b border-gray-200 shadow-sm sticky top-[80px] md:top-[100px] z-30 mb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="relative flex-grow group">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i data-lucide="search"
+                        class="w-5 h-5 text-gray-400 group-focus-within:text-candelaria-purple transition-colors"></i>
+                </div>
+                <input type="text" id="store-search"
+                    class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg leading-5 bg-gray-50 placeholder-gray-500 text-gray-900 focus:outline-none focus:bg-white focus:ring-2 focus:ring-candelaria-purple focus:border-candelaria-purple sm:text-sm transition-all shadow-sm"
+                    placeholder="Buscar productos en la tienda...">
+            </div>
+        </div>
+    </div>
 
     <div class="max-w-7xl mx-auto px-4">
         <!-- Navigation Tabs (Mirrors Services Page) -->
@@ -274,6 +288,30 @@ try {
                 alert('Añadido al carrito (Demo ID: ' + productId + ')');
             }
         }
+
+        // --- Search Logic ---
+        document.getElementById('store-search').addEventListener('input', function (e) {
+            const term = e.target.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.product-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                // The card is an <a> tag, find the h3 inside
+                const titleEl = card.querySelector('h3');
+                const title = titleEl ? titleEl.textContent.toLowerCase() : '';
+
+                if (title.includes(term)) {
+                    card.style.display = ''; // Show (revert to default)
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none'; // Hide
+                }
+            });
+
+            // Optional: Show "No results" message if visibleCount === 0
+            // We can add a hidden div in HTML or just log for now.
+            // Let's rely on visual feedback (empty grid)
+        });
     </script>
 
     <!-- Tienda Core JS -->
