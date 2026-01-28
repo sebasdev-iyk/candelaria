@@ -157,19 +157,19 @@ function getAuthButtonHTML()
     // Check if user is logged in (via JS check mostly, but structure is here)
     return <<<HTML
     <div id="auth-header-container" class="relative">
-        <!-- Logged Out State Button -->
-        <button id="auth-btn-login" onclick="openAuthModal()" class="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-gray-900 font-bold border border-gray-200 hover:bg-gray-50 hover:shadow-md hover:border-purple-200 transition-all duration-300">
+        <!-- Logged Out State Button - HIDDEN BY DEFAULT to prevent flash -->
+        <button id="auth-btn-login" onclick="openAuthModal()" class="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-gray-900 font-bold border border-gray-200 hover:bg-gray-50 hover:shadow-md hover:border-purple-200 transition-all duration-300" style="display:none !important;">
             <span class="bg-gray-100 p-1 rounded-full"><i data-lucide="user" class="w-4 h-4 text-gray-600"></i></span>
             <span>Ingresar</span>
         </button>
 
-        <!-- Mobile Icon (Only Icon) -->
-        <button id="auth-btn-login-mobile" onclick="openAuthModal()" class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-900 border border-gray-200 shadow-md hover:scale-105 transition-transform">
+        <!-- Mobile Icon (Only Icon) - HIDDEN BY DEFAULT to prevent flash -->
+        <button id="auth-btn-login-mobile" onclick="openAuthModal()" class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-900 border border-gray-200 shadow-md hover:scale-105 transition-transform" style="display:none !important;">
             <i data-lucide="user" class="w-5 h-5"></i>
         </button>
 
-        <!-- Logged In State (Hidden by default) -->
-        <div id="auth-user-profile" class="hidden relative group">
+        <!-- Logged In State - HIDDEN BY DEFAULT to prevent flash -->
+        <div id="auth-user-profile" class="relative group" style="display:none !important;">
             <button class="flex items-center gap-2 focus:outline-none">
                 <img id="user-avatar" src="" alt="Profile" class="h-10 w-10 rounded-full border-2 border-white shadow-sm object-cover ring-2 ring-transparent group-hover:ring-purple-500 transition-all">
                 <div class="hidden md:block text-left">
@@ -211,12 +211,43 @@ function getAuthJS()
     </script>
 
     <script>
+    // --- IMMEDIATE AUTH CHECK (Synchronous - prevents flash) ---
+    (function() {
+        // Check localStorage IMMEDIATELY before DOM loads to set initial state
+        const cachedUser = localStorage.getItem('candelaria_user');
+        if (cachedUser) {
+            try {
+                const userData = JSON.parse(cachedUser);
+                if (userData && userData.email) {
+                    window._initialAuthState = 'logged_in';
+                    window._cachedUser = userData;
+                    console.log('[Auth] Immediate check: User found in cache');
+                } else {
+                    window._initialAuthState = 'logged_out';
+                }
+            } catch (e) {
+                window._initialAuthState = 'logged_out';
+            }
+        } else {
+            window._initialAuthState = 'logged_out';
+        }
+    })();
+    
     // --- Auth State Management ---
     
     async function initAuth() {
-        console.log('[Auth] initAuth called');
+        console.log('[Auth] initAuth called, initial state:', window._initialAuthState);
         
-        // First, check for Supabase session (priority)
+        // STEP 1: Show cached state IMMEDIATELY to prevent flash
+        if (window._initialAuthState === 'logged_in' && window._cachedUser) {
+            showLoggedInState(window._cachedUser);
+            console.log('[Auth] Showing cached logged-in state immediately');
+        } else {
+            showLoggedOutState();
+            console.log('[Auth] Showing logged-out state immediately');
+        }
+        
+        // STEP 2: Verify with Supabase in background (async)
         if (typeof SupabaseCore !== 'undefined') {
             try {
                 // getCurrentUser returns { user, error }, not just user
@@ -243,30 +274,41 @@ function getAuthJS()
                     if (typeof lucide !== 'undefined') lucide.createIcons();
                     setupEmailAuthForms();
                     return;
+                } else {
+                    // Supabase says no session - clear local cache if it exists
+                    if (window._initialAuthState === 'logged_in') {
+                        console.log('[Auth] Supabase has no session but cache existed - clearing cache');
+                        localStorage.removeItem('candelaria_user');
+                        window.currentUser = null;
+                        showLoggedOutState();
+                    }
                 }
             } catch (e) {
                 console.log('[Auth] Error checking Supabase session:', e);
+                // Keep showing cached state on error
             }
         } else {
-            console.log('[Auth] SupabaseCore not available');
+            console.log('[Auth] SupabaseCore not available, using cached state');
         }
         
-        // Fallback to legacy localStorage
-        const user = localStorage.getItem('candelaria_user');
-        if (user) {
-            try {
-                const userData = JSON.parse(user);
-                window.currentUser = userData; // Expose globally
-                showLoggedInState(userData);
-            } catch (e) {
-                console.error("Auth Error", e);
-                localStorage.removeItem('candelaria_user');
+        // Fallback to legacy localStorage (if Supabase didn't return anything)
+        if (!window.currentUser) {
+            const user = localStorage.getItem('candelaria_user');
+            if (user) {
+                try {
+                    const userData = JSON.parse(user);
+                    window.currentUser = userData; // Expose globally
+                    showLoggedInState(userData);
+                } catch (e) {
+                    console.error("Auth Error", e);
+                    localStorage.removeItem('candelaria_user');
+                    window.currentUser = null;
+                    showLoggedOutState();
+                }
+            } else {
                 window.currentUser = null;
                 showLoggedOutState();
             }
-        } else {
-            window.currentUser = null;
-            showLoggedOutState();
         }
         
         // Setup email auth forms
@@ -277,25 +319,24 @@ function getAuthJS()
 
     function showLoggedInState(user) {
         window.currentUser = user; // Ensure global sync
-        console.log('Showing logged in state for:', user);
+        console.log('[Auth] Showing logged in state for:', user?.email);
         
-        // Safe check for elements before accessing classList
+        // Safe check for elements before accessing
         const btnLogin = document.getElementById('auth-btn-login');
         const btnLoginMobile = document.getElementById('auth-btn-login-mobile');
         const profileDiv = document.getElementById('auth-user-profile');
 
+        // HIDE login buttons completely
         if(btnLogin) {
-            // btnLogin.classList.add('hidden');
-            btnLogin.style.display = 'none'; // Force hide
+            btnLogin.style.cssText = 'display: none !important;';
         }
         if(btnLoginMobile) {
-            // btnLoginMobile.classList.add('hidden');
-            btnLoginMobile.style.display = 'none'; // Force hide
+            btnLoginMobile.style.cssText = 'display: none !important;';
         }
         
+        // SHOW profile section
         if(profileDiv) {
-            // profileDiv.classList.remove('hidden');
-            profileDiv.style.display = 'block'; // Force show
+            profileDiv.style.cssText = 'display: flex !important;'; // Use flex for proper layout
             
             const avatar = document.getElementById('user-avatar');
             const userName = document.getElementById('user-name');
@@ -307,10 +348,10 @@ function getAuthJS()
                 if (picUrl && !picUrl.startsWith('http') && !picUrl.startsWith('/')) {
                      picUrl = '/candelaria/' + picUrl; // Prepend base path
                 }
-                avatar.src = picUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name);
+                avatar.src = picUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'U');
             }
             if(userName) {
-                userName.innerText = user.name.split(' ')[0]; // First name only
+                userName.innerText = (user.name || 'Usuario').split(' ')[0]; // First name only
             }
             if(userEmail) {
                 userEmail.innerText = user.email || 'Email oculto';
@@ -320,7 +361,7 @@ function getAuthJS()
         // Trigger event for other scripts
         window.dispatchEvent(new CustomEvent('auth-changed', { detail: user }));
         
-        console.log('UI state updated successfully');
+        console.log('[Auth] UI state updated to logged-in');
     }
 
     function showLoggedOutState() {
@@ -331,20 +372,24 @@ function getAuthJS()
         const btnLoginMobile = document.getElementById('auth-btn-login-mobile');
         const profileDiv = document.getElementById('auth-user-profile');
 
-        // Show login buttons with explicit style reset
+        // SHOW login buttons - use responsive display
         if(btnLogin) {
-            // btnLogin.classList.remove('hidden'); // REMOVED: Breaks responsive utility
-            btnLogin.style.display = ''; // Reset to default (let CSS classes handle it)
+            // Desktop: hidden on mobile, flex on md+
+            btnLogin.style.cssText = ''; // Clear inline styles
+            btnLogin.classList.remove('hidden'); // Ensure not hidden by class
+            // Re-apply responsive classes via inline style for md+
+            btnLogin.style.display = window.innerWidth >= 768 ? 'flex' : 'none';
         }
         if(btnLoginMobile) {
-            // btnLoginMobile.classList.remove('hidden');
-            btnLoginMobile.style.display = ''; // Reset to default
+            // Mobile: visible on mobile, hidden on md+
+            btnLoginMobile.style.cssText = ''; // Clear inline styles
+            btnLoginMobile.classList.remove('hidden');
+            btnLoginMobile.style.display = window.innerWidth < 768 ? 'flex' : 'none';
         }
         
-        // Hide profile dropdown with explicit style
+        // HIDE profile dropdown
         if(profileDiv) {
-            // profileDiv.classList.add('hidden');
-            profileDiv.style.display = 'none';
+            profileDiv.style.cssText = 'display: none !important;';
         }
         
         window.dispatchEvent(new CustomEvent('auth-changed', { detail: null }));

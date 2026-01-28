@@ -87,14 +87,46 @@
                 if (recoveryUrl && event === 'SIGNED_IN') {
                     console.log('🔄 [Supabase Core] Recovery URL found:', recoveryUrl);
 
-                    // Normalize URLs for comparison (ignore trailing slashes)
+                    // Normalize URLs for comparison (ignore trailing slashes and hash)
                     const current = window.location.href.split('#')[0].replace(/\/$/, "");
                     const target = recoveryUrl.split('#')[0].replace(/\/$/, "");
 
-                    if (current !== target && !current.includes('tailwindcss.com')) {
+                    // Check if we need to redirect (especially from production to localhost)
+                    const currentHost = window.location.hostname;
+                    const targetUrl = new URL(recoveryUrl);
+                    const targetHost = targetUrl.hostname;
+
+                    // Force redirect if:
+                    // 1. Current URL !== target URL, OR
+                    // 2. We are on production (mipuno.pe) but target was localhost
+                    const isOnProduction = currentHost.includes('mipuno.pe') || currentHost.includes('www.mipuno.pe');
+                    const targetWasLocal = targetHost === 'localhost' || targetHost === '127.0.0.1';
+
+                    console.log('[Supabase Core] Current host:', currentHost, '| Target host:', targetHost);
+                    console.log('[Supabase Core] Is on production:', isOnProduction, '| Target was local:', targetWasLocal);
+
+                    if ((current !== target || (isOnProduction && targetWasLocal)) && !current.includes('tailwindcss.com')) {
                         console.log('🚀 [Supabase Core] Executing Failsafe Redirect to:', recoveryUrl);
                         localStorage.removeItem('auth_redirect_recovery'); // Clear it so we don't loop
+
+                        // For cross-domain redirects (prod -> localhost), we need to pass the session
+                        // Since cookies won't transfer, we store essential data and redirect
+                        if (isOnProduction && targetWasLocal) {
+                            // Store session data that can be recovered on localhost
+                            const sessionData = {
+                                access_token: session.access_token,
+                                refresh_token: session.refresh_token,
+                                user: {
+                                    id: session.user.id,
+                                    email: session.user.email,
+                                    user_metadata: session.user.user_metadata
+                                }
+                            };
+                            localStorage.setItem('auth_session_transfer', JSON.stringify(sessionData));
+                        }
+
                         window.location.href = recoveryUrl;
+                        return; // Stop execution
                     } else {
                         // We are already there
                         localStorage.removeItem('auth_redirect_recovery');
@@ -111,6 +143,42 @@
                 }));
             }
         });
+
+        // --- CHECK FOR SESSION TRANSFER FROM PRODUCTION ---
+        // If we're on localhost and have session data from production redirect
+        const sessionTransfer = localStorage.getItem('auth_session_transfer');
+        if (sessionTransfer) {
+            try {
+                const sessionData = JSON.parse(sessionTransfer);
+                localStorage.removeItem('auth_session_transfer');
+                console.log('[Supabase Core] Recovering session from production redirect...');
+
+                // Set the session manually
+                if (sessionData.access_token) {
+                    setCookie(COOKIE_NAME, sessionData.access_token);
+                    if (sessionData.refresh_token) {
+                        setCookie(COOKIE_REFRESH_NAME, sessionData.refresh_token);
+                    }
+
+                    // Update localStorage for immediate UI
+                    if (sessionData.user) {
+                        const userData = {
+                            id: sessionData.user.id,
+                            email: sessionData.user.email,
+                            name: sessionData.user.user_metadata?.full_name || sessionData.user.user_metadata?.name || sessionData.user.email?.split('@')[0],
+                            picture: sessionData.user.user_metadata?.avatar_url || sessionData.user.user_metadata?.picture
+                        };
+                        localStorage.setItem('candelaria_user', JSON.stringify(userData));
+
+                        // Force page reload to initialize with new session
+                        window.location.reload();
+                    }
+                }
+            } catch (e) {
+                console.error('[Supabase Core] Error recovering session:', e);
+                localStorage.removeItem('auth_session_transfer');
+            }
+        }
 
         return supabaseClient;
     }
