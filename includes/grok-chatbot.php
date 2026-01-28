@@ -72,9 +72,9 @@
 </button>
 
 <!-- Chatbot Styles & Script -->
-<link rel="stylesheet" href="<?= $basePath ?>chatbot/style.css?v=1.1">
+<link rel="stylesheet" href="<?= $basePath ?>chatbot/style.css?v=<?= time() ?>">
 <script>
     // Define Global Base Path for JS
     window.CANDELARIA_BASE_PATH = "<?= $basePath ?>";
 </script>
-<script src="<?= $basePath ?>chatbot/script.js?v=1.1"></script>
+<script src="<?= $basePath ?>chatbot/script.js?v=<?= time() ?>"></script>

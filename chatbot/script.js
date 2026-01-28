@@ -166,7 +166,7 @@ function initVideo() {
 
     const setSize = (w, h) => {
         if (mainCanvas) { mainCanvas.width = w; mainCanvas.height = h; }
-        // triggerCanvas mantiene su tamaño original (100x100) para rendimiento
+        if (triggerCanvas) { triggerCanvas.width = w; triggerCanvas.height = h; }
     };
     setSize(HD_WIDTH, HD_HEIGHT);
 
@@ -175,11 +175,7 @@ function initVideo() {
 
     videoSource.addEventListener('loadedmetadata', () => {
         console.log(`Video: ${videoSource.videoWidth}x${videoSource.videoHeight}`);
-        // Solo redimensionamos el canvas principal, no el trigger
-        if (mainCanvas) {
-            mainCanvas.width = videoSource.videoWidth;
-            mainCanvas.height = videoSource.videoHeight;
-        }
+        setSize(videoSource.videoWidth, videoSource.videoHeight);
     });
 
     const render = () => {
