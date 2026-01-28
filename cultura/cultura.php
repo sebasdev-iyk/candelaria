@@ -148,11 +148,19 @@
             border: 3px solid white;
             box-shadow: 0 0 0 3px #fbbf24;
             position: absolute;
-            left: 50%;
+            left: 1.25rem;
+            /* Mobile: 20px - Left aligned */
             transform: translateX(-50%);
             z-index: 10;
             cursor: pointer;
             transition: all 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-dot {
+                left: 50%;
+                /* Desktop: Centered */
+            }
         }
 
         .timeline-dot:hover {
@@ -2033,14 +2041,16 @@
                     <!-- Línea de tiempo interactiva -->
                     <div class="relative py-10">
                         <!-- Línea central -->
-                        <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-candelaria-gold"></div>
+                        <div
+                            class="absolute left-5 md:left-1/2 transform -translate-x-1/2 h-full w-1 bg-candelaria-gold">
+                        </div>
 
                         <!-- Elementos de la línea de tiempo -->
                         <div class="space-y-20">
 
                             <!-- Era 0: ORÍGENES COLONIALES (1583-1800) -->
                             <div class="relative flex flex-col md:flex-row items-center">
-                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
+                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right pl-12 md:pl-0">
                                     <div class="timeline-content">
                                         <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Orígenes
                                             Coloniales (1583-1800)</h3>
@@ -2059,7 +2069,7 @@
                                     </div>
                                 </div>
                                 <div class="timeline-dot" onclick="toggleTimelineContent(0)"></div>
-                                <div class="md:w-1/2 md:pl-12">
+                                <div class="md:w-1/2 md:pl-12 pl-12">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Cerro_Rico_Potosi.jpg/1200px-Cerro_Rico_Potosi.jpg"
                                             class="w-full h-48 object-cover vintage-photo" alt="Minas coloniales"
@@ -2070,7 +2080,7 @@
 
                             <!-- Era 1: SIKURIS Y PRIMERAS COFRADÍAS (1870-1940) -->
                             <div class="relative flex flex-col md:flex-row items-center">
-                                <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+                                <div class="md:w-1/2 md:pr-12 order-2 md:order-1 pl-12 md:pl-0">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://imgmedia.larepublica.pe/640x384/larepublica/migration/images/AUYVEJ2FDJGGXBBFODIK7OQQKY.webp"
                                             class="w-full h-48 object-cover vintage-photo" alt="Sikuris históricos"
@@ -2078,7 +2088,7 @@
                                     </div>
                                 </div>
                                 <div class="timeline-dot" onclick="toggleTimelineContent(1)"></div>
-                                <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
+                                <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2 pl-12">
                                     <div class="timeline-content">
                                         <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Era de
                                             los Sikuris (1870-1940)</h3>
@@ -2100,7 +2110,7 @@
 
                             <!-- Era 2: DÉCADAS DE ORO (1950-1970) -->
                             <div class="relative flex flex-col md:flex-row items-center">
-                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
+                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right pl-12 md:pl-0">
                                     <div class="timeline-content">
                                         <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Décadas
                                             de Oro (1950-1970)</h3>
@@ -2121,7 +2131,7 @@
                                     </div>
                                 </div>
                                 <div class="timeline-dot" onclick="toggleTimelineContent(2)"></div>
-                                <div class="md:w-1/2 md:pl-12">
+                                <div class="md:w-1/2 md:pl-12 pl-12">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiijAyeVlb8shbRm-HMeE-XNwfbG4uRXlBUImio62n416pNahZ-iij-ug09YMBTqK4GwnEN2OXQh-iO8tNKai-pH7y8_PgSp3EXvIBSAg4TPiEMpxqI0phlGdujmt17EpqCXNL1icP7Q1Q/s1600/Edwin+Losa.jpg"
                                             class="w-full h-48 object-cover vintage-photo" alt="Candelaria años 50"
@@ -2132,7 +2142,7 @@
 
                             <!-- Era 3: INSTITUCIONALIZACIÓN (1967-1985) -->
                             <div class="relative flex flex-col md:flex-row items-center">
-                                <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+                                <div class="md:w-1/2 md:pr-12 order-2 md:order-1 pl-12 md:pl-0">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://www.punomagico.com/image/arguedas.jpg"
                                             class="w-full h-48 object-cover vintage-photo" alt="José María Arguedas"
@@ -2140,7 +2150,7 @@
                                     </div>
                                 </div>
                                 <div class="timeline-dot" onclick="toggleTimelineContent(3)"></div>
-                                <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
+                                <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2 pl-12">
                                     <div class="timeline-content">
                                         <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">
                                             Institucionalización (1967-1985)</h3>
@@ -2163,7 +2173,7 @@
 
                             <!-- Era 4: BOOM DEL BORDADO (1980-2000) -->
                             <div class="relative flex flex-col md:flex-row items-center">
-                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
+                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right pl-12 md:pl-0">
                                     <div class="timeline-content">
                                         <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">El Boom
                                             del Bordado (1980-2000)</h3>
@@ -2183,7 +2193,7 @@
                                     </div>
                                 </div>
                                 <div class="timeline-dot" onclick="toggleTimelineContent(4)"></div>
-                                <div class="md:w-1/2 md:pl-12">
+                                <div class="md:w-1/2 md:pl-12 pl-12">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://static.wixstatic.com/media/27f42d_c1c0a0c4f82643a290333250b73e52f0~mv2.jpg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/27f42d_c1c0a0c4f82643a290333250b73e52f0~mv2.jpg"
                                             class="w-full h-48 object-cover vintage-photo" alt="Candelaria años 80"
@@ -2194,7 +2204,7 @@
 
                             <!-- Era 5: PATRIMONIO UNESCO (2003-2020) -->
                             <div class="relative flex flex-col md:flex-row items-center">
-                                <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+                                <div class="md:w-1/2 md:pr-12 order-2 md:order-1 pl-12 md:pl-0">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/UNESCO_logo.svg/1200px-UNESCO_logo.svg.png"
                                             class="w-full h-48 object-contain bg-white p-4" alt="UNESCO"
@@ -2202,7 +2212,7 @@
                                     </div>
                                 </div>
                                 <div class="timeline-dot" onclick="toggleTimelineContent(5)"></div>
-                                <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2">
+                                <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 order-1 md:order-2 pl-12">
                                     <div class="timeline-content">
                                         <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">
                                             Patrimonio Mundial (2003-2020)</h3>
@@ -2227,7 +2237,7 @@
 
                             <!-- Era 6: ERA DIGITAL Y PRESENTE (2020-2025) -->
                             <div class="relative flex flex-col md:flex-row items-center">
-                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
+                                <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right pl-12 md:pl-0">
                                     <div class="timeline-content">
                                         <h3 class="font-heading text-2xl font-bold text-candelaria-purple mb-2">Era
                                             Digital (2020 - Hoy)</h3>
@@ -2248,7 +2258,7 @@
                                     </div>
                                 </div>
                                 <div class="timeline-dot" onclick="toggleTimelineContent(6)"></div>
-                                <div class="md:w-1/2 md:pl-12">
+                                <div class="md:w-1/2 md:pl-12 pl-12">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                                         <img src="https://vivecandelaria.com/wp-content/uploads/2024/12/festividad-virgen-candelaria-2025-una-puno.jpg"
                                             class="w-full h-48 object-cover vintage-photo" alt="Candelaria actual"
