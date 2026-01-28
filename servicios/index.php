@@ -846,7 +846,18 @@
         document.addEventListener('DOMContentLoaded', () => {
             initMap();
             renderFilters();
-            setActiveTab('hospedajes'); // Esto trigger renderCards
+
+            // Check for tab parameter in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabParam = urlParams.get('tab');
+            const validTabs = ['hospedajes', 'restaurantes', 'transporte', 'info'];
+
+            if (tabParam && validTabs.includes(tabParam)) {
+                setActiveTab(tabParam);
+            } else {
+                setActiveTab('hospedajes');
+            }
+
             lucide.createIcons();
 
             // Listeners
