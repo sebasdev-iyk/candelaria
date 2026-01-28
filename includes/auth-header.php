@@ -154,42 +154,44 @@ function getAuthModalHTML()
 
 function getAuthButtonHTML()
 {
-    // Check if user is logged in (via JS check mostly, but structure is here)
-    return <<<HTML
     // --- SERVER-SIDE AUTH CHECK (SSR) ---
     // Read Supabase cookie to determine initial state
     $isLoggedIn = isset($_COOKIE['sb-access-token']) && !empty($_COOKIE['sb-access-token']);
     
     // CSS classes for visibility
-    $loginClass = $isLoggedIn ? 'hidden' : 'flex'; // Desktop: flex if logged out
-    $loginMobileClass = $isLoggedIn ? 'hidden' : 'flex'; // Mobile: flex if logged out
-    $profileClass = $isLoggedIn ? 'block' : 'hidden'; // Profile: block if logged in
+    $loginClass = $isLoggedIn ? 'hidden' : 'flex';
+    $loginMobileClass = $isLoggedIn ? 'hidden' : 'flex';
+    $profileClass = $isLoggedIn ? 'flex' : 'hidden';
     
-    // Inline styles for display (to prevent FOUC overrides by CSS files)
+    // Inline styles for display
     $loginStyle = $isLoggedIn ? 'display:none;' : ''; 
     $profileStyle = $isLoggedIn ? '' : 'display:none;';
 
-    // If logged in, try to get basic info from JWT (optional enhancement)
+    // If logged in, try to get basic info from JWT
     $userName = 'Usuario';
-    $userEmail = 'Cargando...';
+    $userEmail = '';
     
     if ($isLoggedIn) {
         try {
             $parts = explode('.', $_COOKIE['sb-access-token']);
             if (count($parts) === 3) {
                 $payload = json_decode(base64_decode(str_replace(['-', '_'], ['+', '/'], $parts[1])), true);
-                if (isset($payload['email'])) $userEmail = $payload['email'];
+                if (isset($payload['email'])) $userEmail = htmlspecialchars($payload['email']);
                 if (isset($payload['user_metadata']['full_name'])) {
-                    $userName = explode(' ', $payload['user_metadata']['full_name'])[0];
+                    $userName = htmlspecialchars(explode(' ', $payload['user_metadata']['full_name'])[0]);
                 } elseif (isset($payload['user_metadata']['name'])) {
-                    $userName = explode(' ', $payload['user_metadata']['name'])[0];
+                    $userName = htmlspecialchars(explode(' ', $payload['user_metadata']['name'])[0]);
+                } elseif (!empty($userEmail)) {
+                    $userName = htmlspecialchars(explode('@', $userEmail)[0]);
                 }
             }
         } catch (Exception $e) { /* Ignore parsing errors */ }
     }
+    
+    $avatarUrl = 'https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=4c1d95&color=fff';
 
     return <<<HTML
-    <div id="auth-header-container" class="relative">
+    <div id="auth-header-container" class="relative" style="view-transition-name: auth-container;">
         <!-- Logged Out State Button -->
         <button id="auth-btn-login" onclick="openAuthModal()" class="{$loginClass} md:flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-gray-900 font-bold border border-gray-200 hover:bg-gray-50 hover:shadow-md hover:border-purple-200 transition-all duration-300" style="{$loginStyle}">
             <span class="bg-gray-100 p-1 rounded-full"><i data-lucide="user" class="w-4 h-4 text-gray-600"></i></span>
@@ -204,7 +206,7 @@ function getAuthButtonHTML()
         <!-- Logged In State -->
         <div id="auth-user-profile" class="relative group {$profileClass}" style="{$profileStyle}">
             <button class="flex items-center gap-2 focus:outline-none">
-                <img id="user-avatar" src="https://ui-avatars.com/api/?name={$userName}&background=4c1d95&color=fff" alt="Profile" class="h-10 w-10 rounded-full border-2 border-white shadow-sm object-cover ring-2 ring-transparent group-hover:ring-purple-500 transition-all">
+                <img id="user-avatar" src="{$avatarUrl}" alt="Profile" class="h-10 w-10 rounded-full border-2 border-white shadow-sm object-cover ring-2 ring-transparent group-hover:ring-purple-500 transition-all" style="view-transition-name: auth-avatar;">
                 <div class="hidden md:block text-left">
                     <p id="user-name" class="text-sm font-bold text-white leading-tight">{$userName}</p>
                     <p class="text-[10px] text-purple-200 uppercase font-bold tracking-wider">Miembro</p>

@@ -2,6 +2,10 @@
 /**
  * Standard Header Component for Candelaria 2026
  * Includes: Logo, Navigation, Auth, Live Button
+ * 
+ * Features:
+ * - View Transitions API for smooth page navigation
+ * - SSR auth state rendering to prevent flash
  */
 
 // Determine base path based on current file location
@@ -16,8 +20,12 @@ function getActiveClass($page, $activePage)
 }
 ?>
 
-<!-- Header Section - Standardized -->
-<header class="header-manta-premium text-white shadow-lg sticky top-0 z-40">
+<!-- View Transitions Meta Tag (enables cross-document transitions) -->
+<meta name="view-transition" content="same-origin">
+
+
+<!-- Header Section - Standardized (with view-transition-name for stability) -->
+<header class="header-manta-premium text-white shadow-lg sticky top-0 z-40" style="view-transition-name: main-header;">
     <div class="w-full px-3 md:px-12 h-20 md:h-22 flex items-center relative z-50">
         <div class="w-full flex justify-between items-center h-full">
             <!-- Left: Candelaria Branding -->
@@ -103,6 +111,39 @@ function getActiveClass($page, $activePage)
         justify-content: center;
         will-change: transform;
         z-index: 40;
+        /* View Transition: Keep header stable during page transitions */
+        view-transition-name: main-header;
+    }
+    
+    /* View Transitions API - Smooth page navigation */
+    @view-transition {
+        navigation: auto;
+    }
+    
+    /* Header stays in place during transition */
+    ::view-transition-old(main-header),
+    ::view-transition-new(main-header) {
+        animation: none;
+        mix-blend-mode: normal;
+    }
+    
+    /* Content area transitions smoothly */
+    ::view-transition-old(root) {
+        animation: fade-out 0.15s ease-out forwards;
+    }
+    
+    ::view-transition-new(root) {
+        animation: fade-in 0.15s ease-in;
+    }
+    
+    @keyframes fade-out {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+    
+    @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     @media (max-width: 768px) {

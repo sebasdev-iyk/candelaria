@@ -70,4 +70,19 @@ $basePath = isset($footerDepth) ? str_repeat('../', $footerDepth) : './';
     </div>
 </footer>
 
-<?php include __DIR__ . '/grok-chatbot.php'; ?>
+<?php 
+// Include Auth Modal and JS globally
+if (!function_exists('getAuthModalHTML') && file_exists(__DIR__ . '/auth-header.php')) {
+    include_once __DIR__ . '/auth-header.php';
+}
+
+if (function_exists('getAuthModalHTML')) {
+    echo getAuthModalHTML();
+}
+
+if (function_exists('getAuthJS')) {
+    echo getAuthJS();
+}
+
+include __DIR__ . '/grok-chatbot.php'; 
+?>

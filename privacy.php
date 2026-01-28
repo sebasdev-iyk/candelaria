@@ -1,12 +1,6 @@
 <?php
 // privacy.php
 $headerDepth = 0;
-// Check if file exists before including to prevent errors (though we know it exists)
-if (file_exists('includes/standard-header.php')) {
-    require_once 'includes/standard-header.php';
-} else {
-    // Fallback header or error handling
-}
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +9,7 @@ if (file_exists('includes/standard-header.php')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Privacidad Integral | Candelaria 2026</title>
+    <meta name="view-transition" content="same-origin">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -27,6 +22,12 @@ if (file_exists('includes/standard-header.php')) {
     </style>
 </head>
 <body class="bg-slate-50">
+    <?php
+    $activePage = '';
+    if (file_exists('includes/standard-header.php')) {
+        require_once 'includes/standard-header.php';
+    }
+    ?>
 
     <main class="max-w-5xl mx-auto px-6 py-16">
         <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">

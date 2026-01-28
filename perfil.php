@@ -90,32 +90,12 @@
 </head>
 
 <body class="bg-gray-50">
-    <?php include 'includes/auth-header.php'; ?>
-
-    <!-- Header Section -->
-    <header class="header-manta-premium text-white shadow-lg sticky top-0 z-40">
-        <div class="w-full px-6 md:px-12 h-20 md:h-22 flex items-center">
-            <div class="flex justify-between items-center w-full h-full">
-                <a href="index.php" class="flex items-center cursor-pointer group h-full relative spark-container">
-                    <img src="principal/logoc.png" alt="Candelaria"
-                        class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
-                </a>
-                <div class="flex items-center gap-6">
-                    <nav class="hidden md:flex items-center gap-2">
-                        <a href="servicios/index.php" class="nav-link-custom">Servicios</a>
-                        <a href="cultura/cultura.php" class="nav-link-custom">Cultura</a>
-                        <a href="horarios_y_danzas/index.php" class="nav-link-custom">Festividad</a>
-                        <a href="noticias/index.php" class="nav-link-custom">Noticias</a>
-                    </nav>
-                    <?= getAuthButtonHTML() ?>
-                    <a href="live-platform/index.php" class="btn-live group !p-2.5 md:!px-6 md:!py-2.5">
-                        <div class="live-dot"></div>
-                        <span class="tracking-wider hidden md:inline">EN TIEMPO REAL</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- Header Section - Standardized -->
+    <?php
+    $headerDepth = 0;
+    $activePage = 'perfil'; 
+    include 'includes/standard-header.php';
+    ?>
 
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

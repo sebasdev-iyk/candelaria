@@ -154,69 +154,62 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
-        /* Header Manta Premium Style - Lliclla Pattern */
-        .header-manta-premium {
-            height: 140px;
-            background-image: linear-gradient(rgba(45, 10, 80, 0.45), rgba(15, 5, 30, 0.65)), url('../principal/headerfondo2.jpg');
-            background-size: auto 100%;
-            background-repeat: repeat-x;
-            background-position: center;
-            position: relative;
-            border-bottom: 3px solid #fbbf24;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        /* Custom Secondary Nav for Live Platform */
+        .live-nav-bar {
+            background: rgba(30, 10, 60, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 100px; /* Adjust based on header height 80px + margin */
+            z-index: 30;
+        }
+        
+        .live-nav-item {
+            cursor: pointer;
+            padding: 0.75rem 1.5rem;
+            color: #d8b4fe;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
         }
-
-        .header-manta-premium::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
-            pointer-events: none;
+        
+        .live-nav-item:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.05);
         }
-
-        .header-manta-premium>div {
-            position: relative;
-            z-index: 2;
+        
+        .live-nav-item.active {
+            color: #fbbf24;
+            border-bottom-color: #fbbf24;
         }
     </style>
 
-    <!-- Header (Consistent with Main Project) -->
-    <header class="header-manta-premium text-white shadow-lg sticky top-0 z-50">
-        <div class="h-20 md:h-22 flex items-center justify-between px-6">
-            <div class="flex items-center gap-4 h-full">
-                <!-- Back to Main removed -->
-
-                <a href="../index.php" id="logo-container"
-                    class="flex items-center gap-2 h-full relative spark-container group">
-                    <img src="../principal/logoc.png" alt="Logo"
-                        class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
-                </a>
-
-                <div class="hidden md:flex ml-8 bg-purple-900/50 rounded-full px-4 py-2 border border-purple-700">
-                    <nav class="flex items-center gap-4">
-                        <div id="tab-live" class="nav-link-custom active" onclick="switchView('live')">
-                            <i class="fas fa-broadcast-tower mr-2"></i> En Vivo
-                        </div>
-                        <div id="tab-scores" class="nav-link-custom" onclick="switchView('scores')">
-                            <i class="fas fa-list-ol mr-2"></i> Puntajes
-                        </div>
-                        <div id="tab-map" class="nav-link-custom" onclick="switchView('map')">
-                            <i class="fas fa-map-marked-alt mr-2"></i> Mapa TR
-                        </div>
-                    </nav>
+    <!-- Standard Header Include -->
+    <?php
+    $headerDepth = 1;
+    $activePage = 'live';
+    include '../includes/standard-header.php';
+    ?>
+    
+    <!-- Secondary Navigation Bar (Platform Specific) -->
+    <div class="live-nav-bar shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-center md:justify-start gap-2 overflow-x-auto">
+                <div id="tab-live" class="live-nav-item active" onclick="switchView('live')">
+                    <i class="fas fa-broadcast-tower"></i> En Vivo
+                </div>
+                <div id="tab-scores" class="live-nav-item" onclick="switchView('scores')">
+                    <i class="fas fa-list-ol"></i> Puntajes
+                </div>
+                <div id="tab-map" class="live-nav-item" onclick="switchView('map')">
+                    <i class="fas fa-map-marked-alt"></i> Mapa TR
                 </div>
             </div>
-
-            <div class="flex items-center gap-6">
-                <!-- User Auth Section -->
-                <div class="flex items-center">
-                    <?= getAuthButtonHTML() ?>
-                </div>
-            </div>
-    </header>
+        </div>
+    </div>
 
     <!-- Main Live View -->
     <!-- Main Live View -->
