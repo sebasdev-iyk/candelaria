@@ -488,6 +488,7 @@ $isGuest = !isAuthenticated();
                     <p id="hotel-description" class="text-gray-600 mb-6 leading-relaxed"></p>
 
                     <!-- Amenities -->
+
                     <div class="mb-6">
                         <h3 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
                             <i data-lucide="sparkles" class="w-5 h-5 text-candelaria-purple"></i>
@@ -497,6 +498,37 @@ $isGuest = !isAuthenticated();
                             <!-- Amenities injected here -->
                         </div>
                     </div>
+
+                    <!-- Contact & Policies -->
+                    <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-xl border border-gray-100">
+                        <div id="contact-info" class="hidden">
+                             <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                                <i data-lucide="phone-call" class="w-4 h-4 text-candelaria-purple"></i> Contacto
+                             </h4>
+                             <p id="hotel-phone" class="flex items-center gap-2 mb-1.5 ml-1 hidden">
+                                <span class="text-gray-500 w-20">Teléfono:</span> 
+                                <span class="font-medium text-gray-800"></span>
+                             </p>
+                             <p id="hotel-web" class="flex items-center gap-2 ml-1 hidden">
+                                <span class="text-gray-500 w-20">Web:</span> 
+                                <a href="#" target="_blank" class="text-candelaria-purple font-medium hover:underline truncate max-w-[150px]">Visitar sitio</a>
+                             </p>
+                        </div>
+                        <div id="policies-info" class="hidden">
+                             <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                                <i data-lucide="clock" class="w-4 h-4 text-candelaria-purple"></i> Horarios
+                             </h4>
+                             <p id="hotel-checkin" class="flex items-center gap-2 mb-1.5 ml-1 hidden">
+                                <span class="text-gray-500 w-24">Check-in:</span> 
+                                <span class="font-medium text-gray-800"></span>
+                             </p>
+                             <p id="hotel-checkout" class="flex items-center gap-2 ml-1 hidden">
+                                <span class="text-gray-500 w-24">Check-out:</span> 
+                                <span class="font-medium text-gray-800"></span>
+                             </p>
+                        </div>
+                    </div>
+
 
                     <!-- Price Range -->
                     <div class="bg-gradient-to-r from-candelaria-purple to-purple-700 text-white p-6 rounded-2xl">
@@ -1036,6 +1068,62 @@ $isGuest = !isAuthenticated();
                     ${a}
                 </span>
             `).join('');
+
+                // Contact & Policies
+                const contactDiv = document.getElementById('contact-info');
+                const policiesDiv = document.getElementById('policies-info');
+                
+                let hasContact = false;
+                let hasPolicies = false;
+
+                // Phone
+                const phoneEl = document.getElementById('hotel-phone');
+                if (hotel.telefono) {
+                    phoneEl.querySelector('span:last-child').textContent = hotel.telefono;
+                    phoneEl.classList.remove('hidden');
+                    hasContact = true;
+                } else {
+                    phoneEl.classList.add('hidden');
+                }
+
+                // Web
+                const webEl = document.getElementById('hotel-web');
+                if (hotel.pagina_web) {
+                    const link = webEl.querySelector('a');
+                    link.href = hotel.pagina_web.startsWith('http') ? hotel.pagina_web : 'https://' + hotel.pagina_web;
+                    link.textContent = hotel.pagina_web.replace(/^https?:\/\//, '');
+                    webEl.classList.remove('hidden');
+                    hasContact = true;
+                } else {
+                    webEl.classList.add('hidden');
+                }
+
+                // Checkin
+                const checkinEl = document.getElementById('hotel-checkin');
+                if (hotel.checkin_time) {
+                    // Format time HH:MM
+                    const timeC = hotel.checkin_time.substring(0, 5);
+                    checkinEl.querySelector('span:last-child').textContent = timeC;
+                    checkinEl.classList.remove('hidden');
+                    hasPolicies = true;
+                } else {
+                    checkinEl.classList.add('hidden');
+                }
+
+                // Checkout
+                const checkoutEl = document.getElementById('hotel-checkout');
+                if (hotel.checkout_time) {
+                    const timeO = hotel.checkout_time.substring(0, 5);
+                    checkoutEl.querySelector('span:last-child').textContent = timeO;
+                    checkoutEl.classList.remove('hidden');
+                    hasPolicies = true;
+                } else {
+                    checkoutEl.classList.add('hidden');
+                }
+
+                if (hasContact) contactDiv.classList.remove('hidden');
+                if (hasPolicies) policiesDiv.classList.remove('hidden');
+
 
                 // Min price
                 const minPrice = rooms.length > 0
