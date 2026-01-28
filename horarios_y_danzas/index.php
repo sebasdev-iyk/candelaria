@@ -548,6 +548,12 @@
 
         // Actualizar contenido según el estado
         function updateContent() {
+            // Clear any existing simulator interval when switching tabs
+            if (window.simuladorInterval) {
+                clearInterval(window.simuladorInterval);
+                window.simuladorInterval = null;
+            }
+
             const container = document.getElementById('events-container');
             if (!container) return;
 
