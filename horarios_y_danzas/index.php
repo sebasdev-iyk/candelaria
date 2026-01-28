@@ -1486,8 +1486,20 @@
             <button class="btn-modal-action btn-modal-map" onclick="window.location.href='../live-platform/index.php#map'">
                 Ver en Mapa
             </button>
-            <button class="btn-modal-action btn-modal-share">Compartir</button>
-            <button class="btn-modal-action btn-modal-recordarme">Recordarme</button>
+            <button class="btn-modal-action btn-modal-share" onclick="(function(){
+                const shareUrl = window.location.origin + window.location.pathname + '?danzaId=' + ${danza.id} + '#danzas';
+                if (navigator.share) {
+                    navigator.share({
+                        title: '${nombre}',
+                        text: 'Mira esta danza en la Festividad Virgen de la Candelaria 2026',
+                        url: shareUrl
+                    }).catch(console.error);
+                } else {
+                    navigator.clipboard.writeText(shareUrl).then(() => {
+                        alert('¡Enlace copiado al portapapeles!');
+                    }).catch(err => console.error('Error al copiar:', err));
+                }
+            })()">Compartir</button>
         </div>
             `;
 
