@@ -327,48 +327,53 @@
     @media (max-width: 768px) {
       .info-cards-container {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        /* Side by side */
         align-items: center;
+        justify-content: center;
         margin-top: 2vh;
         width: 90%;
-        max-width: 400px;
+        max-width: 500px;
+        gap: 15px;
+        /* Separate them */
+      }
+
+      /* Hide Cobertura card on mobile */
+      .info-card.card-gold {
+        display: none;
       }
 
       .info-card {
         width: 100%;
-        height: 40px;
+        height: 60px;
+        /* Taller touch targets */
         margin: 0;
-        margin-top: -1px;
+        border-radius: 12px !important;
+        /* Independent rounded buttons */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       }
 
-      .info-card:nth-child(1) {
-        border-radius: 30px 30px 0 0;
-      }
-
-      /* Reset grid specific radius for mobile stack */
-      .info-card:nth-child(2) {
-        border-radius: 0;
-      }
-
+      /* Reset specific targeting since we want them identical now */
+      .info-card:nth-child(2),
       .info-card:nth-child(3) {
-        margin-left: 0;
-        border-radius: 0 0 30px 30px;
+        border-radius: 12px !important;
+        margin: 0;
       }
-
-      /* Cleaned up redundant styles */
     }
 
     @media (max-width: 480px) {
       .info-cards-container {
-        flex-direction: column;
+        flex-direction: row;
+        /* Keep side-by-side on small screens too */
         align-items: center;
-        gap: 12px;
+        gap: 10px;
       }
 
       .info-card {
         width: 100%;
-        max-width: 280px;
-        height: 60px;
+        max-width: none;
+        /* Allow them to fill available space */
+        height: 55px;
       }
 
       .card-text {
