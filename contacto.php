@@ -19,6 +19,7 @@ if (file_exists('includes/standard-header.php')) {
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
@@ -39,76 +40,81 @@ if (file_exists('includes/standard-header.php')) {
 <body class="bg-slate-50">
 
     <main class="max-w-5xl mx-auto px-6 py-16">
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
-            <!-- Header Banner -->
-            <div class="bg-gradient-to-r from-purple-900 to-indigo-900 p-12 text-white text-center relative">
-                <div
-                    class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20">
-                </div>
-                <h1 class="text-4xl md:text-5xl font-extrabold mb-4 relative z-10 tracking-tight">Contáctanos</h1>
-                <p class="text-purple-200 text-lg relative z-10 font-medium">Estamos aquí para ayudarte</p>
-            </div>
 
-            <div class="p-8 md:p-16 text-slate-600 text-sm md:text-base">
-
-                <div class="max-w-3xl mx-auto">
-                    <p class="text-center mb-12 text-lg">
-                        ¿Tienes dudas sobre la Festividad de la Virgen de la Candelaria 2026?
-                        <br>Escríbenos o llámanos para más información.
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Teléfonos -->
-                        <div
-                            class="bg-slate-50 p-8 rounded-2xl border border-slate-200 hover:shadow-lg transition-shadow">
-                            <div
-                                class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                                <i data-lucide="phone" class="w-6 h-6 text-yellow-600"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-center mb-6 text-slate-800">Llámanos</h3>
-                            <div class="flex flex-col gap-4 items-center">
-                                <a href="tel:922191501"
-                                    class="flex items-center gap-3 text-lg font-medium hover:text-purple-700 transition-colors">
-                                    <span>922191501</span>
-                                </a>
-                                <a href="tel:974526627"
-                                    class="flex items-center gap-3 text-lg font-medium hover:text-purple-700 transition-colors">
-                                    <span>974526627</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Correos -->
-                        <div
-                            class="bg-slate-50 p-8 rounded-2xl border border-slate-200 hover:shadow-lg transition-shadow">
-                            <div
-                                class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                                <i data-lucide="mail" class="w-6 h-6 text-blue-600"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-center mb-6 text-slate-800">Escríbenos</h3>
-                            <div class="flex flex-col gap-4 items-center">
-                                <a href="mailto:antonyzapana550@gmail.com"
-                                    class="flex items-center gap-3 font-medium hover:text-purple-700 transition-colors break-all">
-                                    <span>antonyzapana550@gmail.com</span>
-                                </a>
-                                <a href="mailto:p.sebastian.bn@gmail.com"
-                                    class="flex items-center gap-3 font-medium hover:text-purple-700 transition-colors break-all">
-                                    <span>p.sebastian.bn@gmail.com</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-16 text-center">
-                        <h3 class="font-bold text-slate-800 mb-4">Horario de Atención</h3>
-                        <p class="text-slate-500">Lunes a Viernes: 9:00 AM - 6:00 PM</p>
-                        <p class="text-slate-500">Sábados: 9:00 AM - 1:00 PM</p>
-                    </div>
-
-                </div>
-
-            </div>
+        <!-- Header Banner -->
+        <div class="mb-12">
+            <h1
+                class="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-800 to-amber-500 mb-2">
+                Contáctanos</h1>
+            <p class="text-slate-500 text-lg">Estamos aquí para ayudarte. Elige el medio que prefieras.</p>
         </div>
+
+
+        <div class="flex flex-col gap-6">
+
+            <!-- Card 1: Ayuda en Línea -->
+            <div
+                class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 flex flex-col md:flex-row items-center md:items-start md:gap-8 hover:shadow-md transition-shadow">
+                <div class="mb-4 md:mb-0">
+                    <div class="w-16 h-16 rounded-full border-2 border-slate-900 flex items-center justify-center">
+                        <i data-lucide="message-circle" class="w-8 h-8 text-slate-900 stroke-[1.5]"></i>
+                    </div>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Ayuda en línea</h3>
+                    <p class="text-slate-500 mb-1">Horario Chatbot : 24/7 (sólo español)</p>
+                    <p class="text-slate-500 mb-4">Horarios de Agentes: Lun a Vie 09:00-18:00 (sólo español)</p>
+                    <a href="#"
+                        onclick="if(window.toggleChat) toggleChat(); else alert('Chat no disponible'); return false;"
+                        class="inline-flex items-center font-medium text-blue-500 hover:text-blue-600 transition-colors">
+                        Chatea ahora <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 2: WhatsApp -->
+            <div
+                class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 flex flex-col md:flex-row items-center md:items-start md:gap-8 hover:shadow-md transition-shadow">
+                <div class="mb-4 md:mb-0">
+                    <div class="w-16 h-16 rounded-full border-2 border-slate-900 flex items-center justify-center">
+                        <!-- Using fa icon for brand consistency closest to image, or lucide phone -->
+                        <i class="fab fa-whatsapp text-3xl text-slate-900"></i>
+                    </div>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">WhatsApp</h3>
+                    <p class="text-slate-500 mb-1">+51 983519979 | Atención en Español | De lunes a viernes de 9 am a 6
+                        pm</p>
+                    <p class="text-slate-500 mb-4">Soporte para descarga de aplicaciones y consultas generales.</p>
+                    <!-- Optional link if they want to click to chat -->
+                    <!-- <a href="https://wa.me/51983519979" target="_blank" class="text-blue-500 hover:text-blue-600 font-medium">Chat en WhatsApp ></a> -->
+                </div>
+            </div>
+
+            <!-- Card 3: Email -->
+            <div
+                class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 flex flex-col md:flex-row items-center md:items-start md:gap-8 hover:shadow-md transition-shadow">
+                <div class="mb-4 md:mb-0">
+                    <div class="w-16 h-16 rounded-full border-2 border-slate-900 flex items-center justify-center">
+                        <i data-lucide="mail" class="w-8 h-8 text-slate-900 stroke-[1.5]"></i>
+                    </div>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Envíanos un email</h3>
+
+                    <a href="mailto:mipuno@gmail.com"
+                        class="inline-flex items-center font-medium text-blue-500 hover:text-blue-600 transition-colors mt-2">
+                        Escríbenos <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-12 text-center text-slate-400 text-sm">
+            <p>&copy; 2026 Festividad Virgen de la Candelaria</p>
+        </div>
+
     </main>
 
     <!-- Global Footer Include (Standard) -->
