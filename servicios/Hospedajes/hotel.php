@@ -272,8 +272,7 @@ $isGuest = !isAuthenticated();
                     </div>
                     <div class="relative z-10 flex flex-col items-center">
                         <img src="../../principal/logoc.png" class="h-16 w-auto mb-2 drop-shadow-md">
-                        <h3 class="text-white font-bold text-lg leading-tight">Federación Regional de Folklore y Cultura de
-                            Puno</h3>
+                        <h3 class="text-white font-bold text-lg leading-tight">MiPuno Candelaria</h3>
                     </div>
                 </div>
 
@@ -500,32 +499,35 @@ $isGuest = !isAuthenticated();
                     </div>
 
                     <!-- Contact & Policies -->
-                    <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <div
+                        class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-xl border border-gray-100">
                         <div id="contact-info" class="hidden">
-                             <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
                                 <i data-lucide="phone-call" class="w-4 h-4 text-candelaria-purple"></i> Contacto
-                             </h4>
-                             <p id="hotel-phone" class="flex items-center gap-2 mb-1.5 ml-1 hidden">
-                                <span class="text-gray-500 w-20">Teléfono:</span> 
+                            </h4>
+                            <p id="hotel-phone" class="flex items-center gap-2 mb-1.5 ml-1 hidden">
+                                <span class="text-gray-500 w-20">Teléfono:</span>
                                 <span class="font-medium text-gray-800"></span>
-                             </p>
-                             <p id="hotel-web" class="flex items-center gap-2 ml-1 hidden">
-                                <span class="text-gray-500 w-20">Web:</span> 
-                                <a href="#" target="_blank" class="text-candelaria-purple font-medium hover:underline truncate max-w-[150px]">Visitar sitio</a>
-                             </p>
+                            </p>
+                            <p id="hotel-web" class="flex items-center gap-2 ml-1 hidden">
+                                <span class="text-gray-500 w-20">Web:</span>
+                                <a href="#" target="_blank"
+                                    class="text-candelaria-purple font-medium hover:underline truncate max-w-[150px]">Visitar
+                                    sitio</a>
+                            </p>
                         </div>
                         <div id="policies-info" class="hidden">
-                             <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
                                 <i data-lucide="clock" class="w-4 h-4 text-candelaria-purple"></i> Horarios
-                             </h4>
-                             <p id="hotel-checkin" class="flex items-center gap-2 mb-1.5 ml-1 hidden">
-                                <span class="text-gray-500 w-24">Check-in:</span> 
+                            </h4>
+                            <p id="hotel-checkin" class="flex items-center gap-2 mb-1.5 ml-1 hidden">
+                                <span class="text-gray-500 w-24">Check-in:</span>
                                 <span class="font-medium text-gray-800"></span>
-                             </p>
-                             <p id="hotel-checkout" class="flex items-center gap-2 ml-1 hidden">
-                                <span class="text-gray-500 w-24">Check-out:</span> 
+                            </p>
+                            <p id="hotel-checkout" class="flex items-center gap-2 ml-1 hidden">
+                                <span class="text-gray-500 w-24">Check-out:</span>
                                 <span class="font-medium text-gray-800"></span>
-                             </p>
+                            </p>
                         </div>
                     </div>
 
@@ -786,7 +788,7 @@ $isGuest = !isAuthenticated();
         <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
 
         <script>
-                // St                    ate
+            // St                    ate
             let hotel = null;
             let rooms = [];
             let selectedRoom = null;
@@ -1072,7 +1074,7 @@ $isGuest = !isAuthenticated();
                 // Contact & Policies
                 const contactDiv = document.getElementById('contact-info');
                 const policiesDiv = document.getElementById('policies-info');
-                
+
                 let hasContact = false;
                 let hasPolicies = false;
 

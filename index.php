@@ -936,19 +936,29 @@
       <!-- Info Cards Section -->
       <div class="info-cards-container">
         <!-- Card 1: Gold -->
-        <a href="#" class="info-card card-gold">
+        <div class="info-card card-gold" style="cursor: default;">
+          <style>
+            .info-card.card-gold:hover {
+              transform: none !important;
+              box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3) !important;
+            }
+
+            .info-card.card-gold .card-glow {
+              opacity: 0.6 !important;
+            }
+          </style>
           <div class="card-glow"></div>
           <span class="card-text">COBERTURA EN TIEMPO REAL: SABADO 31 DE ENERO </span>
-        </a>
+        </div>
 
         <!-- Card 2: Purple -->
-        <a href="#" class="info-card card-purple">
+        <a href="./live-platform/index.php#scores" class="info-card card-purple">
           <div class="card-glow"></div>
           <span class="card-text">Puntajes</span>
         </a>
 
         <!-- Card 3: Dark Purple -->
-        <a href="#" class="info-card card-dark">
+        <a href="./live-platform/index.php#map" class="info-card card-dark">
           <div class="card-glow"></div>
           <span class="card-text">Recorrido</span>
         </a>

@@ -92,8 +92,7 @@ $mainImg = '../' . $baseImg;
                     </div>
                     <div class="relative z-10 flex flex-col items-center">
                         <img src="../principal/logoc.png" class="h-16 w-auto mb-2 drop-shadow-md">
-                        <h3 class="text-white font-bold text-lg leading-tight">Federación Regional de Folklore y Cultura de
-                            Puno</h3>
+                        <h3 class="text-white font-bold text-lg leading-tight">MiPuno Candelaria</h3>
                     </div>
                 </div>
 
@@ -379,92 +378,92 @@ $mainImg = '../' . $baseImg;
     ?>
 
     <script>
-    // Inline Login Logic
-    document.addEventListener('DOMContentLoaded', () => {
-        const inlineForm = document.getElementById('inline-login-form');
-        if(inlineForm) {
-            inlineForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('inline-email').value;
-                const password = document.getElementById('inline-password').value;
-                
-                if(!email || !password) return;
-                
-                try {
-                    // Reuse Supabase Logic
-                    if (typeof SupabaseCore === 'undefined') {
-                        console.error('SupabaseCore missing');
-                        return;
-                    }
-                    
-                    const { data, error } = await SupabaseCore.signInWithEmail(email, password);
-                    
-                    if(error) {
-                        alert('Error: ' + error.message); // Simple alert for this overlay context
-                        return;
-                    }
-                    
-                    if(data.user) {
-                        // Success - Reload page to show content
-                        location.reload();
-                    }
-                } catch(err) {
-                    console.error('Inline Login Error', err);
-                    alert('Error al iniciar sesión');
-                }
-            });
-        }
-    });
+        // Inline Login Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const inlineForm = document.getElementById('inline-login-form');
+            if (inlineForm) {
+                inlineForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const email = document.getElementById('inline-email').value;
+                    const password = document.getElementById('inline-password').value;
 
-    // Custom Social Login for Product Page (Preserves ID parameter)
-    window.handleProductSocialLogin = async function(provider) {
-        console.group("🔥 [DEBUG] handleProductSocialLogin");
-        console.log("Provider:", provider);
-        
-        if (typeof SupabaseCore === 'undefined') {
-             console.error("SupabaseCore NOT defined");
-             alert('Error: Sistema de autenticación no cargado.');
-             console.groupEnd();
-             return;
-        }
+                    if (!email || !password) return;
 
-        try {
-            // Explicitly pass window.location.href to preserve ?id=10
-            const currentUrl = window.location.href;
-            console.log("📍 Current URL (to use as redirect):", currentUrl);
-            
-            if (provider === 'google') {
-                console.log("🚀 Calling signInWithGoogle with redirect:", currentUrl);
-                await SupabaseCore.signInWithGoogle(currentUrl);
-            } else if (provider === 'facebook') {
-                console.log("🚀 Calling signInWithFacebook with redirect:", currentUrl);
-                await SupabaseCore.signInWithFacebook(currentUrl);
+                    try {
+                        // Reuse Supabase Logic
+                        if (typeof SupabaseCore === 'undefined') {
+                            console.error('SupabaseCore missing');
+                            return;
+                        }
+
+                        const { data, error } = await SupabaseCore.signInWithEmail(email, password);
+
+                        if (error) {
+                            alert('Error: ' + error.message); // Simple alert for this overlay context
+                            return;
+                        }
+
+                        if (data.user) {
+                            // Success - Reload page to show content
+                            location.reload();
+                        }
+                    } catch (err) {
+                        console.error('Inline Login Error', err);
+                        alert('Error al iniciar sesión');
+                    }
+                });
             }
-        } catch (e) {
-            console.error('❌ Social Login Error:', e);
-            alert('Error al conectar con ' + provider);
-        }
-        console.groupEnd();
-    }
+        });
 
-    // Auto-Reload on Social Login Return
-    // When coming back from Google/Facebook, the hash '#access_token=...' is present.
-    // SupabaseCore processes it and fires 'supabase-auth-change'.
-    // We catch it and reload to let PHP render the protected content.
-    window.addEventListener('supabase-auth-change', (e) => {
-        // Only act if we are currently in "Guest Mode" (Overlay is present)
-        // This prevents infinite loops for already logged-in users
-        const loginOverlay = document.querySelector('.login-overlay-backdrop');
-        
-        console.log("🔄 [PRODUCT] Auth Change Event:", e.detail);
-        
-        if (loginOverlay && e.detail && e.detail.event === 'SIGNED_IN' && e.detail.user) {
-            console.log("✅ [PRODUCT] User Signed In detected & Overlay Present. Reloading to unlock content...");
-            window.location.reload();
-        } else {
-             console.log("ℹ️ [PRODUCT] Auth change ignored (Overlay not present or event not SIGNED_IN)");
+        // Custom Social Login for Product Page (Preserves ID parameter)
+        window.handleProductSocialLogin = async function (provider) {
+            console.group("🔥 [DEBUG] handleProductSocialLogin");
+            console.log("Provider:", provider);
+
+            if (typeof SupabaseCore === 'undefined') {
+                console.error("SupabaseCore NOT defined");
+                alert('Error: Sistema de autenticación no cargado.');
+                console.groupEnd();
+                return;
+            }
+
+            try {
+                // Explicitly pass window.location.href to preserve ?id=10
+                const currentUrl = window.location.href;
+                console.log("📍 Current URL (to use as redirect):", currentUrl);
+
+                if (provider === 'google') {
+                    console.log("🚀 Calling signInWithGoogle with redirect:", currentUrl);
+                    await SupabaseCore.signInWithGoogle(currentUrl);
+                } else if (provider === 'facebook') {
+                    console.log("🚀 Calling signInWithFacebook with redirect:", currentUrl);
+                    await SupabaseCore.signInWithFacebook(currentUrl);
+                }
+            } catch (e) {
+                console.error('❌ Social Login Error:', e);
+                alert('Error al conectar con ' + provider);
+            }
+            console.groupEnd();
         }
-    });
+
+        // Auto-Reload on Social Login Return
+        // When coming back from Google/Facebook, the hash '#access_token=...' is present.
+        // SupabaseCore processes it and fires 'supabase-auth-change'.
+        // We catch it and reload to let PHP render the protected content.
+        window.addEventListener('supabase-auth-change', (e) => {
+            // Only act if we are currently in "Guest Mode" (Overlay is present)
+            // This prevents infinite loops for already logged-in users
+            const loginOverlay = document.querySelector('.login-overlay-backdrop');
+
+            console.log("🔄 [PRODUCT] Auth Change Event:", e.detail);
+
+            if (loginOverlay && e.detail && e.detail.event === 'SIGNED_IN' && e.detail.user) {
+                console.log("✅ [PRODUCT] User Signed In detected & Overlay Present. Reloading to unlock content...");
+                window.location.reload();
+            } else {
+                console.log("ℹ️ [PRODUCT] Auth change ignored (Overlay not present or event not SIGNED_IN)");
+            }
+        });
     </script>
 </body>
 
