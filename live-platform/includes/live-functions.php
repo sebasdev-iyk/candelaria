@@ -71,10 +71,21 @@ function renderEmbed($stream)
         case 'facebook':
             $url = $id;
             if (strpos($id, 'http') === FALSE) {
-                $url = "https://www.facebook.com/watch/?v={$id}";
+                // Determine if it's a numeric ID or a path
+                if (is_numeric($id)) {
+                    $url = "https://www.facebook.com/watch/?v={$id}";
+                } else {
+                    // Assume it's a path like 'User/videos/123' if they pasted a partial part
+                    $url = "https://www.facebook.com/{$id}";
+                }
             }
+
+            // Normalize specific subdomains to www for better embed compatibility
+            $url = str_replace(['https://m.facebook.com', 'https://web.facebook.com'], 'https://www.facebook.com', $url);
+
             $encodedUrl = urlencode($url);
-            return "<iframe class='w-full h-full' src='https://www.facebook.com/plugins/video.php?href={$encodedUrl}&show_text=false&t=0' frameborder='0' allowfullscreen='true' allow='autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share'></iframe>";
+            // Added width=500 to href as sometimes required by plugin, though usually optional. Kept simple.
+            return "<iframe class='w-full h-full' src='https://www.facebook.com/plugins/video.php?href={$encodedUrl}&show_text=false&t=0' style='border:none;overflow:hidden' scrolling='no' frameborder='0' allowfullscreen='true' allow='autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share'></iframe>";
 
         case 'tiktok':
             // Support full URL (extract ID) or raw ID
