@@ -343,7 +343,18 @@
                 }
             } else {
                 if (!image) console.log(`[DEBUG ${type}] No image found for item ${item.id} (${item.nombre})`);
-                else console.log(`[DEBUG ${type}] External or Base64 image:`, image.substring(0, 50) + '...');
+                else {
+                    // Check for Broken Google Photos Proxy Links
+                    if (image.includes('gps-proxy')) {
+                        console.warn(`[DEBUG ${type}] POTENTIAL BROKEN PROXY LINK DETECTED:`, image);
+                        // Attempt to sanitize or flag
+                        // Google Proxy links often fail due to Referrer 403.
+                        // We will try to add referrerpolicy="no-referrer" to the IMG tag in the HTML generation,
+                        // but here we can't change the tag attributes easily for just this item without changing the template.
+                        // However, we can try to rewrite the URL if it's a known pattern, but gps-proxy is complex.
+                    }
+                    console.log(`[DEBUG ${type}] External or Base64 image:`, image.substring(0, 50) + '...');
+                }
             }
 
             let features = [];
@@ -488,7 +499,7 @@
                     const popupContent = `
                         <div class="custom-popup bg-white">
                             <div class="h-24 w-full bg-gray-200 relative">
-                                <img src="${item.image}" onerror="handleImageError(this, 'Popup', '${item.id}')" class="w-full h-full object-cover">
+                                <img src="${item.image}" referrerpolicy="no-referrer" onerror="handleImageError(this, 'Popup', '${item.id}')" class="w-full h-full object-cover">
                                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
                                     <h4 class="text-white font-bold text-sm truncate">${item.name}</h4>
                                 </div>
@@ -591,7 +602,7 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row overflow-hidden group">
                     <!-- Imagen -->
                     <div class="sm:w-48 h-48 sm:h-auto relative shrink-0 overflow-hidden cursor-pointer" onclick="openModal(${item.id}, '${state.activeTab}')">
-                        <img src="${item.image}" onerror="handleImageError(this, 'Card', '${item.id}')" alt="${item.name}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <img src="${item.image}" referrerpolicy="no-referrer" onerror="handleImageError(this, 'Card', '${item.id}')" alt="${item.name}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md text-xs font-bold flex items-center shadow-sm">
                             <i data-lucide="star" class="w-3 h-3 text-yellow-500 mr-1 fill-yellow-500"></i>
                             ${item.rating}
@@ -703,7 +714,7 @@
             content.innerHTML = `
                 <!-- Header Imagen -->
                 <div class="relative h-64 w-full">
-                    <img src="${item.image}" onerror="handleImageError(this, 'Modal', '${item.id}')" class="w-full h-full object-cover">
+                    <img src="${item.image}" referrerpolicy="no-referrer" onerror="handleImageError(this, 'Modal', '${item.id}')" class="w-full h-full object-cover">
                     <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/50 hover:bg-white text-gray-800 rounded-full p-2 backdrop-blur-md transition-all">
                         <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
