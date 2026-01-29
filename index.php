@@ -108,7 +108,8 @@
       text-align: center;
       gap: 3vh;
       padding-top: 2vh;
-      padding-bottom: 2vh;
+      padding-bottom: 15vh;
+      /* Increased to prevent overlap with scroll indicator */
       z-index: 1;
       box-sizing: border-box;
       overflow: hidden;
@@ -211,230 +212,290 @@
       margin-bottom: 15px;
     }
 
+    /* Info Cards Styles */
+    .info-cards-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin: 4vh auto 0;
+      width: 100%;
+      max-width: 600px;
+      /* Limit width for better aesthetics */
+    }
+
+    .info-card {
+      position: relative;
+      width: 100%;
+      height: 40px;
+      /* Reducing height to make it flatter */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+
+    /* Grid Layout Specifics */
+
+    /* Card 1: Gold - Spans full top */
+    .info-card:nth-child(1) {
+      grid-column: 1 / -1;
+      border-radius: 30px 30px 0 0;
+      z-index: 2;
+      /* Ensure border overlap looks right */
+    }
+
+    /* Card 2: Purple - Bottom Left */
+    .info-card:nth-child(2) {
+      border-radius: 0 0 0 30px;
+      margin-top: -1px;
+      /* Overlap with top card */
+    }
+
+    /* Card 3: Dark - Bottom Right */
+    .info-card:nth-child(3) {
+      border-radius: 0 0 30px 0;
+      margin-top: -1px;
+      /* Overlap with top card */
+      margin-left: -1px;
+      /* Overlap with left card */
+    }
+
+    .info-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-text {
+      position: relative;
+      z-index: 2;
+      color: white;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-glow {
+      position: absolute;
+      inset: 0;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+
+    .info-card:hover .card-glow {
+      opacity: 0.8;
+    }
+
+    /* Card Themes */
+    .card-gold {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.3));
+      border-color: rgba(251, 191, 36, 0.4);
+    }
+
+    .card-gold .card-glow {
+      background: radial-gradient(circle at center, rgba(251, 191, 36, 0.4) 0%, transparent 70%);
+    }
+
+    .card-purple {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(109, 40, 217, 0.3));
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+
+    .card-purple .card-glow {
+      background: radial-gradient(circle at center, rgba(139, 92, 246, 0.4) 0%, transparent 70%);
+    }
+
+    .card-dark {
+      background: linear-gradient(135deg, rgba(76, 29, 149, 0.3), rgba(67, 56, 202, 0.4));
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .card-dark .card-glow {
+      background: radial-gradient(circle at center, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+    }
+
+    /* Responsive adjustments for info cards */
+    @media (max-width: 768px) {
+      .info-cards-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 2vh;
+        width: 90%;
+        max-width: 400px;
+      }
+
+      .info-card {
+        width: 100%;
+        height: 40px;
+        margin: 0;
+        margin-top: -1px;
+      }
+
+      .info-card:nth-child(1) {
+        border-radius: 30px 30px 0 0;
+      }
+
+      /* Reset grid specific radius for mobile stack */
+      .info-card:nth-child(2) {
+        border-radius: 0;
+      }
+
+      .info-card:nth-child(3) {
+        margin-left: 0;
+        border-radius: 0 0 30px 30px;
+      }
+
+      /* Cleaned up redundant styles */
+    }
+
+    @media (max-width: 480px) {
+      .info-cards-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .info-card {
+        width: 100%;
+        max-width: 280px;
+        height: 60px;
+      }
+
+      .card-text {
+        font-size: 0.9rem;
+        flex-direction: row;
+      }
+
+      .card-text br {
+        display: none;
+      }
+
+      .card-text::after {
+        content: " ";
+      }
+
+
+      /* Scroll Indicator - Pill Style */
+    }
+
     .scroll-indicator {
       position: absolute;
-      bottom: 40px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 15px;
       cursor: pointer;
       z-index: 100;
       transition: opacity 0.3s ease;
     }
 
     .scroll-indicator:hover {
-      opacity: 0.92;
+      opacity: 0.9;
     }
 
-    /* Premium metallic circle */
-    .scroll-circle {
-      width: 72px;
-      height: 72px;
-      background: radial-gradient(circle at 30% 30%,
-          rgba(255, 255, 255, 0.15) 0%,
-          rgba(0, 0, 0, 0.3) 70%);
-      border: 1.5px solid rgba(212, 175, 110, 0.45);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.25),
-        inset 0 2px 8px rgba(255, 255, 255, 0.12),
-        0 0 0 1px rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(4px);
-      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .scroll-circle::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg,
-          rgba(230, 219, 180, 0.08) 0%,
-          rgba(180, 150, 80, 0.12) 100%);
-      border-radius: 50%;
-    }
-
-    .scroll-indicator:hover .scroll-circle {
-      transform: translateX(-50%) scale(1.07) translateY(-3px);
-      box-shadow:
-        0 12px 35px rgba(0, 0, 0, 0.32),
-        inset 0 3px 12px rgba(255, 255, 255, 0.18),
-        0 0 0 2px rgba(212, 175, 110, 0.6);
-      border-color: rgba(212, 175, 110, 0.7);
-    }
-
-    /* Minimalist text label */
+    /* Pill Text Container - Restored Pill Style */
     .scroll-text {
-      background: rgba(15, 15, 20, 0.78);
-      color: rgba(230, 219, 180, 0.92);
-      padding: 8px 28px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 1.2px;
+      background: rgba(15, 23, 42, 0.85);
+      /* Dark background */
+      color: #f8fafc;
+      /* White text */
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(2px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      transition: all 0.35s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+      text-shadow: none;
+      /* Pill has background, no heavy shadow needed */
     }
 
     .scroll-indicator:hover .scroll-text {
-      background: rgba(10, 10, 15, 0.92);
-      transform: translateY(-3px);
-      box-shadow:
-        0 6px 20px rgba(0, 0, 0, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      color: rgba(230, 219, 180, 1);
+      background: rgba(15, 23, 42, 0.95);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      color: #fbbf24;
     }
 
-    /* Elegant arrow with subtle animation */
+    /* Simple Arrow Below */
     .scroll-arrow {
       position: relative;
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
+      margin-top: 5px;
       display: flex;
-      align-items: center;
       justify-content: center;
+      /* No animation on container, animations are on children */
     }
 
-    .scroll-arrow::before {
-      content: '';
+    .main-arrow {
+      position: relative;
+      z-index: 2;
+      color: white;
+      font-size: 1.5rem;
+      animation: bounceArrow 2s infinite ease-in-out;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+    }
+
+    .ghost-arrow {
       position: absolute;
-      width: 2px;
-      height: 18px;
-      background: linear-gradient(to bottom,
-          transparent,
-          rgba(230, 219, 180, 0.95));
-      border-radius: 3px;
-      animation: elegantBounce 2.2s infinite ease-in-out;
+      top: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #fbbf24;
+      /* Gold */
+      font-size: 1.5rem;
+      z-index: 1;
+      opacity: 0;
+      animation: ghostArrow 2s infinite ease-in-out;
     }
 
-    .scroll-arrow::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 6px solid rgba(230, 219, 180, 0.95);
+    /* Remove old complex styles */
+    .scroll-circle,
+    .scroll-line {
+      display: none;
     }
 
-    @keyframes elegantBounce {
+    @keyframes bounceArrow {
 
       0%,
       100% {
         transform: translateY(0);
-        opacity: 0.7;
       }
 
       50% {
-        transform: translateY(8px);
-        opacity: 1;
+        transform: translateY(10px);
       }
     }
 
-    /* Botones de Acción (legacy) */
-    .button-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 25px;
-      margin-top: 50px;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #4c1d95, #7c3aed);
-      color: white;
-      font-weight: 700;
-      font-size: 1.1rem;
-      padding: 15px 35px;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 6px 20px rgba(76, 29, 149, 0.4);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(76, 29, 149, 0.6);
-      background: linear-gradient(135deg, #5b21b6, #8b5cf6);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      color: white;
-      padding: 15px 35px;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-3px);
-      border-color: rgba(251, 191, 36, 0.5);
-    }
-
-    /* Scroll Indicator */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      z-index: 10;
-      animation: bounce 2s infinite;
-    }
-
-    .scroll-text {
-      font-size: 0.9rem;
-      color: #cbd5e1;
-      letter-spacing: 1px;
-    }
-
-    .scroll-line {
-      width: 2px;
-      height: 50px;
-      background: linear-gradient(to bottom, transparent, #fbbf24, transparent);
-    }
-
-    @keyframes bounce {
+    @keyframes ghostArrow {
 
       0%,
       100% {
-        transform: translateX(-50%) translateY(0);
+        opacity: 0;
+        transform: translateY(0);
       }
 
       50% {
-        transform: translateX(-50%) translateY(10px);
+        opacity: 0.6;
+        transform: translateY(18px);
       }
     }
 
@@ -871,14 +932,36 @@
       <div class="countdown" id="countdown">
         <!-- Se llenará con JavaScript -->
       </div>
+
+      <!-- Info Cards Section -->
+      <div class="info-cards-container">
+        <!-- Card 1: Gold -->
+        <a href="#" class="info-card card-gold">
+          <div class="card-glow"></div>
+          <span class="card-text">COBERTURA EN TIEMPO REAL: SABADO 31 DE ENERO </span>
+        </a>
+
+        <!-- Card 2: Purple -->
+        <a href="#" class="info-card card-purple">
+          <div class="card-glow"></div>
+          <span class="card-text">Puntajes</span>
+        </a>
+
+        <!-- Card 3: Dark Purple -->
+        <a href="#" class="info-card card-dark">
+          <div class="card-glow"></div>
+          <span class="card-text">Recorrido</span>
+        </a>
+      </div>
     </div>
 
     <!-- Indicador de Scroll Animado (hijo directo de hero para layout space-between) -->
     <div class="scroll-indicator"
       onclick="document.getElementById('danzas-section').scrollIntoView({behavior: 'smooth'})">
-      <span class="scroll-text">Desliza para conocer las danzas</span>
+      <span class="scroll-text">DESLIZA PARA CONOCER LAS DANZAS</span>
       <div class="scroll-arrow">
-        <i class="fas fa-chevron-down"></i>
+        <i class="fas fa-chevron-down main-arrow"></i>
+        <i class="fas fa-chevron-down ghost-arrow"></i>
       </div>
     </div>
   </section>
