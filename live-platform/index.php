@@ -160,10 +160,11 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: sticky;
-            top: 100px; /* Adjust based on header height 80px + margin */
+            top: 76px;
+            /* Adjust based on header height 76px */
             z-index: 30;
         }
-        
+
         .live-nav-item {
             cursor: pointer;
             padding: 0.75rem 1.5rem;
@@ -175,12 +176,12 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
             align-items: center;
             gap: 0.5rem;
         }
-        
+
         .live-nav-item:hover {
             color: #fff;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
         }
-        
+
         .live-nav-item.active {
             color: #fbbf24;
             border-bottom-color: #fbbf24;
@@ -193,7 +194,7 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
     $activePage = 'live';
     include '../includes/standard-header.php';
     ?>
-    
+
     <!-- Secondary Navigation Bar (Platform Specific) -->
     <div class="live-nav-bar shadow-md">
         <div class="container mx-auto px-4">
@@ -274,11 +275,7 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
                                 </div>
 
                                 <div class="flex gap-3">
-                                    <button onclick="toggleFollow(this)"
-                                        class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 group">
-                                        <i class="far fa-heart group-[:hover]:hidden"></i>
-                                        <i class="fas fa-heart hidden group-[:hover]:inline"></i> Seguir
-                                    </button>
+
                                     <button
                                         class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
                                         <i class="fas fa-share-alt"></i>
@@ -428,7 +425,7 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
 
     <!-- Auth Modal and Dropdown (MUST be before live script) -->
     <?= getAuthModalHTML() ?>
-    <?= getAuthJS('../') ?>
+    <?= getAuthJS() ?>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
