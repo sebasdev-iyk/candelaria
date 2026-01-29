@@ -66,7 +66,12 @@ function renderEmbed($stream)
 
     switch ($platform) {
         case 'youtube':
-            return "<iframe class='w-full h-full' src='https://www.youtube.com/embed/{$id}?autoplay=1&mute=1&controls=1&enablejsapi=1' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
+            // Extract ID if a full URL is provided
+            $videoId = $id;
+            if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $id, $match)) {
+                $videoId = $match[1];
+            }
+            return "<iframe class='w-full h-full' src='https://www.youtube.com/embed/{$videoId}?autoplay=1&mute=1&controls=1&enablejsapi=1' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
 
         case 'facebook':
             $url = $id;
