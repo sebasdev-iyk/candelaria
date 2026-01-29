@@ -403,21 +403,22 @@ $isGuest = !isAuthenticated();
                 </div>
             </div>
 
-            <!-- Mobile Menu (Hidden by default) -->
-            <div id="mobile-menu"
-                class="hidden md:hidden bg-candelaria-purple absolute top-full left-0 w-full shadow-lg border-t border-purple-800 z-30 transition-all duration-300">
-                <nav class="flex flex-col p-6 space-y-4">
-                    <a href="../../servicios/index.php"
-                        class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Servicios</a>
-                    <a href="../../cultura/cultura.php"
-                        class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
-                    <a href="../../horarios_y_danzas/index.php"
-                        class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Festividad</a>
-                    <a href="../../noticias/index.php"
-                        class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Noticias</a>
-                </nav>
-            </div>
         </header>
+
+         <!-- Mobile Menu (Standardized & Moved outside header for fixed positioning) -->
+         <div id="mobile-menu"
+            class="hidden md:hidden fixed top-[80px] left-0 w-full h-[calc(100vh-80px)] bg-[#2e1065] shadow-lg border-t border-purple-800 z-[1200] overflow-y-auto transition-all duration-300">
+            <nav class="flex flex-col p-6 space-y-4">
+                <a href="../../servicios/index.php"
+                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Servicios</a>
+                <a href="../../cultura/cultura.php"
+                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Cultura</a>
+                <a href="../../horarios_y_danzas/index.php"
+                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Festividad</a>
+                <a href="../../noticias/index.php"
+                    class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2">Noticias</a>
+            </nav>
+        </div>
 
         <!-- Loading State -->
         <div id="loading-state" class="max-w-7xl mx-auto px-4 py-12">
