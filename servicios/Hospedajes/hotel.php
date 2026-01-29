@@ -1776,6 +1776,16 @@ $isGuest = !isAuthenticated();
     <script>
         // Inline Login Logic
         document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Logic
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
             const inlineForm = document.getElementById('inline-login-form');
             if (inlineForm) {
                 inlineForm.addEventListener('submit', async (e) => {
