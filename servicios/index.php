@@ -309,25 +309,26 @@
             console.log(`[DEBUG ${type}] Raw image from API:`, rawImage);
 
             // Fix image paths - handle multiple scenarios
+            // DEEP DEBUGGING: Log logic path
             if (image && !image.startsWith('http') && !image.startsWith('data:')) {
-                // If it starts with / it's already an absolute path
+                const original = image;
                 if (image.startsWith('/')) {
-                    // Handle /candelaria-admin/uploads/ -> might need to access differently
-                    if (image.includes('/candelaria-admin/uploads/')) {
-                        console.warn(`[DEBUG ${type}] Image is in admin folder, may not be accessible:`, image);
+                    // Logic: Absolute path (e.g. /candelaria/assets/...)
+                    console.log(`[DEBUG ${type}] Absolute path detected:`, image);
+                    // Check if it looks like a valid asset path
+                    if (!image.includes('/assets/')) {
+                        console.warn(`[DEBUG ${type}] Suspicious absolute path (no assets folder?):`, image);
                     }
-                    // Already absolute, leave as is
                 } else if (image.startsWith('assets/')) {
-                    // Relative path like assets/uploads/...
                     image = '/candelaria/' + image;
+                    console.log(`[DEBUG ${type}] Relative assets path fixed: ${original} -> ${image}`);
                 } else {
-                    // Other relative paths
                     image = '/candelaria/assets/uploads/' + image;
+                    console.log(`[DEBUG ${type}] Filename only fixed: ${original} -> ${image}`);
                 }
-            }
-
-            if (rawImage !== image) {
-                console.log(`[DEBUG ${type}] Image URL fixed: "${rawImage}" -> "${image}"`);
+            } else {
+                if (!image) console.log(`[DEBUG ${type}] No image found for item ${item.id} (${item.nombre})`);
+                else console.log(`[DEBUG ${type}] External or Base64 image:`, image.substring(0, 50) + '...');
             }
 
             let features = [];
