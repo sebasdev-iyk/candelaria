@@ -293,6 +293,21 @@
             info: []
         };
 
+        // --------------------------------------------------------
+        // DEBUGGING: Visual & Console Logging for Images
+        // --------------------------------------------------------
+        window.handleImageError = function (img, context, id) {
+            console.error(`[IMG FAIL] ${context} (Item #${id}):`, img.src);
+            img.style.border = '4px solid red';
+            img.style.opacity = '0.7';
+            if (img.parentNode) {
+                const debugTag = document.createElement('div');
+                debugTag.innerText = `ERR #${id}`;
+                debugTag.className = 'absolute top-0 left-0 bg-red-600 text-white text-xs px-1 z-50 font-bold shadow-md';
+                img.parentNode.appendChild(debugTag);
+            }
+        };
+
         // Function to map DB attributes to Frontend model
         function mapItem(item, type) {
             let image = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNDAwIDMwMCI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZWRlZGVkIiAvPgo8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9ImFyaWFsIiBmb250LXNpemU9IjIwIiBmaWxsPSIjOTk5OTk5Ij5SinZDbwogSW1hZ2U8L3RleHQ+Cjwvc3ZnPg==';;
@@ -473,7 +488,7 @@
                     const popupContent = `
                         <div class="custom-popup bg-white">
                             <div class="h-24 w-full bg-gray-200 relative">
-                                <img src="${item.image}" class="w-full h-full object-cover">
+                                <img src="${item.image}" onerror="handleImageError(this, 'Popup', '${item.id}')" class="w-full h-full object-cover">
                                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
                                     <h4 class="text-white font-bold text-sm truncate">${item.name}</h4>
                                 </div>
@@ -576,7 +591,7 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row overflow-hidden group">
                     <!-- Imagen -->
                     <div class="sm:w-48 h-48 sm:h-auto relative shrink-0 overflow-hidden cursor-pointer" onclick="openModal(${item.id}, '${state.activeTab}')">
-                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <img src="${item.image}" onerror="handleImageError(this, 'Card', '${item.id}')" alt="${item.name}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md text-xs font-bold flex items-center shadow-sm">
                             <i data-lucide="star" class="w-3 h-3 text-yellow-500 mr-1 fill-yellow-500"></i>
                             ${item.rating}
@@ -688,7 +703,7 @@
             content.innerHTML = `
                 <!-- Header Imagen -->
                 <div class="relative h-64 w-full">
-                    <img src="${item.image}" class="w-full h-full object-cover">
+                    <img src="${item.image}" onerror="handleImageError(this, 'Modal', '${item.id}')" class="w-full h-full object-cover">
                     <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/50 hover:bg-white text-gray-800 rounded-full p-2 backdrop-blur-md transition-all">
                         <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
