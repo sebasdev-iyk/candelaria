@@ -381,10 +381,15 @@
         left: 0;
         right: 0;
         bottom: 0;
+        top: 0;
+        /* Ensure it starts from top */
         width: 100%;
-        height: 100vh;
-        max-height: 100vh;
+        height: 100dvh;
+        /* Use dynamic viewport height */
+        max-height: none;
         border-radius: 0;
+        z-index: 2147483647;
+        /* Ensure it stays on top */
     }
 
     .candelaria-bot-trigger {
