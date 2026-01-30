@@ -1071,7 +1071,7 @@
                 const data = await response.json();
                 console.log('[LOAD DEBUG] Raw data received:', data.length, 'items');
                 console.log('[LOAD DEBUG] First item:', data[0]);
-                
+
                 RAM_DANZAS = data;
                 danzas = RAM_DANZAS; // Sync global for modal
                 console.timeEnd("🚀 Descarga Turbo Horarios");
@@ -1094,11 +1094,11 @@
         function setDanzaFilter(filter) {
             currentDanzaFilter = filter;
             currentDanzaPage = 1;
-            
+
             // Update button states
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`filter-${filter}`).classList.add('active');
-            
+
             filterAndRenderDanzas();
             lucide.createIcons();
         }
@@ -1109,22 +1109,22 @@
                 console.warn('[FILTER DEBUG] RAM_DANZAS is empty, cannot filter yet');
                 return;
             }
-            
+
             let results = RAM_DANZAS;
 
             // Check if there's a danzaId parameter in the URL
             const urlParams = new URLSearchParams(window.location.search);
             const danzaIdParam = urlParams.get('danzaId');
-            
+
             console.log('[FILTER DEBUG] RAM_DANZAS length:', RAM_DANZAS.length);
             console.log('[FILTER DEBUG] danzaIdParam:', danzaIdParam);
-            
+
             if (danzaIdParam) {
                 // Filter to show only the specific danza
                 const targetId = parseInt(danzaIdParam, 10);
                 console.log('[FILTER DEBUG] Looking for ID:', targetId, 'type:', typeof targetId);
-                console.log('[FILTER DEBUG] Sample IDs from RAM:', RAM_DANZAS.slice(0, 5).map(d => ({id: d.id, type: typeof d.id, conjunto: d.conjunto})));
-                
+                console.log('[FILTER DEBUG] Sample IDs from RAM:', RAM_DANZAS.slice(0, 5).map(d => ({ id: d.id, type: typeof d.id, conjunto: d.conjunto })));
+
                 // Use == instead of === to allow type coercion
                 results = results.filter(d => d.id == targetId);
                 console.log('[FILTER DEBUG] Results after filtering by ID:', results.length);
@@ -1147,7 +1147,7 @@
                         return cat.includes('luces'); // Matches "Luces Parada"
                     });
                 }
-                
+
                 // Apply search filter
                 if (currentDanzaSearch && currentDanzaSearch.trim() !== '') {
                     const q = currentDanzaSearch.toLowerCase();
@@ -1334,29 +1334,29 @@
             // Detectar parámetro danzaId PRIMERO
             const urlParams = new URLSearchParams(window.location.search);
             const danzaId = urlParams.get('danzaId');
-            
+
             console.log('[INIT] danzaId from URL:', danzaId);
-            
+
             // Verificar si hay una pestaña específica en la URL (hash)
             const hash = window.location.hash.substring(1);
-            
+
             // Si hay danzaId, forzar la pestaña 'danzas'
             if (danzaId) {
                 console.log('[INIT] Setting active tab to danzas and waiting for data...');
                 setActiveTab('danzas');
-                
+
                 // Esperar a que las danzas se carguen y luego abrir el modal
                 let attempts = 0;
                 const maxAttempts = 25; // 5 segundos (25 * 200ms)
                 const checkAndOpenModal = setInterval(() => {
                     attempts++;
                     console.log(`[INIT] Attempt ${attempts}: RAM_DANZAS length =`, RAM_DANZAS ? RAM_DANZAS.length : 0);
-                    
+
                     if (RAM_DANZAS && RAM_DANZAS.length > 0) {
                         clearInterval(checkAndOpenModal);
                         const id = parseInt(danzaId, 10);
                         console.log('[INIT] Data loaded! Opening modal for ID:', id);
-                        
+
                         // Wait a bit more to ensure DOM is ready
                         setTimeout(() => {
                             openDanceModal(id);
@@ -1506,13 +1506,13 @@
                 danza = danzas.find(d => d.id == danzaId);
                 console.log('[DEBUG openDanceModal] Found in danzas:', danza ? 'YES' : 'NO');
             }
-            
+
             // If not found in danzas, try RAM_DANZAS
             if (!danza && typeof RAM_DANZAS !== 'undefined' && RAM_DANZAS.length > 0) {
                 danza = RAM_DANZAS.find(d => d.id == danzaId);
                 console.log('[DEBUG openDanceModal] Found in RAM_DANZAS:', danza ? 'YES' : 'NO');
             }
-            
+
             if (danza) {
                 console.log('[DEBUG openDanceModal] Danza data:', JSON.stringify(danza, null, 2).substring(0, 500));
             } else {
@@ -1563,7 +1563,7 @@
             const diaConcursoValue = danza.dia_concurso || 'Por confirmar';
             const diaVeneracionValue = danza.dia_veneracion || 'Por confirmar';
             const detallesValue = danza.detalles || 'Conjunto folklórico representativo de la festividad.';
-            
+
             // New extended fields with placeholder content
             const historiaValue = danza.historia || 'Este conjunto tiene una rica historia que se remonta a las tradiciones ancestrales del altiplano puneño, manteniendo viva la cultura y el folklore de nuestra región.';
             const juntaDirectivaValue = danza.junta_directiva || 'Presidente: [Por actualizar]\nVicepresidente: [Por actualizar]\nSecretario: [Por actualizar]\nTesorero: [Por actualizar]';
@@ -1616,6 +1616,12 @@
                         <div class="info-label"><i data-lucide="folder" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Categoría</div>
                         <div class="info-value">${catDisplay}</div>
                     </div>
+                    ${(danza.tipo_participacion === 'Exhibición' || danza.tipo_participacion === 'Invitado') ? `
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="info" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Condición</div>
+                        <div class="info-value">${danza.tipo_participacion}</div>
+                    </div>
+                    ` : `
                     <div class="info-card">
                         <div class="info-label"><i data-lucide="award" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Orden Concurso</div>
                         <div class="info-value">#${ordenConcursoValue}</div>
@@ -1624,6 +1630,7 @@
                         <div class="info-label"><i data-lucide="heart" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Orden Veneración</div>
                         <div class="info-value">#${ordenVeneracionValue}</div>
                     </div>
+                    `}
                     <div class="info-card">
                         <div class="info-label"><i data-lucide="calendar" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Día Concurso</div>
                         <div class="info-value">${diaConcursoValue}</div>
@@ -1765,7 +1772,7 @@
             max-width: 900px;
             max-height: 90vh;
             overflow: hidden;
-            box-shadow: 
+            box-shadow:
                 0 0 0 1px rgba(255, 255, 255, 0.1),
                 0 32px 64px rgba(0, 0, 0, 0.24);
         }
@@ -1944,7 +1951,7 @@
             .info-card {
                 padding: 1rem 0.875rem;
             }
-            
+
             .info-value {
                 font-size: 1rem;
             }
@@ -1999,11 +2006,11 @@
                 padding: 1.25rem;
                 margin-bottom: 0.875rem;
             }
-            
+
             .modal-section h3 {
                 font-size: 0.8125rem;
             }
-            
+
             .modal-section p {
                 font-size: 0.875rem;
             }
