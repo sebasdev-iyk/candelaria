@@ -38,12 +38,12 @@ function getActiveClass($page, $activePage)
             <!-- Right: Navigation + EN TIEMPO REAL -->
             <div class="flex items-center gap-2 md:gap-6">
                 <nav class="hidden md:flex items-center gap-2">
-                    <a href="<?= $basePath ?>servicios/index.php"
-                        class="nav-link-custom <?= getActiveClass('servicios', $activePage) ?>">Servicios</a>
-                    <a href="<?= $basePath ?>cultura/cultura.php"
-                        class="nav-link-custom <?= getActiveClass('cultura', $activePage) ?>">Cultura</a>
                     <a href="<?= $basePath ?>horarios_y_danzas/index.php"
                         class="nav-link-custom <?= getActiveClass('horarios', $activePage) ?>">Festividad</a>
+                    <a href="<?= $basePath ?>cultura/cultura.php"
+                        class="nav-link-custom <?= getActiveClass('cultura', $activePage) ?>">Cultura</a>
+                    <a href="<?= $basePath ?>servicios/index.php"
+                        class="nav-link-custom <?= getActiveClass('servicios', $activePage) ?>">Servicios</a>
                     <a href="<?= $basePath ?>noticias/index.php"
                         class="nav-link-custom <?= getActiveClass('noticias', $activePage) ?>">Noticias</a>
                 </nav>
@@ -82,12 +82,12 @@ function getActiveClass($page, $activePage)
     <div id="mobile-menu"
         class="hidden md:hidden fixed top-[80px] left-0 w-full h-[calc(100vh-80px)] bg-[#2e1065] shadow-lg border-t border-purple-800 z-[100] overflow-y-auto transition-all duration-300">
         <nav class="flex flex-col p-6 space-y-4">
-            <a href="<?= $basePath ?>servicios/index.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'servicios' ? 'text-candelaria-gold' : '' ?>">Servicios</a>
-            <a href="<?= $basePath ?>cultura/cultura.php"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'cultura' ? 'text-candelaria-gold' : '' ?>">Cultura</a>
             <a href="<?= $basePath ?>horarios_y_danzas/index.php"
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'horarios' ? 'text-candelaria-gold' : '' ?>">Festividad</a>
+            <a href="<?= $basePath ?>cultura/cultura.php"
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'cultura' ? 'text-candelaria-gold' : '' ?>">Cultura</a>
+            <a href="<?= $basePath ?>servicios/index.php"
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'servicios' ? 'text-candelaria-gold' : '' ?>">Servicios</a>
             <a href="<?= $basePath ?>noticias/index.php"
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'noticias' ? 'text-candelaria-gold' : '' ?>">Noticias</a>
         </nav>

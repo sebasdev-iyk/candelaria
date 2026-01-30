@@ -261,98 +261,109 @@
 
 
 
-        /* Modal Button Styles */
+        /* Modal Button Styles - Modern 2025 */
         .btn-modal-action {
+            font-family: 'Montserrat', sans-serif;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 20px;
-            border-radius: 8px;
-            /* Slightly rounded as per image */
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
+            padding: 0.875rem 1.5rem;
             border: none;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.8125rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 14px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
+        .btn-modal-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-modal-action:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .btn-modal-action {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Primary - En Vivo */
         .btn-modal-live {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            /* Red Gradient */
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            animation: pulseLive 2s infinite;
         }
 
         .btn-modal-live:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+            background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
         }
 
+        /* Secondary - Ver Puntaje */
         .btn-modal-score {
-            background: #fbbf24;
-            /* Candelaria Gold */
-            color: #4c1d95;
-            /* Deep Purple Text */
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
         }
 
         .btn-modal-score:hover {
-            background: #f59e0b;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
         }
 
+        /* Tertiary - Ver en Mapa */
         .btn-modal-map {
-            background: #f59e0b;
-            /* Orange/Amber */
-            color: white;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            color: #6366f1;
         }
 
         .btn-modal-map:hover {
-            background: #d97706;
-            transform: translateY(-2px);
+            background: #f1f5f9;
+            border-color: #c7d2fe;
         }
 
+        /* Quaternary - Compartir */
         .btn-modal-share {
-            background: white;
-            color: #f59e0b;
-            border: 2px solid #f59e0b;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            color: #64748b;
         }
 
         .btn-modal-share:hover {
-            background: #fffbeb;
-            transform: translateY(-2px);
-        }
-
-        .btn-modal-recordarme {
-            background: #4c1d95;
-            /* Candelaria Purple */
-            color: white;
-        }
-
-        .btn-modal-recordarme:hover {
-            background: #5b21b6;
-            transform: translateY(-2px);
+            background: #f1f5f9;
+            border-color: #cbd5e1;
         }
 
         .live-dot {
-            width: 10px;
-            height: 10px;
+            width: 6px;
+            height: 6px;
             background: white;
             border-radius: 50%;
-            animation: blinkDot 1s infinite;
+            margin-right: 8px;
         }
 
-        @keyframes blinkDot {
+        /* Filter buttons */
+        .filter-btn {
+            background: white;
+            border-color: #e2e8f0;
+            color: #64748b;
+        }
 
-            0%,
-            100% {
-                opacity: 1;
-            }
+        .filter-btn:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+        }
 
-            50% {
-                opacity: 0.3;
-            }
+        .filter-btn.active {
+            background: #6366f1;
+            border-color: #6366f1;
+            color: white;
         }
     </style>
     <!-- Spark Effect CSS -->
@@ -378,13 +389,13 @@
     <!-- Navigation Tabs -->
     <nav class="flex space-x-1 border-b border-gray-200 mb-6 overflow-x-auto pb-1 scrollbar-hide" aria-label="Tabs">
         <div class="flex space-x-1 min-w-max mx-auto">
-            <button onclick="setActiveTab('programacion')" id="tab-programacion"
-                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-candelaria-purple text-candelaria-purple text-gray-900">
-                <i data-lucide="calendar" class="w-4 h-4"></i> Programación
-            </button>
             <button onclick="setActiveTab('danzas')" id="tab-danzas"
-                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-transparent text-gray-500 hover:border-candelaria-purple hover:text-candelaria-purple transition-colors">
+                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-candelaria-purple text-candelaria-purple text-gray-900">
                 <i data-lucide="users" class="w-4 h-4"></i> Danzas
+            </button>
+            <button onclick="setActiveTab('programacion')" id="tab-programacion"
+                class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-transparent text-gray-500 hover:border-candelaria-purple hover:text-candelaria-purple transition-colors">
+                <i data-lucide="calendar" class="w-4 h-4"></i> Programación
             </button>
             <button onclick="setActiveTab('simulador')" id="tab-simulador"
                 class="tab-btn whitespace-nowrap py-3 px-6 border-b-2 font-medium text-sm flex items-center gap-2 border-transparent text-gray-500 hover:border-candelaria-purple hover:text-candelaria-purple transition-colors">
@@ -471,6 +482,7 @@
         let currentDanzaPage = 1;
         const danzaPageSize = 12;
         let currentDanzaSearch = '';
+        let currentDanzaFilter = 'all'; // all, autoctono, luces
         let isRamLoaded = false;
         let isDanzaLoading = false;
 
@@ -486,7 +498,7 @@
         // 2. ESTADO DE LA APLICACIÓN (STATE)
         // ==========================================
         let state = {
-            activeTab: 'programacion',
+            activeTab: 'danzas',
             activeDay: 'day2',
             search: '',
             filters: {
@@ -952,7 +964,7 @@
 
                     <!--Search bar for danzas-->
                     <form id="danzas-search-form" class="mb-6">
-                        <div class="flex gap-3">
+                        <div class="flex gap-3 mb-4">
                             <div class="relative flex-grow group">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i data-lucide="search" class="w-5 h-5 text-gray-400 group-focus-within:text-candelaria-purple transition-colors"></i>
@@ -968,6 +980,19 @@
                                 <i data-lucide="download" class="w-4 h-4"></i>
                                 <span class="hidden sm:inline">Descargar Danzas</span>
                             </a>
+                        </div>
+                        
+                        <!-- Filtros de Categoría -->
+                        <div class="flex gap-2 flex-wrap">
+                            <button type="button" id="filter-all" class="filter-btn active px-4 py-2 rounded-lg text-sm font-medium transition-all border-2" onclick="setDanzaFilter('all')">
+                                <i data-lucide="list" class="w-4 h-4 inline-block mr-1"></i> Todas
+                            </button>
+                            <button type="button" id="filter-autoctono" class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all border-2" onclick="setDanzaFilter('autoctono')">
+                                <i data-lucide="mountain" class="w-4 h-4 inline-block mr-1"></i> Autóctonas
+                            </button>
+                            <button type="button" id="filter-luces" class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all border-2" onclick="setDanzaFilter('luces')">
+                                <i data-lucide="sparkles" class="w-4 h-4 inline-block mr-1"></i> Traje de Luces
+                            </button>
                         </div>
                     </form>
 
@@ -1016,10 +1041,14 @@
         // ========== logic: Load ALL Danzas into RAM (Turbo Load) ==========
         async function loadAllDanzasIntoRam() {
             if (isRamLoaded) {
+                console.log('[LOAD DEBUG] Data already loaded, filtering...');
                 filterAndRenderDanzas();
                 return;
             }
-            if (isDanzaLoading) return;
+            if (isDanzaLoading) {
+                console.log('[LOAD DEBUG] Already loading, waiting...');
+                return;
+            }
 
             isDanzaLoading = true;
             const danzasGrid = document.getElementById('danzas-grid');
@@ -1039,7 +1068,11 @@
                 const response = await fetch('../api/danzas_all.php'); // Path relative to horarios_y_danzas/index.php
                 if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
-                RAM_DANZAS = await response.json();
+                const data = await response.json();
+                console.log('[LOAD DEBUG] Raw data received:', data.length, 'items');
+                console.log('[LOAD DEBUG] First item:', data[0]);
+                
+                RAM_DANZAS = data;
                 danzas = RAM_DANZAS; // Sync global for modal
                 console.timeEnd("🚀 Descarga Turbo Horarios");
                 console.log(`✅ ${RAM_DANZAS.length} danzas cargadas en RAM (Horarios).`);
@@ -1058,19 +1091,76 @@
         }
 
         // ========== Logic: Filter RAM -> filteredDanzas -> Paginate -> Render ==========
+        function setDanzaFilter(filter) {
+            currentDanzaFilter = filter;
+            currentDanzaPage = 1;
+            
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`filter-${filter}`).classList.add('active');
+            
+            filterAndRenderDanzas();
+            lucide.createIcons();
+        }
+
         function filterAndRenderDanzas() {
+            // Validar que RAM_DANZAS tenga datos
+            if (!RAM_DANZAS || RAM_DANZAS.length === 0) {
+                console.warn('[FILTER DEBUG] RAM_DANZAS is empty, cannot filter yet');
+                return;
+            }
+            
             let results = RAM_DANZAS;
 
-            if (currentDanzaSearch && currentDanzaSearch.trim() !== '') {
-                const q = currentDanzaSearch.toLowerCase();
-                results = results.filter(d => {
-                    const text = (
-                        (d.conjunto || '') + ' ' +
-                        (d.categoria || '') + ' ' +
-                        (d.descripcion || '')
-                    ).toLowerCase();
-                    return text.includes(q);
-                });
+            // Check if there's a danzaId parameter in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const danzaIdParam = urlParams.get('danzaId');
+            
+            console.log('[FILTER DEBUG] RAM_DANZAS length:', RAM_DANZAS.length);
+            console.log('[FILTER DEBUG] danzaIdParam:', danzaIdParam);
+            
+            if (danzaIdParam) {
+                // Filter to show only the specific danza
+                const targetId = parseInt(danzaIdParam, 10);
+                console.log('[FILTER DEBUG] Looking for ID:', targetId, 'type:', typeof targetId);
+                console.log('[FILTER DEBUG] Sample IDs from RAM:', RAM_DANZAS.slice(0, 5).map(d => ({id: d.id, type: typeof d.id, conjunto: d.conjunto})));
+                
+                // Use == instead of === to allow type coercion
+                results = results.filter(d => d.id == targetId);
+                console.log('[FILTER DEBUG] Results after filtering by ID:', results.length);
+                if (results.length > 0) {
+                    console.log('[FILTER DEBUG] Found danza:', results[0].conjunto);
+                } else {
+                    console.error('[FILTER DEBUG] NO MATCH FOUND! Checking all IDs...');
+                    console.log('[FILTER DEBUG] All IDs in database:', RAM_DANZAS.map(d => d.id).join(', '));
+                }
+            } else {
+                // Apply category filter
+                if (currentDanzaFilter === 'autoctono') {
+                    results = results.filter(d => {
+                        const cat = (d.categoria || '').toLowerCase();
+                        return cat.includes('autoct'); // Matches "Autoctonos"
+                    });
+                } else if (currentDanzaFilter === 'luces') {
+                    results = results.filter(d => {
+                        const cat = (d.categoria || '').toLowerCase();
+                        return cat.includes('luces'); // Matches "Luces Parada"
+                    });
+                }
+                
+                // Apply search filter
+                if (currentDanzaSearch && currentDanzaSearch.trim() !== '') {
+                    const q = currentDanzaSearch.toLowerCase();
+                    results = results.filter(d => {
+                        const text = (
+                            (d.conjunto || '') + ' ' +
+                            (d.name || '') + ' ' +
+                            (d.categoria || '') + ' ' +
+                            (d.descripcion || '')
+                        ).toLowerCase();
+                        return text.includes(q);
+                    });
+                }
             }
 
             filteredDanzas = results;
@@ -1101,10 +1191,38 @@
 
             const pageItems = filteredDanzas.slice(startIdx, endIdx);
 
+            // Check if we're showing a specific danza from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const danzaIdParam = urlParams.get('danzaId');
+            const hideDetailsButton = !!danzaIdParam;
+
+            // Remove existing back button if any
+            const existingBackButton = danzasGrid.parentElement.querySelector('.back-button-container');
+            if (existingBackButton) {
+                existingBackButton.remove();
+            }
+
+            // Add "Volver" button if coming from external link
+            if (danzaIdParam) {
+                const backButtonContainer = document.createElement('div');
+                backButtonContainer.className = 'mb-6 back-button-container';
+                backButtonContainer.innerHTML = `
+                    <button onclick="window.location.href='../index.php#danzas-section'" 
+                            class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white rounded-xl font-semibold hover:from-indigo-700 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl flex items-center gap-2">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Volver a Página Principal
+                    </button>
+                `;
+                danzasGrid.parentElement.insertBefore(backButtonContainer, danzasGrid);
+                lucide.createIcons();
+            }
+
             danzasGrid.innerHTML = '';
             pageItems.forEach(danza => {
                 let categoria = danza.categoria || 'N/A';
+                // Normalize category display names
                 if (categoria === 'Luces Parada') categoria = 'Traje de Luces';
+                if (categoria === 'Autoctonos') categoria = 'Autóctonas';
 
                 let categoryClass = 'traditional';
                 const catUpper = categoria.toUpperCase();
@@ -1129,9 +1247,11 @@
                     <div class="event-content">
                         <div class="event-genre">${categoria}</div>
                         <h3 class="event-title">${danza.conjunto}</h3>
+                        ${!hideDetailsButton ? `
                         <button class="event-btn" onclick="openDanceModal(${danza.id})">
                             Ver Detalles
                         </button>
+                        ` : ''}
                     </div>
                 `;
                 danzasGrid.appendChild(card);
@@ -1211,9 +1331,43 @@
 
         // Función para inicializar la aplicación
         function initApp() {
+            // Detectar parámetro danzaId PRIMERO
+            const urlParams = new URLSearchParams(window.location.search);
+            const danzaId = urlParams.get('danzaId');
+            
+            console.log('[INIT] danzaId from URL:', danzaId);
+            
             // Verificar si hay una pestaña específica en la URL (hash)
             const hash = window.location.hash.substring(1);
-            if (hash && ['programacion', 'consultas', 'danzas'].includes(hash)) {
+            
+            // Si hay danzaId, forzar la pestaña 'danzas'
+            if (danzaId) {
+                console.log('[INIT] Setting active tab to danzas and waiting for data...');
+                setActiveTab('danzas');
+                
+                // Esperar a que las danzas se carguen y luego abrir el modal
+                let attempts = 0;
+                const maxAttempts = 25; // 5 segundos (25 * 200ms)
+                const checkAndOpenModal = setInterval(() => {
+                    attempts++;
+                    console.log(`[INIT] Attempt ${attempts}: RAM_DANZAS length =`, RAM_DANZAS ? RAM_DANZAS.length : 0);
+                    
+                    if (RAM_DANZAS && RAM_DANZAS.length > 0) {
+                        clearInterval(checkAndOpenModal);
+                        const id = parseInt(danzaId, 10);
+                        console.log('[INIT] Data loaded! Opening modal for ID:', id);
+                        
+                        // Wait a bit more to ensure DOM is ready
+                        setTimeout(() => {
+                            openDanceModal(id);
+                        }, 300);
+                    } else if (attempts >= maxAttempts) {
+                        clearInterval(checkAndOpenModal);
+                        console.error('[INIT] Timeout: Could not load danzas data after 5 seconds');
+                        alert('Error: No se pudieron cargar los datos. Por favor recarga la página.');
+                    }
+                }, 200);
+            } else if (hash && ['programacion', 'consultas', 'danzas', 'simulador'].includes(hash)) {
                 setActiveTab(hash);
             } else {
                 // Establecer la pestaña activa por defecto
@@ -1228,23 +1382,6 @@
                     updateContent();
                 });
             }
-
-            // Detectar parámetro danzaId para abrir modal automáticamente
-            const urlParams = new URLSearchParams(window.location.search);
-            const danzaId = urlParams.get('danzaId');
-            if (danzaId) {
-                // Esperar a que las danzas se carguen y luego abrir el modal
-                const checkAndOpenModal = setInterval(() => {
-                    if (danzas && danzas.length > 0) {
-                        clearInterval(checkAndOpenModal);
-                        const id = parseInt(danzaId, 10);
-                        openDanceModal(id);
-                    }
-                }, 200);
-                // Timeout después de 5 segundos
-                setTimeout(() => clearInterval(checkAndOpenModal), 5000);
-            }
-
         }
 
         // Inicializar la aplicación cuando se cargue el DOM
@@ -1361,17 +1498,27 @@
         function openDanceModal(danzaId) {
             console.log('[DEBUG openDanceModal] Called with ID:', danzaId);
             console.log('[DEBUG openDanceModal] Global danzas array length:', danzas ? danzas.length : 'undefined');
+            console.log('[DEBUG openDanceModal] RAM_DANZAS array length:', RAM_DANZAS ? RAM_DANZAS.length : 'undefined');
 
-            // Search in global danzas array
+            // Search in global danzas array first, then RAM_DANZAS
             let danza = null;
             if (typeof danzas !== 'undefined' && danzas.length > 0) {
                 danza = danzas.find(d => d.id == danzaId);
-                console.log('[DEBUG openDanceModal] Found danza:', danza ? 'YES' : 'NO');
-                if (danza) {
-                    console.log('[DEBUG openDanceModal] Danza data:', JSON.stringify(danza, null, 2).substring(0, 500));
-                }
+                console.log('[DEBUG openDanceModal] Found in danzas:', danza ? 'YES' : 'NO');
+            }
+            
+            // If not found in danzas, try RAM_DANZAS
+            if (!danza && typeof RAM_DANZAS !== 'undefined' && RAM_DANZAS.length > 0) {
+                danza = RAM_DANZAS.find(d => d.id == danzaId);
+                console.log('[DEBUG openDanceModal] Found in RAM_DANZAS:', danza ? 'YES' : 'NO');
+            }
+            
+            if (danza) {
+                console.log('[DEBUG openDanceModal] Danza data:', JSON.stringify(danza, null, 2).substring(0, 500));
             } else {
                 console.error('[DEBUG openDanceModal] danzas array is empty or undefined!');
+                console.log('[DEBUG openDanceModal] Available IDs in danzas:', danzas ? danzas.map(d => d.id).slice(0, 10) : 'none');
+                console.log('[DEBUG openDanceModal] Available IDs in RAM_DANZAS:', RAM_DANZAS ? RAM_DANZAS.map(d => d.id).slice(0, 10) : 'none');
             }
 
             // If danza is not found, show error
@@ -1385,22 +1532,45 @@
             const modalBody = document.getElementById('dance-modal-body');
             const modalTitle = document.getElementById('dance-modal-title');
 
-            modalTitle.textContent = danza.name || danza.conjunto || 'Danza';
+            // Validate modal elements exist
+            if (!modal) {
+                console.error('[DEBUG openDanceModal] Modal element not found!');
+                alert('Error: El modal no está disponible. Por favor recarga la página.');
+                return;
+            }
+            if (!modalBody) {
+                console.error('[DEBUG openDanceModal] Modal body not found!');
+                return;
+            }
+            if (!modalTitle) {
+                console.error('[DEBUG openDanceModal] Modal title not found!');
+                return;
+            }
+
+            console.log('[DEBUG openDanceModal] Modal elements found, proceeding...');
+
+            // Ocultar el título del header
+            modalTitle.style.display = 'none';
 
             const nombre = danza.name || danza.conjunto || 'Danza';
-            const descValue = danza.descripcion || 'Descripción no disponible';
+            const descValue = danza.descripcion || 'Información detallada sobre esta danza folklórica de la región de Puno.';
             const catValue = danza.categoria || 'N/A';
             // Show "Traje de Luces" for "Luces Parada" or "Luces Estadio"
             const catDisplay = catValue.toLowerCase().includes('luces') ? 'Traje de Luces' : catValue;
-            const horaValue = danza.hora || 'Hora no especificada';
+            const horaValue = danza.hora || 'Por confirmar';
             const ordenConcursoValue = danza.orden_concurso || 'N/A';
             const ordenVeneracionValue = danza.orden_veneracion || 'N/A';
-            const detallesValue = danza.detalles || '';
-            // New extended fields
-            const historiaValue = danza.historia || '';
-            const juntaDirectivaValue = danza.junta_directiva || '';
-            const bloquesValue = danza.bloques || '';
-            const bandasValue = danza.bandas || '';
+            const diaConcursoValue = danza.dia_concurso || 'Por confirmar';
+            const diaVeneracionValue = danza.dia_veneracion || 'Por confirmar';
+            const detallesValue = danza.detalles || 'Conjunto folklórico representativo de la festividad.';
+            
+            // New extended fields with placeholder content
+            const historiaValue = danza.historia || 'Este conjunto tiene una rica historia que se remonta a las tradiciones ancestrales del altiplano puneño, manteniendo viva la cultura y el folklore de nuestra región.';
+            const juntaDirectivaValue = danza.junta_directiva || 'Presidente: [Por actualizar]\nVicepresidente: [Por actualizar]\nSecretario: [Por actualizar]\nTesorero: [Por actualizar]';
+            const bloquesValue = danza.bloques || 'Bloque Principal\nBloque Juvenil\nBloque Infantil';
+            const bandasValue = danza.bandas || 'Banda Musical Principal\nBanda de Acompañamiento';
+            const puntajeEstadioValue = danza.puntaje_estadio || 'Pendiente';
+            const puntajeParadaValue = danza.puntaje_parada || 'Pendiente';
 
             // Function to fix photo paths - transform filename to full path
             function fixPhotoPath(url) {
@@ -1417,84 +1587,100 @@
             // FIX: Use fixPhotoPath to get the correct URL
             const fotoValue = fixPhotoPath(danza.foto);
 
+            // Check if we came from an external link (for the back button)
+            const urlParams = new URLSearchParams(window.location.search);
+            const danzaIdParam = urlParams.get('danzaId');
+
             modalBody.innerHTML = `
-            <div class="dance-details-grid">
-                    <div>
-                        <img src="${fotoValue}"
-                             alt="${nombre}"
-                             class="dance-image"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';">
-                        <div style="margin-top: 1.5rem;">
-                            <h3>Información de Presentación</h3>
-                            <div class="quick-facts">
-                                <div class="info-item">
-                                    <div class="info-label">Categoría</div>
-                                    <div class="info-value">${catDisplay}</div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">Orden en Concurso</div>
-                                    <div class="info-value">#${ordenConcursoValue}</div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">Orden en Veneración</div>
-                                    <div class="info-value">#${ordenVeneracionValue}</div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">Hora Estimada</div>
-                                    <div class="info-value">${horaValue}</div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="dance-hero">
+                <img src="${fotoValue}"
+                     alt="${nombre}"
+                     class="dance-image"
+                     onerror="this.onerror=null; this.src='https://placehold.co/400x300?text=Imagen+no+disponible';">
+                <div class="dance-hero-overlay">
+                    <h1 class="dance-hero-title">${nombre}</h1>
+                </div>
+            </div>
+            
+            <div class="dance-content">
+                ${danzaIdParam ? `
+                <div style="margin-bottom: 1.5rem;">
+                    <button class="btn-modal-action" onclick="window.location.href='../index.php#danzas-section'" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; width: 100%;">
+                        <i data-lucide="arrow-left" style="width: 16px; height: 16px; margin-right: 6px;"></i> Volver a Página Principal
+                    </button>
+                </div>
+                ` : ''}
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="folder" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Categoría</div>
+                        <div class="info-value">${catDisplay}</div>
                     </div>
-                    <div>
-                        <div class="modal-section">
-                            <h3>Datos del Conjunto</h3>
-                            <p><strong>Conjunto:</strong> ${nombre}</p>
-                            <p><strong>Descripción:</strong> ${descValue}</p>
-                            ${detallesValue ? `<p><strong>Detalles:</strong> ${detallesValue}</p>` : ''}
-                        </div>
-                        ${juntaDirectivaValue ? `
-                        <div class="modal-section" style="margin-top: 1rem;">
-                            <h3>Junta Directiva</h3>
-                            <p style="line-height: 1.6; color: #4b5563;">${juntaDirectivaValue}</p>
-                        </div>
-                        ` : ''}
-                        ${bandasValue ? `
-                        <div class="modal-section" style="margin-top: 1rem;">
-                            <h3>Bandas</h3>
-                            <p style="line-height: 1.6; color: #4b5563;">${bandasValue}</p>
-                        </div>
-                        ` : ''}
-                        ${bloquesValue ? `
-                        <div class="modal-section" style="margin-top: 1rem;">
-                            <h3>Bloques</h3>
-                            <p style="line-height: 1.6; color: #4b5563;">${bloquesValue}</p>
-                        </div>
-                        ` : ''}
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="award" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Orden Concurso</div>
+                        <div class="info-value">#${ordenConcursoValue}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="heart" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Orden Veneración</div>
+                        <div class="info-value">#${ordenVeneracionValue}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="calendar" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Día Concurso</div>
+                        <div class="info-value">${diaConcursoValue}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="calendar-check" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Día Veneración</div>
+                        <div class="info-value">${diaVeneracionValue}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="star" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Puntaje Estadio</div>
+                        <div class="info-value">${puntajeEstadioValue}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="star" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Puntaje Parada</div>
+                        <div class="info-value">${puntajeParadaValue}</div>
                     </div>
                 </div>
 
-            ${historiaValue ? `
                 <div class="modal-section">
-                    <h3>Historia del Conjunto</h3>
-                    <p style="line-height: 1.6; color: #4b5563;">${historiaValue}</p>
+                    <h3><i data-lucide="file-text" style="width: 14px; height: 14px;"></i> Descripción</h3>
+                    <p>${descValue}</p>
+                    ${detallesValue ? `<p style="margin-top: 0.75rem;"><strong>Detalles adicionales:</strong> ${detallesValue}</p>` : ''}
                 </div>
-                ` : ''
-                }
 
-        <div class="card-actions">
-            <button class="btn-modal-action btn-modal-live" onclick="window.location.href='../live-platform/index.php#live'">
-                <i data-lucide="radio" style="width: 18px; height: 18px; margin-right: 8px;"></i> Ver En Vivo
-            </button>
-            <button class="btn-modal-action btn-modal-score" onclick="window.location.href='../live-platform/index.php#scores'">
-                <i data-lucide="trophy" style="width: 18px; height: 18px; margin-right: 8px;"></i> Ver Puntaje
-            </button>
-            <button class="btn-modal-action btn-modal-map" onclick="window.location.href='../live-platform/index.php#map'">
-                Ver en Mapa
-            </button>
-            <button class="btn-modal-action btn-modal-share" onclick="(function(){
-                const shareUrl = window.location.origin + window.location.pathname + '?danzaId=' + ${danza.id} + '#danzas';
-                if (navigator.share) {
+                <div class="modal-section">
+                    <h3><i data-lucide="book" style="width: 14px; height: 14px;"></i> Historia del Conjunto</h3>
+                    <p>${historiaValue}</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i data-lucide="users" style="width: 14px; height: 14px;"></i> Junta Directiva</h3>
+                    <p style="white-space: pre-line;">${juntaDirectivaValue}</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i data-lucide="layers" style="width: 14px; height: 14px;"></i> Bloques</h3>
+                    <p style="white-space: pre-line;">${bloquesValue}</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i data-lucide="music" style="width: 14px; height: 14px;"></i> Bandas</h3>
+                    <p style="white-space: pre-line;">${bandasValue}</p>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn-modal-action btn-modal-live" onclick="window.location.href='../live-platform/index.php#live'">
+                        <span class="live-dot"></span> En Vivo
+                    </button>
+                    <button class="btn-modal-action btn-modal-score" onclick="window.location.href='../live-platform/index.php#scores'">
+                        <i data-lucide="trophy" style="width: 16px; height: 16px; margin-right: 6px;"></i> Ver Puntaje
+                    </button>
+                    <button class="btn-modal-action btn-modal-map" onclick="window.location.href='../live-platform/index.php#map'">
+                        <i data-lucide="map-pin" style="width: 16px; height: 16px; margin-right: 6px;"></i> Ver en Mapa
+                    </button>
+                    <button class="btn-modal-action btn-modal-share" onclick="(function(){
+                        const shareUrl = window.location.origin + window.location.pathname + '?danzaId=' + ${danza.id} + '#danzas';
+                        if (navigator.share) {
                     navigator.share({
                         title: '${nombre}',
                         text: 'Mira esta danza en la Festividad Virgen de la Candelaria 2026',
@@ -1505,7 +1691,7 @@
                         alert('¡Enlace copiado al portapapeles!');
                     }).catch(err => console.error('Error al copiar:', err));
                 }
-            })()">Compartir</button>
+            })()"><i data-lucide="share-2" style="width: 16px; height: 16px; margin-right: 6px;"></i> Compartir</button>
         </div>
             `;
 
@@ -1513,7 +1699,9 @@
                 lucide.createIcons();
             }
 
+            console.log('[DEBUG openDanceModal] About to show modal...');
             modal.classList.add('active');
+            console.log('[DEBUG openDanceModal] Modal should now be visible with class:', modal.className);
         }
         // Generate PDF Function
 
@@ -1550,128 +1738,291 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(15, 23, 42, 0.8);
             z-index: 1000;
             overflow-y: auto;
+            backdrop-filter: blur(12px);
         }
 
         .modal.active {
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            padding: 2rem;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .modal.active {
+                padding: 0;
+                align-items: flex-end;
+            }
         }
 
         .modal-content {
-            background: white;
-            border-radius: 1rem;
-            width: 90%;
-            max-width: 1200px;
+            background: #ffffff;
+            border-radius: 32px;
+            width: 100%;
+            max-width: 900px;
             max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: modalFadeIn 0.3s ease;
+            overflow: hidden;
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                0 32px 64px rgba(0, 0, 0, 0.24);
         }
 
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        @media (max-width: 768px) {
+            .modal-content {
+                border-radius: 32px 32px 0 0;
+                max-height: 95vh;
+                max-width: 100%;
             }
         }
 
         .modal-header {
-            padding: 2rem;
-            background: linear-gradient(to right, #4c1d95, #5b21b6);
+            position: relative;
+            padding: 1.5rem 2.5rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: white;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 768px) {
+            .modal-header {
+                padding: 1.25rem 1.5rem;
+            }
         }
 
         .modal-close {
-            background: none;
-            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
-            font-size: 2rem;
+            font-size: 1.25rem;
             cursor: pointer;
             padding: 0;
-            width: 2rem;
-            height: 2rem;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: color 0.3s ease;
+            transition: all 0.2s ease;
+            border-radius: 12px;
+            font-weight: 300;
         }
 
         .modal-close:hover {
-            color: #fbbf24;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .modal-close {
+                width: 36px;
+                height: 36px;
+            }
         }
 
         .modal-body {
-            padding: 2rem;
+            max-height: calc(90vh - 80px);
+            overflow-y: auto;
+            background: #fafafa;
         }
 
-        .modal-section {
-            margin-bottom: 2.5rem;
-        }
-
-        .modal-section h3 {
-            color: #4c1d95;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #fbbf24;
-        }
-
-        .dance-details-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .dance-image {
+        .dance-hero {
+            position: relative;
             width: 100%;
-            height: 300px;
+            height: 320px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+
+        @media (max-width: 768px) {
+            .dance-hero {
+                height: 280px;
+            }
+        }
+
+        .dance-hero .dance-image {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        .quick-facts {
+        .dance-hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 70%, transparent 100%);
+        }
+
+        @media (max-width: 768px) {
+            .dance-hero-overlay {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        .dance-hero-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            margin: 0;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .dance-hero-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        .dance-content {
+            padding: 2rem 2.5rem;
+            background: white;
+        }
+
+        @media (max-width: 768px) {
+            .dance-content {
+                padding: 1.75rem 1.5rem;
+            }
+        }
+
+        .info-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .info-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.875rem;
+            }
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 1.25rem 1rem;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.12);
+            border-color: #c7d2fe;
         }
 
         .info-label {
-            font-size: 0.75rem;
-            color: #6b7280;
-            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.6875rem;
+            color: #6366f1;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
         }
 
         .info-value {
-            font-size: 0.875rem;
-            color: #1f2937;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.125rem;
+            color: #0f172a;
             font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        @media (max-width: 768px) {
+            .info-card {
+                padding: 1rem 0.875rem;
+            }
+            
+            .info-value {
+                font-size: 1rem;
+            }
+        }
+
+        .modal-section {
+            background: #ffffff;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .modal-section:hover {
+            border-color: #c7d2fe;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.08);
+        }
+
+        .modal-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: #6366f1;
+            font-size: 0.875rem;
+            margin: 0 0 1rem 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-section p {
+            font-family: 'Open Sans', sans-serif;
+            color: #475569;
+            line-height: 1.7;
+            margin: 0;
+            font-size: 0.9375rem;
+        }
+
+        .modal-section p:not(:last-child) {
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-section strong {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .modal-section {
+                padding: 1.25rem;
+                margin-bottom: 0.875rem;
+            }
+            
+            .modal-section h3 {
+                font-size: 0.8125rem;
+            }
+            
+            .modal-section p {
+                font-size: 0.875rem;
+            }
         }
 
         .card-actions {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.875rem;
+            padding: 2rem 2.5rem;
+            background: #fafafa;
+        }
+
+        @media (max-width: 768px) {
+            .card-actions {
+                grid-template-columns: 1fr;
+                padding: 1.75rem 1.5rem;
+                gap: 0.75rem;
+            }
         }
 
         .btn {

@@ -14,8 +14,10 @@ try {
 
     if ($db) {
         // NO usamos LIMIT ni WHERE. Traemos lo necesario para el listado.
-        // Seleccionamos solo las comunas necesarias para reducir peso.
-        $query = "SELECT id, conjunto, categoria, descripcion, foto, orden_concurso, dia_concurso, dia_veneracion, hora, detalles 
+        // Seleccionamos todos los campos necesarios para el modal expandido.
+        $query = "SELECT id, conjunto, categoria, descripcion, foto, orden_concurso, orden_veneracion, 
+                         dia_concurso, dia_veneracion, hora, detalles, historia, junta_directiva, 
+                         bloques, bandas, puntaje_estadio, puntaje_parada
                   FROM candela_list 
                   ORDER BY orden_concurso ASC, conjunto ASC";
 
