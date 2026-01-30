@@ -163,25 +163,12 @@
         </div>
     </main>
     
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="flex flex-col items-center justify-center text-center">
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="text-xl font-bold font-heading text-gray-900">Candelaria 2026</span>
-                </div>
-                <div class="text-gray-500 text-sm mb-6">
-                    &copy; 2026 Candela Digital. Todos los derechos reservados.
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php 
+    $footerDepth = 2;
+    include '../../includes/standard-footer.php'; 
+    ?>
     
     <!-- Scripts -->
     <script src="script.js"></script>
-    
-    <!-- Auth Modal and Dropdown -->
-    <?= getAuthModalHTML() ?>
-    <?= getAuthJS('../../') ?>
 </body>
 </html>
