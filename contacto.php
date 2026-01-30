@@ -1,12 +1,3 @@
-<?php
-// contacto.php
-$headerDepth = 0;
-// Check if file exists before including
-if (file_exists('includes/standard-header.php')) {
-    require_once 'includes/standard-header.php';
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -14,30 +5,63 @@ if (file_exists('includes/standard-header.php')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto | Candelaria 2026</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"
-        rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Critical CSS inline to prevent FOUC -->
     <style>
+        /* Prevent FOUC - Hide body until styles load */
+        body {
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
+        }
+        body.loaded {
+            opacity: 1;
+        }
+        
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Open Sans', sans-serif;
             background-color: #f8fafc;
             color: #334155;
         }
 
-        h1,
-        h2,
-        h3,
-        h4 {
+        h1, h2, h3, h4 {
             font-family: 'Montserrat', sans-serif;
             color: #1e293b;
         }
     </style>
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    
+    <!-- Load fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body class="bg-slate-50">
+    <?php
+    // Include header after body tag
+    $headerDepth = 0;
+    $activePage = 'contacto';
+    if (file_exists('includes/standard-header.php')) {
+        require_once 'includes/standard-header.php';
+    }
+    ?>
 
     <main class="max-w-5xl mx-auto px-6 py-16">
 
@@ -123,7 +147,20 @@ if (file_exists('includes/standard-header.php')) {
     require_once 'includes/standard-footer.php';
     ?>
 
-    <script>lucide.createIcons();</script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Show body after everything is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+        });
+        
+        // Fallback: show body after 500ms even if DOMContentLoaded hasn't fired
+        setTimeout(function() {
+            document.body.classList.add('loaded');
+        }, 500);
+    </script>
 </body>
 
 </html>
