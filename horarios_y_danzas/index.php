@@ -1652,10 +1652,12 @@
                         <div class="info-label"><i data-lucide="award" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Orden Concurso</div>
                         <div class="info-value">#${ordenConcursoValue}</div>
                     </div>
+                    ${(danza.categoria || '').toLowerCase().includes('autocton') ? '' : `
                     <div class="info-card">
                         <div class="info-label"><i data-lucide="heart" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Orden Veneración</div>
                         <div class="info-value">#${ordenVeneracionValue}</div>
                     </div>
+                    `}
                     `}
                     <div class="info-card">
                         <div class="info-label"><i data-lucide="calendar" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Día Concurso</div>
