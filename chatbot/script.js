@@ -24,27 +24,33 @@ const API_URL = BASE_PATH + 'chatbot/api/chat.php';
 // Mensajes cute para las burbujas de pensamiento
 const CUTE_MESSAGES = [
     "Estás en la cima... 🏔️",
-    "¡Hola! 👋",
-    "Seré tu gran ayuda 💜",
-    "Dame click yo te serviré 😊",
-    "¿Necesitas ayuda? 🤗",
-    "Estoy aquí para ti ✨",
-    "¡Pregúntame algo! 💭",
-    "Soy tu asistente virtual 🤖",
-    "¿Qué tal tu día? 😄",
-    "¡Conversemos! 💬",
-    "Tengo muchas respuestas 🧠",
-    "¿Te ayudo con algo? 🙋‍♀️",
-    "¡Soy muy amigable! 😸",
-    "Cuéntame qué necesitas 📝",
-    "¡Estoy listo para ayudar! 🚀",
-    "¿Tienes alguna pregunta? ❓",
-    "Soy tu guía virtual 🗺️",
-    "¡Hablemos de Candelaria! 🎭",
-    "¿Conoces las danzas? 💃",
-    "Te cuento sobre la fiesta 🎉",
-    "¡Puno es hermoso! 🏔️"
+  "¿Vienes por la Candelaria o te quedas por mí? 😉🎭",
+  "Entre danzas y sonrisas… ¿bailamos una charla? 💃😏",
+  "La Candelaria brilla, pero tu visita brilla más ✨",
+  "Oye… ¿y si empezamos con un saludo coqueto? 😌",
+  "Dicen que quien pregunta aquí, vuelve enamorado 💜🔥",
+  "Cuidado… este chat tiene pasos prohibidos 💃😜",
+  "Si la Candelaria es pasión, este chat también 🎉😉",
+  "¿Buscas información o una buena conversación? Yo doy ambas 😏",
+  "Te advierto algo: aquí se baila, se siente y se conversa 😄🎶",
+  "Entre trajes, música y cultura… yo soy tu mejor guía 😎🗺️",
+  "La fiesta comienza… y yo también estoy listo 🎊😏",
+  "¿Sabías que la Candelaria enamora? Yo solo continúo la tradición 💘",
+  "Si te gusta la fiesta, este chat te va a encantar 😍",
+  "Danzas, historia… y un poquito de coqueteo cultural 💃✨",
+  "No soy danza, pero sé cómo seguir tu ritmo 😜🎵",
+  "Aquí no solo informamos… también sacamos sonrisas 😉",
+  "¿Listo para vivir la Candelaria desde el chat? 🎭🔥",
+  "Pregunta con confianza… prometo responder bonito 😌",
+  "Si Puno es pasión, yo soy el detalle encantador 😏",
+  "Este chat tiene más ritmo que una morenada 🎶😄",
+  "La Virgen nos une… la conversación nos acerca 💜✨",
+  "¿Te cuento un dato o te conquisto con cultura? 😜📚",
+  "Advertencia: este asistente baila y conversa a la vez 💃🤖",
+  "Entre folklore y encanto… aquí estoy para ti 😉",
+  "Si buscas Candelaria, llegaste al chat correcto 😎🎉"
 ];
+
 
 // Variable para controlar si es la primera vez
 let isFirstThoughtBubble = true;
