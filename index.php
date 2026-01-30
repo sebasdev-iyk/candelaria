@@ -993,37 +993,40 @@
       </div>
 
       <!-- Search bar for danzas -->
-      <form id="danzas-search-form" class="danzas-search-form">
-        <div class="search-input-wrapper">
-          <i data-lucide="search" class="search-icon"></i>
-          <input type="text" id="danzas-search-input" class="search-input" placeholder="Buscar danzas por nombre...">
-        </div>
-        <button type="submit" class="search-btn">
-          Buscar
-        </button>
-      </form>
+      <div class="search-filter-wrapper">
+        <form id="danzas-search-form" class="danzas-search-form-new">
+          <i data-lucide="search" class="search-icon-new"></i>
+          <input type="text" id="danzas-search-input" class="search-input-new" placeholder="Buscar danzas...">
+          <button type="button" id="clear-search" class="clear-search-btn" style="display: none;">
+            <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+          </button>
+        </form>
 
-      <!-- Category Filter Buttons -->
-      <div class="category-filter-container">
-        <button class="category-filter-btn active" data-category="" onclick="filterByCategory('')">
-          <i data-lucide="grid-3x3" style="width: 16px; height: 16px;"></i>
-          Todos
-        </button>
-        <button class="category-filter-btn" data-category="Autoctonos" onclick="filterByCategory('Autoctonos')">
-          <i data-lucide="mountain" style="width: 16px; height: 16px;"></i>
-          Autóctonos
-        </button>
-        <button class="category-filter-btn" data-category="Luces Parada" onclick="filterByCategory('Luces Parada')">
-          <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
-          Traje de Luces
-        </button>
-        <a href="./assets/orden.pdf" download="Programacion_Candelaria_2026.pdf"
-          class="category-filter-btn download-btn"
-          style="border-color: #fbbf24; color: #fbbf24; text-decoration: none;">
-          <i data-lucide="download" style="width: 16px; height: 16px;"></i>
-          Descargar Danzas
-        </a>
+        <!-- Category Filter Chips -->
+        <div class="category-chips-container">
+          <button class="category-chip active" data-category="" onclick="filterByCategory('')">
+            <i data-lucide="grid-3x3" style="width: 14px; height: 14px;"></i>
+            <span>Todos</span>
+          </button>
+          <button class="category-chip" data-category="Autoctonos" onclick="filterByCategory('Autoctonos')">
+            <i data-lucide="mountain" style="width: 14px; height: 14px;"></i>
+            <span>Autóctonos</span>
+          </button>
+          <button class="category-chip" data-category="Luces Parada" onclick="filterByCategory('Luces Parada')">
+            <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i>
+            <span>Traje de Luces</span>
+          </button>
+        </div>
       </div>
+
+      <!-- Floating Download Button -->
+      <a href="./assets/orden.pdf" download="Programacion_Candelaria_2026.pdf" class="floating-download-btn" title="Descargar PDF de Danzas">
+        <div class="download-icon-wrapper">
+          <i data-lucide="file-text" class="pdf-icon"></i>
+          <i data-lucide="download" class="download-arrow"></i>
+        </div>
+        <span class="download-text">Descargar PDF</span>
+      </a>
 
       <div id="danzas-grid" class="danzas-grid">
         <!-- Loading skeleton -->
@@ -1119,20 +1122,22 @@
 
     .danzas-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 25px;
+      grid-template-columns: 1fr;
+      gap: 20px;
       margin-bottom: 40px;
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 640px) {
       .danzas-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
       }
     }
 
     @media (min-width: 1024px) {
       .danzas-grid {
         grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
       }
     }
 
@@ -1141,7 +1146,7 @@
       background: rgba(255, 255, 255, 0.12);
       backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 1.2rem;
+      border-radius: 1rem;
       overflow: hidden;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
@@ -1179,14 +1184,14 @@
 
     .danza-card .card-category {
       position: absolute;
-      top: 12px;
-      left: 12px;
+      top: 10px;
+      left: 10px;
       background: rgba(76, 29, 149, 0.9);
       backdrop-filter: blur(5px);
       color: white;
-      padding: 6px 14px;
+      padding: 4px 10px;
       border-radius: 20px;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -1194,15 +1199,15 @@
     }
 
     .danza-card .card-content {
-      padding: 20px;
+      padding: 14px;
     }
 
     .danza-card .card-title {
       color: white;
-      font-size: 1.15rem;
+      font-size: 1rem;
       font-weight: 700;
       margin-bottom: 10px;
-      line-height: 1.4;
+      line-height: 1.3;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -1213,31 +1218,98 @@
     .danza-card .card-order {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: linear-gradient(135deg, #fbbf24, #f59e0b);
       color: #4c1d95;
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: 20px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 800;
     }
 
     .danza-card .card-btn {
       width: 100%;
-      margin-top: 15px;
-      padding: 12px;
+      margin-top: 12px;
+      padding: 10px;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 10px;
       color: white;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       cursor: pointer;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
+    }
+
+    /* Mobile optimizations for card text */
+    @media (max-width: 640px) {
+      .danza-card .card-image-container {
+        height: 160px;
+      }
+
+      .danza-card .card-category {
+        top: 8px;
+        left: 8px;
+        padding: 3px 8px;
+        font-size: 0.6rem;
+      }
+
+      .danza-card .card-content {
+        padding: 10px;
+      }
+
+      .danza-card .card-title {
+        font-size: 0.85rem;
+        line-height: 1.25;
+        margin-bottom: 8px;
+        -webkit-line-clamp: 2;
+      }
+
+      .danza-card .card-btn {
+        padding: 8px;
+        font-size: 0.75rem;
+        margin-top: 8px;
+        gap: 4px;
+      }
+
+      .danza-card .card-btn i {
+        width: 14px !important;
+        height: 14px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .danza-card {
+        border-radius: 0.875rem;
+      }
+
+      .danza-card .card-image-container {
+        height: 140px;
+      }
+
+      .danza-card .card-content {
+        padding: 8px;
+      }
+
+      .danza-card .card-title {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+      }
+
+      .danza-card .card-category {
+        padding: 2px 7px;
+        font-size: 0.55rem;
+      }
+
+      .danza-card .card-btn {
+        padding: 7px;
+        font-size: 0.7rem;
+        margin-top: 6px;
+      }
     }
 
     .danza-card .card-btn:hover {
@@ -1287,117 +1359,248 @@
     }
 
     /* ========== Search Form Styles ========== */
-    .danzas-search-form {
-      display: flex;
-      gap: 12px;
-      max-width: 600px;
+    .search-filter-wrapper {
+      max-width: 800px;
       margin: 0 auto 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
 
-    .search-input-wrapper {
+    .danzas-search-form-new {
       position: relative;
-      flex: 1;
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      color: rgba(255, 255, 255, 0.5);
-      pointer-events: none;
-    }
-
-    .search-input {
       width: 100%;
-      padding: 14px 16px 14px 50px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(251, 191, 36, 0.3);
+      border-radius: 50px;
+      padding: 4px 4px 4px 20px;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .danzas-search-form-new:focus-within {
+      border-color: #fbbf24;
+      box-shadow: 0 8px 32px rgba(251, 191, 36, 0.3);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .search-icon-new {
+      width: 22px;
+      height: 22px;
+      color: #fbbf24;
+      flex-shrink: 0;
+      margin-right: 12px;
+    }
+
+    .search-input-new {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
       color: white;
       font-size: 1rem;
-      transition: all 0.3s ease;
+      font-weight: 500;
+      padding: 14px 8px;
     }
 
-    .search-input::placeholder {
+    .search-input-new::placeholder {
       color: rgba(255, 255, 255, 0.5);
     }
 
-    .search-input:focus {
-      outline: none;
-      border-color: #fbbf24;
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
-    }
-
-    .search-btn {
-      padding: 14px 28px;
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      color: #4c1d95;
-      font-weight: 700;
-      font-size: 1rem;
+    .clear-search-btn {
+      background: rgba(255, 255, 255, 0.2);
       border: none;
-      border-radius: 12px;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       transition: all 0.3s ease;
+      margin-right: 8px;
+      color: white;
     }
 
-    .search-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
+    .clear-search-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
     }
 
-    /* ========== Category Filter Styles ========== */
-    .category-filter-container {
+    /* ========== Category Chips ========== */
+    .category-chips-container {
       display: flex;
       justify-content: center;
-      gap: 12px;
-      margin: 25px 0;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
-    .category-filter-btn {
-      display: flex;
+    .category-chip {
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
+      gap: 6px;
+      padding: 8px 16px;
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       border: 2px solid rgba(255, 255, 255, 0.2);
       border-radius: 50px;
       color: rgba(255, 255, 255, 0.8);
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
     }
 
-    .category-filter-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+    .category-chip:hover {
+      background: rgba(255, 255, 255, 0.15);
       border-color: rgba(251, 191, 36, 0.5);
-      color: #fff;
+      color: white;
       transform: translateY(-2px);
     }
 
-    .category-filter-btn.active {
-      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    .category-chip.active {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
       border-color: #fbbf24;
       color: #1e1b4b;
       box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+      transform: scale(1.05);
     }
 
-    .category-filter-btn.active:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
+    .category-chip.active:hover {
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    /* ========== Floating Download Button ========== */
+    .floating-download-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #1e1b4b;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 8px 32px rgba(251, 191, 36, 0.5);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .floating-download-btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 12px 40px rgba(251, 191, 36, 0.6);
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    }
+
+    .download-icon-wrapper {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pdf-icon {
+      width: 24px;
+      height: 24px;
+      color: #1e1b4b;
+      transition: all 0.3s ease;
+    }
+
+    .download-arrow {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      color: #1e1b4b;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .floating-download-btn:hover .pdf-icon {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .floating-download-btn:hover .download-arrow {
+      opacity: 1;
+      transform: translateY(0);
+      animation: downloadBounce 0.6s ease-in-out infinite;
+    }
+
+    @keyframes downloadBounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(4px);
+      }
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      .search-filter-wrapper {
+        padding: 0 10px;
+      }
+
+      .floating-download-btn {
+        bottom: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+      }
+
+      .download-text {
+        display: none;
+      }
+
+      .floating-download-btn {
+        width: 56px;
+        height: 56px;
+        padding: 0;
+        justify-content: center;
+        border-radius: 50%;
+      }
+
+      .download-icon-wrapper {
+        width: 28px;
+        height: 28px;
+      }
+
+      .pdf-icon {
+        width: 28px;
+        height: 28px;
+      }
+
+      .download-arrow {
+        width: 20px;
+        height: 20px;
+      }
     }
 
     @media (max-width: 480px) {
-      .category-filter-btn {
-        padding: 10px 18px;
-        font-size: 0.85rem;
+      .category-chip {
+        padding: 7px 14px;
+        font-size: 0.8rem;
+      }
+
+      .category-chip i {
+        width: 12px !important;
+        height: 12px !important;
+      }
+
+      .search-input-new {
+        font-size: 0.9rem;
       }
     }
 
@@ -1625,8 +1828,8 @@
       }
 
       .danzas-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
       }
 
       .danzas-search-form {
@@ -2085,7 +2288,7 @@
 
     // ========== Category Filter Function ==========
     function filterByCategory(category) {
-      document.querySelectorAll('.category-filter-btn').forEach(btn => {
+      document.querySelectorAll('.category-chip').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.category === category);
       });
 
@@ -2176,6 +2379,7 @@
       // Set up search form
       const searchForm = document.getElementById('danzas-search-form');
       const searchInput = document.getElementById('danzas-search-input');
+      const clearBtn = document.getElementById('clear-search');
 
       // Prevent Form Submit (Reload)
       if (searchForm) {
@@ -2191,6 +2395,25 @@
           currentSearchQuery = e.target.value;
           currentPage = 1; // Reset page
           filterAndRender(); // Filtrado local instantáneo
+
+          // Show/hide clear button
+          if (clearBtn) {
+            clearBtn.style.display = currentSearchQuery ? 'flex' : 'none';
+          }
+        });
+      }
+
+      // Clear search button
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+          if (searchInput) {
+            searchInput.value = '';
+            currentSearchQuery = '';
+            currentPage = 1;
+            filterAndRender();
+            clearBtn.style.display = 'none';
+            searchInput.focus();
+          }
         });
       }
 
