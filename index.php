@@ -330,7 +330,8 @@
     /* Responsive adjustments for info cards */
     @media (max-width: 768px) {
       .info-cards-container {
-        display: none !important; /* Hide in hero section on mobile */
+        display: none !important;
+        /* Hide in hero section on mobile */
       }
     }
 
@@ -902,7 +903,7 @@
   <!-- Video Background -->
   <div class="video-background">
     <video autoplay muted loop playsinline>
-      <source src="./principal/candelaria-backgroundOFF.mp4" type="video/mp4">
+      <source src="./principal/candelaria-background.webm" type="video/mp4">
       <!-- Video de respaldo si el principal no carga -->
       <source src="https://assets.mixkit.co/videos/preview/mixkit-fireworks-over-a-lake-at-night-41356-large.mp4"
         type="video/mp4">
@@ -930,7 +931,7 @@
       class="absolute inset-0 z-30 flex items-center justify-center opacity-0 scale-90 transition-all duration-500 delay-300">
       <div class="relative">
         <div class="absolute inset-0 bg-candelaria-gold blur-[60px] opacity-50 rounded-full animate-pulse"></div>
-        <img src="./principal/virgencandelariaa.png" alt="Transition"
+        <img src="./principal/virgencandelariaa.webp" alt="Transition"
           class="h-64 md:h-96 w-auto object-contain drop-shadow-[0_0_30px_rgba(251,191,36,0.6)] relative z-10 transform hover:scale-105 transition-transform">
         <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
           <span
@@ -995,13 +996,11 @@
   include 'includes/standard-header.php';
   ?>
 
-
-  <!-- Contenido Principal -->
   <section class="hero">
     <div class="content">
       <!-- Imágenes reemplazando los textos originales - AHORA MÁS GRANDES -->
-      <img src="./principal/Festividad.png" alt="Festividad" class="title-image">
-      <img src="./principal/virgencandelariaa.png" alt="Virgen de la Candelaria" class="subtitle-image">
+      <img src="./principal/Festividad.webp" alt="Festividad" class="title-image">
+      <img src="./principal/virgencandelariaa.webp" alt="Virgen de la Candelaria" class="subtitle-image">
 
       <div class="date-info">Del <span>16 de Enero al 10 de Febrero</span> | Puno, Perú</div>
 
@@ -1036,7 +1035,7 @@
           Danzas de la Festividad
         </h2>
         <p class="danzas-subtitle">Conoce las danzas que dan vida a la celebración más grande del Perú</p>
-        
+
         <!-- Info Cards Moved Here -->
         <div class="info-cards-danzas-section">
           <!-- Card 2: Purple -->
@@ -1081,7 +1080,8 @@
       </div>
 
       <!-- Floating Download Button -->
-      <a href="./assets/orden.pdf" download="Programacion_Candelaria_2026.pdf" class="floating-download-btn" title="Descargar PDF de Danzas">
+      <a href="./assets/orden.pdf" download="Programacion_Candelaria_2026.pdf" class="floating-download-btn"
+        title="Descargar PDF de Danzas">
         <div class="download-icon-wrapper">
           <i data-lucide="file-text" class="pdf-icon"></i>
           <i data-lucide="download" class="download-arrow"></i>
@@ -1129,11 +1129,8 @@
     </div>
   </section>
 
-  <!-- Footer -->
-
 
   <style>
-    /* ========== Sección de Danzas con Fondo Transparente ========== */
     .danzas-section {
       position: relative;
       min-height: 100vh;
@@ -1605,9 +1602,12 @@
     }
 
     @keyframes downloadBounce {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateY(0);
       }
+
       50% {
         transform: translateY(4px);
       }
@@ -2478,7 +2478,7 @@
 
       // Clear search button
       if (clearBtn) {
-        clearBtn.addEventListener('click', function() {
+        clearBtn.addEventListener('click', function () {
           if (searchInput) {
             searchInput.value = '';
             currentSearchQuery = '';

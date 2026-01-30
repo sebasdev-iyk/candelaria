@@ -80,9 +80,9 @@ candelaria/
 ├── tienda/                 # Tienda virtual (opcional)
 ├── logs/                   # Registros del sistema
 ├── principal/              # Recursos principales
-│   ├── candelaria-backgroundOFF.mp4 # Video de fondo
-│   ├── Festividad.png      # Imagen de título
-│   ├── virgencandelariaa.png # Imagen de la virgen
+│   ├── candelaria-background.webm # Video de fondo
+│   ├── Festividad.webp      # Imagen de título
+│   ├── virgencandelariaa.webp # Imagen de la virgen
 │   ├── logoc.png           # Logo
 │   └── [otros recursos]
 ├── Dockerfile              # Configuración de contenedor
@@ -129,7 +129,7 @@ candelaria/
    - styles.css
    - script.js
    - assets/css/sparks.css
-4. **Video de fondo (500-1500ms)**: candelaria-backgroundOFF.mp4 (posiblemente pesado)
+4. **Video de fondo (500-1500ms)**: candelaria-background.webm (posiblemente pesado)
 5. **Inicialización de scripts (100-300ms)**:
    - Countdown timer
    - Particles effect
