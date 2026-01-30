@@ -326,71 +326,135 @@
     /* Responsive adjustments for info cards */
     @media (max-width: 768px) {
       .info-cards-container {
-        display: flex;
-        flex-direction: row;
-        /* Side by side */
-        align-items: center;
-        justify-content: center;
-        margin-top: 2vh;
-        width: 90%;
-        max-width: 500px;
-        gap: 15px;
-        /* Separate them */
-      }
-
-      /* Hide Cobertura card on mobile */
-      .info-card.card-gold {
-        display: none;
-      }
-
-      .info-card {
-        width: 100%;
-        height: 60px;
-        /* Taller touch targets */
-        margin: 0;
-        border-radius: 12px !important;
-        /* Independent rounded buttons */
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-
-      /* Reset specific targeting since we want them identical now */
-      .info-card:nth-child(2),
-      .info-card:nth-child(3) {
-        border-radius: 12px !important;
-        margin: 0;
+        display: none !important; /* Hide in hero section on mobile */
       }
     }
 
     @media (max-width: 480px) {
       .info-cards-container {
-        flex-direction: row;
-        /* Keep side-by-side on small screens too */
-        align-items: center;
-        gap: 10px;
+        display: none !important;
+      }
+    }
+
+    /* ========== Info Cards in Danzas Section ========== */
+    .info-cards-danzas-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .info-card-danzas {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      padding: 14px 40px;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 2px solid;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .info-card-danzas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .info-card-danzas:hover::before {
+      opacity: 1;
+    }
+
+    .info-card-danzas:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .info-card-danzas .card-text {
+      position: relative;
+      z-index: 2;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 1rem;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .info-card-danzas .card-glow {
+      display: none;
+    }
+
+    /* Card Themes for Danzas Section */
+    .card-purple-danzas {
+      border-color: #8b5cf6;
+      background: rgba(139, 92, 246, 0.12);
+    }
+
+    .card-purple-danzas:hover {
+      border-color: #a78bfa;
+      background: rgba(139, 92, 246, 0.2);
+      box-shadow: 0 8px 30px rgba(139, 92, 246, 0.5);
+    }
+
+    .card-purple-danzas .card-text {
+      color: #c4b5fd;
+    }
+
+    .card-dark-danzas {
+      border-color: #6366f1;
+      background: rgba(99, 102, 241, 0.12);
+    }
+
+    .card-dark-danzas:hover {
+      border-color: #818cf8;
+      background: rgba(99, 102, 241, 0.2);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5);
+    }
+
+    .card-dark-danzas .card-text {
+      color: #a5b4fc;
+    }
+
+    @media (max-width: 768px) {
+      .info-cards-danzas-section {
+        gap: 15px;
+        margin-top: 25px;
       }
 
-      .info-card {
-        width: 100%;
-        max-width: none;
-        /* Allow them to fill available space */
-        height: 55px;
+      .info-card-danzas {
+        padding: 12px 32px;
       }
 
-      .card-text {
+      .info-card-danzas .card-text {
         font-size: 0.9rem;
-        flex-direction: row;
+        letter-spacing: 1.3px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .info-cards-danzas-section {
+        gap: 12px;
+        margin-top: 20px;
       }
 
-      .card-text br {
-        display: none;
+      .info-card-danzas {
+        padding: 10px 24px;
       }
 
-      .card-text::after {
-        content: " ";
+      .info-card-danzas .card-text {
+        font-size: 0.8rem;
+        letter-spacing: 1.2px;
       }
-
-
-      /* Scroll Indicator - Pill Style */
     }
 
     .scroll-indicator {
@@ -562,8 +626,8 @@
         /* En móvil el header ocupa más espacio (~130px con banner + nav) */
         height: calc(100vh - 130px);
         max-height: calc(100vh - 130px);
-        gap: 2vh;
-        padding-top: 1vh;
+        gap: 1.5vh;
+        padding-top: 0.5vh;
         padding-bottom: 1vh;
       }
 
@@ -608,25 +672,25 @@
       }
 
       .title-image {
-        width: 90%;
-        max-width: 350px;
-        margin-bottom: 5px;
+        width: 95%;
+        max-width: none;
+        margin-bottom: 3px;
       }
 
       .subtitle-image {
         width: 95%;
-        max-width: 380px;
-        margin-bottom: 10px;
+        max-width: none;
+        margin-bottom: 8px;
       }
 
       .date-info {
-        font-size: 1rem;
-        margin-bottom: 10px;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
       }
 
       .countdown {
         gap: 8px;
-        margin-top: 10px;
+        margin-top: 8px;
       }
 
       .time-box {
@@ -698,20 +762,20 @@
       }
 
       .title-image {
-        width: 85%;
-        max-width: 280px;
-        margin-bottom: 3px;
+        width: 98%;
+        max-width: none;
+        margin-bottom: 2px;
       }
 
       .subtitle-image {
-        width: 90%;
-        max-width: 300px;
-        margin-bottom: 8px;
+        width: 98%;
+        max-width: none;
+        margin-bottom: 6px;
       }
 
       .date-info {
-        font-size: 0.85rem;
-        margin-bottom: 8px;
+        font-size: 0.8rem;
+        margin-bottom: 6px;
       }
 
       .time-box {
@@ -739,26 +803,30 @@
         justify-content: center;
       }
 
-      /* Ajuste para que el contador se muestre en dos filas en móviles */
+      /* Contador horizontal - cajas más anchas y MÁS ALTAS para móvil */
       .countdown {
-        flex-direction: column;
-        gap: 5px;
-      }
-
-      .countdown-row {
-        display: flex;
-        gap: 10px;
+        flex-direction: row;
+        gap: 6px;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        padding: 0 15px;
         width: 100%;
-        justify-content: center;
+        max-width: 100%;
       }
 
       .time-box {
-        min-width: 60px;
-        padding: 10px 5px;
+        flex: 1;
+        min-width: 0;
+        padding: 14px 5px;
       }
 
       .time-box span {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
+      }
+
+      .time-box p {
+        font-size: 0.6rem;
+        margin-top: 4px;
       }
 
       .separator {
@@ -938,35 +1006,9 @@
         <!-- Se llenará con JavaScript -->
       </div>
 
-      <!-- Info Cards Section -->
-      <div class="info-cards-container">
-        <!-- Card 1: Gold -->
-        <div class="info-card card-gold" style="cursor: default;">
-          <style>
-            .info-card.card-gold:hover {
-              transform: none !important;
-              box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3) !important;
-            }
-
-            .info-card.card-gold .card-glow {
-              opacity: 0.6 !important;
-            }
-          </style>
-          <div class="card-glow"></div>
-          <span class="card-text">COBERTURA EN TIEMPO REAL: SABADO 31 DE ENERO </span>
-        </div>
-
-        <!-- Card 2: Purple -->
-        <a href="./live-platform/index.php#scores" class="info-card card-purple">
-          <div class="card-glow"></div>
-          <span class="card-text">Puntajes</span>
-        </a>
-
-        <!-- Card 3: Dark Purple -->
-        <a href="./live-platform/index.php#map" class="info-card card-dark">
-          <div class="card-glow"></div>
-          <span class="card-text">Recorrido</span>
-        </a>
+      <!-- Info Cards Section - Solo mostrar en Desktop -->
+      <div class="info-cards-container" style="display: none;">
+        <!-- Oculto en todas las resoluciones, solo se muestran en sección danzas -->
       </div>
     </div>
 
@@ -990,6 +1032,21 @@
           Danzas de la Festividad
         </h2>
         <p class="danzas-subtitle">Conoce las danzas que dan vida a la celebración más grande del Perú</p>
+        
+        <!-- Info Cards Moved Here -->
+        <div class="info-cards-danzas-section">
+          <!-- Card 2: Purple -->
+          <a href="./live-platform/index.php#scores" class="info-card-danzas card-purple-danzas">
+            <div class="card-glow"></div>
+            <span class="card-text">Puntajes</span>
+          </a>
+
+          <!-- Card 3: Dark Purple -->
+          <a href="./live-platform/index.php#map" class="info-card-danzas card-dark-danzas">
+            <div class="card-glow"></div>
+            <span class="card-text">Recorrido</span>
+          </a>
+        </div>
       </div>
 
       <!-- Search bar for danzas -->
@@ -1077,12 +1134,17 @@
       position: relative;
       min-height: 100vh;
       padding: 100px 20px 80px;
+      background: transparent;
+      z-index: 1;
+      transition: background 0.5s ease;
+    }
+
+    .danzas-section.scrolled {
       background: linear-gradient(to bottom,
           rgba(0, 0, 0, 0.2) 0%,
           rgba(76, 29, 149, 0.4) 50%,
           rgba(0, 0, 0, 0.5) 100%);
       backdrop-filter: blur(3px);
-      z-index: 1;
     }
 
     .danzas-container {
@@ -1890,6 +1952,17 @@
         videoBackground.style.transform = `translateY(-${scrollY * 0.5}px)`;
       }
 
+      // Activar fondo de sección danzas al hacer scroll
+      const danzasSection = document.querySelector('.danzas-section');
+      if (danzasSection) {
+        const danzasTop = danzasSection.offsetTop;
+        if (scrollY >= danzasTop - 100) {
+          danzasSection.classList.add('scrolled');
+        } else {
+          danzasSection.classList.remove('scrolled');
+        }
+      }
+
       // Efecto adicional en navbar
       const header = document.querySelector('.header-manta-premium');
       if (header) {
@@ -1944,32 +2017,28 @@
 
       const pad = (n) => String(Math.floor(n)).padStart(2, "0");
 
-      // Diferente estructura para móviles
+      // Modo horizontal - una sola fila para móviles
       if (window.innerWidth <= 480) {
         countdownElement.innerHTML = `
-          <div class="countdown-row">
-            <div class="time-box">
-              <span>${pad(months)}</span>
-              <p>meses</p>
-            </div>
-            <div class="time-box">
-              <span>${pad(days)}</span>
-              <p>días</p>
-            </div>
-            <div class="time-box">
-              <span>${pad(hours)}</span>
-              <p>horas</p>
-            </div>
+          <div class="time-box">
+            <span>${pad(months)}</span>
+            <p>meses</p>
           </div>
-          <div class="countdown-row">
-            <div class="time-box">
-              <span>${pad(minutes)}</span>
-              <p>min.</p>
-            </div>
-            <div class="time-box">
-              <span>${pad(seconds)}</span>
-              <p>seg.</p>
-            </div>
+          <div class="time-box">
+            <span>${pad(days)}</span>
+            <p>días</p>
+          </div>
+          <div class="time-box">
+            <span>${pad(hours)}</span>
+            <p>hrs</p>
+          </div>
+          <div class="time-box">
+            <span>${pad(minutes)}</span>
+            <p>min</p>
+          </div>
+          <div class="time-box">
+            <span>${pad(seconds)}</span>
+            <p>seg</p>
           </div>
         `;
       } else {

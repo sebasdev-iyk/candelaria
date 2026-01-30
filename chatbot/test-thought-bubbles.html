@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Thought Bubbles</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e1b4b, #0f172a);
+            color: white;
+            font-family: 'Montserrat', Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        .test-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .controls {
+            background: rgba(76, 29, 149, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: #4c1d95;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: #6d28d9;
+        }
+
+        .status {
+            background: rgba(251, 191, 36, 0.2);
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border-left: 4px solid #fbbf24;
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="test-info">
+        <h1>☁️ Test de Nubes de Pensamiento</h1>
+        <p>Esta página prueba las nubes de pensamiento del chatbot con efecto de dibujo progresivo.</p>
+        <p><strong>Instrucciones:</strong></p>
+        <ul>
+            <li><strong>Primer mensaje especial:</strong> "Estás en la cima... 🏔️" aparece siempre primero</li>
+            <li>Las nubes aparecen automáticamente cada 8-15 segundos</li>
+            <li>Primero aparecen las burbujas pequeñas (cola), luego la burbuja principal</li>
+            <li>Haz click en el personaje o en las nubes para abrir el chat</li>
+            <li>Cierra el chat para que las nubes vuelvan a aparecer</li>
+            <li>Usa los controles para probar manualmente</li>
+        </ul>
+    </div>
+
+    <div class="controls">
+        <h3>☁️ Controles de Prueba</h3>
+        <button onclick="showTestBubble()">Mostrar Nube de Prueba</button>
+        <button onclick="showFirstMessage()">Mostrar Primer Mensaje</button>
+        <button onclick="stopThoughtBubbles()">Detener Nubes</button>
+        <button onclick="resumeThoughtBubbles()">Reanudar Nubes</button>
+        <button onclick="clearBubbles()">Limpiar Nubes</button>
+        <div class="status" id="status">
+            Estado: Esperando inicialización... (Primer mensaje: "Estás en la cima... 🏔️")
+        </div>
+    </div>
+
+    <!-- Chatbot Widget (Simplified for testing) -->
+    <div id="candelaria-bot-widget" class="candelaria-bot-widget">
+        <div class="chat-header">
+            <div class="header-content">
+                <div class="bot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="bot-info">
+                    <h1>Asistente Candelaria</h1>
+                    <p class="status"><span class="status-dot"></span> En línea</p>
+                </div>
+            </div>
+            <button class="close-btn" onclick="toggleChatbot()" title="Minimizar">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        ¡Hola! Este es un test de las nubes de pensamiento. 
+                        Cierra este chat para ver las nubes aparecer automáticamente con efecto de dibujo progresivo.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <div class="input-wrapper">
+                <input type="text" placeholder="Escribe algo..." disabled>
+                <button class="send-btn" disabled><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Trigger -->
+    <button id="candelariaTriggerBtn" class="candelaria-bot-trigger" title="Asistente Virtual">
+        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #4c1d95, #7c3aed); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: white;">
+            🤖
+        </div>
+    </button>
+
+    <!-- Thought Bubbles Container -->
+    <div class="thought-bubble-container"></div>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="script.js"></script>
+    <script>
+        // Test functions
+        function showTestBubble() {
+            if (typeof showRandomThoughtBubble === 'function') {
+                showRandomThoughtBubble();
+                updateStatus('Nube de prueba mostrada');
+            } else {
+                updateStatus('Error: Función no encontrada');
+            }
+        }
+
+        function showFirstMessage() {
+            if (typeof showRandomThoughtBubble === 'function') {
+                // Forzar el primer mensaje
+                window.isFirstThoughtBubble = true;
+                showRandomThoughtBubble();
+                updateStatus('Primer mensaje especial mostrado: "Estás en la cima... 🏔️"');
+            } else {
+                updateStatus('Error: Función no encontrada');
+            }
+        }
+
+        function clearBubbles() {
+            const container = document.querySelector('.thought-bubble-container');
+            if (container) {
+                container.innerHTML = '';
+                updateStatus('Nubes limpiadas');
+            }
+        }
+
+        function updateStatus(message) {
+            const status = document.getElementById('status');
+            status.textContent = `Estado: ${message}`;
+            console.log('Status:', message);
+        }
+
+        // Monitor initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                if (typeof CUTE_MESSAGES !== 'undefined') {
+                    updateStatus(`Inicializado correctamente. ${CUTE_MESSAGES.length} mensajes disponibles.`);
+                } else {
+                    updateStatus('Error: Variables no inicializadas');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -71,6 +71,9 @@
     <canvas id="trigger-video-canvas" width="100" height="100"></canvas>
 </button>
 
+<!-- Thought Bubbles Container -->
+<div class="thought-bubble-container"></div>
+
 <!-- Chatbot Styles & Script -->
 <link rel="stylesheet" href="<?= $basePath ?>chatbot/style.css?v=<?= time() ?>">
 <script>
