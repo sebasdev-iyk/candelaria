@@ -1442,54 +1442,80 @@
             const modalBody = document.getElementById('event-modal-body');
             const modalTitle = document.getElementById('event-modal-title');
 
-            modalTitle.textContent = evento.banda;
+            // Hide title in header (will show on image)
+            modalTitle.style.display = 'none';
 
             modalBody.innerHTML = `
-            <div class="dance-details-grid">
-                    <div>
-                        <img src="${evento.imagen}" alt="${evento.banda}" class="dance-image">
-                        <div style="margin-top: 1.5rem;">
-                            <h3>Información del Evento</h3>
-                            <div class="quick-facts">
-                                <div class="info-item">
-                                    <div class="info-label">Fecha</div>
-                                    <div class="info-value">${evento.fecha} • ${evento.dia}</div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">Hora</div>
-                                    <div class="info-value">${evento.hora}</div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">Tipo</div>
-                                    <div class="info-value">${evento.genero}</div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="dance-hero">
+                <img src="${evento.imagen}" 
+                     alt="${evento.banda}" 
+                     class="dance-image"
+                     onerror="this.onerror=null; this.src='https://placehold.co/800x400?text=Evento';">
+                <div class="dance-hero-overlay">
+                    <h1 class="dance-hero-title">${evento.banda}</h1>
+                </div>
+            </div>
+            
+            <div class="dance-content">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="calendar" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Fecha</div>
+                        <div class="info-value">${evento.fecha} • ${evento.dia}</div>
                     </div>
-                    <div>
-                        <div class="modal-section">
-                            <h3>Descripción</h3>
-                            <p style="line-height: 1.6; color: #4b5563;">${evento.description || 'No hay descripción disponible para este evento.'}</p>
-                        </div>
-                        <div class="modal-section">
-                            <h3>Detalles Adicionales</h3>
-                            <div style="background: #f5f3ff; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #e0e7ff;">
-                                <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 1rem;">
-                                    <div class="info-item">
-                                        <div class="info-label">Información Extra</div>
-                                        <div class="info-value">${evento.extra || 'No hay información extra disponible.'}</div>
-                                    </div>
-                                    <div class="info-item" style="margin-top: 1rem;">
-                                        <div class="info-label">Ubicación</div>
-                                        <div class="info-value">${evento.location || 'Puno, Perú'}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="clock" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Hora</div>
+                        <div class="info-value">${evento.hora}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="tag" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Tipo</div>
+                        <div class="info-value">${evento.genero}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label"><i data-lucide="map-pin" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Ubicación</div>
+                        <div class="info-value">${evento.location || 'Puno, Perú'}</div>
                     </div>
                 </div>
+
+                <div class="modal-section">
+                    <h3><i data-lucide="file-text" style="width: 14px; height: 14px;"></i> Descripción</h3>
+                    <p>${evento.description || 'Evento importante de la Festividad Virgen de la Candelaria 2026.'}</p>
+                </div>
+
+                ${evento.extra ? `
+                <div class="modal-section">
+                    <h3><i data-lucide="info" style="width: 14px; height: 14px;"></i> Detalles Adicionales</h3>
+                    <p>${evento.extra}</p>
+                </div>
+                ` : ''}
+
+                <div class="card-actions">
+                    <button class="btn-modal-action btn-modal-live" onclick="window.location.href='../live-platform/index.php#live'">
+                        <span class="live-dot"></span> En Vivo
+                    </button>
+                    <button class="btn-modal-action btn-modal-map" onclick="window.location.href='../live-platform/index.php#map'">
+                        <i data-lucide="map-pin" style="width: 16px; height: 16px; margin-right: 6px;"></i> Ver en Mapa
+                    </button>
+                    <button class="btn-modal-action btn-modal-share" onclick="(function(){
+                        const shareUrl = window.location.origin + window.location.pathname + '#programacion';
+                        if (navigator.share) {
+                            navigator.share({
+                                title: '${evento.banda}',
+                                text: 'Mira este evento en la Festividad Virgen de la Candelaria 2026',
+                                url: shareUrl
+                            }).catch(console.error);
+                        } else {
+                            navigator.clipboard.writeText(shareUrl).then(() => {
+                                alert('¡Enlace copiado al portapapeles!');
+                            }).catch(err => console.error('Error al copiar:', err));
+                        }
+                    })()"><i data-lucide="share-2" style="width: 16px; height: 16px; margin-right: 6px;"></i> Compartir</button>
+                </div>
+            </div>
             `;
 
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
 
             modal.classList.add('active');
         }
@@ -1749,19 +1775,24 @@
             z-index: 1000;
             overflow-y: auto;
             backdrop-filter: blur(12px);
+            /* Better scrolling behavior */
+            -webkit-overflow-scrolling: touch;
         }
 
         .modal.active {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
+            /* Ensure content is centered even when scrolling */
+            min-height: 100vh;
         }
 
         @media (max-width: 768px) {
             .modal.active {
                 padding: 0;
                 align-items: flex-end;
+                min-height: auto;
             }
         }
 
@@ -1770,11 +1801,13 @@
             border-radius: 32px;
             width: 100%;
             max-width: 900px;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow: hidden;
             box-shadow:
                 0 0 0 1px rgba(255, 255, 255, 0.1),
                 0 32px 64px rgba(0, 0, 0, 0.24);
+            /* Ensure modal is centered vertically */
+            margin: auto 0;
         }
 
         @media (max-width: 768px) {

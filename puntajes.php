@@ -110,9 +110,10 @@
         </div>
     </main>
 
-    <footer class="bg-black/50 border-t border-white/5 mt-20 py-8 text-center text-gray-500 text-sm">
-        <p>© 2026 Festividad Virgen de la Candelaria. Todos los derechos reservados.</p>
-    </footer>
+    <?php 
+    $footerDepth = 0;
+    require_once 'includes/standard-footer.php'; 
+    ?>
 
     <script>
         let allScores = [];

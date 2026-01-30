@@ -198,6 +198,13 @@ $mainImg = '../' . $baseImg;
                 </span>
             </nav>
 
+            <!-- Back Button -->
+            <div class="mb-6">
+                <a href="index.php" class="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-all shadow-sm hover:shadow-md">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    Volver a la Tienda
+                </a>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
 
                 <!-- Galería de Imágenes -->

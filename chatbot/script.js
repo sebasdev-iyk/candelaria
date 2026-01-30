@@ -9,6 +9,7 @@
 let chatbotWidget, messageInput, chatMessages, typingIndicator, triggerBtn;
 let videoSource, mainCanvas, triggerCanvas;
 let mainCtx, triggerCtx;
+let thoughtBubbleContainer, thoughtBubbleInterval;
 
 // Configuración de Video
 const HD_WIDTH = 1920;
@@ -19,6 +20,40 @@ const TOLERANCE = { r: 40, g: 40, b: 40 }; // Tolerancia para fondo NEGRO
 // Use global base path if available (defined in grok-chatbot.php), otherwise try to guess or use relative
 const BASE_PATH = window.CANDELARIA_BASE_PATH || '';
 const API_URL = BASE_PATH + 'chatbot/api/chat.php';
+
+// Mensajes cute para las burbujas de pensamiento
+const CUTE_MESSAGES = [
+    "Estás en la cima... 🏔️",
+  "¿Vienes por la Candelaria o te quedas por mí? 😉🎭",
+  "Entre danzas y sonrisas… ¿bailamos una charla? 💃😏",
+  "La Candelaria brilla, pero tu visita brilla más ✨",
+  "Oye… ¿y si empezamos con un saludo coqueto? 😌",
+  "Dicen que quien pregunta aquí, vuelve enamorado 💜🔥",
+  "Cuidado… este chat tiene pasos prohibidos 💃😜",
+  "Si la Candelaria es pasión, este chat también 🎉😉",
+  "¿Buscas información o una buena conversación? Yo doy ambas 😏",
+  "Te advierto algo: aquí se baila, se siente y se conversa 😄🎶",
+  "Entre trajes, música y cultura… yo soy tu mejor guía 😎🗺️",
+  "La fiesta comienza… y yo también estoy listo 🎊😏",
+  "¿Sabías que la Candelaria enamora? Yo solo continúo la tradición 💘",
+  "Si te gusta la fiesta, este chat te va a encantar 😍",
+  "Danzas, historia… y un poquito de coqueteo cultural 💃✨",
+  "No soy danza, pero sé cómo seguir tu ritmo 😜🎵",
+  "Aquí no solo informamos… también sacamos sonrisas 😉",
+  "¿Listo para vivir la Candelaria desde el chat? 🎭🔥",
+  "Pregunta con confianza… prometo responder bonito 😌",
+  "Si Puno es pasión, yo soy el detalle encantador 😏",
+  "Este chat tiene más ritmo que una morenada 🎶😄",
+  "La Virgen nos une… la conversación nos acerca 💜✨",
+  "¿Te cuento un dato o te conquisto con cultura? 😜📚",
+  "Advertencia: este asistente baila y conversa a la vez 💃🤖",
+  "Entre folklore y encanto… aquí estoy para ti 😉",
+  "Si buscas Candelaria, llegaste al chat correcto 😎🎉"
+];
+
+
+// Variable para controlar si es la primera vez
+let isFirstThoughtBubble = true;
 
 // ============================================
 // INICIALIZACIÓN
@@ -88,6 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
         chatForm.onsubmit = submitChat;
     }
 
+    // 4. Inicializar Burbujas de Pensamiento
+    initThoughtBubbles();
+
     console.log('✅ Inicialización completa');
 });
 
@@ -128,6 +166,9 @@ window.toggleChatbot = function () {
             }, 100);
         }
 
+        // Detener burbujas de pensamiento
+        stopThoughtBubbles();
+
         // Reproducir video
         if (videoSource && videoSource.paused) {
             videoSource.play().catch(e => console.log('Autoplay bloqueado:', e));
@@ -155,6 +196,11 @@ window.toggleChatbot = function () {
             triggerBtn.style.opacity = '1';
             triggerBtn.style.pointerEvents = 'auto';
         }
+
+        // Reanudar burbujas de pensamiento
+        setTimeout(() => {
+            resumeThoughtBubbles();
+        }, 1000);
     }
 };
 
@@ -309,3 +355,135 @@ function hideTyping() {
 }
 
 console.log('✅ Script cargado completamente');
+
+// ============================================
+// THOUGHT BUBBLES SYSTEM
+// ============================================
+function initThoughtBubbles() {
+    console.log('🫧 Inicializando burbujas de pensamiento...');
+    
+    // Crear contenedor de burbujas si no existe
+    thoughtBubbleContainer = document.querySelector('.thought-bubble-container');
+    if (!thoughtBubbleContainer) {
+        thoughtBubbleContainer = document.createElement('div');
+        thoughtBubbleContainer.className = 'thought-bubble-container';
+        document.body.appendChild(thoughtBubbleContainer);
+    }
+
+    // Asegurar que el primer mensaje sea especial
+    isFirstThoughtBubble = true;
+
+    // Iniciar ciclo de burbujas
+    startThoughtBubbleCycle();
+}
+
+function startThoughtBubbleCycle() {
+    // Mostrar primera burbuja después de 3 segundos
+    setTimeout(() => {
+        showRandomThoughtBubble();
+    }, 3000);
+
+    // Continuar mostrando burbujas cada 8-15 segundos
+    thoughtBubbleInterval = setInterval(() => {
+        // Solo mostrar si el chatbot no está abierto
+        if (!chatbotWidget || !chatbotWidget.classList.contains('active')) {
+            showRandomThoughtBubble();
+        }
+    }, getRandomInterval(8000, 15000));
+}
+
+function showRandomThoughtBubble() {
+    if (!thoughtBubbleContainer) return;
+
+    // Limpiar burbujas anteriores
+    thoughtBubbleContainer.innerHTML = '';
+
+    // Seleccionar mensaje - primer mensaje siempre es "Estás en la cima..."
+    let randomMessage;
+    if (isFirstThoughtBubble) {
+        randomMessage = CUTE_MESSAGES[0]; // "Estás en la cima... 🏔️"
+        isFirstThoughtBubble = false;
+        console.log('💭 Mostrando primer mensaje especial');
+    } else {
+        // Seleccionar mensaje aleatorio (excluyendo el primero)
+        const messageIndex = Math.floor(Math.random() * (CUTE_MESSAGES.length - 1)) + 1;
+        randomMessage = CUTE_MESSAGES[messageIndex];
+    }
+    
+    // Seleccionar posición aleatoria
+    const positions = ['position-1', 'position-2', 'position-3', 'position-4', 'position-5'];
+    const randomPosition = positions[Math.floor(Math.random() * positions.length)];
+
+    // Crear la nube de pensamiento completa
+    const cloud = document.createElement('div');
+    cloud.className = `thought-cloud ${randomPosition}`;
+
+    // Crear la burbuja principal
+    const mainBubble = document.createElement('div');
+    mainBubble.className = 'cloud-main';
+    mainBubble.textContent = randomMessage;
+
+    // Crear las burbujas pequeñas (cola de la nube)
+    const bubble1 = document.createElement('div');
+    bubble1.className = 'cloud-bubble cloud-bubble-1';
+
+    const bubble2 = document.createElement('div');
+    bubble2.className = 'cloud-bubble cloud-bubble-2';
+
+    const bubble3 = document.createElement('div');
+    bubble3.className = 'cloud-bubble cloud-bubble-3';
+
+    // Ensamblar la nube
+    cloud.appendChild(mainBubble);
+    cloud.appendChild(bubble1);
+    cloud.appendChild(bubble2);
+    cloud.appendChild(bubble3);
+
+    // Hacer la nube clickeable para abrir el chat
+    cloud.addEventListener('click', () => {
+        console.log('💭 Nube clickeada, abriendo chat...');
+        if (!chatbotWidget || !chatbotWidget.classList.contains('active')) {
+            toggleChatbot();
+        }
+    });
+
+    // Agregar al contenedor
+    thoughtBubbleContainer.appendChild(cloud);
+
+    // Iniciar la animación de flotación después de que se dibuje
+    setTimeout(() => {
+        cloud.classList.add('animate');
+    }, 100);
+
+    // Remover después de la animación completa
+    setTimeout(() => {
+        if (cloud.parentNode) {
+            cloud.parentNode.removeChild(cloud);
+        }
+    }, 5500); // 5s de animación + 0.5s de margen
+
+    console.log(`💭 Nube mostrada: "${randomMessage}" en ${randomPosition}`);
+}
+
+function getRandomInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function stopThoughtBubbles() {
+    if (thoughtBubbleInterval) {
+        clearInterval(thoughtBubbleInterval);
+        thoughtBubbleInterval = null;
+    }
+    
+    if (thoughtBubbleContainer) {
+        thoughtBubbleContainer.innerHTML = '';
+    }
+}
+
+function resumeThoughtBubbles() {
+    if (!thoughtBubbleInterval) {
+        // Reiniciar para mostrar el primer mensaje especial
+        isFirstThoughtBubble = true;
+        startThoughtBubbleCycle();
+    }
+}

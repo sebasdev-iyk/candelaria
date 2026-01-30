@@ -2020,7 +2020,7 @@
                     </div>
 
                     <div class="text-center pt-12 reveal-up">
-                        <a href="#"
+                        <a href="#" id="palmares-completo-btn"
                             class="inline-flex items-center gap-2 text-candelaria-purple hover:text-purple-800 transition-colors border-b border-candelaria-purple pb-1 uppercase tracking-widest text-sm font-heading font-bold">
                             Ver Palmarés Completo (1960 - Hoy)
                         </a>
@@ -3357,6 +3357,11 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
             }
         }
 
+        // 10. Lógica para Palmarés Completo - Coming Soon
+        function showPalmaresComingSoon() {
+            showToast('📋 Palmarés Completo (1960 - Hoy) - ¡Disponible muy pronto! Estamos preparando una experiencia completa con todos los ganadores históricos.');
+        }
+
         // Ejecución inmediata para evitar flicker
         (function () {
             if (document.readyState === 'loading') {
@@ -3371,6 +3376,15 @@ En el Altiplano, la figura de la Virgen de la Candelaria se fusionó con la de l
         window.onload = () => {
             lucide.createIcons();
             syncCardImages(); // Sincronizar imágenes de portada
+
+            // Agregar event listener para el botón de Palmarés Completo
+            const palmaresBtn = document.getElementById('palmares-completo-btn');
+            if (palmaresBtn) {
+                palmaresBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showPalmaresComingSoon();
+                });
+            }
 
             // Animaciones iniciales solo en el contenido activo
             const activeTab = localStorage.getItem('activeCulturaTab') || 'historia';

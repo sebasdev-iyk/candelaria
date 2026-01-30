@@ -88,6 +88,184 @@
 }
 
 /* ============================================
+   THOUGHT BUBBLES (BURBUJAS DE PENSAMIENTO)
+   ============================================ */
+.thought-bubble-container {
+    position: fixed;
+    bottom: 0px;
+    left: 20px;
+    width: 400px;
+    height: 300px;
+    pointer-events: none;
+    z-index: 2147483639;
+    overflow: visible;
+}
+
+/* Nube de pensamiento principal */
+.thought-cloud {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 2147483638;
+}
+
+/* Burbuja principal de la nube */
+.cloud-main {
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(76, 29, 149, 0.3);
+    border-radius: 25px;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4c1d95;
+    box-shadow: 0 8px 32px rgba(76, 29, 149, 0.2);
+    max-width: 160px;
+    text-align: center;
+    line-height: 1.4;
+    font-family: 'Montserrat', sans-serif;
+    transform: scale(0);
+    animation: cloudMainGrow 0.6s ease-out forwards;
+    animation-delay: 0.8s;
+}
+
+/* Burbujas pequeñas que forman la cola de la nube */
+.cloud-bubble {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(76, 29, 149, 0.25);
+    border-radius: 50%;
+    box-shadow: 0 4px 16px rgba(76, 29, 149, 0.15);
+    transform: scale(0);
+}
+
+.cloud-bubble-1 {
+    width: 20px;
+    height: 20px;
+    bottom: -25px;
+    left: 25px;
+    animation: cloudBubbleGrow 0.4s ease-out forwards;
+    animation-delay: 0.2s;
+}
+
+.cloud-bubble-2 {
+    width: 14px;
+    height: 14px;
+    bottom: -35px;
+    left: 15px;
+    animation: cloudBubbleGrow 0.4s ease-out forwards;
+    animation-delay: 0.4s;
+}
+
+.cloud-bubble-3 {
+    width: 8px;
+    height: 8px;
+    bottom: -42px;
+    left: 8px;
+    animation: cloudBubbleGrow 0.4s ease-out forwards;
+    animation-delay: 0.6s;
+}
+
+/* Animaciones de crecimiento */
+@keyframes cloudMainGrow {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes cloudBubbleGrow {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Animación completa de la nube */
+@keyframes thoughtCloudFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    
+    15% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    
+    85% {
+        opacity: 1;
+        transform: translateY(-15px);
+    }
+    
+    100% {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+}
+
+/* Efecto hover para la nube completa */
+.thought-cloud:hover .cloud-main {
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba(76, 29, 149, 0.3);
+    background: rgba(255, 255, 255, 0.98);
+    border-color: rgba(76, 29, 149, 0.4);
+}
+
+.thought-cloud:hover .cloud-bubble {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(76, 29, 149, 0.2);
+}
+
+/* Aplicar animación flotante a toda la nube */
+.thought-cloud.animate {
+    animation: thoughtCloudFloat 5s ease-in-out forwards;
+}
+
+/* Posiciones aleatorias para las nubes */
+.thought-cloud.position-1 {
+    top: 50px;
+    left: 200px;
+}
+
+.thought-cloud.position-2 {
+    top: 80px;
+    left: 120px;
+}
+
+.thought-cloud.position-3 {
+    top: 30px;
+    left: 280px;
+}
+
+.thought-cloud.position-4 {
+    top: 100px;
+    left: 250px;
+}
+
+.thought-cloud.position-5 {
+    top: 60px;
+    left: 160px;
+}
+
+/* ============================================
    AVATAR GRANDE (OCULTO - NO TAPA CONVERSACIÓN)
    ============================================ */
 .video-avatar-container {
@@ -399,6 +577,66 @@
         height: 180px;
     }
 
+    .thought-bubble-container {
+        left: 10px;
+        bottom: 10px;
+        width: 300px;
+        height: 220px;
+    }
+
+    .cloud-main {
+        font-size: 11px;
+        padding: 8px 12px;
+        max-width: 120px;
+        border-radius: 20px;
+    }
+
+    .cloud-bubble-1 {
+        width: 16px;
+        height: 16px;
+        bottom: -20px;
+        left: 20px;
+    }
+
+    .cloud-bubble-2 {
+        width: 12px;
+        height: 12px;
+        bottom: -28px;
+        left: 12px;
+    }
+
+    .cloud-bubble-3 {
+        width: 6px;
+        height: 6px;
+        bottom: -34px;
+        left: 6px;
+    }
+
+    .thought-cloud.position-1 {
+        top: 40px;
+        left: 150px;
+    }
+
+    .thought-cloud.position-2 {
+        top: 60px;
+        left: 100px;
+    }
+
+    .thought-cloud.position-3 {
+        top: 20px;
+        left: 200px;
+    }
+
+    .thought-cloud.position-4 {
+        top: 80px;
+        left: 180px;
+    }
+
+    .thought-cloud.position-5 {
+        top: 50px;
+        left: 130px;
+    }
+
     .video-avatar-container {
         display: none !important;
         /* Ocultar avatar en móvil para dar más espacio */
@@ -429,6 +667,66 @@
     .candelaria-bot-trigger {
         width: 100px;
         height: 140px;
+    }
+
+    .thought-bubble-container {
+        left: 5px;
+        bottom: 5px;
+        width: 250px;
+        height: 180px;
+    }
+
+    .cloud-main {
+        font-size: 10px;
+        padding: 6px 10px;
+        max-width: 100px;
+        border-radius: 18px;
+    }
+
+    .cloud-bubble-1 {
+        width: 14px;
+        height: 14px;
+        bottom: -16px;
+        left: 16px;
+    }
+
+    .cloud-bubble-2 {
+        width: 10px;
+        height: 10px;
+        bottom: -22px;
+        left: 10px;
+    }
+
+    .cloud-bubble-3 {
+        width: 5px;
+        height: 5px;
+        bottom: -27px;
+        left: 5px;
+    }
+
+    .thought-cloud.position-1 {
+        top: 30px;
+        left: 120px;
+    }
+
+    .thought-cloud.position-2 {
+        top: 50px;
+        left: 80px;
+    }
+
+    .thought-cloud.position-3 {
+        top: 15px;
+        left: 160px;
+    }
+
+    .thought-cloud.position-4 {
+        top: 65px;
+        left: 140px;
+    }
+
+    .thought-cloud.position-5 {
+        top: 40px;
+        left: 100px;
     }
 
     .bot-info h1 {
