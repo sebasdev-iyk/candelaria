@@ -1663,10 +1663,12 @@
                         <div class="info-label"><i data-lucide="calendar" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Día Concurso</div>
                         <div class="info-value">${diaConcursoValue}</div>
                     </div>
+                    ${(danza.categoria || '').toLowerCase().includes('autocton') ? '' : `
                     <div class="info-card">
                         <div class="info-label"><i data-lucide="calendar-check" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Día Veneración</div>
                         <div class="info-value">${diaVeneracionValue}</div>
                     </div>
+                    `}
                     <div class="info-card">
                         <div class="info-label"><i data-lucide="star" style="width: 12px; height: 12px; display: inline-block; margin-right: 4px;"></i>Puntaje Estadio</div>
                         <div class="info-value">${puntajeEstadioValue}</div>
