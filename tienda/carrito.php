@@ -22,10 +22,18 @@ ini_set('display_errors', 0);
     ?>
 
     <div class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-black text-gray-900 mb-8 flex items-center gap-3">
-            <i data-lucide="shopping-cart" class="w-8 h-8 text-purple-600"></i>
-            Mi Carrito de Compras
-        </h1>
+        <div class="flex items-center justify-between mb-8">
+            <h1 class="text-3xl font-black text-gray-900 flex items-center gap-3">
+                <i data-lucide="shopping-cart" class="w-8 h-8 text-purple-600"></i>
+                Mi Carrito de Compras
+            </h1>
+            
+            <!-- Back Button -->
+            <button onclick="window.history.back()" class="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-all shadow-sm hover:shadow-md">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                <span class="hidden sm:inline">Seguir Comprando</span>
+            </button>
+        </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 hidden" id="cart-content">
             <!-- Left: Cart Items -->
