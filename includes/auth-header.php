@@ -142,6 +142,13 @@ GSDK;
                         <p class="mt-8 text-center text-xs text-gray-500">
                             Al continuar, aceptas nuestros <a href="{$baseUrl}terms.php" target="_blank" class="font-semibold text-purple-600 hover:text-purple-500">Términos de Servicio</a> y <a href="{$baseUrl}privacy.php" target="_blank" class="font-semibold text-purple-600 hover:text-purple-500">Política de Privacidad</a>.
                         </p>
+                        
+                        <!-- "Go back" link - shown when opened from store -->
+                        <p id="auth-modal-back-link" class="mt-4 text-center hidden">
+                            <button type="button" onclick="closeAuthModal()" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">
+                                Ahora no, volver a la tienda
+                            </button>
+                        </p>
                     </div>
                 </div>
             </div>

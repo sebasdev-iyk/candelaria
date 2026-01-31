@@ -44,6 +44,14 @@ window.Tienda = {
 
     addItem(productId, quantity = 1, productDetails = null) {
         console.log(`🛒 [DEBUG - Tienda] Adding Item: ID=${productId}, Qty=${quantity}`, productDetails);
+
+        // Check if user is authenticated
+        if (!this.isUserAuthenticated()) {
+            console.log("🛒 [DEBUG - Tienda] User not authenticated, showing login modal");
+            this.showLoginRequiredModal();
+            return;
+        }
+
         const existing = this.cart.find(item => item.id === productId);
 
         if (existing) {
@@ -61,6 +69,101 @@ window.Tienda = {
         this.saveCart();
         console.log("🛒 [DEBUG - Tienda] Cart saved:", this.cart);
         this.showFeedback('Producto agregado al carrito');
+    },
+
+    /**
+     * Check if user is authenticated
+     */
+    isUserAuthenticated() {
+        // Check multiple sources for authentication state
+        // 1. Global currentUser object (set by auth-header.js)
+        if (window.currentUser && window.currentUser.id) {
+            return true;
+        }
+
+        // 2. Check localStorage for cached user
+        const cachedUser = localStorage.getItem('candelaria_user');
+        if (cachedUser) {
+            try {
+                const user = JSON.parse(cachedUser);
+                if (user && user.id) {
+                    return true;
+                }
+            } catch (e) { }
+        }
+
+        // 3. Check Supabase cookie
+        const sbToken = this.getSimpleToken();
+        if (sbToken && sbToken.length > 10) {
+            return true;
+        }
+
+        return false;
+    },
+
+    /**
+     * Show login required modal for cart
+     */
+    showLoginRequiredModal() {
+        // Update modal header text temporarily
+        const modalTitle = document.querySelector('#auth-modal h2');
+        const modalSubtitle = document.querySelector('#auth-modal h2 + p');
+        const backLink = document.getElementById('auth-modal-back-link');
+
+        if (modalTitle) {
+            modalTitle.dataset.originalText = modalTitle.textContent;
+            modalTitle.textContent = 'Inicia sesión para agregar al carrito';
+        }
+        if (modalSubtitle) {
+            modalSubtitle.dataset.originalText = modalSubtitle.textContent;
+            modalSubtitle.textContent = 'Accede a precios exclusivos y compra segura';
+        }
+
+        // Show "go back to store" link
+        if (backLink) {
+            backLink.classList.remove('hidden');
+        }
+
+        // Setup listener to restore original text when modal closes
+        const modal = document.getElementById('auth-modal');
+        if (modal) {
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        if (modal.classList.contains('hidden')) {
+                            // Modal was closed, restore original text
+                            if (modalTitle && modalTitle.dataset.originalText) {
+                                modalTitle.textContent = modalTitle.dataset.originalText;
+                            }
+                            if (modalSubtitle && modalSubtitle.dataset.originalText) {
+                                modalSubtitle.textContent = modalSubtitle.dataset.originalText;
+                            }
+                            // Hide back link again
+                            if (backLink) {
+                                backLink.classList.add('hidden');
+                            }
+                            // Disconnect observer
+                            observer.disconnect();
+                        }
+                    }
+                });
+            });
+            observer.observe(modal, { attributes: true });
+        }
+
+        // Open the auth modal
+        if (typeof openAuthModal === 'function') {
+            openAuthModal();
+        } else if (window.openAuthModal) {
+            window.openAuthModal();
+        } else {
+            // Fallback: show toast with message
+            if (window.showToast) {
+                window.showToast('Debes iniciar sesión para agregar productos al carrito', 'warning');
+            } else {
+                alert('Debes iniciar sesión para agregar productos al carrito');
+            }
+        }
     },
 
     removeItem(productId) {
