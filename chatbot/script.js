@@ -24,31 +24,31 @@ const API_URL = BASE_PATH + 'chatbot/api/chat.php';
 // Mensajes cute para las burbujas de pensamiento
 const CUTE_MESSAGES = [
     "Estás en la cima... 🏔️",
-  "¿Vienes por la Candelaria o te quedas por mí? 😉🎭",
-  "Entre danzas y sonrisas… ¿bailamos una charla? 💃😏",
-  "La Candelaria brilla, pero tu visita brilla más ✨",
-  "Oye… ¿y si empezamos con un saludo coqueto? 😌",
-  "Dicen que quien pregunta aquí, vuelve enamorado 💜🔥",
-  "Cuidado… este chat tiene pasos prohibidos 💃😜",
-  "Si la Candelaria es pasión, este chat también 🎉😉",
-  "¿Buscas información o una buena conversación? Yo doy ambas 😏",
-  "Te advierto algo: aquí se baila, se siente y se conversa 😄🎶",
-  "Entre trajes, música y cultura… yo soy tu mejor guía 😎🗺️",
-  "La fiesta comienza… y yo también estoy listo 🎊😏",
-  "¿Sabías que la Candelaria enamora? Yo solo continúo la tradición 💘",
-  "Si te gusta la fiesta, este chat te va a encantar 😍",
-  "Danzas, historia… y un poquito de coqueteo cultural 💃✨",
-  "No soy danza, pero sé cómo seguir tu ritmo 😜🎵",
-  "Aquí no solo informamos… también sacamos sonrisas 😉",
-  "¿Listo para vivir la Candelaria desde el chat? 🎭🔥",
-  "Pregunta con confianza… prometo responder bonito 😌",
-  "Si Puno es pasión, yo soy el detalle encantador 😏",
-  "Este chat tiene más ritmo que una morenada 🎶😄",
-  "La Virgen nos une… la conversación nos acerca 💜✨",
-  "¿Te cuento un dato o te conquisto con cultura? 😜📚",
-  "Advertencia: este asistente baila y conversa a la vez 💃🤖",
-  "Entre folklore y encanto… aquí estoy para ti 😉",
-  "Si buscas Candelaria, llegaste al chat correcto 😎🎉"
+    "¿Vienes por la Candelaria o te quedas por mí? 😉🎭",
+    "Entre danzas y sonrisas… ¿bailamos una charla? 💃😏",
+    "La Candelaria brilla, pero tu visita brilla más ✨",
+    "Oye… ¿y si empezamos con un saludo coqueto? 😌",
+    "Dicen que quien pregunta aquí, vuelve enamorado 💜🔥",
+    "Cuidado… este chat tiene pasos prohibidos 💃😜",
+    "Si la Candelaria es pasión, este chat también 🎉😉",
+    "¿Buscas información o una buena conversación? Yo doy ambas 😏",
+    "Te advierto algo: aquí se baila, se siente y se conversa 😄🎶",
+    "Entre trajes, música y cultura… yo soy tu mejor guía 😎🗺️",
+    "La fiesta comienza… y yo también estoy listo 🎊😏",
+    "¿Sabías que la Candelaria enamora? Yo solo continúo la tradición 💘",
+    "Si te gusta la fiesta, este chat te va a encantar 😍",
+    "Danzas, historia… y un poquito de coqueteo cultural 💃✨",
+    "No soy danza, pero sé cómo seguir tu ritmo 😜🎵",
+    "Aquí no solo informamos… también sacamos sonrisas 😉",
+    "¿Listo para vivir la Candelaria desde el chat? 🎭🔥",
+    "Pregunta con confianza… prometo responder bonito 😌",
+    "Si Puno es pasión, yo soy el detalle encantador 😏",
+    "Este chat tiene más ritmo que una morenada 🎶😄",
+    "La Virgen nos une… la conversación nos acerca 💜✨",
+    "¿Te cuento un dato o te conquisto con cultura? 😜📚",
+    "Advertencia: este asistente baila y conversa a la vez 💃🤖",
+    "Entre folklore y encanto… aquí estoy para ti 😉",
+    "Si buscas Candelaria, llegaste al chat correcto 😎🎉"
 ];
 
 
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 4. Inicializar Burbujas de Pensamiento
-    initThoughtBubbles();
+    // DESACTIVADO: initThoughtBubbles(); // Burbujas flotantes desactivadas
 
     console.log('✅ Inicialización completa');
 });
@@ -198,9 +198,10 @@ window.toggleChatbot = function () {
         }
 
         // Reanudar burbujas de pensamiento
-        setTimeout(() => {
-            resumeThoughtBubbles();
-        }, 1000);
+        // DESACTIVADO: Burbujas flotantes desactivadas
+        // setTimeout(() => {
+        //     resumeThoughtBubbles();
+        // }, 1000);
     }
 };
 
@@ -361,7 +362,7 @@ console.log('✅ Script cargado completamente');
 // ============================================
 function initThoughtBubbles() {
     console.log('🫧 Inicializando burbujas de pensamiento...');
-    
+
     // Crear contenedor de burbujas si no existe
     thoughtBubbleContainer = document.querySelector('.thought-bubble-container');
     if (!thoughtBubbleContainer) {
@@ -409,7 +410,7 @@ function showRandomThoughtBubble() {
         const messageIndex = Math.floor(Math.random() * (CUTE_MESSAGES.length - 1)) + 1;
         randomMessage = CUTE_MESSAGES[messageIndex];
     }
-    
+
     // Seleccionar posición aleatoria
     const positions = ['position-1', 'position-2', 'position-3', 'position-4', 'position-5'];
     const randomPosition = positions[Math.floor(Math.random() * positions.length)];
@@ -474,7 +475,7 @@ function stopThoughtBubbles() {
         clearInterval(thoughtBubbleInterval);
         thoughtBubbleInterval = null;
     }
-    
+
     if (thoughtBubbleContainer) {
         thoughtBubbleContainer.innerHTML = '';
     }
