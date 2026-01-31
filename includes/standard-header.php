@@ -213,7 +213,7 @@ function getActiveClass($page, $activePage)
 
     .btn-live {
         position: relative;
-        background: linear-gradient(135deg, #16a34a, #15803d);
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
         color: white;
         padding: 10px 24px;
         border-radius: 30px;
@@ -223,7 +223,7 @@ function getActiveClass($page, $activePage)
         display: flex;
         align-items: center;
         gap: 10px;
-        box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4);
+        box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
         animation: pulseLive 2s infinite;
     }
 
@@ -251,11 +251,11 @@ function getActiveClass($page, $activePage)
 
         0%,
         100% {
-            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4);
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
         }
 
         50% {
-            box-shadow: 0 4px 25px rgba(22, 163, 74, 0.7), 0 0 30px rgba(22, 163, 74, 0.4);
+            box-shadow: 0 4px 25px rgba(220, 38, 38, 0.7), 0 0 30px rgba(220, 38, 38, 0.4);
         }
     }
 
