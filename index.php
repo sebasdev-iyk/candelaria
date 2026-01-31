@@ -1989,8 +1989,8 @@
 
 
 
-    // Nuevo contador con meses y actualización de fecha a 2026
-    const eventDate = new Date("February 2, 2026 00:00:00").getTime();
+    // Nuevo contador con meses y actualización de fecha a 2025
+    const eventDate = new Date("January 31, 2025 07:00:00").getTime();
     const countdownElement = document.getElementById('countdown');
 
     function updateCountdown() {
