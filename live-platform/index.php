@@ -410,14 +410,31 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
             <input type="hidden" id="stream-id" value="<?= htmlspecialchars($currentStream['id'] ?? 'default') ?>">
 
             <div class="chat-input-area">
-                <input type="text" id="chat-input" class="chat-input text-white" placeholder="Enviar mensaje..."
-                    maxlength="200">
-                <div class="flex justify-between items-center mt-2 px-1">
-                    <div id="char-counter" class="text-xs text-gray-500">0/200</div>
-                    <button class="text-candelaria-gold hover:text-white transition-colors">
-                        <i class="fas fa-smile text-lg"></i>
-                    </button>
-                </div>
+                <?php
+                $isLoggedIn = isset($_COOKIE['sb-access-token']) && !empty($_COOKIE['sb-access-token']);
+                if ($isLoggedIn):
+                    ?>
+                    <input type="text" id="chat-input" class="chat-input text-white" placeholder="Enviar mensaje..."
+                        maxlength="200">
+                    <div class="flex justify-between items-center mt-2 px-1">
+                        <div id="char-counter" class="text-xs text-gray-500">0/200</div>
+                        <button class="text-candelaria-gold hover:text-white transition-colors">
+                            <i class="fas fa-smile text-lg"></i>
+                        </button>
+                    </div>
+                <?php else: ?>
+                    <div id="login-prompt" class="text-center py-4">
+                        <p class="text-gray-400 text-sm mb-3">
+                            <i class="fas fa-lock mr-2"></i>Inicia sesión para poder chatear
+                        </p>
+                        <button onclick="openAuthModal()"
+                            class="bg-candelaria-gold text-candelaria-purple px-4 py-2 rounded-lg font-bold text-sm hover:bg-yellow-400 transition-colors">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+                        </button>
+                    </div>
+                    <!-- Hidden input for JS compatibility -->
+                    <input type="hidden" id="chat-input" disabled>
+                <?php endif; ?>
             </div>
         </aside>
     </div>
