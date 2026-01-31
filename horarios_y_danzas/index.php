@@ -719,8 +719,8 @@
             if (!container) return;
 
             // 1. Calcular Tiempos
-            // Fecha Base: Sábado 31 de Enero 2026, 10:00 AM
-            const baseDate = new Date('2026-01-31T10:00:00-05:00'); // Hora Puno/Perú
+            // Fecha Base: Sábado 31 de Enero 2025, 7:00 AM
+            const baseDate = new Date('2025-01-31T07:00:00-05:00'); // Hora Puno/Perú
             const slotDuration = 10; // minutos
 
             // Simular fecha actual para pruebas si no estamos en 2026 (Comentar para producción real)
