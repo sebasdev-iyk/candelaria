@@ -357,6 +357,16 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
                         </div>
                     </div>
 
+                    <!-- Search Bar -->
+                    <div class="mb-3">
+                        <div class="relative">
+                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="scores-search" placeholder="Buscar danza..."
+                                class="w-full bg-gray-800 border border-gray-600 text-white pl-10 pr-4 py-2 rounded-lg focus:outline-none focus:border-purple-500 text-sm"
+                                oninput="searchScores(this.value)">
+                        </div>
+                    </div>
+
                     <!-- Filter Bar for Autoctonos -->
                     <div id="filter-bar-autoctonos" class="flex flex-wrap gap-2 mb-4 items-center">
                         <span class="text-gray-400 text-sm"><i class="fas fa-filter mr-1"></i>Filtrar:</span>

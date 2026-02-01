@@ -392,6 +392,7 @@ let REAL_SCORES = [];
 let currentDateFilter = 'all'; // 'all', '2026-01-31', '2026-02-01'
 let currentOrderBy = 'score'; // 'score' or 'orden_concurso'
 let currentScoreType = 'autoctonos';
+let currentSearchQuery = ''; // Search filter
 
 // DEPURACIÓN PROFUNDA
 function debugScores(msg, data = null) {
@@ -812,13 +813,23 @@ function renderScores(type) {
         scores.sort((a, b) => b.final - a.final);
     }
 
+    // FILTER: By search query
+    if (currentSearchQuery && currentSearchQuery.trim() !== '') {
+        const query = currentSearchQuery.toLowerCase().trim();
+        scores = scores.filter(s => (s.name || '').toLowerCase().includes(query));
+        debugScores('Filtered by search', { query, count: scores.length });
+    }
+
     debugScores(`Filtered items: ${scores.length}`);
 
     if (scores.length === 0) {
+        const message = currentSearchQuery
+            ? `No se encontraron resultados para "${currentSearchQuery}"`
+            : 'No hay puntajes registrados para esta categoría.';
         listContainer.innerHTML = `
             <div class="p-8 text-center text-gray-400">
                 <i class="fas fa-info-circle text-2xl mb-2"></i>
-                <p>No hay puntajes registrados para esta categoría.</p>
+                <p>${message}</p>
             </div>
          `;
         return;
@@ -839,11 +850,17 @@ function renderScores(type) {
         // Show order number or rank based on mode
         const displayNumber = currentOrderBy === 'orden_concurso' ? item.orden_concurso : rank;
 
+        // Create unique ID for this row
+        const rowId = `score-row-${index}`;
+        const nameId = `score-name-${index}`;
+
         const html = `
-            <div class="grid grid-cols-12 p-3 md:p-5 items-center transition-colors ${rowBg}">
-                <div class="col-span-4 md:col-span-5 flex items-center gap-2 md:gap-4 pl-1 md:pl-4">
-                    <span class="text-lg md:text-2xl font-bold font-heading w-6 md:w-8 ${rankColor}">#${displayNumber}</span>
-                    <span class="font-medium text-gray-100 text-xs md:text-base truncate">${item.name}</span>
+            <div id="${rowId}" class="score-row grid grid-cols-12 p-3 md:p-5 items-center transition-colors cursor-pointer ${rowBg}" onclick="toggleScoreName('${nameId}')">
+                <div class="col-span-4 md:col-span-5 flex items-center gap-2 md:gap-4 pl-1 md:pl-4 min-w-0">
+                    <span class="text-lg md:text-2xl font-bold font-heading w-6 md:w-8 flex-shrink-0 ${rankColor}">#${displayNumber}</span>
+                    <div class="min-w-0 flex-1">
+                        <span id="${nameId}" class="font-medium text-gray-100 text-xs md:text-base score-name-truncate" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</span>
+                    </div>
                 </div>
                 <div class="col-span-2 text-center text-gray-400 font-mono text-xs md:text-sm bg-black/20 py-1 rounded mx-1">
                     ${item.parada.toFixed(2)}
@@ -860,4 +877,32 @@ function renderScores(type) {
         `;
         listContainer.insertAdjacentHTML('beforeend', html);
     });
+}
+
+// Escape HTML for safety
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Toggle score name expansion
+window.toggleScoreName = function (nameId) {
+    const nameEl = document.getElementById(nameId);
+    if (!nameEl) return;
+
+    if (nameEl.classList.contains('score-name-truncate')) {
+        nameEl.classList.remove('score-name-truncate');
+        nameEl.classList.add('score-name-expanded');
+    } else {
+        nameEl.classList.remove('score-name-expanded');
+        nameEl.classList.add('score-name-truncate');
+    }
+}
+
+// Search scores function
+window.searchScores = function (query) {
+    currentSearchQuery = query;
+    renderScores(currentScoreType);
 }
