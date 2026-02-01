@@ -329,25 +329,26 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
             </div>
 
             <!-- VIEW: PUNTAJES (Initially Hidden) -->
-            <div id="view-scores" class="hidden h-full flex flex-col overflow-y-auto custom-scrollbar p-6 bg-gray-900">
+            <div id="view-scores"
+                class="hidden h-full flex flex-col overflow-y-auto custom-scrollbar p-4 md:p-6 bg-gray-900">
                 <div class="max-w-6xl mx-auto w-full">
                     <!-- Header -->
-                    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-6">
-                        <h2 class="text-3xl font-bold font-heading text-white flex items-center gap-3">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-4 md:mb-6 gap-4">
+                        <h2 class="text-xl md:text-3xl font-bold font-heading text-white flex items-center gap-3">
                             <i class="fas fa-trophy text-candelaria-gold"></i>
                             Resultados y Puntajes
                         </h2>
-                        <!-- Tabs -->
-                        <div class="bg-gray-800 p-1 rounded-lg inline-flex">
+                        <!-- Category Tabs -->
+                        <div class="bg-gray-800 p-1 rounded-lg inline-flex flex-wrap justify-center">
                             <button id="btn-autoctonos" onclick="switchScoreType('autoctonos')"
-                                class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 bg-purple-600 text-white shadow-lg">
+                                class="px-3 md:px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 bg-purple-600 text-white shadow-lg">
                                 Autóctonos
                             </button>
                             <button id="btn-luces" onclick="switchScoreType('luces')"
-                                class="px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 text-gray-300 hover:text-white">
+                                class="px-3 md:px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 text-gray-300 hover:text-white">
                                 Trajes de Luces
                             </button>
-                            <div class="w-px h-6 bg-gray-600 mx-2 self-center"></div>
+                            <div class="w-px h-6 bg-gray-600 mx-2 self-center hidden md:block"></div>
                             <button onclick="refreshScores()" id="btn-refresh"
                                 class="px-3 py-2 rounded-md text-gray-400 hover:text-candelaria-gold hover:bg-gray-700 transition-colors"
                                 title="Actualizar Puntajes">
@@ -356,14 +357,38 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
                         </div>
                     </div>
 
+                    <!-- Filter Bar for Autoctonos -->
+                    <div id="filter-bar-autoctonos" class="flex flex-wrap gap-2 mb-4 items-center">
+                        <span class="text-gray-400 text-sm"><i class="fas fa-filter mr-1"></i>Filtrar:</span>
+                        <button id="btn-date-all" onclick="filterByDate('all')"
+                            class="px-3 py-1 rounded-lg text-sm font-medium bg-purple-600 text-white">
+                            Todos
+                        </button>
+                        <button id="btn-date-day1" onclick="filterByDate('2026-01-31')"
+                            class="px-3 py-1 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600">
+                            Día 1 (31 Ene)
+                        </button>
+                        <button id="btn-date-day2" onclick="filterByDate('2026-02-01')"
+                            class="px-3 py-1 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600">
+                            Día 2 (1 Feb)
+                        </button>
+                        <div class="flex-grow"></div>
+                        <button id="btn-order-toggle" onclick="toggleOrderBy()"
+                            class="px-3 py-1 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 flex items-center gap-1"
+                            title="Cambiar ordenamiento">
+                            <i class="fas fa-sort-amount-down"></i>
+                            <span id="order-label">Por Puntaje</span>
+                        </button>
+                    </div>
+
                     <!-- Scores List -->
                     <div class="bg-gray-800/50 border border-gray-700 rounded-xl overflow-hidden backdrop-blur-sm">
                         <div
-                            class="grid grid-cols-12 bg-purple-900/40 p-4 border-b border-gray-700 text-purple-200 font-semibold text-sm uppercase tracking-wider">
-                            <div class="col-span-6 md:col-span-5 pl-4">Conjunto / Danza</div>
-                            <div class="col-span-2 text-center hidden md:block">Parada</div>
-                            <div class="col-span-2 text-center hidden md:block">Estadio</div>
-                            <div class="col-span-6 md:col-span-3 text-center">Puntaje Final</div>
+                            class="grid grid-cols-12 bg-purple-900/40 p-3 md:p-4 border-b border-gray-700 text-purple-200 font-semibold text-xs md:text-sm uppercase tracking-wider">
+                            <div class="col-span-4 md:col-span-5 pl-2 md:pl-4">Conjunto</div>
+                            <div class="col-span-2 text-center">Parada</div>
+                            <div class="col-span-2 text-center">Estadio</div>
+                            <div class="col-span-4 md:col-span-3 text-center">Final</div>
                         </div>
                         <div id="scores-list" class="divide-y divide-gray-700/50">
                             <div class="p-8 text-center text-gray-400">

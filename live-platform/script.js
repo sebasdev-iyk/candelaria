@@ -389,6 +389,9 @@ function toggleFollow(btn) {
 
 /* --- Tabs & Rankings Logic --- */
 let REAL_SCORES = [];
+let currentDateFilter = 'all'; // 'all', '2026-01-31', '2026-02-01'
+let currentOrderBy = 'score'; // 'score' or 'orden_concurso'
+let currentScoreType = 'autoctonos';
 
 // DEPURACIÓN PROFUNDA
 function debugScores(msg, data = null) {
@@ -414,13 +417,15 @@ async function fetchRealScores() {
 
         debugScores('Raw Data Loaded', data.length + ' items');
 
-        // Transform to our format
+        // Transform to our format - include dia_concurso and orden_concurso for filtering/sorting
         REAL_SCORES = data.map(d => ({
             name: d.conjunto,
             category: d.categoria,
             estadio: parseFloat(d.puntaje_estadio || 0),
             parada: parseFloat(d.puntaje_parada || 0),
-            final: (parseFloat(d.puntaje_estadio || 0) + parseFloat(d.puntaje_parada || 0))
+            final: (parseFloat(d.puntaje_estadio || 0) + parseFloat(d.puntaje_parada || 0)),
+            dia_concurso: d.dia_concurso || null,  // e.g. '2026-01-31'
+            orden_concurso: parseInt(d.orden_concurso) || 0
         }));
 
         debugScores('Processed Scores', REAL_SCORES);
@@ -649,8 +654,10 @@ function createPopupContent(danza) {
 }
 
 function switchScoreType(type) {
+    currentScoreType = type;
     const btnAuto = document.getElementById('btn-autoctonos');
     const btnLuces = document.getElementById('btn-luces');
+    const filterBar = document.getElementById('filter-bar-autoctonos');
 
     const activeClass = ['bg-purple-600', 'text-white', 'shadow-lg'];
     // Classes for inactive state: transparent bg, lighter text
@@ -671,12 +678,66 @@ function switchScoreType(type) {
     if (type === 'autoctonos') {
         setBtnState(btnAuto, true);
         setBtnState(btnLuces, false);
+        // Show filter bar for autoctonos
+        if (filterBar) filterBar.style.display = 'flex';
     } else {
         setBtnState(btnAuto, false);
         setBtnState(btnLuces, true);
+        // Hide filter bar for luces (or show if you want filters there too)
+        if (filterBar) filterBar.style.display = 'none';
+        // Reset to all dates for luces
+        currentDateFilter = 'all';
     }
 
     renderScores(type);
+}
+
+// Filter by date function
+window.filterByDate = function (dateValue) {
+    currentDateFilter = dateValue;
+
+    // Update button styles
+    const btnAll = document.getElementById('btn-date-all');
+    const btnDay1 = document.getElementById('btn-date-day1');
+    const btnDay2 = document.getElementById('btn-date-day2');
+
+    const resetBtn = (btn) => {
+        btn.classList.remove('bg-purple-600', 'text-white');
+        btn.classList.add('bg-gray-700', 'text-gray-300');
+    };
+    const activateBtn = (btn) => {
+        btn.classList.remove('bg-gray-700', 'text-gray-300');
+        btn.classList.add('bg-purple-600', 'text-white');
+    };
+
+    resetBtn(btnAll);
+    resetBtn(btnDay1);
+    resetBtn(btnDay2);
+
+    if (dateValue === 'all') activateBtn(btnAll);
+    else if (dateValue === '2026-01-31') activateBtn(btnDay1);
+    else if (dateValue === '2026-02-01') activateBtn(btnDay2);
+
+    renderScores(currentScoreType);
+}
+
+// Toggle order by function
+window.toggleOrderBy = function () {
+    const orderLabel = document.getElementById('order-label');
+    const orderBtn = document.getElementById('btn-order-toggle');
+    const icon = orderBtn.querySelector('i');
+
+    if (currentOrderBy === 'score') {
+        currentOrderBy = 'orden_concurso';
+        orderLabel.textContent = 'Por Orden';
+        icon.className = 'fas fa-sort-numeric-down';
+    } else {
+        currentOrderBy = 'score';
+        orderLabel.textContent = 'Por Puntaje';
+        icon.className = 'fas fa-sort-amount-down';
+    }
+
+    renderScores(currentScoreType);
 }
 
 window.refreshScores = async function () {
@@ -693,8 +754,7 @@ window.refreshScores = async function () {
         await fetchRealScores();
 
         // Re-render current view
-        const isAuto = document.getElementById('btn-autoctonos').classList.contains('bg-purple-600');
-        renderScores(isAuto ? 'autoctonos' : 'luces');
+        renderScores(currentScoreType);
 
         debugScores('Manual Refresh Complete');
     } catch (e) {
@@ -714,7 +774,7 @@ function renderScores(type) {
 
     listContainer.innerHTML = '';
 
-    debugScores(`Rendering scores for type: ${type}`);
+    debugScores(`Rendering scores for type: ${type}, dateFilter: ${currentDateFilter}, orderBy: ${currentOrderBy}`);
 
     // Use REAL_SCORES
     let scores = [];
@@ -728,17 +788,29 @@ function renderScores(type) {
             scores = REAL_SCORES.filter(s => (s.category || '').includes('Luces'));
         }
 
-        // FILTER: Show only dances with scores
-        scores = scores.filter(s => s.final > 0);
-        debugScores('Filtered out zero-scores', scores.length);
+        // FILTER: By date if autoctonos and date filter is set
+        if (type === 'autoctonos' && currentDateFilter !== 'all') {
+            scores = scores.filter(s => s.dia_concurso === currentDateFilter);
+            debugScores('Filtered by date', { dateFilter: currentDateFilter, count: scores.length });
+        }
+
+        // FILTER: Show only dances with scores (unless ordering by orden_concurso, show all)
+        if (currentOrderBy === 'score') {
+            scores = scores.filter(s => s.final > 0);
+        }
+        debugScores('After score filter', scores.length);
 
     } else {
         debugScores('No Real Scores available');
-        // scores = MOCK_SCORES[type] || []; // Keeping mock logic disabled if preferred, or enable if needed
     }
 
-    // Sort by final score desc
-    scores.sort((a, b) => b.final - a.final);
+    // Sort based on order mode
+    if (currentOrderBy === 'orden_concurso') {
+        scores.sort((a, b) => a.orden_concurso - b.orden_concurso);
+    } else {
+        // Sort by final score desc
+        scores.sort((a, b) => b.final - a.final);
+    }
 
     debugScores(`Filtered items: ${scores.length}`);
 
@@ -757,24 +829,30 @@ function renderScores(type) {
         let rankColor = 'text-gray-400';
         let rowBg = 'hover:bg-gray-700/50';
 
-        if (rank === 1) { rankColor = 'text-yellow-400'; rowBg = 'bg-yellow-900/10 hover:bg-yellow-900/20'; }
-        if (rank === 2) { rankColor = 'text-gray-300'; }
-        if (rank === 3) { rankColor = 'text-amber-600'; }
+        // Only highlight ranks if sorting by score
+        if (currentOrderBy === 'score') {
+            if (rank === 1) { rankColor = 'text-yellow-400'; rowBg = 'bg-yellow-900/10 hover:bg-yellow-900/20'; }
+            if (rank === 2) { rankColor = 'text-gray-300'; }
+            if (rank === 3) { rankColor = 'text-amber-600'; }
+        }
+
+        // Show order number or rank based on mode
+        const displayNumber = currentOrderBy === 'orden_concurso' ? item.orden_concurso : rank;
 
         const html = `
-            <div class="grid grid-cols-12 p-5 items-center transition-colors ${rowBg}">
-                <div class="col-span-6 md:col-span-5 flex items-center gap-4 pl-4">
-                    <span class="text-2xl font-bold font-heading w-8 ${rankColor}">#${rank}</span>
-                    <span class="font-medium text-gray-100">${item.name}</span>
+            <div class="grid grid-cols-12 p-3 md:p-5 items-center transition-colors ${rowBg}">
+                <div class="col-span-4 md:col-span-5 flex items-center gap-2 md:gap-4 pl-1 md:pl-4">
+                    <span class="text-lg md:text-2xl font-bold font-heading w-6 md:w-8 ${rankColor}">#${displayNumber}</span>
+                    <span class="font-medium text-gray-100 text-xs md:text-base truncate">${item.name}</span>
                 </div>
-                <div class="col-span-2 text-center text-gray-400 hidden md:block font-mono bg-black/20 py-1 rounded mx-2">
+                <div class="col-span-2 text-center text-gray-400 font-mono text-xs md:text-sm bg-black/20 py-1 rounded mx-1">
                     ${item.parada.toFixed(2)}
                 </div>
-                <div class="col-span-2 text-center text-gray-400 hidden md:block font-mono bg-black/20 py-1 rounded mx-2">
+                <div class="col-span-2 text-center text-gray-400 font-mono text-xs md:text-sm bg-black/20 py-1 rounded mx-1">
                     ${item.estadio.toFixed(2)}
                 </div>
-                <div class="col-span-6 md:col-span-3 text-center">
-                    <span class="text-xl font-bold text-candelaria-gold bg-yellow-400/10 px-3 py-1 rounded-lg border border-yellow-400/20">
+                <div class="col-span-4 md:col-span-3 text-center">
+                    <span class="text-sm md:text-xl font-bold text-candelaria-gold bg-yellow-400/10 px-2 md:px-3 py-1 rounded-lg border border-yellow-400/20">
                         ${item.final.toFixed(2)}
                     </span>
                 </div>
