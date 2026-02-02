@@ -31,7 +31,7 @@ function getActiveClass($page, $activePage)
             <!-- Left: Candelaria Branding -->
             <a href="<?= $basePath ?>index.php" id="logo-container"
                 class="flex items-center cursor-pointer group h-full relative spark-container">
-                <img src="<?= $basePath ?>principal/logoc.png" alt="Candelaria"
+                <img src="<?= $basePath ?>principal/logoc.webp" alt="Candelaria"
                     class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
             </a>
 
@@ -93,7 +93,8 @@ function getActiveClass($page, $activePage)
             <a href="<?= $basePath ?>noticias/index.php"
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'noticias' ? 'text-candelaria-gold' : '' ?>">Noticias</a>
             <a href="https://www.joinnus.com/events/art-culture/puno-concurso-de-danzas-originarias-2026-74197"
-                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2" target="_blank" rel="noopener noreferrer">Entradas</a>
+                class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2"
+                target="_blank" rel="noopener noreferrer">Entradas</a>
         </nav>
     </div>
 </header>

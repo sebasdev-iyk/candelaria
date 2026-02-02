@@ -91,7 +91,7 @@ $mainImg = '../' . $baseImg;
                     <div class="absolute inset-0 bg-[url('../principal/headerfondo2.jpg')] opacity-30 bg-cover bg-center">
                     </div>
                     <div class="relative z-10 flex flex-col items-center">
-                        <img src="../principal/logoc.png" class="h-16 w-auto mb-2 drop-shadow-md">
+                        <img src="../principal/logoc.webp" class="h-16 w-auto mb-2 drop-shadow-md">
                         <h3 class="text-white font-bold text-lg leading-tight">MiPuno Candelaria</h3>
                     </div>
                 </div>
@@ -200,7 +200,8 @@ $mainImg = '../' . $baseImg;
 
             <!-- Back Button -->
             <div class="mb-6">
-                <a href="index.php" class="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-all shadow-sm hover:shadow-md">
+                <a href="index.php"
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-all shadow-sm hover:shadow-md">
                     <i data-lucide="arrow-left" class="w-5 h-5"></i>
                     Volver a la Tienda
                 </a>

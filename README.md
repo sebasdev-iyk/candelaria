@@ -83,7 +83,7 @@ candelaria/
 │   ├── candelaria-background.webm # Video de fondo
 │   ├── Festividad.webp      # Imagen de título
 │   ├── virgencandelariaa.webp # Imagen de la virgen
-│   ├── logoc.png           # Logo
+│   ├── logoc.webp           # Logo
 │   └── [otros recursos]
 ├── Dockerfile              # Configuración de contenedor
 ├── .gitignore              # Archivos ignorados

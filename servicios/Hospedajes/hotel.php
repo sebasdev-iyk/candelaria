@@ -271,7 +271,7 @@ $isGuest = !isAuthenticated();
                         class="absolute inset-0 bg-[url('../../principal/headerfondo2.jpg')] opacity-30 bg-cover bg-center">
                     </div>
                     <div class="relative z-10 flex flex-col items-center">
-                        <img src="../../principal/logoc.png" class="h-16 w-auto mb-2 drop-shadow-md">
+                        <img src="../../principal/logoc.webp" class="h-16 w-auto mb-2 drop-shadow-md">
                         <h3 class="text-white font-bold text-lg leading-tight">MiPuno Candelaria</h3>
                     </div>
                 </div>
@@ -372,7 +372,7 @@ $isGuest = !isAuthenticated();
                     <!-- Left: Candelaria Branding -->
                     <a href="../../index.php" id="logo-container"
                         class="flex items-center cursor-pointer group h-full relative spark-container">
-                        <img src="../../principal/logoc.png" alt="Candelaria"
+                        <img src="../../principal/logoc.webp" alt="Candelaria"
                             class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 relative z-10">
                     </a>
                     <!-- Right: Navigation + EN TIEMPO REAL -->
@@ -405,8 +405,8 @@ $isGuest = !isAuthenticated();
 
         </header>
 
-         <!-- Mobile Menu (Standardized & Moved outside header for fixed positioning) -->
-         <div id="mobile-menu"
+        <!-- Mobile Menu (Standardized & Moved outside header for fixed positioning) -->
+        <div id="mobile-menu"
             class="hidden md:hidden fixed top-[80px] left-0 w-full h-[calc(100vh-80px)] bg-[#2e1065] shadow-lg border-t border-purple-800 z-[1200] overflow-y-auto transition-all duration-300">
             <nav class="flex flex-col p-6 space-y-4">
                 <a href="../../servicios/index.php"
