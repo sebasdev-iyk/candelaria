@@ -60,7 +60,7 @@
     <!-- Video Avatar (Canvas for Transparency) -->
     <div class="video-avatar-container">
         <canvas id="video-canvas" width="250" height="300"></canvas>
-        <video id="source-video" src="<?= $basePath ?>chatbot/assets/chatbotggs.mp4" loop muted playsinline
+        <video id="source-video" src="<?= $basePath ?>chatbot/assets/chatbotggs.webm" loop muted playsinline
             crossorigin="anonymous" style="display: none;"></video>
     </div>
 </div>
