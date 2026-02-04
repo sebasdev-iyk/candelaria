@@ -369,10 +369,37 @@
                 }
             }
 
+            // Extract ALL images for carousel
+            let images = [];
+            if (item.imagenes) {
+                if (Array.isArray(item.imagenes)) {
+                    images = item.imagenes;
+                } else if (typeof item.imagenes === 'string' && item.imagenes.startsWith('[')) {
+                    try { images = JSON.parse(item.imagenes); } catch (e) { }
+                }
+            }
+            // Fallback: use single imagen if no imagenes array
+            if (images.length === 0 && item.imagen) {
+                images = [item.imagen];
+            }
+            // Fallback: use the processed image
+            if (images.length === 0 && image) {
+                images = [image];
+            }
+
+            // Fix paths for all images
+            images = images.map(img => {
+                if (!img) return null;
+                if (img.startsWith('http') || img.startsWith('data:') || img.startsWith('/')) return img;
+                if (img.startsWith('assets/')) return '/candelaria/' + img;
+                return '/candelaria/assets/uploads/' + img;
+            }).filter(img => img !== null);
+
             return {
                 id: item.id,
                 name: item.nombre,
                 image: image,
+                images: images, // Array of all images for carousel
                 rating: item.calificacion ? parseFloat(item.calificacion) : 0,
                 reviews: item.total_reviews ? parseInt(item.total_reviews) : 0,
                 price: parseFloat(item.precio_noche || item.precio_promedio || item.precio || 0),
@@ -709,20 +736,69 @@
 
             const modal = document.getElementById('detail-modal');
             const content = document.getElementById('modal-content');
-
-            // HTML del modal
-            content.innerHTML = `
-                <!-- Header Imagen -->
-                <div class="relative h-64 w-full">
-                    <img src="${item.image}" referrerpolicy="no-referrer" onerror="handleImageError(this, 'Modal', '${item.id}')" class="w-full h-full object-cover">
-                    <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/50 hover:bg-white text-gray-800 rounded-full p-2 backdrop-blur-md transition-all">
+            
+            // Carousel state
+            const images = item.images && item.images.length > 0 ? item.images : [item.image];
+            const hasMultipleImages = images.length > 1;
+            
+            // Generate carousel HTML
+            const carouselHTML = `
+                <!-- Carousel Container -->
+                <div class="relative h-64 w-full overflow-hidden" id="modal-carousel">
+                    <!-- Images -->
+                    <div class="carousel-images relative h-full w-full">
+                        ${images.map((img, idx) => `
+                            <img src="${img}" 
+                                 referrerpolicy="no-referrer" 
+                                 onerror="handleImageError(this, 'Modal', '${item.id}')"
+                                 class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${idx === 0 ? 'opacity-100' : 'opacity-0'}"
+                                 data-index="${idx}">
+                        `).join('')}
+                    </div>
+                    
+                    <!-- Navigation Arrows (only show if multiple images) -->
+                    ${hasMultipleImages ? `
+                        <button onclick="carouselPrev()" 
+                            class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full shadow-lg transition-all z-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m15 18-6-6 6-6"/>
+                            </svg>
+                        </button>
+                        <button onclick="carouselNext()" 
+                            class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full shadow-lg transition-all z-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m9 18 6-6-6-6"/>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dot Indicators -->
+                        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                            ${images.map((_, idx) => `
+                                <button onclick="carouselGoTo(${idx})" 
+                                    class="carousel-dot w-2 h-2 rounded-full transition-all ${idx === 0 ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/80'}"></button>
+                            `).join('')}
+                        </div>
+                        
+                        <!-- Counter -->
+                        <div class="absolute top-3 left-3 bg-black/60 text-white text-xs px-2 py-1 rounded-full font-medium z-10">
+                            <span id="carousel-current">1</span> / ${images.length}
+                        </div>
+                    ` : ''}
+                    
+                    <!-- Close Button -->
+                    <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/50 hover:bg-white text-gray-800 rounded-full p-2 backdrop-blur-md transition-all z-20">
                         <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
-                    <div class="absolute bottom-4 left-4">
+                    
+                    <!-- Badge -->
+                    <div class="absolute bottom-4 left-4 z-10">
                         <span class="px-3 py-1 bg-candelaria-purple text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-lg">Recomendado</span>
                     </div>
                 </div>
-
+            `;
+            
+            // Body content
+            const bodyHTML = `
                 <!-- Body -->
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
@@ -778,9 +854,57 @@
                     </div>
                 </div>
             `;
+            
+            // Combine and set content
+            content.innerHTML = carouselHTML + bodyHTML;
+            
+            // Store carousel state for navigation
+            window.carouselState = { images: images, currentIndex: 0 };
 
             lucide.createIcons();
             modal.classList.remove('hidden');
+        }
+        
+        // Carousel navigation functions
+        function carouselPrev() {
+            if (!window.carouselState) return;
+            const { images } = window.carouselState;
+            window.carouselState.currentIndex = (window.carouselState.currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        }
+        
+        function carouselNext() {
+            if (!window.carouselState) return;
+            const { images } = window.carouselState;
+            window.carouselState.currentIndex = (window.carouselState.currentIndex + 1) % images.length;
+            updateCarousel();
+        }
+        
+        function carouselGoTo(index) {
+            if (!window.carouselState) return;
+            window.carouselState.currentIndex = index;
+            updateCarousel();
+        }
+        
+        function updateCarousel() {
+            const { currentIndex } = window.carouselState;
+            
+            // Update slide visibility
+            document.querySelectorAll('.carousel-slide').forEach((slide, idx) => {
+                slide.classList.toggle('opacity-100', idx === currentIndex);
+                slide.classList.toggle('opacity-0', idx !== currentIndex);
+            });
+            
+            // Update dot indicators
+            document.querySelectorAll('.carousel-dot').forEach((dot, idx) => {
+                dot.classList.toggle('bg-white', idx === currentIndex);
+                dot.classList.toggle('scale-125', idx === currentIndex);
+                dot.classList.toggle('bg-white/50', idx !== currentIndex);
+            });
+            
+            // Update counter
+            const counter = document.getElementById('carousel-current');
+            if (counter) counter.textContent = currentIndex + 1;
         }
 
         function closeModal() {
