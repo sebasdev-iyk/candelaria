@@ -389,8 +389,8 @@ function toggleFollow(btn) {
 
 /* --- Tabs & Rankings Logic --- */
 let REAL_SCORES = [];
-let currentDateFilter = 'all'; // 'all', '2026-01-31', '2026-02-01' for autoctonos
-let currentDateFilterLuces = 'all'; // 'all', '2026-02-08', '2026-02-09', '2026-02-10' for luces
+let currentDateFilter = 'all'; // 'all', '2026-01-31', '2026-02-01'
+let currentDateFilterLuces = 'all'; // 'all', '2026-02-08', '2026-02-09', '2026-02-10'
 let currentOrderBy = 'score'; // 'score' or 'orden_concurso'
 let currentScoreType = 'luces';
 let currentSearchQuery = ''; // Search filter
@@ -419,15 +419,17 @@ async function fetchRealScores() {
 
         debugScores('Raw Data Loaded', data.length + ' items');
 
-        // Transform to our format - include dia_concurso and orden_concurso for filtering/sorting
+        // Transform to our format - include dia_concurso, dia_veneracion, orden_concurso, orden_veneracion for filtering/sorting
         REAL_SCORES = data.map(d => ({
             name: d.conjunto,
             category: d.categoria,
             estadio: parseFloat(d.puntaje_estadio || 0),
             parada: parseFloat(d.puntaje_parada || 0),
             final: (parseFloat(d.puntaje_estadio || 0) + parseFloat(d.puntaje_parada || 0)),
-            dia_concurso: d.dia_concurso || null,  // e.g. '2026-01-31'
-            orden_concurso: parseInt(d.orden_concurso) || 0
+            dia_concurso: d.dia_concurso || null,  // e.g. '2026-01-31' or '2026-02-08'
+            dia_veneracion: d.dia_veneracion || null,  // e.g. '2026-02-09' or '2026-02-10'
+            orden_concurso: parseInt(d.orden_concurso) || 0,
+            orden_veneracion: parseInt(d.orden_veneracion) || 0
         }));
 
         debugScores('Processed Scores', REAL_SCORES);
@@ -659,8 +661,7 @@ function switchScoreType(type) {
     currentScoreType = type;
     const btnAuto = document.getElementById('btn-autoctonos');
     const btnLuces = document.getElementById('btn-luces');
-    const filterBarAuto = document.getElementById('filter-bar-autoctonos');
-    const filterBarLuces = document.getElementById('filter-bar-luces');
+    const filterBar = document.getElementById('filter-bar-autoctonos');
 
     const activeClass = ['bg-purple-600', 'text-white', 'shadow-lg'];
     // Classes for inactive state: transparent bg, lighter text
@@ -681,14 +682,18 @@ function switchScoreType(type) {
     if (type === 'autoctonos') {
         setBtnState(btnAuto, true);
         setBtnState(btnLuces, false);
-        // Show filter bar for autoctonos, hide luces
-        if (filterBarAuto) filterBarAuto.style.display = 'flex';
+        // Show filter bar for autoctonos
+        if (filterBar) filterBar.style.display = 'flex';
+        // Hide luces filter bar
+        const filterBarLuces = document.getElementById('filter-bar-luces');
         if (filterBarLuces) filterBarLuces.style.display = 'none';
     } else {
         setBtnState(btnAuto, false);
         setBtnState(btnLuces, true);
-        // Show filter bar for luces, hide autoctonos
-        if (filterBarAuto) filterBarAuto.style.display = 'none';
+        // Hide autoctonos filter bar
+        if (filterBar) filterBar.style.display = 'none';
+        // Show luces filter bar
+        const filterBarLuces = document.getElementById('filter-bar-luces');
         if (filterBarLuces) filterBarLuces.style.display = 'flex';
     }
 
@@ -729,29 +734,31 @@ window.filterByDateLuces = function (dateValue) {
     currentDateFilterLuces = dateValue;
 
     // Update button styles
-    const btnAll = document.getElementById('btn-luces-all');
-    const btnDay1 = document.getElementById('btn-luces-day1');
-    const btnDay2 = document.getElementById('btn-luces-day2');
-    const btnDay3 = document.getElementById('btn-luces-day3');
+    const btnAll = document.getElementById('btn-date-luces-all');
+    const btnDay8 = document.getElementById('btn-date-luces-day8');
+    const btnDay9 = document.getElementById('btn-date-luces-day9');
+    const btnDay10 = document.getElementById('btn-date-luces-day10');
 
     const resetBtn = (btn) => {
+        if (!btn) return;
         btn.classList.remove('bg-purple-600', 'text-white');
         btn.classList.add('bg-gray-700', 'text-gray-300');
     };
     const activateBtn = (btn) => {
+        if (!btn) return;
         btn.classList.remove('bg-gray-700', 'text-gray-300');
         btn.classList.add('bg-purple-600', 'text-white');
     };
 
     resetBtn(btnAll);
-    resetBtn(btnDay1);
-    resetBtn(btnDay2);
-    resetBtn(btnDay3);
+    resetBtn(btnDay8);
+    resetBtn(btnDay9);
+    resetBtn(btnDay10);
 
     if (dateValue === 'all') activateBtn(btnAll);
-    else if (dateValue === '2026-02-08') activateBtn(btnDay1);
-    else if (dateValue === '2026-02-09') activateBtn(btnDay2);
-    else if (dateValue === '2026-02-10') activateBtn(btnDay3);
+    else if (dateValue === '2026-02-08') activateBtn(btnDay8);
+    else if (dateValue === '2026-02-09') activateBtn(btnDay9);
+    else if (dateValue === '2026-02-10') activateBtn(btnDay10);
 
     renderScores(currentScoreType);
 }
@@ -759,17 +766,22 @@ window.filterByDateLuces = function (dateValue) {
 // Toggle order by function
 window.toggleOrderBy = function () {
     const orderLabel = document.getElementById('order-label');
+    const orderLabelLuces = document.getElementById('order-label-luces');
     const orderBtn = document.getElementById('btn-order-toggle');
-    const icon = orderBtn.querySelector('i');
+    const orderBtnLuces = document.getElementById('btn-order-toggle-luces');
 
     if (currentOrderBy === 'score') {
         currentOrderBy = 'orden_concurso';
-        orderLabel.textContent = 'Por Orden';
-        icon.className = 'fas fa-sort-numeric-down';
+        if (orderLabel) orderLabel.textContent = 'Por Orden';
+        if (orderLabelLuces) orderLabelLuces.textContent = 'Por Orden';
+        if (orderBtn) orderBtn.querySelector('i').className = 'fas fa-sort-numeric-down';
+        if (orderBtnLuces) orderBtnLuces.querySelector('i').className = 'fas fa-sort-numeric-down';
     } else {
         currentOrderBy = 'score';
-        orderLabel.textContent = 'Por Puntaje';
-        icon.className = 'fas fa-sort-amount-down';
+        if (orderLabel) orderLabel.textContent = 'Por Puntaje';
+        if (orderLabelLuces) orderLabelLuces.textContent = 'Por Puntaje';
+        if (orderBtn) orderBtn.querySelector('i').className = 'fas fa-sort-amount-down';
+        if (orderBtnLuces) orderBtnLuces.querySelector('i').className = 'fas fa-sort-amount-down';
     }
 
     renderScores(currentScoreType);
@@ -826,17 +838,27 @@ function renderScores(type) {
         // FILTER: By date if autoctonos and date filter is set
         if (type === 'autoctonos' && currentDateFilter !== 'all') {
             scores = scores.filter(s => s.dia_concurso === currentDateFilter);
-            debugScores('Filtered by date (autoctonos)', { dateFilter: currentDateFilter, count: scores.length });
+            debugScores('Filtered by date', { dateFilter: currentDateFilter, count: scores.length });
         }
 
         // FILTER: By date if luces and date filter is set
         if (type === 'luces' && currentDateFilterLuces !== 'all') {
-            scores = scores.filter(s => s.dia_concurso === currentDateFilterLuces);
-            debugScores('Filtered by date (luces)', { dateFilter: currentDateFilterLuces, count: scores.length });
+            if (currentDateFilterLuces === '2026-02-08') {
+                // Feb 8 uses dia_concurso
+                scores = scores.filter(s => s.dia_concurso === currentDateFilterLuces);
+            } else {
+                // Feb 9 and 10 use dia_veneracion
+                scores = scores.filter(s => s.dia_veneracion === currentDateFilterLuces);
+            }
+            debugScores('Filtered by date luces', { dateFilter: currentDateFilterLuces, count: scores.length });
         }
 
-        // FILTER: Show only dances with scores (unless ordering by orden_concurso, show all)
-        if (currentOrderBy === 'score') {
+        // FILTER: Show only dances with scores UNLESS a specific date is selected
+        // When a specific date is selected, show all dances (even without scores yet)
+        const dateFilterActive = (type === 'autoctonos' && currentDateFilter !== 'all') ||
+            (type === 'luces' && currentDateFilterLuces !== 'all');
+
+        if (currentOrderBy === 'score' && !dateFilterActive) {
             scores = scores.filter(s => s.final > 0);
         }
         debugScores('After score filter', scores.length);
@@ -845,8 +867,32 @@ function renderScores(type) {
         debugScores('No Real Scores available');
     }
 
-    // Sort based on order mode
-    if (currentOrderBy === 'orden_concurso') {
+    // Sort based on order mode and category/date
+    if (type === 'luces' && currentDateFilterLuces !== 'all') {
+        // Special ordering for Traje de Luces by date
+        if (currentDateFilterLuces === '2026-02-08') {
+            // Feb 8: order by puntaje (desc) then by orden_concurso (asc)
+            if (currentOrderBy === 'orden_concurso') {
+                scores.sort((a, b) => a.orden_concurso - b.orden_concurso);
+            } else {
+                scores.sort((a, b) => {
+                    if (b.final !== a.final) return b.final - a.final;
+                    return a.orden_concurso - b.orden_concurso;
+                });
+            }
+        } else {
+            // Feb 9 and 10: order by puntaje (desc) then by orden_veneracion (asc)
+            if (currentOrderBy === 'orden_concurso') {
+                // When ordering by 'orden', use orden_veneracion for Feb 9/10
+                scores.sort((a, b) => a.orden_veneracion - b.orden_veneracion);
+            } else {
+                scores.sort((a, b) => {
+                    if (b.final !== a.final) return b.final - a.final;
+                    return a.orden_veneracion - b.orden_veneracion;
+                });
+            }
+        }
+    } else if (currentOrderBy === 'orden_concurso') {
         scores.sort((a, b) => a.orden_concurso - b.orden_concurso);
     } else {
         // Sort by final score desc
