@@ -341,11 +341,11 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
                         <!-- Category Tabs -->
                         <div class="bg-gray-800 p-1 rounded-lg inline-flex flex-wrap justify-center">
                             <button id="btn-autoctonos" onclick="switchScoreType('autoctonos')"
-                                class="px-3 md:px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 bg-purple-600 text-white shadow-lg">
+                                class="px-3 md:px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 text-gray-300 hover:text-white">
                                 Autóctonos
                             </button>
                             <button id="btn-luces" onclick="switchScoreType('luces')"
-                                class="px-3 md:px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 text-gray-300 hover:text-white">
+                                class="px-3 md:px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 bg-purple-600 text-white shadow-lg">
                                 Trajes de Luces
                             </button>
                             <div class="w-px h-6 bg-gray-600 mx-2 self-center hidden md:block"></div>

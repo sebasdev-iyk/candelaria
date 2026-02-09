@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Load Real Scores on Init
     await fetchRealScores();
-    renderScores('autoctonos');
+    renderScores('luces');
 });
 
 // Check auth status from Supabase (via cookies)
@@ -391,7 +391,7 @@ function toggleFollow(btn) {
 let REAL_SCORES = [];
 let currentDateFilter = 'all'; // 'all', '2026-01-31', '2026-02-01'
 let currentOrderBy = 'score'; // 'score' or 'orden_concurso'
-let currentScoreType = 'autoctonos';
+let currentScoreType = 'luces';
 let currentSearchQuery = ''; // Search filter
 
 // DEPURACIÓN PROFUNDA
