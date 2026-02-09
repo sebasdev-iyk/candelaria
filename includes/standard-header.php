@@ -46,7 +46,7 @@ function getActiveClass($page, $activePage)
                         class="nav-link-custom <?= getActiveClass('servicios', $activePage) ?>">Servicios</a>
                     <a href="<?= $basePath ?>noticias/index.php"
                         class="nav-link-custom <?= getActiveClass('noticias', $activePage) ?>">Noticias</a>
-                    <a href="https://www.joinnus.com/events/art-culture/puno-concurso-de-danzas-originarias-2026-74197"
+                    <a href="https://www.joinnus.com/events/art-culture/puno-concurso-de-danzas-en-traje-de-luces-74295"
                         class="nav-link-custom" target="_blank" rel="noopener noreferrer">Entradas</a>
                 </nav>
 
@@ -92,7 +92,7 @@ function getActiveClass($page, $activePage)
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'servicios' ? 'text-candelaria-gold' : '' ?>">Servicios</a>
             <a href="<?= $basePath ?>noticias/index.php"
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2 <?= $activePage === 'noticias' ? 'text-candelaria-gold' : '' ?>">Noticias</a>
-            <a href="https://www.joinnus.com/events/art-culture/puno-concurso-de-danzas-originarias-2026-74197"
+            <a href="https://www.joinnus.com/events/art-culture/puno-concurso-de-danzas-en-traje-de-luces-74295"
                 class="block text-white text-lg hover:text-candelaria-gold font-semibold border-b border-purple-800 pb-2"
                 target="_blank" rel="noopener noreferrer">Entradas</a>
         </nav>
