@@ -389,7 +389,8 @@ function toggleFollow(btn) {
 
 /* --- Tabs & Rankings Logic --- */
 let REAL_SCORES = [];
-let currentDateFilter = 'all'; // 'all', '2026-01-31', '2026-02-01'
+let currentDateFilter = 'all'; // 'all', '2026-01-31', '2026-02-01' for autoctonos
+let currentDateFilterLuces = 'all'; // 'all', '2026-02-08', '2026-02-09', '2026-02-10' for luces
 let currentOrderBy = 'score'; // 'score' or 'orden_concurso'
 let currentScoreType = 'luces';
 let currentSearchQuery = ''; // Search filter
@@ -658,7 +659,8 @@ function switchScoreType(type) {
     currentScoreType = type;
     const btnAuto = document.getElementById('btn-autoctonos');
     const btnLuces = document.getElementById('btn-luces');
-    const filterBar = document.getElementById('filter-bar-autoctonos');
+    const filterBarAuto = document.getElementById('filter-bar-autoctonos');
+    const filterBarLuces = document.getElementById('filter-bar-luces');
 
     const activeClass = ['bg-purple-600', 'text-white', 'shadow-lg'];
     // Classes for inactive state: transparent bg, lighter text
@@ -679,15 +681,15 @@ function switchScoreType(type) {
     if (type === 'autoctonos') {
         setBtnState(btnAuto, true);
         setBtnState(btnLuces, false);
-        // Show filter bar for autoctonos
-        if (filterBar) filterBar.style.display = 'flex';
+        // Show filter bar for autoctonos, hide luces
+        if (filterBarAuto) filterBarAuto.style.display = 'flex';
+        if (filterBarLuces) filterBarLuces.style.display = 'none';
     } else {
         setBtnState(btnAuto, false);
         setBtnState(btnLuces, true);
-        // Hide filter bar for luces (or show if you want filters there too)
-        if (filterBar) filterBar.style.display = 'none';
-        // Reset to all dates for luces
-        currentDateFilter = 'all';
+        // Show filter bar for luces, hide autoctonos
+        if (filterBarAuto) filterBarAuto.style.display = 'none';
+        if (filterBarLuces) filterBarLuces.style.display = 'flex';
     }
 
     renderScores(type);
@@ -718,6 +720,38 @@ window.filterByDate = function (dateValue) {
     if (dateValue === 'all') activateBtn(btnAll);
     else if (dateValue === '2026-01-31') activateBtn(btnDay1);
     else if (dateValue === '2026-02-01') activateBtn(btnDay2);
+
+    renderScores(currentScoreType);
+}
+
+// Filter by date function for Traje de Luces
+window.filterByDateLuces = function (dateValue) {
+    currentDateFilterLuces = dateValue;
+
+    // Update button styles
+    const btnAll = document.getElementById('btn-luces-all');
+    const btnDay1 = document.getElementById('btn-luces-day1');
+    const btnDay2 = document.getElementById('btn-luces-day2');
+    const btnDay3 = document.getElementById('btn-luces-day3');
+
+    const resetBtn = (btn) => {
+        btn.classList.remove('bg-purple-600', 'text-white');
+        btn.classList.add('bg-gray-700', 'text-gray-300');
+    };
+    const activateBtn = (btn) => {
+        btn.classList.remove('bg-gray-700', 'text-gray-300');
+        btn.classList.add('bg-purple-600', 'text-white');
+    };
+
+    resetBtn(btnAll);
+    resetBtn(btnDay1);
+    resetBtn(btnDay2);
+    resetBtn(btnDay3);
+
+    if (dateValue === 'all') activateBtn(btnAll);
+    else if (dateValue === '2026-02-08') activateBtn(btnDay1);
+    else if (dateValue === '2026-02-09') activateBtn(btnDay2);
+    else if (dateValue === '2026-02-10') activateBtn(btnDay3);
 
     renderScores(currentScoreType);
 }
@@ -792,7 +826,13 @@ function renderScores(type) {
         // FILTER: By date if autoctonos and date filter is set
         if (type === 'autoctonos' && currentDateFilter !== 'all') {
             scores = scores.filter(s => s.dia_concurso === currentDateFilter);
-            debugScores('Filtered by date', { dateFilter: currentDateFilter, count: scores.length });
+            debugScores('Filtered by date (autoctonos)', { dateFilter: currentDateFilter, count: scores.length });
+        }
+
+        // FILTER: By date if luces and date filter is set
+        if (type === 'luces' && currentDateFilterLuces !== 'all') {
+            scores = scores.filter(s => s.dia_concurso === currentDateFilterLuces);
+            debugScores('Filtered by date (luces)', { dateFilter: currentDateFilterLuces, count: scores.length });
         }
 
         // FILTER: Show only dances with scores (unless ordering by orden_concurso, show all)

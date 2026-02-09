@@ -368,7 +368,8 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
                     </div>
 
                     <!-- Filter Bar for Autoctonos -->
-                    <div id="filter-bar-autoctonos" class="flex flex-wrap gap-2 mb-4 items-center">
+                    <div id="filter-bar-autoctonos" class="flex flex-wrap gap-2 mb-4 items-center"
+                        style="display: none;">
                         <span class="text-gray-400 text-sm"><i class="fas fa-filter mr-1"></i>Filtrar:</span>
                         <button id="btn-date-all" onclick="filterByDate('all')"
                             class="px-3 py-1 rounded-lg text-sm font-medium bg-purple-600 text-white">
@@ -381,6 +382,34 @@ $recommendations = array_filter($allStreams, fn($s) => $s['id'] !== ($currentStr
                         <button id="btn-date-day2" onclick="filterByDate('2026-02-01')"
                             class="px-3 py-1 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600">
                             Día 2 (1 Feb)
+                        </button>
+                        <div class="flex-grow"></div>
+                        <button id="btn-order-toggle-auto" onclick="toggleOrderBy()"
+                            class="px-3 py-1 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 flex items-center gap-1"
+                            title="Cambiar ordenamiento">
+                            <i class="fas fa-sort-amount-down"></i>
+                            <span id="order-label-auto">Por Puntaje</span>
+                        </button>
+                    </div>
+
+                    <!-- Filter Bar for Traje de Luces -->
+                    <div id="filter-bar-luces" class="flex flex-wrap gap-2 mb-4 items-center">
+                        <span class="text-gray-400 text-sm"><i class="fas fa-filter mr-1"></i>Filtrar:</span>
+                        <button id="btn-luces-all" onclick="filterByDateLuces('all')"
+                            class="px-3 py-1 rounded-lg text-sm font-medium bg-purple-600 text-white">
+                            Todos
+                        </button>
+                        <button id="btn-luces-day1" onclick="filterByDateLuces('2026-02-08')"
+                            class="px-3 py-1 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600">
+                            8 Feb
+                        </button>
+                        <button id="btn-luces-day2" onclick="filterByDateLuces('2026-02-09')"
+                            class="px-3 py-1 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600">
+                            9 Feb
+                        </button>
+                        <button id="btn-luces-day3" onclick="filterByDateLuces('2026-02-10')"
+                            class="px-3 py-1 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600">
+                            10 Feb
                         </button>
                         <div class="flex-grow"></div>
                         <button id="btn-order-toggle" onclick="toggleOrderBy()"
